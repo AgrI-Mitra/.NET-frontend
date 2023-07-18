@@ -77,6 +77,13 @@ namespace KisanEMitra.Controllers
                 Success = true
             });
         }
+
+        [HttpPost]
+        public ActionResult CheckRecordingStatus(bool status)
+        {
+            // Return the new boolean value as JSON
+            return Json(new { isRecording = !status });
+        }
     }
 
     public class AjaxActionResult

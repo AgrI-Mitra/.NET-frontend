@@ -27,7 +27,7 @@
         <!-- Left dropdown content -->
         @Html.DropDownListFor(m => m.SelectedLanguage, (IEnumerable<SelectListItem>)Model.Languages, new { @class = "form-control", id = "ddlLanguage" })
     </div>
-    <div class="center-column">
+    <div class="center-column" style="color: #219653; font-size: 3vh; font-weight: 700; font-family: Mulish-bold,sans-serif; ">
         <!-- Application name -->
         @Resources.Resource.label_title
     </div>
@@ -41,7 +41,9 @@
 
 <div class="center-section" style="position: fixed; width: 100%; bottom: 7vh; top: 75px;">
     <!-- Button in the center -->
-    <button>@Resources.Resource.label_click</button>
+    <button id="recordingButton">
+        <img id="recordingImage" src="/Content/images/startIcon.svg" alt="Image" width="200" height="212" />
+    </button>
 </div>
 
 <div class="bottom-section">
@@ -49,7 +51,9 @@
         <div class="chatbox">
             <!-- Chatbox content -->
             <input type="text" class="text-box" placeholder="@Resources.Resource.message_ask_ur_question">
-            <button class="send-button">@Resources.Resource.label_send</button>
+            <button class="send-button">
+                @Resources.Resource.label_send
+            </button>
         </div>
         <div class="tab-bar">
             <div class="tab">
@@ -73,7 +77,9 @@
 </div>
 
 <script type="text/javascript">
-    
+
+    var isRecording = false;
+
     $(document).ready(function () {
         $("#ddlLanguage").on('change', function () {
 
@@ -93,6 +99,19 @@
                 }
             });
         });
+
+        $("#recordingButton").click(function () {
+            isRecording = !isRecording;
+            $("#recordingImage").attr("src", isRecording ? "/Content/images/startIcon.svg" : "/Content/images/stop.gif");
+                @*$.ajax({
+                    url: '@Url.Action("CheckRecordingStatus", "Home")',
+                    type: 'POST',
+                    success: function (result) {
+                        // Update the image src based on the new boolean value
+                        $("#recordingImage").attr("src", result.isRecording ? "~/Content/images/startIcon.svg" : "~/Content/images/stop.gif");
+                    }
+                });*@
+            });
     });
 </script>
 
