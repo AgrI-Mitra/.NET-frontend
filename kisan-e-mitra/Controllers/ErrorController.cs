@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace kishan_bot.Controllers
+namespace KisanEMitra.Controllers
 {
     public class ErrorController : Controller
     {

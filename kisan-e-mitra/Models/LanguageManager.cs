@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 
-namespace kishan_bot.Models
+namespace KisanEMitra.Models
 {
     public class Languages
     {

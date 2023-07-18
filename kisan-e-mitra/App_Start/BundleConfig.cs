@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace kishan_bot
+namespace KisanEMitra
 {
     public class BundleConfig
     {

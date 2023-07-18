@@ -1,11 +1,11 @@
-﻿using kishan_bot.Models;
+﻿using KisanEMitra.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace kishan_bot.Controllers
+namespace KisanEMitra.Controllers
 {
     public class HomeController : LanguageController
     {
@@ -15,15 +15,16 @@ namespace kishan_bot.Controllers
         }
         public ActionResult Index()
         {
-            ViewBag.Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageFullName", "LanguageCultureName");
+            ViewBag.Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageFullName");
             return View();
         }
 
-        public void ChangeLanguage(string lang)
+        [HttpPost]
+        public ActionResult ChangeLanguage(string lang)
         {
             Console.WriteLine(lang);
             new LanguageManager().SetLanguage(lang);
-            //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

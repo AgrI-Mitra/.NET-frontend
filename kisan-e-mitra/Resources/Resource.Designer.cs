@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace kishan_bot {
+namespace Resources {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace kishan_bot {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    public class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace kishan_bot {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("kishan_bot.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("kishan_bot.Resources.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace kishan_bot {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to You are disconnected. Please refresh or login again..
         /// </summary>
-        internal static string error_disconnected {
+        public static string error_disconnected {
             get {
                 return ResourceManager.GetString("error.disconnected", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Please type or select a message to send..
         /// </summary>
-        internal static string error_empty_msg {
+        public static string error_empty_msg {
             get {
                 return ResourceManager.GetString("error.empty_msg", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Failed to submit rating..
         /// </summary>
-        internal static string error_fail_to_submit {
+        public static string error_fail_to_submit {
             get {
                 return ResourceManager.GetString("error.fail_to_submit", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Failed to submit review..
         /// </summary>
-        internal static string error_fail_to_submit_review {
+        public static string error_fail_to_submit_review {
             get {
                 return ResourceManager.GetString("error.fail_to_submit_review", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to OTP not sent.
         /// </summary>
-        internal static string error_otp_not_sent {
+        public static string error_otp_not_sent {
             get {
                 return ResourceManager.GetString("error.otp_not_sent", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Error sending OTP.
         /// </summary>
-        internal static string error_sending_otp {
+        public static string error_sending_otp {
             get {
                 return ResourceManager.GetString("error.sending_otp", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to UserID not registered..
         /// </summary>
-        internal static string error_userid_not_registered {
+        public static string error_userid_not_registered {
             get {
                 return ResourceManager.GetString("error.userid_not_registered", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Please wait for reply..
         /// </summary>
-        internal static string error_wait_new_chat {
+        public static string error_wait_new_chat {
             get {
                 return ResourceManager.GetString("error.wait_new_chat", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
-        internal static string label_back {
+        public static string label_back {
             get {
                 return ResourceManager.GetString("label.back", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Chats.
         /// </summary>
-        internal static string label_chats {
+        public static string label_chats {
             get {
                 return ResourceManager.GetString("label.chats", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Reload.
         /// </summary>
-        internal static string label_click {
+        public static string label_click {
             get {
                 return ResourceManager.GetString("label.click", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
-        internal static string label_close {
+        public static string label_close {
             get {
                 return ResourceManager.GetString("label.close", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete this conversation?.
         /// </summary>
-        internal static string label_confirm_delete {
+        public static string label_confirm_delete {
             get {
                 return ResourceManager.GetString("label.confirm_delete", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
-        internal static string label_continue {
+        public static string label_continue {
             get {
                 return ResourceManager.GetString("label.continue", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Dial.
         /// </summary>
-        internal static string label_dial {
+        public static string label_dial {
             get {
                 return ResourceManager.GetString("label.dial", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Examples.
         /// </summary>
-        internal static string label_examples {
+        public static string label_examples {
             get {
                 return ResourceManager.GetString("label.examples", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Extension Worker.
         /// </summary>
-        internal static string label_extension_worker {
+        public static string label_extension_worker {
             get {
                 return ResourceManager.GetString("label.extension_worker", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to FAQs.
         /// </summary>
-        internal static string label_faqs {
+        public static string label_faqs {
             get {
                 return ResourceManager.GetString("label.faqs", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Farmer.
         /// </summary>
-        internal static string label_farmer {
+        public static string label_farmer {
             get {
                 return ResourceManager.GetString("label.farmer", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Feedback.
         /// </summary>
-        internal static string label_feedback {
+        public static string label_feedback {
             get {
                 return ResourceManager.GetString("label.feedback", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Logout.
         /// </summary>
-        internal static string label_logout {
+        public static string label_logout {
             get {
                 return ResourceManager.GetString("label.logout", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Mobile Number.
         /// </summary>
-        internal static string label_mobile_number {
+        public static string label_mobile_number {
             get {
                 return ResourceManager.GetString("label.mobile_number", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to More.
         /// </summary>
-        internal static string label_more {
+        public static string label_more {
             get {
                 return ResourceManager.GetString("label.more", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to New chat.
         /// </summary>
-        internal static string label_new_chat {
+        public static string label_new_chat {
             get {
                 return ResourceManager.GetString("label.new_chat", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to No Chats.
         /// </summary>
-        internal static string label_no_history {
+        public static string label_no_history {
             get {
                 return ResourceManager.GetString("label.no_history", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Dear Beneficiary, Thank for reaching out to us with your query. In order to provide you with the correct resolution, we kindly request you to provide us with your Aadhaar Number / PM KISAN ID / Phone no..
         /// </summary>
-        internal static string label_popUpTitle {
+        public static string label_popUpTitle {
             get {
                 return ResourceManager.GetString("label.popUpTitle", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Enter your last 4 digits of Aadhaar.
         /// </summary>
-        internal static string label_popUpTitle2 {
+        public static string label_popUpTitle2 {
             get {
                 return ResourceManager.GetString("label.popUpTitle2", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Dear Beneficiary, request you to kindly enter the OTP that has been received by you..
         /// </summary>
-        internal static string label_popUpTitle3 {
+        public static string label_popUpTitle3 {
             get {
                 return ResourceManager.GetString("label.popUpTitle3", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
-        internal static string label_profile {
+        public static string label_profile {
             get {
                 return ResourceManager.GetString("label.profile", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
-        internal static string label_search {
+        public static string label_search {
             get {
                 return ResourceManager.GetString("label.search", resourceCulture);
             }
@@ -333,7 +333,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
-        internal static string label_send {
+        public static string label_send {
             get {
                 return ResourceManager.GetString("label.send", resourceCulture);
             }
@@ -342,7 +342,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Kisan e-Mitra.
         /// </summary>
-        internal static string label_splash_title {
+        public static string label_splash_title {
             get {
                 return ResourceManager.GetString("label.splash_title", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Submit.
         /// </summary>
-        internal static string label_submit {
+        public static string label_submit {
             get {
                 return ResourceManager.GetString("label.submit", resourceCulture);
             }
@@ -360,7 +360,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Submit Review.
         /// </summary>
-        internal static string label_submit_revie {
+        public static string label_submit_revie {
             get {
                 return ResourceManager.GetString("label.submit_revie", resourceCulture);
             }
@@ -369,7 +369,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Kisan e-Mitra.
         /// </summary>
-        internal static string label_title {
+        public static string label_title {
             get {
                 return ResourceManager.GetString("label.title", resourceCulture);
             }
@@ -378,7 +378,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Welcome.
         /// </summary>
-        internal static string label_welcome {
+        public static string label_welcome {
             get {
                 return ResourceManager.GetString("label.welcome", resourceCulture);
             }
@@ -387,7 +387,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Ask Your Question.
         /// </summary>
-        internal static string message_ask_ur_question {
+        public static string message_ask_ur_question {
             get {
                 return ResourceManager.GetString("message.ask_ur_question", resourceCulture);
             }
@@ -396,7 +396,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Cannot answer again.
         /// </summary>
-        internal static string message_cannot_answer_again {
+        public static string message_cannot_answer_again {
             get {
                 return ResourceManager.GetString("message.cannot_answer_again", resourceCulture);
             }
@@ -405,7 +405,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Coming Soon!.
         /// </summary>
-        internal static string message_coming_soon {
+        public static string message_coming_soon {
             get {
                 return ResourceManager.GetString("message.coming_soon", resourceCulture);
             }
@@ -414,7 +414,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to We are going to launch this feature very soon. Stay tuned!.
         /// </summary>
-        internal static string message_coming_soon_description {
+        public static string message_coming_soon_description {
             get {
                 return ResourceManager.GetString("message.coming_soon_description", resourceCulture);
             }
@@ -423,7 +423,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to To connect with call centre.
         /// </summary>
-        internal static string message_dial_description {
+        public static string message_dial_description {
             get {
                 return ResourceManager.GetString("message.dial_description", resourceCulture);
             }
@@ -432,7 +432,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to You may speak to an Ama Krushi expert to get a satisfactory response.
         /// </summary>
-        internal static string message_dialer_popup {
+        public static string message_dialer_popup {
             get {
                 return ResourceManager.GetString("message.dialer_popup", resourceCulture);
             }
@@ -441,7 +441,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Didn&apos;t receive the OTP?.
         /// </summary>
-        internal static string message_didnt_receive {
+        public static string message_didnt_receive {
             get {
                 return ResourceManager.GetString("message.didnt_receive", resourceCulture);
             }
@@ -450,7 +450,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Retry.
         /// </summary>
-        internal static string message_down_time_retry {
+        public static string message_down_time_retry {
             get {
                 return ResourceManager.GetString("message.down_time_retry", resourceCulture);
             }
@@ -459,7 +459,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Enter Mobile Number.
         /// </summary>
-        internal static string message_enter_mobile {
+        public static string message_enter_mobile {
             get {
                 return ResourceManager.GetString("message.enter_mobile", resourceCulture);
             }
@@ -468,7 +468,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Where is my money?.
         /// </summary>
-        internal static string message_example_ques_one {
+        public static string message_example_ques_one {
             get {
                 return ResourceManager.GetString("message.example_ques_one", resourceCulture);
             }
@@ -477,7 +477,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Whom do I need to speak to in order to get my money?.
         /// </summary>
-        internal static string message_example_ques_three {
+        public static string message_example_ques_three {
             get {
                 return ResourceManager.GetString("message.example_ques_three", resourceCulture);
             }
@@ -486,7 +486,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to What is the status of my application?.
         /// </summary>
-        internal static string message_example_ques_two {
+        public static string message_example_ques_two {
             get {
                 return ResourceManager.GetString("message.example_ques_two", resourceCulture);
             }
@@ -495,7 +495,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Was this helpful?.
         /// </summary>
-        internal static string message_helpful {
+        public static string message_helpful {
             get {
                 return ResourceManager.GetString("message.helpful", resourceCulture);
             }
@@ -504,7 +504,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Enter a 10 digit number!.
         /// </summary>
-        internal static string message_invalid_mobile {
+        public static string message_invalid_mobile {
             get {
                 return ResourceManager.GetString("message.invalid_mobile", resourceCulture);
             }
@@ -513,7 +513,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Invalid Otp.
         /// </summary>
-        internal static string message_invalid_otp {
+        public static string message_invalid_otp {
             get {
                 return ResourceManager.GetString("message.invalid_otp", resourceCulture);
             }
@@ -522,7 +522,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Your Chat History with AI will come here.
         /// </summary>
-        internal static string message_no_history {
+        public static string message_no_history {
             get {
                 return ResourceManager.GetString("message.no_history", resourceCulture);
             }
@@ -531,7 +531,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Not registered yet ?.
         /// </summary>
-        internal static string message_not_register_yet {
+        public static string message_not_register_yet {
             get {
                 return ResourceManager.GetString("message.not_register_yet", resourceCulture);
             }
@@ -540,7 +540,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to We will send you a one time password on this.
         /// </summary>
-        internal static string message_otp_message {
+        public static string message_otp_message {
             get {
                 return ResourceManager.GetString("message.otp_message", resourceCulture);
             }
@@ -549,7 +549,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Otp not sent.
         /// </summary>
-        internal static string message_otp_not_sent {
+        public static string message_otp_not_sent {
             get {
                 return ResourceManager.GetString("message.otp_not_sent", resourceCulture);
             }
@@ -558,7 +558,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to OTP sent again.
         /// </summary>
-        internal static string message_otp_sent_again {
+        public static string message_otp_sent_again {
             get {
                 return ResourceManager.GetString("message.otp_sent_again", resourceCulture);
             }
@@ -567,7 +567,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to  OTP Verification.
         /// </summary>
-        internal static string message_otp_verification {
+        public static string message_otp_verification {
             get {
                 return ResourceManager.GetString("message.otp_verification", resourceCulture);
             }
@@ -576,7 +576,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Did you find this useful?.
         /// </summary>
-        internal static string message_rating {
+        public static string message_rating {
             get {
                 return ResourceManager.GetString("message.rating", resourceCulture);
             }
@@ -585,7 +585,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Tap a star to rate.
         /// </summary>
-        internal static string message_rating_description {
+        public static string message_rating_description {
             get {
                 return ResourceManager.GetString("message.rating_description", resourceCulture);
             }
@@ -594,7 +594,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Rating Submitted!.
         /// </summary>
-        internal static string message_rating_submitted {
+        public static string message_rating_submitted {
             get {
                 return ResourceManager.GetString("message.rating_submitted", resourceCulture);
             }
@@ -603,7 +603,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Sorry, there is an issue processing your request at the moment. Please try again later..
         /// </summary>
-        internal static string message_recorder_error {
+        public static string message_recorder_error {
             get {
                 return ResourceManager.GetString("message.recorder_error", resourceCulture);
             }
@@ -612,7 +612,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Please wait while we process your request....
         /// </summary>
-        internal static string message_recorder_wait {
+        public static string message_recorder_wait {
             get {
                 return ResourceManager.GetString("message.recorder_wait", resourceCulture);
             }
@@ -621,7 +621,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Register at Krushak Odisha.
         /// </summary>
-        internal static string message_register_at_krushak {
+        public static string message_register_at_krushak {
             get {
                 return ResourceManager.GetString("message.register_at_krushak", resourceCulture);
             }
@@ -630,7 +630,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to If you are already registered then use your mobile number to login..
         /// </summary>
-        internal static string message_register_message {
+        public static string message_register_message {
             get {
                 return ResourceManager.GetString("message.register_message", resourceCulture);
             }
@@ -639,7 +639,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Resend again.
         /// </summary>
-        internal static string message_resend_again {
+        public static string message_resend_again {
             get {
                 return ResourceManager.GetString("message.resend_again", resourceCulture);
             }
@@ -648,7 +648,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Please retry..
         /// </summary>
-        internal static string message_retry {
+        public static string message_retry {
             get {
                 return ResourceManager.GetString("message.retry", resourceCulture);
             }
@@ -657,7 +657,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Write your review (optional).
         /// </summary>
-        internal static string message_review {
+        public static string message_review {
             get {
                 return ResourceManager.GetString("message.review", resourceCulture);
             }
@@ -666,7 +666,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Please write your experience&apos;s feedback..
         /// </summary>
-        internal static string message_review_description {
+        public static string message_review_description {
             get {
                 return ResourceManager.GetString("message.review_description", resourceCulture);
             }
@@ -675,7 +675,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Review Submitted!.
         /// </summary>
-        internal static string message_review_submitted {
+        public static string message_review_submitted {
             get {
                 return ResourceManager.GetString("message.review_submitted", resourceCulture);
             }
@@ -684,7 +684,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to to connect again..
         /// </summary>
-        internal static string message_socket_disconnect_msg {
+        public static string message_socket_disconnect_msg {
             get {
                 return ResourceManager.GetString("message.socket_disconnect_msg", resourceCulture);
             }
@@ -693,7 +693,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Please wait, servers are taking longer than usual..
         /// </summary>
-        internal static string message_taking_longer {
+        public static string message_taking_longer {
             get {
                 return ResourceManager.GetString("message.taking_longer", resourceCulture);
             }
@@ -702,7 +702,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to We&apos;re temporarily down.
         /// </summary>
-        internal static string message_temporarily_down {
+        public static string message_temporarily_down {
             get {
                 return ResourceManager.GetString("message.temporarily_down", resourceCulture);
             }
@@ -711,7 +711,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to We are experiencing high user volume at the moment, please try logging in after some time.
         /// </summary>
-        internal static string message_temporarily_down_description {
+        public static string message_temporarily_down_description {
             get {
                 return ResourceManager.GetString("message.temporarily_down_description", resourceCulture);
             }
@@ -720,7 +720,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Please wait before resending OTP.
         /// </summary>
-        internal static string message_wait_resending_otp {
+        public static string message_wait_resending_otp {
             get {
                 return ResourceManager.GetString("message.wait_resending_otp", resourceCulture);
             }
@@ -729,7 +729,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Successfully disliked the response.
         /// </summary>
-        internal static string toast_reaction_dislike {
+        public static string toast_reaction_dislike {
             get {
                 return ResourceManager.GetString("toast.reaction_dislike", resourceCulture);
             }
@@ -738,7 +738,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Successfully liked the response.
         /// </summary>
-        internal static string toast_reaction_like {
+        public static string toast_reaction_like {
             get {
                 return ResourceManager.GetString("toast.reaction_like", resourceCulture);
             }
@@ -747,7 +747,7 @@ namespace kishan_bot {
         /// <summary>
         ///   Looks up a localized string similar to Successfully removed the response.
         /// </summary>
-        internal static string toast_reaction_reset {
+        public static string toast_reaction_reset {
             get {
                 return ResourceManager.GetString("toast.reaction_reset", resourceCulture);
             }

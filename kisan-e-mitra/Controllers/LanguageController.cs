@@ -1,11 +1,11 @@
-﻿using kishan_bot.Models;
+﻿using KisanEMitra.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace kishan_bot.Controllers
+namespace KisanEMitra.Controllers
 {
     public class LanguageController : Controller
     {
