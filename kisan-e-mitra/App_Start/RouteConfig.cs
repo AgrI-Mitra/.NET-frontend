@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace kisan_e_mitra
+namespace kishan_bot
 {
     public class RouteConfig
     {
@@ -16,7 +16,7 @@ namespace kisan_e_mitra
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Splash", id = UrlParameter.Optional }
             );
         }
     }

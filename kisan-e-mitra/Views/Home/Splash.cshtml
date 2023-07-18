@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Kisan e-Mitra";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Welcome to Kisan e-Mitra</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background: #C6F6D5;
+        }
+        h1 {
+            color: #219653;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="~/Content/images/MOA_logo.png" alt="welcome logo" width="200" height="200"/>
+    </div>
+    <div>
+        <h1>Kisan e-Mitra</h1>
+    </div>
+
+    <script>
+        // Wait for 5 seconds and redirect to the main page
+        setTimeout(function () {
+            window.location.href = '@Url.Action("Index", "Home")';
+        }, 3000);
+    </script>
+</body>
+</html>
