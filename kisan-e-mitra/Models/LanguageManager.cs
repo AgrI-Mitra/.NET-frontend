@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using System.Web.Mvc;
 
 namespace KisanEMitra.Models
 {
@@ -21,6 +22,12 @@ namespace KisanEMitra.Models
         }
     }
 
+    public class LanguageModel
+    {
+        public SelectList Languages { get; set; }
+        public string SelectedLanguage { get; set; }
+    }
+
     public class LanguageManager
     {
         public static List<Languages> AvailableLanguages = new List<Languages> {
@@ -31,7 +38,7 @@ namespace KisanEMitra.Models
                 LanguageFullName = "Hindi", LanguageCultureName = "hi"
             },
             new Languages {
-                LanguageFullName = "Bangla", LanguageCultureName = "ba"
+                LanguageFullName = "Bangla", LanguageCultureName = "bn"
             },
             new Languages {
                 LanguageFullName = "Tamil", LanguageCultureName = "ta"
