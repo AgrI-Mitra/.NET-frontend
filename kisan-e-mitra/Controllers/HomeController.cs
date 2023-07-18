@@ -1,4 +1,9 @@
 ﻿using KisanEMitra.Models;
+using KisanEMitra.Services;
+using KisanEMitra.Services.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -6,12 +11,32 @@ namespace KisanEMitra.Controllers
 {
     public class HomeController : LanguageController
     {
+        public IAgrimitraService agrimitraService { get; set; }
+
+        public HomeController(IAgrimitraService _agrimitraService)
+        {
+            this.agrimitraService = _agrimitraService;
+        }
+
         public ActionResult Splash()
         {
             return View();
         }
-        public ActionResult Index()
+        public ActionResult Index(string fingerPrint)
         {
+            var userSessionID = Session["userSessionID"];
+
+            if (userSessionID == null)
+            {
+                if (fingerPrint == null)
+                    throw new Exception("API call error. Please try again later.");
+
+                userSessionID = this.agrimitraService.GetUserSessionIDAsync(fingerPrint);
+                if (userSessionID == null)
+                    throw new Exception("Session is not created. Please try again later.");
+
+                Session["userSessionID"] = userSessionID;
+            }
 
             string selectedLanguage;
             HttpCookie langCookie = Request.Cookies["culture"];

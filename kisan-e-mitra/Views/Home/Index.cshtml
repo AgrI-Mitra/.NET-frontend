@@ -73,7 +73,7 @@
 </div>
 
 <script type="text/javascript">
-
+    
     $(document).ready(function () {
         $("#ddlLanguage").on('change', function () {
 
@@ -86,7 +86,6 @@
                 data: { lang: selValue },
                 success: function (data) {
 
-                    console.log('data: ', data);
                     location.reload();
                 },
                 failure: function (data) {
@@ -95,6 +94,5 @@
             });
         });
     });
-
 </script>
 
