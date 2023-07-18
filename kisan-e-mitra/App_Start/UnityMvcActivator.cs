@@ -3,10 +3,10 @@ using System.Web.Mvc;
 
 using Unity.AspNet.Mvc;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(kishan_bot.UnityMvcActivator), nameof(kishan_bot.UnityMvcActivator.Start))]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(kishan_bot.UnityMvcActivator), nameof(kishan_bot.UnityMvcActivator.Shutdown))]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(KisanEMitra.UnityMvcActivator), nameof(KisanEMitra.UnityMvcActivator.Start))]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(KisanEMitra.UnityMvcActivator), nameof(KisanEMitra.UnityMvcActivator.Shutdown))]
 
-namespace kishan_bot
+namespace KisanEMitra
 {
     /// <summary>
     /// Provides the bootstrapping for integrating Unity with ASP.NET MVC.

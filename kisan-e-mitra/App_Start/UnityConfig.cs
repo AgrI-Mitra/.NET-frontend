@@ -2,7 +2,7 @@ using System;
 
 using Unity;
 
-namespace kishan_bot
+namespace KisanEMitra
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.

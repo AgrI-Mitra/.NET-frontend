@@ -1,19 +1,10 @@
-﻿using kishan_bot.Services.Contracts;
+﻿using KisanEMitra.Services.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Reflection;
-using System.Security.Policy;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using static Antlr.Runtime.Tree.TreeWizard;
-using System.Web.UI.WebControls;
 
-namespace kishan_bot.Services
+namespace KisanEMitra.Services
 {
     public class AgrimitraService : IAgrimitraService
     {
