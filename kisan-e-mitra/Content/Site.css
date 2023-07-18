@@ -27,7 +27,14 @@
 }
 
 .bottom-section {
-    display: flex;
+    position: absolute;
+    bottom: 0;
+    left:0;
+    right:0;
+}
+
+.bottom-container {
+    display:flex;
     flex-direction: column;
     background-color: #f1f1f1;
     padding: 10px;
@@ -35,10 +42,19 @@
 
 .chatbox {
     flex: 1;
+    flex-shrink:2;
     margin-bottom: 10px;
     padding: 10px;
     background-color: #ffffff;
 }
+.chatbox input{
+    width:90%;
+}
+    .chatbox button {
+        width: 100px;
+        background-color: #219653;
+    }
+
 
 .tab-bar {
     display: flex;
