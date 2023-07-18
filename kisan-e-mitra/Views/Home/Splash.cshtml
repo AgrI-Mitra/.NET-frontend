@@ -13,10 +13,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height:98vh;
+            height: 98vh;
             flex-direction: column;
             background: #C6F6D5;
         }
+
         h1 {
             color: #219653;
         }
@@ -24,17 +25,28 @@
 </head>
 <body>
     <div>
-        <img src="~/Content/images/MOA_logo.png" alt="welcome logo" width="200" height="200"/>
+        <img src="~/Content/images/MOA_logo.png" alt="welcome logo" width="200" height="200" />
     </div>
     <div>
         <h1>Kisan e-Mitra</h1>
     </div>
 
-    <script>
-        // Wait for 5 seconds and redirect to the main page
-        setTimeout(function () {
-            window.location.href = '@Url.Action("Index", "Home")';
-        }, 3000);
+    <script type="text/javascript">
+
+    const fpPromise = import('https://openfpcdn.io/fingerprintjs/v3')
+    .then(FingerprintJS => FingerprintJS.load())
+
+    // Get the visitor identifier when you need it.
+        fpPromise.then(fp => fp.get())
+            .then(result => {
+                console.log(result);
+                // This is the visitor identifier:
+                const fingerPrintID = result.visitorId;
+                setTimeout(function () {
+                    window.location.href = '@Url.Action("Index", "Home")?fingerPrint=' + fingerPrintID;
+                }, 3000);
+
+            });
     </script>
 </body>
 </html>

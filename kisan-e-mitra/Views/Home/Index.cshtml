@@ -72,7 +72,7 @@
 </div>
 
 <script type="text/javascript">
-
+    
     $(document).ready(function () {
         $("#ddlLanguage").on('change', function () {
 
@@ -84,7 +84,10 @@
                 dataType: "json",
                 data: { lang: selValue },
                 success: function (data) {
+                    var urlToRedirect= '@Url.Action("Index","Home")';
 
+                    window.location.href = urlToRedirect; 
+                    console.log('updated');
                 },
                 failure: function (data) {
                     alert('oops something went wrong');
@@ -92,6 +95,5 @@
             });
         });
     });
-
 </script>
 
