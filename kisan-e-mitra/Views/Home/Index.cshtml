@@ -50,8 +50,8 @@
     <div class="bottom-container">
         <div class="chatbox">
             <!-- Chatbox content -->
-            <input type="text" class="text-box" placeholder="@Resources.Resource.message_ask_ur_question">
-            <button class="send-button">
+            <input id="userQuestionTextBox" type="text" class="text-box" placeholder="@Resources.Resource.message_ask_ur_question">
+            <button class="send-button modal-link" onclick="openModalPopUp()">
                 @Resources.Resource.label_send
             </button>
         </div>
@@ -76,11 +76,50 @@
     </div>
 </div>
 
+<!-- The below code is for the modal dialog -->
+<div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">@Resources.Resource.label_popUpTitle</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="form-group">
+                    <form id="myForm">
+                        <input class="form-control" id="inputText">
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
+                <button id="submitButton" type="button" class="btn btn-primary">@Resources.Resource.label_submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Message</strong>
+            <small></small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <p id="toastBody">@Resources.Resource.error_empty_msg</p>
+        </div>
+    </div>
+</div>
+
+
+
 <script type="text/javascript">
 
     var isRecording = false;
 
     $(document).ready(function () {
+
         $("#ddlLanguage").on('change', function () {
 
             var selValue = $('#ddlLanguage').val();
@@ -111,7 +150,34 @@
                         $("#recordingImage").attr("src", result.isRecording ? "~/Content/images/startIcon.svg" : "~/Content/images/stop.gif");
                     }
                 });*@
-            });
+        });
+
+        $(function () {
+            $('body').on('click', '#submitButton', function (e) {
+                e.preventDefault();
+                var textValue = $('#inputText').val();
+
+                console.log('textValue: ', textValue);
+                // Do something with textValue here
+                $("#exampleModal").modal('hide');
+            });
+        });
+
+
     });
+
+    var openModalPopUp = function () {
+
+        const userQuestionTextBoxValue = $("#userQuestionTextBox").val();
+
+        if (userQuestionTextBoxValue) {
+            $("#exampleModal").modal("show");
+        } else {
+            const toastLiveExample = document.getElementById('liveToast');
+
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+            toastBootstrap.show();
+        }
+    }
 </script>
 

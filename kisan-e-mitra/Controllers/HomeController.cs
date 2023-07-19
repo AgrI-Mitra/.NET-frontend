@@ -1,9 +1,6 @@
 ﻿using KisanEMitra.Models;
-using KisanEMitra.Services;
 using KisanEMitra.Services.Contracts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -63,6 +60,8 @@ namespace KisanEMitra.Controllers
                 Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageFullName"),
                 SelectedLanguage = selectedLanguage
             };
+
+            ViewBag.UserId = "";
 
             return View(languageModel);
         }
