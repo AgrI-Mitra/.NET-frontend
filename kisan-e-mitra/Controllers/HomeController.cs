@@ -1,5 +1,6 @@
 ﻿using KisanEMitra.Models;
 using KisanEMitra.Services.Contracts;
+using kishan_bot.Models;
 using System;
 using System.Web;
 using System.Web.Mvc;
@@ -67,10 +68,10 @@ namespace KisanEMitra.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeLanguage(string lang)
+        public JsonResult ChangeLanguage(string lang)
         {
             new LanguageManager().SetLanguage(lang);
-            return Json(new AjaxActionResult()
+            return Json(new AjaxActionResponse()
             {
                 Message = "Language Changed.",
                 Success = true
@@ -78,17 +79,63 @@ namespace KisanEMitra.Controllers
         }
 
         [HttpPost]
-        public ActionResult CheckRecordingStatus(bool status)
+        public JsonResult CheckRecordingStatus(bool status)
         {
             // Return the new boolean value as JSON
             return Json(new { isRecording = !status });
         }
-    }
 
-    public class AjaxActionResult
-    {
-        public string Message { get; set; }
-        public bool Success { get; set; }
-        public object Data { get; set; }
+        [HttpPost]
+        public JsonResult IdentifyUser(string identifyID)
+        {
+            var userSessionID = (string)Session["userSessionID"];
+
+            var userQueryBody = new UserQueryBody()
+            {
+                Text = identifyID
+            };
+            var responseBody = this.agrimitraService.IdentifyUser(userSessionID, userQueryBody);
+            if(responseBody.Result == null)
+                return Json(null);
+            if(responseBody.Result.Error!=null)
+                return Json(new { responseBody.Result.Error });
+
+            return Json(new { responseBody.Result });
+        }
+
+
+        [HttpPost]
+        public JsonResult VerifyOTP(string otp)
+        {
+            var userSessionID = (string)Session["userSessionID"];
+            var userQueryBody = new UserQueryBody()
+            {
+                Text = otp
+            };
+            var responseBody = this.agrimitraService.VerifyOTP(userSessionID, userQueryBody);
+            if (responseBody.Result == null)
+                return Json(null);
+            if (responseBody.Result.Error != null)
+                return Json(new { responseBody.Result.Error });
+
+            return Json(new { responseBody.Result });
+        }
+
+        [HttpPost]
+        public JsonResult AskQuestions(string querstion)
+        {
+            var userSessionID = (string)Session["userSessionID"];
+            var userQueryBody = new UserQueryBody()
+            {
+                Text = querstion
+            };
+            var responseBody = this.agrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
+            if (responseBody.Result == null)
+                return Json(null);
+            if (responseBody.Result.Error != null)
+                return Json(new { responseBody.Result.Error });
+
+            return Json(new { responseBody.Result });
+        }
     }
 }

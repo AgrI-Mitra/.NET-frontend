@@ -1,5 +1,7 @@
 ﻿/* Set padding to keep content from hitting the edges */
-
+html, body {
+   background-color: rgb(246, 249, 254) !important;
+}
 .main-page-content{
     height: 500px;
     margin: 0;
@@ -7,7 +9,7 @@
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
-    background: #d0d0d0;
+    /*background: #d0d0d0;*/
 }
 
 .top-bar {
@@ -15,7 +17,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #f1f1f1;
 }
 
 .center-section {
@@ -23,21 +24,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #d0d0d0;
 }
 
 .bottom-section {
     position: absolute;
     bottom: 0;
-    left:0;
-    right:0;
+    left: 0;
+    right: 0;
+    background-color: #f1f1f1;
 }
 
 .bottom-container {
     display:flex;
     flex-direction: column;
-    background-color: #f1f1f1;
-    padding: 10px;
 }
 
 .chatbox {
@@ -60,6 +59,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 40px;
+    height: 60px;
     background-color: #333;
 }
