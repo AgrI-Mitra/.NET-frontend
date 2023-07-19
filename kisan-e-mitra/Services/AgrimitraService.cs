@@ -1,4 +1,5 @@
 ﻿using KisanEMitra.Services.Contracts;
+using kishan_bot.Models;
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -13,7 +14,8 @@ namespace KisanEMitra.Services
 
         public static class APIPaths
         {
-            public static string User = "user/generateUserId/";
+            public static string User = "user/generateUserId";
+            public static string Prompt = "prompt";
         }
 
         public AgrimitraService(HttpClient httpClient) {
@@ -21,11 +23,11 @@ namespace KisanEMitra.Services
             httpClient.BaseAddress = new Uri(baseURL);
         }
 
-        public async Task<string> GetUserSessionIDAsync(string fingerPrint)
+        public async Task<string> GetUserSessionIDAsync(string VisitorID)
         {
             try
             {
-                var response = await this.httpClient.PostAsJsonAsync<string>($"{APIPaths.User}{fingerPrint}", null);
+                var response = await this.httpClient.PostAsJsonAsync<string>($"{APIPaths.User}/{VisitorID}", null);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     string userSessionID = response.Content.ReadAsStringAsync().Result;
@@ -41,5 +43,79 @@ namespace KisanEMitra.Services
             }
         }
 
+        public async Task<SiteResponseBody> IdentifyUser(string UserID, UserQueryBody UserQuery)
+        {
+            try
+            {
+                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}{UserID}", null);
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
+                    return siteUserBody;
+                }
+                else
+                {
+                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
+                    throw new Exception($"Error:{siteUserBody.Error}");
+                }
+
+                throw new Exception("API Network issue.");
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Rest API call issue.";
+                throw new Exception(errorMessage, ex);
+            }
+        }
+
+        public async Task<SiteResponseBody> VerifyOTP(string UserID, UserQueryBody UserQuery)
+        {
+            try
+            {
+                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}{UserID}", null);
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
+                    return siteUserBody;
+                }
+                else
+                {
+                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
+                    throw new Exception($"Error:{siteUserBody.Error}");
+                }
+
+                throw new Exception("API Network issue.");
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Rest API call issue.";
+                throw new Exception(errorMessage, ex);
+            }
+        }
+
+        public async Task<SiteResponseBody> AskQuestionAsync(string UserID, UserQueryBody UserQuery)
+        {
+            try
+            {
+                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}{UserID}", null);
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
+                    return siteUserBody;
+                }
+                else
+                {
+                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
+                    throw new Exception($"Error:{siteUserBody.Error}");
+                }
+
+                throw new Exception("API Network issue.");
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Rest API call issue.";
+                throw new Exception(errorMessage, ex);
+            }
+        }
     }
 }

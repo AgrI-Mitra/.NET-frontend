@@ -8,6 +8,11 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Welcome to Kisan e-Mitra</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
     <style>
         body {
             display: flex;
@@ -23,7 +28,7 @@
         }
     </style>
 </head>
-<body>
+<body style="">
     <div>
         <img src="~/Content/images/MOA_logo.png" alt="welcome logo" width="200" height="200" />
     </div>
@@ -32,21 +37,20 @@
     </div>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            setTimeout(function () {
+                const fpPromise = import('https://openfpcdn.io/fingerprintjs/v3')
+                    .then(FingerprintJS => FingerprintJS.load())
 
-    const fpPromise = import('https://openfpcdn.io/fingerprintjs/v3')
-    .then(FingerprintJS => FingerprintJS.load())
-
-    // Get the visitor identifier when you need it.
-        fpPromise.then(fp => fp.get())
-            .then(result => {
-                console.log(result);
-                // This is the visitor identifier:
-                const fingerPrintID = result.visitorId;
-                setTimeout(function () {
-                    window.location.href = '@Url.Action("Index", "Home")?fingerPrint=' + fingerPrintID;
-                }, 3000);
-
-            });
+                // Get the visitor identifier when you need it.
+                fpPromise.then(fp => fp.get())
+                    .then(result => {
+                        // This is the visitor identifier:
+                        const fingerPrintID = result.visitorId;
+                        window.location.href = '@Url.Action("Index", "Home")?fingerPrint=' + fingerPrintID;
+                    });
+            }, 3000);
+        });
     </script>
 </body>
 </html>

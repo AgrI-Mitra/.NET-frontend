@@ -9,10 +9,62 @@
     @Scripts.Render("~/bundles/jquery")
 </head>
 <body class="body-content">
-        @RenderBody()
-
-    
+    @model KisanEMitra.Models.LanguageModel
+    <div class="top-bar">
+        <div class="left-column">
+            <!-- Left dropdown content -->
+            @Html.DropDownListFor(m => m.SelectedLanguage, (IEnumerable<SelectListItem>)Model.Languages, new { @class = "form-control", id = "ddlLanguage" })
+        </div>
+        <div class="center-column" style="color: #219653; font-size: 3vh; font-weight: 700; font-family: Mulish-bold,sans-serif; ">
+            <!-- Application name -->
+            @Resources.Resource.label_title
+        </div>
+        <div class="right-column">
+            <!-- Right logo icons -->
+            <img src="~/Content/images/emblem.png" alt="Logo 1" class="logo" width="60" height="60">
+            <img src="~/Content/images/MOA_logo.png" alt="Logo 2" class="logo" width="60" height="60">
+            <img src="~/Content/images/phone.png" alt="Logo 3" class="logo" width="60" height="60">
+        </div>
+    </div>
+    @RenderBody()
+    <div class="bottom-section">
+        <div class="bottom-container">
+            <div class="tab-bar">
+                <a class="tab" href="#tab1">
+                    <img src="~/Content/images/home.svg" width="32" height="32" />
+                </a>
+                <a class="tab" href="#tab2">
+                    <img src="~/Content/images/message-menu.svg" width="32" height="32" />
+                </a>
+                <a class="tab" href="#tab3">
+                    <img src="~/Content/images/menu.svg" width="32" height="32" />
+                </a>
+            </div>
+        </div>
+    </div>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#ddlLanguage").on('change', function () {
+
+                var selValue = $('#ddlLanguage').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/ChangeLanguage",
+                    dataType: "json",
+                    data: { lang: selValue },
+                    success: function (data) {
+
+                        location.reload();
+                    },
+                    failure: function (data) {
+                        alert('oops something went wrong');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
