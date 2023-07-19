@@ -2,6 +2,7 @@
 using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using System;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,7 +21,7 @@ namespace KisanEMitra.Controllers
         {
             return View();
         }
-        public ActionResult Index(string fingerPrint)
+        public async Task<ActionResult> Index(string fingerPrint)
         {
             var userSessionID = Session["userSessionID"];
 
@@ -29,7 +30,7 @@ namespace KisanEMitra.Controllers
                 if (fingerPrint == null)
                     throw new Exception("API call error. Please try again later.");
 
-                userSessionID = this.agrimitraService.GetUserSessionIDAsync(fingerPrint);
+                userSessionID =await this.agrimitraService.GetUserSessionIDAsync(fingerPrint);
                 if (userSessionID == null)
                     throw new Exception("Session is not created. Please try again later.");
 
@@ -62,8 +63,6 @@ namespace KisanEMitra.Controllers
                 SelectedLanguage = selectedLanguage
             };
 
-            ViewBag.UserId = "";
-
             return View(languageModel);
         }
 
@@ -86,56 +85,50 @@ namespace KisanEMitra.Controllers
         }
 
         [HttpPost]
-        public JsonResult IdentifyUser(string identifyID)
+        public async Task<JsonResult> IdentifyUser(string identifyID)
         {
-            var userSessionID = (string)Session["userSessionID"];
+            var userSessionID = Session["userSessionID"].ToString();
 
             var userQueryBody = new UserQueryBody()
             {
                 Text = identifyID
             };
-            var responseBody = this.agrimitraService.IdentifyUser(userSessionID, userQueryBody);
-            if(responseBody.Result == null)
+            var responseBody =await this.agrimitraService.IdentifyUser(userSessionID, userQueryBody);
+            if(responseBody == null)
                 return Json(null);
-            if(responseBody.Result.Error!=null)
-                return Json(new { responseBody.Result.Error });
 
-            return Json(new { responseBody.Result });
+            return Json(responseBody, JsonRequestBehavior.AllowGet);
         }
 
 
         [HttpPost]
-        public JsonResult VerifyOTP(string otp)
+        public async Task<JsonResult> VerifyOTP(string otp)
         {
             var userSessionID = (string)Session["userSessionID"];
             var userQueryBody = new UserQueryBody()
             {
                 Text = otp
             };
-            var responseBody = this.agrimitraService.VerifyOTP(userSessionID, userQueryBody);
-            if (responseBody.Result == null)
+            var responseBody =await this.agrimitraService.VerifyOTP(userSessionID, userQueryBody);
+            if (responseBody == null)
                 return Json(null);
-            if (responseBody.Result.Error != null)
-                return Json(new { responseBody.Result.Error });
 
-            return Json(new { responseBody.Result });
+            return Json(responseBody, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult AskQuestions(string querstion)
+        public async Task<JsonResult> AskQuestions(string querstion)
         {
             var userSessionID = (string)Session["userSessionID"];
             var userQueryBody = new UserQueryBody()
             {
                 Text = querstion
             };
-            var responseBody = this.agrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
-            if (responseBody.Result == null)
+            var responseBody =await this.agrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
+            if (responseBody == null)
                 return Json(null);
-            if (responseBody.Result.Error != null)
-                return Json(new { responseBody.Result.Error });
 
-            return Json(new { responseBody.Result });
+            return Json(responseBody, JsonRequestBehavior.AllowGet);
         }
     }
 }

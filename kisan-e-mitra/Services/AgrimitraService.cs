@@ -2,6 +2,7 @@
 using kishan_bot.Models;
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
@@ -47,7 +48,9 @@ namespace KisanEMitra.Services
         {
             try
             {
-                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}{UserID}", null);
+                this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
+                //this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
+                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
@@ -72,7 +75,9 @@ namespace KisanEMitra.Services
         {
             try
             {
-                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}{UserID}", null);
+                this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
+                //this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
+                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
@@ -97,7 +102,9 @@ namespace KisanEMitra.Services
         {
             try
             {
-                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}{UserID}", null);
+                this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
+                //this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
+                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;

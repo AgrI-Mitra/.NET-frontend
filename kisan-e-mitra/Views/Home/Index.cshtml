@@ -1,37 +1,24 @@
 ﻿
-
 @{
     ViewBag.Title = Resources.Resource.label_title;
 }
 
 <div class="chat-container">
-    <div class="message-list">
-        <div class="message left">
-            <div class="message-content">Hello!</div>
-        </div>
-        <div class="message right">
-            <div class="message-content">Hi there!</div>
-        </div>
-        <div class="message left">
-            <div class="message-content">How are you?</div>
-        </div>
-        <div class="message right">
-            <div class="message-content">I'm good, thanks!</div>
-        </div>
+    <div id="message-list" class="message-list">
     </div>
     <div class="input-container">
         <input id="userQuestionTextBox" type="text" class="message-input border-success" placeholder="@Resources.Resource.message_ask_ur_question">
-        <button id="inputBtn" class="send-button bg-success" onclick="openModalPopUp()">
+        <button id="inputBtn" class="send-button bg-success">
             @Resources.Resource.label_send
         </button>
     </div>
-
-    <!-- The below code is for the modal dialog -->
-<div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+</div>
+<!-- The below code is for the modal dialog -->
+<div class="modal fade" id="beneficiaryModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="beneficiaryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">@Resources.Resource.label_popUpTitle</h1>
+                <h1 class="modal-title fs-5" id="beneficiaryModalLabel">@Resources.Resource.label_popUpTitle</h1>
             </div>
             <div class="modal-body" id="modalBody">
                 <div class="form-group">
@@ -41,8 +28,35 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Speak</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
-                <button id="submitButton" type="button" class="btn btn-primary">@Resources.Resource.label_submit</button>
+                <button id="submitButton" type="button" class="btn btn-success">@Resources.Resource.label_submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The below code is for the modal dialog -->
+<div class="modal fade" id="verifyModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="verifyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="verifyModallLabel">@Resources.Resource.label_popUpTitle3</h1>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="form-group">
+                    <form id="myForm">
+                        <input class="form-control" id="verifyInputText">
+                    </form>
+                </div>
+            </div>
+            <div style="text-align:center">
+                <span>@Resources.Resource.message_didnt_receive</span> <a href="#" class="link-success">@Resources.Resource.message_resend_again</a>
+            </div>
+            <div class="modal-footer align-items-center">
+                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Speak</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
+                <button id="verifySubmitButton" type="button" class="btn btn-success">@Resources.Resource.label_submit</button>
             </div>
         </div>
     </div>
@@ -61,7 +75,6 @@
     </div>
 </div>
 
-
 <script type="text/javascript">
     $(document).ready(function () {
         var isRecording = false;
@@ -79,25 +92,114 @@
         });
 
         $(function () {
+
+            $('body').on('click', '#inputBtn', function (e) {
+                e.preventDefault();
+                var querstionInput = $('#userQuestionTextBox').val();
+                $("#beneficiaryModal").modal('hide');
+                $("#verifyModal").modal("hide");
+                if (querstionInput) {
+                    var userQuery = "<div class='message left'><div class='message-content'>" + querstionInput + "</div></div>";
+                    $('#message-list').append(userQuery);
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/AskQuestions",
+                    dataType: "json",
+                    data: { querstion: querstionInput },
+                    success: function (data) {
+                        console.log(data);
+                        var message = "";
+                        if (data.Text !== null) {
+                            message = data.Text;
+                            // Do something with textValue here
+                        }
+                        if (data.Error !== null) {
+                            message = data.Error;
+                            openModalPopUp();
+                        }
+
+                        response = "<div class='message right'><div class='message-content'>" + message + "</div></div>";
+                        $('#message-list').append(response);
+                        $("#userQuestionTextBox").val('');
+                    },
+                    failure: function (data) {
+                        console.log('oops something went wrong');
+                    }
+                });
+            });
+
             $('body').on('click', '#submitButton', function (e) {
                 e.preventDefault();
-                var textValue = $('#inputText').val();
 
-                console.log('textValue: ', textValue);
-                // Do something with textValue here
-                $("#exampleModal").modal('hide');
+                var inputText = $('#inputText').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/IdentifyUser",
+                    dataType: "json",
+                    data: { identifyID: inputText },
+                    success: function (data) {
+                        console.log(data);
+                        var message = "";
+                        if (data.Text !== null) {
+                            message = data.Text;
+                            $("#beneficiaryModal").modal('hide');
+                            $("#verifyModal").modal("show");
+                            // Do something with textValue here
+                        }
+                        if (data.Error !== null)
+                            message = data.Error;
+
+                        response = "<div class='message right'><div class='message-content'>" + message + "</div></div>";
+                        $('#message-list').append(response);
+                        $("#userQuestionTextBox").val('');
+                    },
+                    failure: function (data) {
+                        console.log('oops something went wrong');
+                    }
+                });
+            });
+
+            $('body').on('click', '#verifySubmitButton', function (e) {
+                e.preventDefault();
+                var verifyInputText = $('#verifyInputText').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/VerifyOTP",
+                    dataType: "json",
+                    data: { otp: verifyInputText },
+                    success: function (data) {
+                        var message = "";
+                        if (data.Text !== null) {
+                            message = data.Text;
+                            $("#verifyModal").modal("hide");
+                        }
+                        if (data.Error !== null)
+                            message = data.Error;
+
+                        response = "<div class='message right'><div class='message-content'>" + message + "</div></div>";
+                        $('#message-list').append(response);
+                        $("#userQuestionTextBox").val('');
+                    },
+                    failure: function (data) {
+                        console.log('oops something went wrong');
+                    }
+                });
             });
         });
-
-
     });
 
     var openModalPopUp = function () {
-
         const userQuestionTextBoxValue = $("#userQuestionTextBox").val();
 
         if (userQuestionTextBoxValue) {
-            $("#exampleModal").modal("show");
+            $("#beneficiaryModal").modal("show");
+            var userQuery = "<div class='message left'><div class='message-content'>" + userQuestionTextBoxValue + "</div></div>";
+            $('#message-list').append(userQuery);
+
         } else {
             const toastLiveExample = document.getElementById('liveToast');
 

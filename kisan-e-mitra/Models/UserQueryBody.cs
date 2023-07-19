@@ -36,5 +36,6 @@ namespace kishan_bot.Models
         public object StylingTag { get; set; }
         public string Flow { get; set; }
         public string MediaCaption { get; set; }
+        public string inputLanguage { get; set; }
     }
 }
