@@ -11,6 +11,9 @@
         <button id="inputBtn" class="send-button bg-success">
             @Resources.Resource.label_send
         </button>
+        <button id="inputRecordBtn" class="send-button bg-success">
+            <img id="recordingImage" src="/Content/images/startIcon.svg" width="32" height="32" />
+        </button>
     </div>
 </div>
 <!-- The below code is for the modal dialog -->
@@ -76,9 +79,19 @@
 </div>
 
 <script type="text/javascript">
+    const inputBtn = document.getElementById('inputBtn');
+
+    //const inputRecordBtn = document.getElementById('inputRecordBtn');
+
+    inputRecordBtn.setAttribute('hidden', 'hidden');
+
     $(document).ready(function () {
+
+        getLocalStream();
+
         var isRecording = false;
-        $("#recordingButton").click(function () {
+
+        $("#inputRecordBtn").click(function () {
             isRecording = !isRecording;
             $("#recordingImage").attr("src", isRecording ? "/Content/images/startIcon.svg" : "/Content/images/stop.gif");
                 @*$.ajax({
@@ -99,7 +112,7 @@
                 $("#beneficiaryModal").modal('hide');
                 $("#verifyModal").modal("hide");
                 if (querstionInput) {
-                    var userQuery = "<div class='message left'><div class='message-content'>" + querstionInput + "</div></div>";
+                    var userQuery = "<div class='message right'><div class='message-content'>" + querstionInput + "</div></div>";
                     $('#message-list').append(userQuery);
                 }
 
@@ -113,14 +126,14 @@
                         var message = "";
                         if (data.Text !== null) {
                             message = data.Text;
-                            // Do something with textValue here
+                            openModalPopUp(false, data.Text);
                         }
                         if (data.Error !== null) {
                             message = data.Error;
-                            openModalPopUp();
+                            openModalPopUp(true, data.Error);
                         }
 
-                        response = "<div class='message right'><div class='message-content'>" + message + "</div></div>";
+                        response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
                         $('#message-list').append(response);
                         $("#userQuestionTextBox").val('');
                     },
@@ -145,14 +158,14 @@
                         var message = "";
                         if (data.Text !== null) {
                             message = data.Text;
-                            $("#beneficiaryModal").modal('hide');
-                            $("#verifyModal").modal("show");
-                            // Do something with textValue here
+                            openModalPopUp(false, data.Text);
                         }
-                        if (data.Error !== null)
+                        if (data.Error !== null) {
                             message = data.Error;
+                            openModalPopUp(true, message);
+                        }
 
-                        response = "<div class='message right'><div class='message-content'>" + message + "</div></div>";
+                        response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
                         $('#message-list').append(response);
                         $("#userQuestionTextBox").val('');
                     },
@@ -175,12 +188,12 @@
                         var message = "";
                         if (data.Text !== null) {
                             message = data.Text;
-                            $("#verifyModal").modal("hide");
+                            openModalPopUp(false, message);
                         }
                         if (data.Error !== null)
                             message = data.Error;
 
-                        response = "<div class='message right'><div class='message-content'>" + message + "</div></div>";
+                        response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
                         $('#message-list').append(response);
                         $("#userQuestionTextBox").val('');
                     },
@@ -192,20 +205,132 @@
         });
     });
 
-    var openModalPopUp = function () {
-        const userQuestionTextBoxValue = $("#userQuestionTextBox").val();
+    var openModalPopUp = function (hasError, message) {
+        const userQuestionTextBoxValue = document.getElementById('userQuestionTextBox');
 
-        if (userQuestionTextBoxValue) {
-            $("#beneficiaryModal").modal("show");
-            var userQuery = "<div class='message left'><div class='message-content'>" + userQuestionTextBoxValue + "</div></div>";
-            $('#message-list').append(userQuery);
+        if (!hasError) {
+            if (String(message).includes('enter a valid')) {
+                if (userQuestionTextBoxValue.innerText) {
+                    $("#verifyModal").modal("hide");
+                    $("#beneficiaryModal").modal("show");
+                }
+            }
+            else if (String(message).includes('enter the OTP') || String(message).includes('Invalid OTP')) {
+                $("#beneficiaryModal").modal("hide");
+                $("#verifyModal").modal("show");
+            }
+            else {
+                $("#verifyModal").modal("hide");
+                $("#beneficiaryModal").modal("hide");
+                inputRecordBtn.removeAttribute('hidden', '');
+                inputBtn.setAttribute('hidden', 'hidden');
+                userQuestionTextBoxValue.setAttribute('disabled', 'disabled');
+                recordAudio();
 
-        } else {
-            const toastLiveExample = document.getElementById('liveToast');
-
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-            toastBootstrap.show();
+            }
         }
+        else {
+            toastMessagePopup(message);
+        }
+    }
+
+    var toastMessagePopup = function (message) {
+        const toastBody = document.getElementById('toastBody');
+        const toastLiveExample = document.getElementById('liveToast');
+        toastBody.innerText = message;
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+        toastBootstrap.show();
+    }
+
+    function getLocalStream() {
+        window.addEventListener('DOMContentLoaded', () => { 
+            if ('MediaRecorder' in window) {
+                navigator.mediaDevices
+                    .getUserMedia({ video: false, audio: true })
+                    .then((stream) => {
+                        window.localStream = stream;
+                        window.localAudio.srcObject = stream;
+                        window.localAudio.autoplay = true;
+                    })
+                    .catch((err) => {
+                        console.error(`you got an error: ${err}`);
+                    });
+            }
+        });
+    }
+
+
+    function recordAudio() {
+        if ('MediaRecorder' in window) {
+            try {
+                const stream = navigator.mediaDevices.getUserMedia({
+                    audio: true,
+                    video: false
+                });
+                const mimeType = 'audio/webm';
+                let chunks = [];
+                const recorder = new MediaRecorder(stream, { type: mimeType });
+                recorder.addEventListener('dataavailable', event => {
+                    if (typeof event.data === 'undefined') return;
+                    if (event.data.size === 0) return;
+                    chunks.push(event.data);
+                });
+                recorder.addEventListener('stop', () => {
+                    const recording = new Blob(chunks, {
+                        type: mimeType
+                    });
+                    var reader = new window.FileReader();
+                    reader.readAsDataURL(recording);
+
+                    reader.onloadend = function () {
+                        base64 = reader.result;
+                        base64 = base64.split(',')[1];
+                        console.log(base64);
+                    }
+                    renderRecording(recording, list);
+                    chunks = [];
+                });
+                recordButton.removeAttribute('hidden');
+                recordButton.addEventListener('click', () => {
+                    if (recorder.state === 'inactive') {
+                        recorder.start();
+                        recordButton.innerText = 'Stop';
+                    } else {
+                        recorder.stop();
+                        recordButton.innerText = 'Record';
+                    }
+                });
+                console.log(stream);
+            } catch {
+                renderError(
+                    'You denied access to the microphone so this demo will not work.'
+                );
+            }
+        } else {
+        }
+    }
+
+    function renderError(message) {
+        toastMessagePopup(message);
+    }
+
+    function renderRecording(blob, list) {
+        const blobUrl = URL.createObjectURL(blob);
+        const li = document.createElement('li');
+        const audio = document.createElement('audio');
+        const anchor = document.createElement('a');
+        anchor.setAttribute('href', blobUrl);
+        const now = new Date();
+        anchor.setAttribute(
+            'download',
+            `recording-${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDay().toString().padStart(2, '0')}--${now.getHours().toString().padStart(2, '0')}-${now.getMinutes().toString().padStart(2, '0')}-${now.getSeconds().toString().padStart(2, '0')}.webm`
+        );
+        anchor.innerText = 'Download';
+        audio.setAttribute('src', blobUrl);
+        audio.setAttribute('controls', 'controls');
+        li.appendChild(audio);
+        li.appendChild(anchor);
+        list.appendChild(li);
     }
 </script>
 
