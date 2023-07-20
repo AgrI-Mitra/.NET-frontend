@@ -16,7 +16,7 @@ namespace KisanEMitra.Services
         public static class APIPaths
         {
             public static string User = "user/generateUserId";
-            public static string Prompt = "prompt";
+            public static string Prompt = "prompt/2";
         }
 
         public AgrimitraService(HttpClient httpClient) {
