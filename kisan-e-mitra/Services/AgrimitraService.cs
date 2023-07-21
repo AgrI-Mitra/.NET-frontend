@@ -19,7 +19,8 @@ namespace KisanEMitra.Services
             public static string Prompt = "prompt/2";
         }
 
-        public AgrimitraService(HttpClient httpClient) {
+        public AgrimitraService(HttpClient httpClient)
+        {
             this.httpClient = httpClient;
             httpClient.BaseAddress = new Uri(baseURL);
         }
@@ -35,7 +36,7 @@ namespace KisanEMitra.Services
                     return userSessionID;
                 }
 
-               throw new Exception("API Network issue.");
+                throw new Exception("API Network issue.");
             }
             catch (Exception ex)
             {
@@ -46,83 +47,83 @@ namespace KisanEMitra.Services
 
         public async Task<SiteResponseBody> IdentifyUser(string UserID, UserQueryBody UserQuery)
         {
+            var siteUserBody = new SiteResponseBody();
             try
             {
                 this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
-                //this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
                 var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
-                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
-                    return siteUserBody;
+                    siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
                 }
                 else
                 {
-                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
-                    throw new Exception($"Error:{siteUserBody.Error}");
+                    siteUserBody.Text = response.ReasonPhrase;
+                    siteUserBody.Error = response.StatusCode.ToString();
                 }
-
-                throw new Exception("API Network issue.");
             }
             catch (Exception ex)
             {
-                var errorMessage = "Rest API call issue.";
-                throw new Exception(errorMessage, ex);
+                siteUserBody.Text = "Rest API call issue.";
+                siteUserBody.Error = ex.Message;
             }
+
+            return siteUserBody;
         }
 
         public async Task<SiteResponseBody> VerifyOTP(string UserID, UserQueryBody UserQuery)
         {
+            var siteUserBody = new SiteResponseBody();
             try
             {
                 this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
-                //this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
                 var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
-                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
-                    return siteUserBody;
+                    siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
                 }
                 else
                 {
-                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
-                    throw new Exception($"Error:{siteUserBody.Error}");
+                    siteUserBody.Text = response.ReasonPhrase;
+                    siteUserBody.Error = response.StatusCode.ToString();
                 }
-
-                throw new Exception("API Network issue.");
             }
             catch (Exception ex)
             {
-                var errorMessage = "Rest API call issue.";
-                throw new Exception(errorMessage, ex);
+                siteUserBody.Text = "Rest API call issue.";
+                siteUserBody.Error = ex.Message;
             }
+
+            return siteUserBody;
         }
 
         public async Task<SiteResponseBody> AskQuestionAsync(string UserID, UserQueryBody UserQuery)
         {
+            var siteUserBody = new SiteResponseBody();
             try
             {
                 this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
-                //this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
+
                 var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
+
+
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
-                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
-                    return siteUserBody;
+                    siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
                 }
                 else
                 {
-                    var siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
-                    throw new Exception($"Error:{siteUserBody.Error}");
+                    siteUserBody.Text = response.ReasonPhrase;
+                    siteUserBody.Error = response.StatusCode.ToString();
                 }
-
-                throw new Exception("API Network issue.");
             }
             catch (Exception ex)
             {
-                var errorMessage = "Rest API call issue.";
-                throw new Exception(errorMessage, ex);
+                siteUserBody.Text = "Rest API call issue.";
+                siteUserBody.Error = ex.Message;
             }
+
+            return siteUserBody;
         }
     }
 }
