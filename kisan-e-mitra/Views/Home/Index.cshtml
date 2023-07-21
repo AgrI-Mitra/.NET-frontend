@@ -1,4 +1,4 @@
-﻿
+
 @{
     ViewBag.Title = Resources.Resource.label_title;
 }
@@ -206,12 +206,52 @@
     var openModalPopUp = function (hasError, message) {
         const userQuestionTextBoxValue = document.getElementById('userQuestionTextBox');
 
+        // If message includes one of these texts then we need to open the modal
+        let mobileAdharBenificiaryModalTexts = [
+            "मोबाइल/आधार/बेनिफिशियरी",
+            "enter a valid",
+            "enter your Mobile",
+
+        ];
+
+        // If message includes one of these texts then we need to open OTP modal
+        let otpModalTexts = [
+            "ओटीपी",
+            "OTP",
+        ];
+
         if (!hasError) {
-            if (String(message).includes('enter a valid') || String(message).includes('enter your Mobile')) {
+
+            // Check if message is asking to enter Mobile/Aadhaar/Benificiary Id
+            let shouldOpenMobileAdharBenificiaryModal = false;
+
+            for (var i = 0; i < mobileAdharBenificiaryModalTexts.length; i++) {
+                let currentMobileAdharBenificiaryModalText = mobileAdharBenificiaryModalTexts[i];
+
+                if (String(message).includes(currentMobileAdharBenificiaryModalText)) {
+                    shouldOpenMobileAdharBenificiaryModal = true;
+                    break;
+                }
+            }
+
+            // Check if message is asking to enter otp
+            let shouldOpenOtpModal = false;
+
+            for (var i = 0; i < otpModalTexts.length; i++) {
+                let currentOtpModalText = otpModalTexts[i];
+
+                if (String(message).includes(currentOtpModalText)) {
+                    shouldOpenOtpModal = true;
+                    break;
+                }
+            }
+
+            if (shouldOpenMobileAdharBenificiaryModal) {
                 $("#verifyModal").modal("hide");
                 $("#beneficiaryModal").modal("show");
             }
-            else if (String(message).includes('enter the OTP') || String(message).includes('Invalid OTP')) {
+
+            else if (shouldOpenOtpModal) {
                 $("#beneficiaryModal").modal("hide");
                 $("#verifyModal").modal("show");
             }
