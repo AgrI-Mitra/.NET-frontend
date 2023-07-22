@@ -2,9 +2,9 @@
     ViewBag.Title = "Error";
     Layout = "~/Views/Shared/_ErrorLayout.cshtml";
 }
+
 <main>
     <h1 class="title">@ViewBag.ErrorTitle</h1>
     <p class="message">@ViewBag.ErrorMessage</p>
     <a href="@Url.Action("Splash", "Home")">Redirect to Home</a>
 </main>
-

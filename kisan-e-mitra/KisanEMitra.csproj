@@ -306,6 +306,8 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Home\Splash.cshtml" />
     <Content Include="Views\Home\ChatHistory.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Shared\_ErrorLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
