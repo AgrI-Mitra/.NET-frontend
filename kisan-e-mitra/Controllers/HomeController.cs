@@ -162,6 +162,11 @@ namespace KisanEMitra.Controllers
             return View(chatHistories);
         }
 
+        public ActionResult More()
+        {
+            return View();
+        }
+
         private LanguageModel GetSelectedLanguage()
         {
             string selectedLanguage;
