@@ -3,8 +3,23 @@
 }
 
 <div class="chat-container">
-    <div id="message-list" class="message-list">
-    </div>
+    @if (ViewBag.HasNewSession)
+    {
+        <div id="record-voice" class="record-voice">
+           <div>
+               <button id="inputMainRecordBtn" class="send-button bg-light">
+                   <img id="recordingMainImage" src="/Content/images/startIcon.svg" width="128" height="128" />
+               </button>
+           </div>
+        </div>
+
+    }
+    else
+    {
+        <div id="message-list" class="message-list">
+
+        </div>
+    }
     <div class="input-container">
         <input id="userQuestionTextBox" type="text" class="message-input border-success" placeholder="@Resources.Resource.message_ask_ur_question">
         <button id="inputBtn" class="send-button bg-success">
@@ -29,10 +44,12 @@
                     </form>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Speak</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
-                <button id="submitButton" type="button" class="btn btn-success">@Resources.Resource.label_submit</button>
+            <div class="modal-footer justify-content-center">
+               <button id="identityRecordBtn" class="send-button bg-light">
+                   <img id="identityRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
+               </button>
+                <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
+                <button id="submitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
             </div>
         </div>
     </div>
@@ -55,10 +72,12 @@
             <div style="text-align:center">
                 <span>@Resources.Resource.message_didnt_receive</span> <a href="#" class="link-success">@Resources.Resource.message_resend_again</a>
             </div>
-            <div class="modal-footer align-items-center">
-                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Speak</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
-                <button id="verifySubmitButton" type="button" class="btn btn-success">@Resources.Resource.label_submit</button>
+            <div class="modal-footer justify-content-center">
+                <button id="verifyRecordBtn" class="send-button bg-light">
+                    <img id="verifyRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
+                </button>
+                <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
+                <button id="verifySubmitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
             </div>
         </div>
     </div>
@@ -78,12 +97,19 @@
 </div>
 
 <script type="text/javascript">
+    var inputTextId = "";
     let chunks = [];
     initializeAudio();
     let recorderInstance;
     const inputBtn = document.getElementById('inputBtn');
 
     const inputRecordBtn = document.getElementById('inputRecordBtn');
+
+    //const inputMainRecordBtn = document.getElementById('inputMainRecordBtn');
+
+    //const identityRecordBtn = document.getElementById('identityRecordBtn');
+
+    //const verifyRecordBtn = document.getElementById('verifyRecordBtn');
 
     inputRecordBtn.setAttribute('hidden', 'hidden');
 
@@ -94,17 +120,41 @@
         var isRecording = false;
 
         $("#inputRecordBtn").click(function () {
+            inputTextId = "#userQuestionTextBox";
+            var recordImageID = "#recordingImage";
+            recordAudio(recordImageID);
+        });
 
+        $("#inputMainRecordBtn").click(function () {
+            inputTextId = "#userQuestionTextBox";
+            var recordImageID = "#recordingMainImage";
+            recordAudio(recordImageID);
+        });
+
+        $("#identityRecordBtn").click(function () {
+            inputTextId = "#inputText";
+            var recordImageID = "#identityRecordImage";
+            recordAudio(recordImageID);
+        });
+
+
+        $("#verifyRecordBtn").click(function () {
+            inputTextId = "#verifyInputText";
+            var recordImageID = "#verifyRecordImage";
+            recordAudio(recordImageID);
+        });
+
+        function recordAudio(recordImageID) {
             isRecording = !isRecording;
 
             if (isRecording) {
-                $("#recordingImage").attr("src", "/Content/images/stop.gif");
+                $(recordImageID).attr("src", "/Content/images/stop.gif");
                 startRecording();
             } else {
-                $("#recordingImage").attr("src", "/Content/images/startIcon.svg");
+                $(recordImageID).attr("src", "/Content/images/startIcon.svg");
                 stopRecording();
             }
-        });
+        }
 
         $(function () {
 
@@ -347,6 +397,7 @@
                             if (data.Text !== null) {
                                 message = data.Text;
                                 //openModalPopUp(false, data.Text);
+                                $(inputTextId).val(message);
                             }
 
                             if (data.Error !== null) {
@@ -367,7 +418,6 @@
         });
         // END
     }
-
 
     function initializeAudio() {
 
