@@ -32,11 +32,17 @@ namespace KisanEMitra.Controllers
             if (userSessionID == null)
             {
                 if (fingerPrint == null)
-                    throw new Exception("API call error. Please try again later.");
+                {
+                    var errorMessage = "API call error. Please try again later.";
+                    return RedirectToAction("Index", "Error", errorMessage);
+                }
 
                 userSessionID = await this.agrimitraService.GetUserSessionIDAsync(fingerPrint);
                 if (userSessionID == null)
-                    throw new Exception("Session is not created. Please try again later.");
+                {
+                    var errorMessage = "Session is not created. Please try again later.";
+                    return RedirectToAction("Index", "Error", errorMessage);
+                }
 
                 Session["userSessionID"] = userSessionID;
             }

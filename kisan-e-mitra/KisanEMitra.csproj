@@ -313,6 +313,8 @@
     <Content Include="Views\Home\ProfileView.cshtml" />
     <Content Include="Views\Home\FAQs.cshtml" />
     <Content Include="Views\Home\Feedback.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Shared\_ErrorLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
