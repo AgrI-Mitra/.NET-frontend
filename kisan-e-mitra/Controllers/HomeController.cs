@@ -2,6 +2,8 @@
 using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -37,33 +39,9 @@ namespace KisanEMitra.Controllers
                 Session["userSessionID"] = userSessionID;
             }
 
-            string selectedLanguage;
-            HttpCookie langCookie = Request.Cookies["culture"];
-            if (langCookie != null)
-            {
-                selectedLanguage = langCookie.Value;
-            }
-            else
-            {
-                var userLanguage = Request.UserLanguages;
-                var userLang = userLanguage != null ? userLanguage[0] : "";
-                if (userLang != "")
-                {
-                    selectedLanguage = userLang;
-                }
-                else
-                {
-                    selectedLanguage = LanguageManager.GetDefaultLanguage();
-                }
-            }
-
-            var languageModel = new LanguageModel
-            {
-                Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageFullName"),
-                SelectedLanguage = selectedLanguage
-            };
-
-            return View(languageModel);
+            var languageModel = GetSelectedLanguage();
+            ViewBag.LanguageModel = languageModel;
+            return View();
         }
 
         [HttpPost]
@@ -165,6 +143,53 @@ namespace KisanEMitra.Controllers
                 return Json(null);
 
             return Json(responseBody, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ChatHistory()
+        {
+
+            List<ChatHistory> chatHistories = new List<ChatHistory>();
+
+            //for (int i = 0; i < 20; i++)
+            //{
+            //    chatHistories.Add(new ChatHistory
+            //    {
+            //        Message = i.ToString(),
+            //        Alignment = i % 2 == 0 ? "left" : "right",
+            //    });
+            //}
+            ViewBag.LanguageModel = GetSelectedLanguage();
+            return View(chatHistories);
+        }
+
+        private LanguageModel GetSelectedLanguage()
+        {
+            string selectedLanguage;
+            HttpCookie langCookie = Request.Cookies["culture"];
+            if (langCookie != null)
+            {
+                selectedLanguage = langCookie.Value;
+            }
+            else
+            {
+                var userLanguage = Request.UserLanguages;
+                var userLang = userLanguage != null ? userLanguage[0] : "";
+                if (userLang != "")
+                {
+                    selectedLanguage = userLang;
+                }
+                else
+                {
+                    selectedLanguage = LanguageManager.GetDefaultLanguage();
+                }
+            }
+
+            var languageModel = new LanguageModel
+            {
+                Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageFullName"),
+                SelectedLanguage = selectedLanguage
+            };
+            return languageModel;
         }
     }
 }

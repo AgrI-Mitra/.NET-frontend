@@ -9,11 +9,15 @@
     @Scripts.Render("~/bundles/jquery")
 </head>
 <body class="body-content">
-    @model KisanEMitra.Models.LanguageModel
+    
+        @{ 
+            IEnumerable<SelectListItem>languages = ViewBag.LanguageModel.Languages;
+            var selectedLanguage = ViewBag.LanguageModel.SelectedLanguage;
+        }
     <div class="top-bar">
         <div class="left-column">
             <!-- Left dropdown content -->
-            @Html.DropDownListFor(m => m.SelectedLanguage, (IEnumerable<SelectListItem>)Model.Languages, new { @class = "form-control", id = "ddlLanguage" })
+            @Html.DropDownList("@selectedLanguage", languages, new { @class = "form-control", id = "ddlLanguage" })
         </div>
         <div class="center-column" style="color: #219653; font-size: 3vh; font-weight: 700; font-family: Mulish-bold,sans-serif; ">
             <!-- Application name -->
@@ -30,10 +34,10 @@
     <div class="bottom-section">
         <div class="bottom-container">
             <div class="tab-bar">
-                <a class="tab" href="#tab1">
+                <a class="tab" href="@Url.Action("Index","Home")">
                     <img src="~/Content/images/home.svg" width="32" height="32" />
                 </a>
-                <a class="tab" href="#tab2">
+                <a href="@Url.Action("ChatHistory","Home")">
                     <img src="~/Content/images/message-menu.svg" width="32" height="32" />
                 </a>
                 <a class="tab" href="#tab3">
@@ -44,8 +48,11 @@
     </div>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-    <script type="text/javascript">
+<script type="text/javascript">
         $(document).ready(function () {
+
+            $("#ddlLanguage").val("@ViewBag.LanguageModel.SelectedLanguage");
+
             $("#ddlLanguage").on('change', function () {
 
                 var selValue = $('#ddlLanguage').val();
@@ -64,6 +71,6 @@
                 });
             });
         });
-    </script>
+</script>
 </body>
 </html>

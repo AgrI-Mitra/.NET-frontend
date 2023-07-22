@@ -1,0 +1,20 @@
+﻿@model List<KisanEMitra.Models.ChatHistory>
+
+@{
+    ViewBag.Title = @Resources.Resource.label_chats;
+}
+
+<div class="page-title">@ViewBag.Title</div>
+
+<div class="chat-container">
+    <div id="messageList" class="message-list">
+        @foreach (var item in Model)
+        {
+            <div class="message @item.Alignment">
+                <div class="message-content">
+                    @item.Message
+                </div>
+            </div>
+        }
+    </div>
+</div>

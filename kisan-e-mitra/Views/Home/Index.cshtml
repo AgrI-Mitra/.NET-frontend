@@ -1,5 +1,4 @@
-
-@{
+﻿@{
     ViewBag.Title = Resources.Resource.label_title;
 }
 
@@ -116,7 +115,7 @@
                 $("#verifyModal").modal("hide");
                 if (querstionInput) {
                     var userQuery = "<div class='message right'><div class='message-content'>" + querstionInput + "</div></div>";
-                    $('#message-list').append(userQuery);
+                    $('#message-list').append(userQuery.replace(/\n/g, "<br>"));
                 }
 
                 $.ajax({
@@ -125,19 +124,27 @@
                     dataType: "json",
                     data: { querstion: querstionInput },
                     success: function (data) {
+                        console.log('data: ', data);
                         var message = "";
-                        if (data.Text !== null) {
-                            message = data.Text;
-                            openModalPopUp(false, data.Text);
-                        }
-                        if (data.Error !== null) {
-                            message = data.Error;
-                            openModalPopUp(true, data.Error);
+                        if (data.Text !== null || data.Error !== null) {
+
+                            if (data.Text !== null) {
+                                message = data.Text;
+                                openModalPopUp(false, data.Text);
+                            }
+
+                            if (data.Error !== null) {
+                                message = data.Error;
+                                openModalPopUp(true, message);
+                            }
+
+                        } else {
+                            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+                            $('#message-list').append(response.replace(/\n/g, "<br>"));
+                            $("#userQuestionTextBox").val('');
                         }
 
-                        response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-                        $('#message-list').append(response);
-                        $("#userQuestionTextBox").val('');
+
                     },
                     failure: function (data) {
                     }
@@ -155,19 +162,25 @@
                     dataType: "json",
                     data: { identifyID: inputText },
                     success: function (data) {
+                        console.log("data: ", data);
                         var message = "";
-                        if (data.Text !== null) {
-                            message = data.Text;
-                            openModalPopUp(false, data.Text);
-                        }
-                        if (data.Error !== null) {
-                            message = data.Error;
-                            openModalPopUp(true, message);
-                        }
+                        if (data.Text !== null || data.Error !== null) {
 
-                        response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-                        $('#message-list').append(response);
-                        $("#userQuestionTextBox").val('');
+                            if (data.Text !== null) {
+                                message = data.Text;
+                                openModalPopUp(false, data.Text);
+                            }
+
+                            if (data.Error !== null) {
+                                message = data.Error;
+                                openModalPopUp(true, message);
+                            }
+
+                        } else {
+                            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+                            $('#message-list').append(response.replace(/\n/g, "<br>"));
+                            $("#userQuestionTextBox").val('');
+                        }
                     },
                     failure: function (data) {
                     }
@@ -184,17 +197,25 @@
                     dataType: "json",
                     data: { otp: verifyInputText },
                     success: function (data) {
+                        console.log('data: ', data);
                         var message = "";
-                        if (data.Text !== null) {
-                            message = data.Text;
-                            openModalPopUp(false, message);
-                        }
-                        if (data.Error !== null)
-                            message = data.Error;
+                        if (data.Text !== null || data.Error !== null) {
 
-                        response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-                        $('#message-list').append(response);
-                        $("#userQuestionTextBox").val('');
+
+                            if (data.Text !== null) {
+                                message = data.Text;
+                                openModalPopUp(false, data.Text);
+                            }
+
+                            if (data.Error !== null) {
+                                message = data.Error;
+                                openModalPopUp(true, message);
+                            }
+                        } else {
+                            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+                            $('#message-list').append(response.replace(/\n/g, "<br>"));
+                            $("#userQuestionTextBox").val('');
+                        }
                     },
                     failure: function (data) {
                     }
@@ -256,13 +277,16 @@
                 $("#verifyModal").modal("show");
             }
             else {
+
+                var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+                $('#message-list').append(response.replace(/\n/g, "<br>"));
+                $("#userQuestionTextBox").val('');
+
                 $("#verifyModal").modal("hide");
                 $("#beneficiaryModal").modal("hide");
                 inputRecordBtn.removeAttribute('hidden', '');
                 inputBtn.setAttribute('hidden', 'hidden');
                 userQuestionTextBoxValue.setAttribute('disabled', 'disabled');
-                //initializeAudio();
-
             }
         }
         else {
@@ -315,25 +339,30 @@
                     dataType: "json",
                     data: { base64Question: base64 },
                     success: function (data) {
+                        console.log("data: ", data);
                         var message = "";
-                        if (data.Text !== null) {
-                            message = data.Text;
-                            //openModalPopUp(false, data.Text);
-                        }
-                        if (data.Error !== null) {
-                            message = data.Error;
-                            openModalPopUp(true, data.Error);
-                        }
 
-                        response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-                        $('#message-list').append(response);
-                        $("#userQuestionTextBox").val('');
+                        if (data.Text !== null || data.Error !== null) {
+
+                            if (data.Text !== null) {
+                                message = data.Text;
+                                //openModalPopUp(false, data.Text);
+                            }
+
+                            if (data.Error !== null) {
+                                message = data.Error;
+                                openModalPopUp(true, message);
+                            }
+                        } else {
+                            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+                            $('#message-list').append(response.replace(/\n/g, "<br>"));
+                            $("#userQuestionTextBox").val('');
+                        }
                     },
                     failure: function (data) {
                     }
                 });
             }
-            renderRecording(recording, list);
             chunks = [];
         });
         // END
@@ -389,25 +418,6 @@
 
     function renderError(message) {
         toastMessagePopup(message);
-    }
-
-    function renderRecording(blob, list) {
-        const blobUrl = URL.createObjectURL(blob);
-        const li = document.createElement('li');
-        const audio = document.createElement('audio');
-        const anchor = document.createElement('a');
-        anchor.setAttribute('href', blobUrl);
-        const now = new Date();
-        anchor.setAttribute(
-            'download',
-            `recording-${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDay().toString().padStart(2, '0')}--${now.getHours().toString().padStart(2, '0')}-${now.getMinutes().toString().padStart(2, '0')}-${now.getSeconds().toString().padStart(2, '0')}.webm`
-        );
-        anchor.innerText = 'Download';
-        audio.setAttribute('src', blobUrl);
-        audio.setAttribute('controls', 'controls');
-        li.appendChild(audio);
-        li.appendChild(anchor);
-        list.appendChild(li);
     }
 </script>
 

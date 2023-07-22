@@ -163,6 +163,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ChatHistoryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LanguageController.cs" />
@@ -170,6 +172,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AjaxActionResponse.cs" />
+    <Compile Include="Models\ChatHsitory.cs" />
     <Compile Include="Models\LanguageManager.cs" />
     <Compile Include="Models\SiteResponseBody.cs" />
     <Compile Include="Models\UserQueryBody.cs" />
@@ -275,6 +278,8 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Font\Mulish-Bold.792fb274.ttf" />
+    <Content Include="Font\Mulish-Regular.a4c4b1ab.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -300,9 +305,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Home\Splash.cshtml" />
+    <Content Include="Views\Home\ChatHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Language\" />
   </ItemGroup>
   <ItemGroup>

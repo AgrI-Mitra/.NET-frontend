@@ -8,7 +8,7 @@
 
 .message-list {
     flex-grow: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: 10px;
 }
 
@@ -42,7 +42,7 @@
     flex-grow: 1;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 40px;
 }
 
 .send-button {
@@ -51,10 +51,23 @@
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 40px;
     cursor: pointer;
+    width: 26vw !important;
+    max-width: 100px !important;
+    font-weight: 700;
+    font-size: 15px !important;
 }
 
     .send-button:hover {
         background-color: #0069d9;
     }
+
+.page-title {
+    margin-top: 4vh;
+    margin-left: 2vh;
+    font-family: Mulish-Bold;
+    font-size: 4.265vh;
+    font-weight: 700;
+    color: #219653;
+}
