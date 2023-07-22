@@ -3,10 +3,12 @@ using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WebGrease.Activities;
 
 namespace KisanEMitra.Controllers
 {
@@ -167,7 +169,54 @@ namespace KisanEMitra.Controllers
 
         public ActionResult More()
         {
+            ViewBag.LanguageModel = GetSelectedLanguage();
             return View();
+        }
+
+        public ActionResult ProfileView()
+        {
+            ViewBag.LanguageModel = GetSelectedLanguage();
+            return View();
+        }
+
+        public ActionResult FAQs()
+        {
+            ViewBag.LanguageModel = GetSelectedLanguage();
+            return View();
+        }
+
+        public ActionResult Feedback()
+        {
+            ViewBag.LanguageModel = GetSelectedLanguage();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SubmitRating(int rating)
+        {
+            ViewBag.LanguageModel = GetSelectedLanguage();
+            return View("Feedback");
+        }
+
+        [HttpPost]
+        public ActionResult SubmitReview(string review)
+        {
+            ViewBag.LanguageModel = GetSelectedLanguage();
+            return View("Feedback");
+        }
+
+        public FileResult DownloadFile(string filename)
+        {
+            string fullName = Server.MapPath("~" + "/Content/Files/" + filename);
+
+            return File(fullName, "application/pdf", filename);
+        }
+
+        public FileResult download(string filename)
+        {
+            string fullName = Server.MapPath("~" + "/Content/Files/" + filename);
+
+            return File(fullName, "application/pdf", filename);
         }
 
         private LanguageModel GetSelectedLanguage()

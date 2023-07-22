@@ -360,9 +360,9 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Submit Review.
         /// </summary>
-        public static string label_submit_revie {
+        public static string label_submit_review {
             get {
-                return ResourceManager.GetString("label.submit_revie", resourceCulture);
+                return ResourceManager.GetString("label.submit_review", resourceCulture);
             }
         }
         
