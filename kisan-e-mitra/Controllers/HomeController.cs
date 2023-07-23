@@ -77,8 +77,10 @@ namespace KisanEMitra.Controllers
 
             var userQueryBody = new UserQueryBody()
             {
-                Text = identifyID
+                Text = identifyID,
+                inputLanguage = GetSelectedLanguage().SelectedLanguage
             };
+
             var responseBody = await this.agrimitraService.IdentifyUser(userSessionID, userQueryBody);
             if (responseBody == null)
                 return Json(null);
@@ -93,7 +95,8 @@ namespace KisanEMitra.Controllers
             var userSessionID = (string)Session["userSessionID"];
             var userQueryBody = new UserQueryBody()
             {
-                Text = otp
+                Text = otp,
+                inputLanguage = GetSelectedLanguage().SelectedLanguage
             };
             var responseBody = await this.agrimitraService.VerifyOTP(userSessionID, userQueryBody);
             if (responseBody == null)
@@ -108,7 +111,8 @@ namespace KisanEMitra.Controllers
             var userSessionID = (string)Session["userSessionID"];
             var userQueryBody = new UserQueryBody()
             {
-                Text = querstion
+                Text = querstion,
+                inputLanguage = GetSelectedLanguage().SelectedLanguage
             };
             var responseBody = await this.agrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
             if (responseBody == null)
@@ -120,31 +124,12 @@ namespace KisanEMitra.Controllers
         [HttpPost]
         public async Task<JsonResult> AskAudioQuestions(string base64Question)
         {
-            string selectedLanguage;
-            HttpCookie langCookie = Request.Cookies["culture"];
-            if (langCookie != null)
-            {
-                selectedLanguage = langCookie.Value;
-            }
-            else
-            {
-                var userLanguage = Request.UserLanguages;
-                var userLang = userLanguage != null ? userLanguage[0] : "";
-                if (userLang != "")
-                {
-                    selectedLanguage = userLang;
-                }
-                else
-                {
-                    selectedLanguage = LanguageManager.GetDefaultLanguage();
-                }
-            }
 
             var userSessionID = (string)Session["userSessionID"];
             var userQueryBody = new UserQueryBody()
             {
                 Media = new MediaQuery() { Category = "base64audio", Text = base64Question },
-                inputLanguage = selectedLanguage
+                inputLanguage = GetSelectedLanguage().SelectedLanguage
             };
             var responseBody = await this.agrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
             if (responseBody == null)

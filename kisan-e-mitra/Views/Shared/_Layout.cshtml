@@ -7,13 +7,14 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript" src="~/Content/js/recorder.js"></script>
 </head>
 <body class="body-content">
-    
-        @{ 
-            IEnumerable<SelectListItem>languages = ViewBag.LanguageModel.Languages;
-            var selectedLanguage = ViewBag.LanguageModel.SelectedLanguage;
-        }
+
+    @{
+        IEnumerable<SelectListItem> languages = ViewBag.LanguageModel.Languages;
+        var selectedLanguage = ViewBag.LanguageModel.SelectedLanguage;
+    }
     <div class="top-bar">
         <div class="left-column">
             <!-- Left dropdown content -->
@@ -48,7 +49,7 @@
     </div>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-<script type="text/javascript">
+    <script type="text/javascript">
         $(document).ready(function () {
 
             $("#ddlLanguage").val("@ViewBag.LanguageModel.SelectedLanguage");
@@ -71,6 +72,6 @@
                 });
             });
         });
-</script>
+    </script>
 </body>
 </html>

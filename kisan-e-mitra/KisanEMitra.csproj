@@ -270,6 +270,7 @@
     <Content Include="Content\images\thumbs-up.svg" />
     <Content Include="Content\images\user-alt.svg" />
     <Content Include="Content\images\user-circle.svg" />
+    <Content Include="Content\js\recorder.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

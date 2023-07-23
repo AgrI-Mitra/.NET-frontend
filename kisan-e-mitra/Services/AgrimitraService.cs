@@ -17,6 +17,7 @@ namespace KisanEMitra.Services
         {
             public static string User = "user/generateUserId";
             public static string Prompt = "prompt/2";
+            public static string UserId = "benAudio-serI-4enA-dioU-erIdbenAudio";
         }
 
         public AgrimitraService(HttpClient httpClient)
@@ -50,7 +51,7 @@ namespace KisanEMitra.Services
             var siteUserBody = new SiteResponseBody();
             try
             {
-                this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
+                this.httpClient.DefaultRequestHeaders.Add("User-id", APIPaths.UserId);
                 var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
@@ -76,7 +77,7 @@ namespace KisanEMitra.Services
             var siteUserBody = new SiteResponseBody();
             try
             {
-                this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
+                this.httpClient.DefaultRequestHeaders.Add("User-id", APIPaths.UserId);
                 var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
@@ -102,7 +103,7 @@ namespace KisanEMitra.Services
             var siteUserBody = new SiteResponseBody();
             try
             {
-                this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
+                this.httpClient.DefaultRequestHeaders.Add("User-id", APIPaths.UserId);
 
                 var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
 

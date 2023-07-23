@@ -25,7 +25,8 @@
     </div>
 </div>
 <!-- The below code is for the modal dialog -->
-<div class="modal fade" id="beneficiaryModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="beneficiaryModalLabel" aria-hidden="true">
+<div class="modal fade" id="beneficiaryModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="ben         * e         *
+        ficiaryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -44,6 +45,31 @@
                 </button>
                 <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
                 <button id="submitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The below code is for the aadhar 4 digit modal dialog -->
+<div class="modal fade" id="aadhar4DigitModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="aadhar4DigitModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="aadhar4DigitModallLabel">@Resources.Resource.label_popUpTitle2</h1>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <div class="form-group">
+                    <form id="myForm">
+                        <input class="form-control" id="aadhar4DigitModalInputText">
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button id="aadhar4DigitModalRecordBtn" class="send-button bg-light">
+                    <img id="aadhar4DigitModalRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
+                </button>
+                <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
+                <button id="aadhar4DigitModalSubmitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
             </div>
         </div>
     </div>
@@ -99,17 +125,45 @@
 
     const inputRecordBtn = document.getElementById('inputRecordBtn');
 
-    //const inputMainRecordBtn = document.getElementById('inputMainRecordBtn');
+    var gumStream; 						//stream from getUserMedia()
+    var rec; 							//Recorder.js object
+    var input; 							//MediaStreamAudioSourceNode we'll be recording
 
-    //const identityRecordBtn = document.getElementById('identityRecordBtn');
-
-    //const verifyRecordBtn = document.getElementById('verifyRecordBtn');
+    // shim for AudioContext when it's not avb.
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioContext //audio context to help us record
 
     var hasNewSession = true;
 
     inputRecordBtn.setAttribute('hidden', 'hidden');
 
+
+    function showHideAudioAndTextInputButton(textValue) {
+        if (textValue) {
+            inputRecordBtn.setAttribute('hidden', 'hidden');
+            inputBtn.removeAttribute('hidden', '');
+        } else {
+            inputBtn.setAttribute('hidden', 'hidden');
+            inputRecordBtn.removeAttribute('hidden', '');
+        }
+    }
+
     $(document).ready(function () {
+
+        showHideAudioAndTextInputButton($("#userQuestionTextBox").val());
+
+        /**
+        // Keep checking userQuestionTextBox change events
+        // When there is a text written show Send button
+        // Show Audio button when it is empty
+        */
+        //START
+        $('#userQuestionTextBox').on('change', function () {
+            var textValue = $(this).val();
+
+            showHideAudioAndTextInputButton(textValue);
+        });
+        //END
 
         getLocalStream();
         NewSessionActive(hasNewSession);
@@ -138,6 +192,13 @@
         $("#verifyRecordBtn").click(function () {
             inputTextId = "#verifyInputText";
             var recordImageID = "#verifyRecordImage";
+            recordAudio(recordImageID);
+        });
+
+        //aadhar4DigitModalRecordBtn
+        $("#aadhar4DigitModalRecordBtn").click(function () {
+            inputTextId = "#aadhar4DigitModalInputText";
+            var recordImageID = "#aadhar4DigitModalRecordImage";
             recordAudio(recordImageID);
         });
 
@@ -177,7 +238,7 @@
 
                             if (data.Text !== null) {
                                 message = data.Text;
-                                openModalPopUp(false, data.Text);
+                                openModalPopUp(false, data.Text, data.textInEnglish);
                             }
 
                             if (data.Error !== null) {
@@ -215,7 +276,7 @@
 
                             if (data.Text !== null) {
                                 message = data.Text;
-                                openModalPopUp(false, data.Text);
+                                openModalPopUp(false, data.Text, data.textInEnglish);
                             }
 
                             if (data.Error !== null) {
@@ -223,6 +284,43 @@
                                 openModalPopUp(true, message);
                             }
 
+                        } else {
+                            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+                            $('#message-list').append(response.replace(/\n/g, "<br>"));
+                            $("#userQuestionTextBox").val('');
+                        }
+                    },
+                    failure: function (data) {
+                    }
+                });
+            });
+
+            $('body').on('click', '#aadhar4DigitModalSubmitButton', function (e) {
+                e.preventDefault();
+                var verifyInputText = $('#aadhar4DigitModalInputText').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/VerifyOTP",
+                    dataType: "json",
+                    data: { otp: verifyInputText },
+                    success: function (data) {
+                        console.log('data: ', data);
+                        var message = "";
+                        if (data.Text !== null || data.Error !== null) {
+
+
+                            if (data.Text !== null) {
+                                message = data.Text;
+                                openModalPopUp(false, data.Text, data.textInEnglish);
+                                hasNewSession = false;
+                                NewSessionActive(hasNewSession);
+                            }
+
+                            if (data.Error !== null) {
+                                message = data.Error;
+                                openModalPopUp(true, message);
+                            }
                         } else {
                             var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
                             $('#message-list').append(response.replace(/\n/g, "<br>"));
@@ -251,7 +349,7 @@
 
                             if (data.Text !== null) {
                                 message = data.Text;
-                                openModalPopUp(false, data.Text);
+                                openModalPopUp(false, data.Text, data.textInEnglish);
                                 hasNewSession = false;
                                 NewSessionActive(hasNewSession);
                             }
@@ -273,20 +371,23 @@
         });
     });
 
-    var openModalPopUp = function (hasError, message) {
+    var openModalPopUp = function (hasError, message, textInEnglish) {
         const userQuestionTextBoxValue = document.getElementById('userQuestionTextBox');
 
         // If message includes one of these texts then we need to open the modal
         let mobileAdharBenificiaryModalTexts = [
-            "मोबाइल/आधार/बेनिफिशियरी",
-            "enter a valid",
+            "Aadhaar Number / PM KISAN ID / Phone no.",
             "enter your Mobile",
 
         ];
 
+        // Aadhar 4 digit modal
+        let aadhar4DigitModalTexts = [
+            "Enter your last 4 digits of Aadhaar"
+        ];
+
         // If message includes one of these texts then we need to open OTP modal
         let otpModalTexts = [
-            "ओटीपी",
             "OTP",
         ];
 
@@ -298,8 +399,20 @@
             for (var i = 0; i < mobileAdharBenificiaryModalTexts.length; i++) {
                 let currentMobileAdharBenificiaryModalText = mobileAdharBenificiaryModalTexts[i];
 
-                if (String(message).includes(currentMobileAdharBenificiaryModalText)) {
+                if (String(textInEnglish).includes(currentMobileAdharBenificiaryModalText)) {
                     shouldOpenMobileAdharBenificiaryModal = true;
+                    break;
+                }
+            }
+
+            // Check if message is asking to enter aadhar 4 digits
+            let shouldShowAadhar4DigitModal = false;
+
+            for (var i = 0; i < aadhar4DigitModalTexts.length; i++) {
+                let currentaadhar4DigitModalText = aadhar4DigitModalTexts[i];
+
+                if (String(textInEnglish).includes(currentaadhar4DigitModalText)) {
+                    shouldShowAadhar4DigitModal = true;
                     break;
                 }
             }
@@ -310,7 +423,7 @@
             for (var i = 0; i < otpModalTexts.length; i++) {
                 let currentOtpModalText = otpModalTexts[i];
 
-                if (String(message).includes(currentOtpModalText)) {
+                if (String(textInEnglish).includes(currentOtpModalText)) {
                     shouldOpenOtpModal = true;
                     break;
                 }
@@ -320,9 +433,12 @@
                 $("#verifyModal").modal("hide");
                 $("#beneficiaryModal").modal("show");
             }
-
-            else if (shouldOpenOtpModal) {
+            else if (shouldShowAadhar4DigitModal) {
                 $("#beneficiaryModal").modal("hide");
+                $("#aadhar4DigitModal").modal("show");
+            }
+            else if (shouldOpenOtpModal) {
+                $("#aadhar4DigitModal").modal("hide");
                 $("#verifyModal").modal("show");
             }
             else {
@@ -335,7 +451,7 @@
                 $("#beneficiaryModal").modal("hide");
                 inputRecordBtn.removeAttribute('hidden', '');
                 inputBtn.setAttribute('hidden', 'hidden');
-                userQuestionTextBoxValue.setAttribute('disabled', 'disabled');
+                /*userQuestionTextBoxValue.setAttribute('disabled', 'disabled');*/
             }
         }
         else {
@@ -370,101 +486,188 @@
 
     function listenStopEvent() {
         //START To listen recording stop event
-        recorderInstance.addEventListener('stop', () => {
-            const mimeType = 'audio/webm';
-            const recording = new Blob(chunks, {
-                type: mimeType
-            });
-            var reader = new window.FileReader();
-            reader.readAsDataURL(recording);
+        //recorderInstance.addEventListener('stop', () => {
+        //    const mimeType = 'audio/wav';
+        //    const recording = new Blob(chunks, {
+        //        type: mimeType
+        //    });
+        //    var reader = new window.FileReader();
+        //    reader.readAsDataURL(recording);
 
-            reader.onloadend = function () {
-                base64 = reader.result;
-                base64 = base64.split(',')[1];
-                console.log('base64: ', base64);
+        //    reader.onloadend = function () {
+        //        base64 = reader.result;
+        //        base64 = base64.split(',')[1];
+        //        console.log('base64: ', base64);
 
-                $.ajax({
-                    type: "POST",
-                    url: "/Home/AskAudioQuestions",
-                    dataType: "json",
-                    data: { base64Question: base64 },
-                    success: function (data) {
-                        console.log("data: ", data);
-                        var message = "";
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "/Home/AskAudioQuestions",
+        //            dataType: "json",
+        //            data: { base64Question: base64 },
+        //            success: function (data) {
+        //                console.log("data: ", data);
+        //                var message = "";
 
-                        if (data.Text !== null || data.Error !== null) {
+        //                if (data.Text !== null || data.Error !== null) {
 
-                            if (data.Text !== null) {
-                                message = data.Text;
-                                //openModalPopUp(false, data.Text);
-                                $(inputTextId).val(message);
-                            }
+        //                    if (data.Text !== null) {
+        //                        message = data.Text;
+        //                        //openModalPopUp(false, data.Text);
+        //                        $(inputTextId).val(message);
+        //                    }
 
-                            if (data.Error !== null) {
-                                message = data.Error;
-                                openModalPopUp(true, message);
-                            }
-                        } else {
-                            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-                            $('#message-list').append(response.replace(/\n/g, "<br>"));
-                            $("#userQuestionTextBox").val('');
-                        }
-                    },
-                    failure: function (data) {
-                    }
-                });
-            }
-            chunks = [];
-        });
+        //                    if (data.Error !== null) {
+        //                        message = data.Error;
+        //                        openModalPopUp(true, message);
+        //                    }
+        //                } else {
+        //                    var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+        //                    $('#message-list').append(response.replace(/\n/g, "<br>"));
+        //                    $("#userQuestionTextBox").val('');
+        //                }
+        //            },
+        //            failure: function (data) {
+        //            }
+        //        });
+        //    }
+        //    chunks = [];
+        //});
         // END
     }
 
     function initializeAudio() {
 
-        if ('MediaRecorder' in window) {
-            try {
+        //if ('MediaRecorder' in window) {
+        //    try {
 
-                navigator.mediaDevices
-                    .getUserMedia({
-                        audio: true,
-                        video: false
-                    })
-                    .then((stream) => {
+        //        navigator.mediaDevices
+        //            .getUserMedia({
+        //                audio: true,
+        //                video: false
+        //            })
+        //            .then((stream) => {
 
-                        const mimeType = 'audio/webm';
+        //                const mimeType = 'audio/webm';
 
-                        const recorder = new MediaRecorder(stream, { type: mimeType });
+        //                const recorder = new MediaRecorder(stream, { type: mimeType });
 
-                        recorderInstance = recorder;
+        //                recorderInstance = recorder;
 
-                        listenStopEvent();
+        //                listenStopEvent();
 
-                        recorder.addEventListener('dataavailable', event => {
-                            if (typeof event.data === 'undefined') return;
-                            if (event.data.size === 0) return;
-                            chunks.push(event.data);
-                        });
-                    })
-                    .catch((err) => {
+        //                recorder.addEventListener('dataavailable', event => {
+        //                    if (typeof event.data === 'undefined') return;
+        //                    if (event.data.size === 0) return;
+        //                    chunks.push(event.data);
+        //                });
+        //            })
+        //            .catch((err) => {
 
-                    });
+        //            });
 
-            } catch (error) {
-                renderError(
-                    'You denied access to the microphone so this demo will not work.'
-                );
-            }
-        } else {
-        }
+        //    } catch (error) {
+        //        renderError(
+        //            'You denied access to the microphone so this demo will not work.'
+        //        );
+        //    }
+        //} else {
+        //}
     }
 
     function startRecording() {
-        recorderInstance.start();
+
+        var constraints = { audio: true, video: false }
+
+        /*
+            We're using the standard promise based getUserMedia()
+            https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+        */
+
+        navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+
+            /*
+                create an audio context after getUserMedia is called
+                sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
+                the sampleRate defaults to the one set in your OS for your playback device
+
+            */
+            audioContext = new AudioContext();
+
+            /*  assign to gumStream for later use  */
+            gumStream = stream;
+
+            /* use the stream */
+            input = audioContext.createMediaStreamSource(stream);
+
+            /*
+                Create the Recorder object and configure to record mono sound (1 channel)
+                Recording 2 channels  will double the file size
+            */
+            rec = new Recorder(input, { numChannels: 1 })
+
+            //start the recording process
+            rec.record();
+
+        }).catch(function (err) {
+        });
     }
 
     function stopRecording() {
-        recorderInstance.stop();
+
+        //tell the recorder to stop the recording
+        rec.stop();
+
+        //stop microphone access
+        gumStream.getAudioTracks()[0].stop();
+
+        //create the wav blob and pass it on to createDownloadLink
+        rec.exportWAV(createDownloadLink);
     }
+
+    function createDownloadLink(blob) {
+        var reader = new window.FileReader();
+        reader.readAsDataURL(blob);
+
+        reader.onloadend = function () {
+            base64 = reader.result;
+            console.log('reader.result: ', reader.result);
+            base64 = base64.split(',')[1];
+            console.log('base64 wav: ', base64);
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/AskAudioQuestions",
+                dataType: "json",
+                data: { base64Question: base64 },
+                success: function (data) {
+                    console.log("data: ", data);
+                    var message = "";
+
+                    if (data.Text !== null || data.Error !== null) {
+
+                        if (data.Text !== null) {
+                            message = data.Text;
+                            //openModalPopUp(false, data.Text);
+                            $(inputTextId).val(message);
+                            showHideAudioAndTextInputButton($("#userQuestionTextBox").val());
+                        }
+
+                        if (data.Error !== null) {
+                            message = data.Error;
+                            openModalPopUp(true, message);
+                        }
+                    } else {
+                        var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+                        $('#message-list').append(response.replace(/\n/g, "<br>"));
+                        $("#userQuestionTextBox").val('');
+                    }
+                },
+                failure: function (data) {
+                }
+            });
+        }
+    }
+
 
     function renderError(message) {
         toastMessagePopup(message);
