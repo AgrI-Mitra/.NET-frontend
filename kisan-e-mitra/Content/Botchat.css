@@ -13,7 +13,7 @@
 }
 
     .record-voice div {
-        height:70vh;
+        height: 70vh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -67,7 +67,7 @@
     border-radius: 40px;
     cursor: pointer;
     width: 26vw !important;
-    max-width: 100px !important;
+    max-width: 100px;
     font-weight: 700;
     font-size: 15px !important;
 }
@@ -83,4 +83,61 @@
     font-size: 4.265vh;
     font-weight: 700;
     color: #219653;
+}
+
+.more-pages {
+    display: flex;
+    background-color: #fff;
+    padding: 1vh;
+    margin: 1vh 0;
+    align-items: center;
+    height: 50px;
+}
+
+.faq-connect-card {
+    background-color: #fff;
+    margin: 2vh 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.16);
+    padding-bottom: 1vh;
+}
+
+.dial-info {
+    align-items: center;
+    margin-top: 2vh;
+    margin-left: 2vh;
+    font-family: Mulish-Bold;
+    font-size: 4.2vh;
+    font-weight: 700;
+    color: #219653 !important;
+}
+
+    .dial-info :hover {
+        color: #219653 !important;
+    }
+
+.faq-buttons {
+    font-size: 1.65vh !important;
+    color: #fff;
+    margin: 4vh auto 0;
+    text-align: center;
+    font-family: Mulish-regular;
+    padding: 2vh;
+    border: none;
+    background-color: #219653 !important;
+}
+
+    .faq-buttons a {
+        text-decoration: none;
+        color: #fff;
+    }
+
+        .faq-buttons a:hover {
+            color: #fff;
+            text-decoration: none;
+        }
+
+.faq-connect-card textarea {
+    padding: 5px;
+    border: 2px solid #219653;
 }

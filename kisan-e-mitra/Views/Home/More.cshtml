@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = @Resources.Resource.label_more;
+}
+
+<div class="page-title">@ViewBag.Title</div>
+
+
+<div class="container-fluid text-center">
+    <div class="row more-pages">
+        <div class="col-1" style="text-align:left;">
+            <a class="tab" href="#">
+                <img src="~/Content/images/user-circle.svg" width="32" height="32" />
+            </a>
+        </div>
+        <div class="col-9" style="text-align:left;">
+            @Resources.Resource.label_welcome
+        </div>
+        <div class="col-2" style="text-align:right;">
+
+        </div>
+    </div>
+    <div class="row more-pages" data-action="@Url.Action("ProfileView", "Home")">
+        <div class="col-1" style="text-align:left;">
+            <a class="tab" href="#">
+                <img src="~/Content/images/user-alt.svg" width="32" height="32" />
+            </a>
+        </div>
+        <div class="col-9" style="text-align:left;">
+            @Resources.Resource.label_profile
+        </div>
+        <div class="col-2" style="text-align:right;">
+            <a class="tab" href="#">
+                <img src="~/Content/images/right.svg" width="32" height="32" />
+            </a>
+        </div>
+    </div>
+    <div class="row more-pages" data-action="@Url.Action("FAQs", "Home")">
+        <div class="col-1" style="text-align:left;">
+            <a class="tab" href="#">
+                <img src="~/Content/images/question-mark.svg" width="32" height="32" />
+            </a>
+        </div>
+        <div class="col-9" style="text-align:left;">
+            @Resources.Resource.label_faqs
+        </div>
+        <div class="col-2" style="text-align:right;">
+            <a class="tab" href="#">
+                <img src="~/Content/images/right.svg" width="32" height="32" />
+            </a>
+        </div>
+    </div>
+    <div class="row more-pages" data-action="@Url.Action("Feedback", "Home")">
+        <div class="col-1" style="text-align:left;">
+            <a class="tab" href="#">
+                <img src="~/Content/images/thumbs-up.svg" width="32" height="32" />
+            </a>
+        </div>
+        <div class="col-9" style="text-align:left;">
+            @Resources.Resource.label_feedback
+        </div>
+        <div class="col-2" style="text-align:right;">
+            <a class="tab" href="#">
+                <img src="~/Content/images/right.svg" width="32" height="32" />
+            </a>
+        </div>
+    </div>
+    <div class="row more-pages">
+        <div class="col-1" style="text-align:left;">
+            <a class="tab" href="#">
+                <img src="~/Content/images/logout.svg" width="32" height="32" />
+            </a>
+        </div>
+        <div class="col-9" style="text-align:left;">
+            @Resources.Resource.label_logout
+        </div>
+        <div class="col-2" style="text-align:right;">
+            <a class="tab" href="#">
+                <img src="~/Content/images/right.svg" width="32" height="32" />
+            </a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.more-pages').click(function () {
+        var url = $(this).attr('data-action');
+
+        if (url !== undefined)
+            window.location.href = url;
+    });
+</script>
