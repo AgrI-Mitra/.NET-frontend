@@ -3,23 +3,17 @@
 }
 
 <div class="chat-container">
-    @if (ViewBag.HasNewSession)
-    {
-        <div id="record-voice" class="record-voice">
-           <div>
-               <button id="inputMainRecordBtn" class="send-button bg-light">
-                   <img id="recordingMainImage" src="/Content/images/startIcon.svg" width="128" height="128" />
-               </button>
-           </div>
+    <div id="record-voice" class="record-voice">
+        <div>
+            <button id="inputMainRecordBtn" class="send-button bg-light">
+                <img id="recordingMainImage" src="/Content/images/startIcon.svg" width="128" height="128" />
+            </button>
         </div>
+    </div>
 
-    }
-    else
-    {
-        <div id="message-list" class="message-list">
+    <div id="message-list" class="message-list">
 
-        </div>
-    }
+    </div>
     <div class="input-container">
         <input id="userQuestionTextBox" type="text" class="message-input border-success" placeholder="@Resources.Resource.message_ask_ur_question">
         <button id="inputBtn" class="send-button bg-success">
@@ -45,9 +39,9 @@
                 </div>
             </div>
             <div class="modal-footer justify-content-center">
-               <button id="identityRecordBtn" class="send-button bg-light">
-                   <img id="identityRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
-               </button>
+                <button id="identityRecordBtn" class="send-button bg-light">
+                    <img id="identityRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
+                </button>
                 <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
                 <button id="submitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
             </div>
@@ -111,11 +105,14 @@
 
     //const verifyRecordBtn = document.getElementById('verifyRecordBtn');
 
+    var hasNewSession = true;
+
     inputRecordBtn.setAttribute('hidden', 'hidden');
 
     $(document).ready(function () {
 
         getLocalStream();
+        NewSessionActive(hasNewSession);
 
         var isRecording = false;
 
@@ -255,6 +252,8 @@
                             if (data.Text !== null) {
                                 message = data.Text;
                                 openModalPopUp(false, data.Text);
+                                hasNewSession = false;
+                                NewSessionActive(hasNewSession);
                             }
 
                             if (data.Error !== null) {
@@ -468,6 +467,20 @@
 
     function renderError(message) {
         toastMessagePopup(message);
+    }
+
+    function NewSessionActive(status) {
+        const recordVoice = document.getElementById('record-voice');
+        const messageList = document.getElementById('message-list');
+        if (status) {
+            $(recordVoice).show();
+            $(messageList).hide();
+        }
+        else {
+            $(recordVoice).hide();
+            $(messageList).show();
+        }
+        console.log('load');
     }
 </script>
 

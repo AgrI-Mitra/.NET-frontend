@@ -47,7 +47,6 @@ namespace KisanEMitra.Controllers
 
             var languageModel = GetSelectedLanguage();
             ViewBag.LanguageModel = languageModel;
-            ViewBag.HasNewSession = true;
             return View();
         }
 
@@ -112,8 +111,6 @@ namespace KisanEMitra.Controllers
             var responseBody = await this.agrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
             if (responseBody == null)
                 return Json(null);
-
-            ViewBag.HasNewSession = false;
 
             return Json(responseBody, JsonRequestBehavior.AllowGet);
         }
