@@ -158,7 +158,7 @@
         // Show Audio button when it is empty
         */
         //START
-        $('#userQuestionTextBox').on('change', function () {
+        $('#userQuestionTextBox').on('change paste keyup input', function () {
             var textValue = $(this).val();
 
             showHideAudioAndTextInputButton(textValue);

@@ -25,8 +25,14 @@ namespace KisanEMitra.Controllers
         {
             return View();
         }
-        public async Task<ActionResult> Index(string fingerPrint)
+        public async Task<ActionResult> Index()
         {
+
+            HttpContext context = System.Web.HttpContext.Current;
+            System.Web.SessionState.SessionIDManager Manager = new System.Web.SessionState.SessionIDManager();
+
+            string fingerPrint = Manager.CreateSessionID(context);
+
             var userSessionID = Session["userSessionID"];
 
             if (userSessionID == null)

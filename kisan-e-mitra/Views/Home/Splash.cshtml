@@ -39,16 +39,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
             setTimeout(function () {
-                const fpPromise = import('https://openfpcdn.io/fingerprintjs/v3')
-                    .then(FingerprintJS => FingerprintJS.load())
 
-                // Get the visitor identifier when you need it.
-                fpPromise.then(fp => fp.get())
-                    .then(result => {
-                        // This is the visitor identifier:
-                        const fingerPrintID = result.visitorId;
-                        window.location.href = '@Url.Action("Index", "Home")?fingerPrint=' + fingerPrintID;
-                    });
+                window.location.href = '@Url.Action("Index", "Home")';
             }, 3000);
         });
     </script>
