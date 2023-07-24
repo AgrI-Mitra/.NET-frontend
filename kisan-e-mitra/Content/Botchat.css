@@ -66,8 +66,8 @@
     border: none;
     border-radius: 40px;
     cursor: pointer;
-    width: 26vw !important;
-    max-width: 100px;
+    /*width: 26vw !important;*/
+    /*max-width: 100px;*/
     font-weight: 700;
     font-size: 15px !important;
 }

@@ -206,10 +206,10 @@
             isRecording = !isRecording;
 
             if (isRecording) {
-                $(recordImageID).attr("src", "/Content/images/stop.gif");
+                $(recordImageID).attr("src", "~/Content/images/stop.gif");
                 startRecording();
             } else {
-                $(recordImageID).attr("src", "/Content/images/startIcon.svg");
+                $(recordImageID).attr("src", "~/Content/images/startIcon.svg");
                 stopRecording();
             }
         }
@@ -372,87 +372,24 @@
     });
 
     var openModalPopUp = function (hasError, message, textInEnglish) {
-        const userQuestionTextBoxValue = document.getElementById('userQuestionTextBox');
-
-        // If message includes one of these texts then we need to open the modal
-        let mobileAdharBenificiaryModalTexts = [
-            "Aadhaar Number / PM KISAN ID / Phone no.",
-            "enter your Mobile",
-
-        ];
-
-        // Aadhar 4 digit modal
-        let aadhar4DigitModalTexts = [
-            "Enter your last 4 digits of Aadhaar"
-        ];
-
-        // If message includes one of these texts then we need to open OTP modal
-        let otpModalTexts = [
-            "OTP",
-        ];
-
-        if (!hasError) {
-
-            // Check if message is asking to enter Mobile/Aadhaar/Benificiary Id
-            let shouldOpenMobileAdharBenificiaryModal = false;
-
-            for (var i = 0; i < mobileAdharBenificiaryModalTexts.length; i++) {
-                let currentMobileAdharBenificiaryModalText = mobileAdharBenificiaryModalTexts[i];
-
-                if (String(textInEnglish).includes(currentMobileAdharBenificiaryModalText)) {
-                    shouldOpenMobileAdharBenificiaryModal = true;
-                    break;
-                }
-            }
-
-            // Check if message is asking to enter aadhar 4 digits
-            let shouldShowAadhar4DigitModal = false;
-
-            for (var i = 0; i < aadhar4DigitModalTexts.length; i++) {
-                let currentaadhar4DigitModalText = aadhar4DigitModalTexts[i];
-
-                if (String(textInEnglish).includes(currentaadhar4DigitModalText)) {
-                    shouldShowAadhar4DigitModal = true;
-                    break;
-                }
-            }
-
-            // Check if message is asking to enter otp
-            let shouldOpenOtpModal = false;
-
-            for (var i = 0; i < otpModalTexts.length; i++) {
-                let currentOtpModalText = otpModalTexts[i];
-
-                if (String(textInEnglish).includes(currentOtpModalText)) {
-                    shouldOpenOtpModal = true;
-                    break;
-                }
-            }
-
-            if (shouldOpenMobileAdharBenificiaryModal) {
-                $("#verifyModal").modal("hide");
-                $("#beneficiaryModal").modal("show");
-            }
-            else if (shouldShowAadhar4DigitModal) {
-                $("#beneficiaryModal").modal("hide");
-                $("#aadhar4DigitModal").modal("show");
-            }
-            else if (shouldOpenOtpModal) {
-                $("#aadhar4DigitModal").modal("hide");
-                $("#verifyModal").modal("show");
-            }
-            else {
-
+            NewSessionActive(false);
+            if(!hasError){
                 var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
                 $('#message-list').append(response.replace(/\n/g, "<br>"));
-                $("#userQuestionTextBox").val('');
+                 
+                if(String(message).toLowerCase() == "invalid otp" || String(message).toLowerCase() == "अमान्य ओ. टी. पी")
+                {
+                      var resendOTPBtn = "<div class='message left'><button class='send-button bg-success' onclick='resendOTP()'>Resend</button></div>";
+                   $('#message-list').append(resendOTPBtn);
+                  }
+                
+                  $("#userQuestionTextBox").val('');
 
                 $("#verifyModal").modal("hide");
                 $("#beneficiaryModal").modal("hide");
                 inputRecordBtn.removeAttribute('hidden', '');
                 inputBtn.setAttribute('hidden', 'hidden');
-                /*userQuestionTextBoxValue.setAttribute('disabled', 'disabled');*/
-            }
+
         }
         else {
             toastMessagePopup(message);
@@ -608,8 +545,7 @@
             //start the recording process
             rec.record();
 
-        }).catch(function (err) {
-        });
+        }).catch(function (err) {});
     }
 
     function stopRecording() {
