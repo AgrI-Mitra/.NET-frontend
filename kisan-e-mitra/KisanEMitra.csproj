@@ -224,6 +224,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Botchat.css" />
     <Content Include="Content\images\c4gt_logo.png" />
+    <Content Include="Content\images\loadingChat.gif" />
     <Content Include="Content\images\right.svg" />
     <Content Include="Content\images\call-icon.svg" />
     <Content Include="Content\images\crossIcon.svg" />

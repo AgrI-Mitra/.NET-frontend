@@ -3,16 +3,7 @@
 }
 
 <div class="chat-container">
-    <div id="record-voice" class="record-voice">
-        <div>
-            <button id="inputMainRecordBtn" class="send-button bg-light">
-                <img id="recordingMainImage" src="/Content/images/startIcon.svg" width="128" height="128" />
-            </button>
-        </div>
-    </div>
-
     <div id="message-list" class="message-list">
-
     </div>
     <div class="input-container">
         <input id="userQuestionTextBox" type="text" class="message-input border-success" placeholder="@Resources.Resource.message_ask_ur_question">
@@ -20,110 +11,17 @@
             @Resources.Resource.label_send
         </button>
         <button id="inputRecordBtn" class="send-button bg-success">
-            <img id="recordingImage" src="/Content/images/startIcon.svg" width="32" height="32" />
+            <img id="recordingImage" src="../Content/images/startIcon.svg" width="26" height="26" />
         </button>
     </div>
 </div>
-<!-- The below code is for the modal dialog -->
-<div class="modal fade" id="beneficiaryModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="ben         * e         *
-        ficiaryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="beneficiaryModalLabel">@Resources.Resource.label_popUpTitle</h1>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <div class="form-group">
-                    <form id="myForm">
-                        <input class="form-control" id="inputText">
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button id="identityRecordBtn" class="send-button bg-light">
-                    <img id="identityRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
-                </button>
-                <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
-                <button id="submitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- The below code is for the aadhar 4 digit modal dialog -->
-<div class="modal fade" id="aadhar4DigitModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="aadhar4DigitModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="aadhar4DigitModallLabel">@Resources.Resource.label_popUpTitle2</h1>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <div class="form-group">
-                    <form id="myForm">
-                        <input class="form-control" id="aadhar4DigitModalInputText">
-                    </form>
-                </div>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button id="aadhar4DigitModalRecordBtn" class="send-button bg-light">
-                    <img id="aadhar4DigitModalRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
-                </button>
-                <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
-                <button id="aadhar4DigitModalSubmitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- The below code is for the modal dialog -->
-<div class="modal fade" id="verifyModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="verifyModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="verifyModallLabel">@Resources.Resource.label_popUpTitle3</h1>
-            </div>
-            <div class="modal-body" id="modalBody">
-                <div class="form-group">
-                    <form id="myForm">
-                        <input class="form-control" id="verifyInputText">
-                    </form>
-                </div>
-            </div>
-            <div style="text-align:center">
-                <span>@Resources.Resource.message_didnt_receive</span> <a href="#" class="link-success">@Resources.Resource.message_resend_again</a>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button id="verifyRecordBtn" class="send-button bg-light">
-                    <img id="verifyRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
-                </button>
-                <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
-                <button id="verifySubmitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
-    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="me-auto">Message</strong>
-            <small></small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-            <p id="toastBody">@Resources.Resource.error_empty_msg</p>
-        </div>
-    </div>
-</div>
 
 <script type="text/javascript">
     var inputTextId = "";
     let chunks = [];
-    initializeAudio();
-    let recorderInstance;
-    const inputBtn = document.getElementById('inputBtn');
 
-    const inputRecordBtn = document.getElementById('inputRecordBtn');
+    var querstionInput = "";
 
     var gumStream; 						//stream from getUserMedia()
     var rec; 							//Recorder.js object
@@ -133,275 +31,108 @@
     var AudioContext = window.AudioContext || window.webkitAudioContext;
     var audioContext //audio context to help us record
 
-    var hasNewSession = true;
-
-    inputRecordBtn.setAttribute('hidden', 'hidden');
-
-
-    function showHideAudioAndTextInputButton(textValue) {
-        if (textValue) {
-            inputRecordBtn.setAttribute('hidden', 'hidden');
-            inputBtn.removeAttribute('hidden', '');
-        } else {
-            inputBtn.setAttribute('hidden', 'hidden');
-            inputRecordBtn.removeAttribute('hidden', '');
-        }
+    function chatLoader() {
+        const responseLoader = "<div id='responseLoader' class='message left'><div class='dot-flashing'></div></div>"
+        $('#message-list').append(responseLoader);
     }
-
+    
     $(document).ready(function () {
-
-        showHideAudioAndTextInputButton($("#userQuestionTextBox").val());
-
-        /**
-        // Keep checking userQuestionTextBox change events
-        // When there is a text written show Send button
-        // Show Audio button when it is empty
-        */
-        //START
-        $('#userQuestionTextBox').on('change paste keyup input', function () {
-            var textValue = $(this).val();
-
-            showHideAudioAndTextInputButton(textValue);
-        });
-        //END
-
-        getLocalStream();
-        NewSessionActive(hasNewSession);
-
+       
         var isRecording = false;
+        getLocalStream();
 
         $("#inputRecordBtn").click(function () {
+            recordAudio(recordImageID);
             inputTextId = "#userQuestionTextBox";
             var recordImageID = "#recordingImage";
-            recordAudio(recordImageID);
-        });
-
-        $("#inputMainRecordBtn").click(function () {
-            inputTextId = "#userQuestionTextBox";
-            var recordImageID = "#recordingMainImage";
-            recordAudio(recordImageID);
-        });
-
-        $("#identityRecordBtn").click(function () {
-            inputTextId = "#inputText";
-            var recordImageID = "#identityRecordImage";
-            recordAudio(recordImageID);
-        });
-
-
-        $("#verifyRecordBtn").click(function () {
-            inputTextId = "#verifyInputText";
-            var recordImageID = "#verifyRecordImage";
-            recordAudio(recordImageID);
-        });
-
-        //aadhar4DigitModalRecordBtn
-        $("#aadhar4DigitModalRecordBtn").click(function () {
-            inputTextId = "#aadhar4DigitModalInputText";
-            var recordImageID = "#aadhar4DigitModalRecordImage";
-            recordAudio(recordImageID);
         });
 
         function recordAudio(recordImageID) {
             isRecording = !isRecording;
 
             if (isRecording) {
-                $(recordImageID).attr("src", "~/Content/images/stop.gif");
+                $(recordImageID).attr("src", "Content/images/stop.gif");
                 startRecording();
             } else {
-                $(recordImageID).attr("src", "~/Content/images/startIcon.svg");
+                $(recordImageID).attr("src", "Content/images/startIcon.svg");
                 stopRecording();
             }
+            console.log('data error');
         }
 
         $(function () {
-
             $('body').on('click', '#inputBtn', function (e) {
                 e.preventDefault();
-                var querstionInput = $('#userQuestionTextBox').val();
-                $("#beneficiaryModal").modal('hide');
-                $("#verifyModal").modal("hide");
+                querstionInput = $('#userQuestionTextBox').val();
                 if (querstionInput) {
                     var userQuery = "<div class='message right'><div class='message-content'>" + querstionInput + "</div></div>";
                     $('#message-list').append(userQuery.replace(/\n/g, "<br>"));
                 }
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Home/AskQuestions",
-                    dataType: "json",
-                    data: { querstion: querstionInput },
-                    success: function (data) {
-                        console.log('data: ', data);
-                        var message = "";
-                        if (data.Text !== null || data.Error !== null) {
-
-                            if (data.Text !== null) {
-                                message = data.Text;
-                                openModalPopUp(false, data.Text, data.textInEnglish);
-                            }
-
-                            if (data.Error !== null) {
-                                message = data.Error;
-                                openModalPopUp(true, message);
-                            }
-
-                        } else {
-                            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-                            $('#message-list').append(response.replace(/\n/g, "<br>"));
-                            $("#userQuestionTextBox").val('');
-                        }
-
-
-                    },
-                    failure: function (data) {
-                    }
-                });
+                chatLoader();
+                askQuestions(querstionInput);
             });
 
-            $('body').on('click', '#submitButton', function (e) {
-                e.preventDefault();
-
-                var inputText = $('#inputText').val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Home/IdentifyUser",
-                    dataType: "json",
-                    data: { identifyID: inputText },
-                    success: function (data) {
-                        console.log("data: ", data);
-                        var message = "";
-                        if (data.Text !== null || data.Error !== null) {
-
-                            if (data.Text !== null) {
-                                message = data.Text;
-                                openModalPopUp(false, data.Text, data.textInEnglish);
-                            }
-
-                            if (data.Error !== null) {
-                                message = data.Error;
-                                openModalPopUp(true, message);
-                            }
-
-                        } else {
-                            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-                            $('#message-list').append(response.replace(/\n/g, "<br>"));
-                            $("#userQuestionTextBox").val('');
-                        }
-                    },
-                    failure: function (data) {
-                    }
-                });
-            });
-
-            $('body').on('click', '#aadhar4DigitModalSubmitButton', function (e) {
-                e.preventDefault();
-                var verifyInputText = $('#aadhar4DigitModalInputText').val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Home/VerifyOTP",
-                    dataType: "json",
-                    data: { otp: verifyInputText },
-                    success: function (data) {
-                        console.log('data: ', data);
-                        var message = "";
-                        if (data.Text !== null || data.Error !== null) {
-
-
-                            if (data.Text !== null) {
-                                message = data.Text;
-                                openModalPopUp(false, data.Text, data.textInEnglish);
-                                hasNewSession = false;
-                                NewSessionActive(hasNewSession);
-                            }
-
-                            if (data.Error !== null) {
-                                message = data.Error;
-                                openModalPopUp(true, message);
-                            }
-                        } else {
-                            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-                            $('#message-list').append(response.replace(/\n/g, "<br>"));
-                            $("#userQuestionTextBox").val('');
-                        }
-                    },
-                    failure: function (data) {
-                    }
-                });
-            });
-
-            $('body').on('click', '#verifySubmitButton', function (e) {
-                e.preventDefault();
-                var verifyInputText = $('#verifyInputText').val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "/Home/VerifyOTP",
-                    dataType: "json",
-                    data: { otp: verifyInputText },
-                    success: function (data) {
-                        console.log('data: ', data);
-                        var message = "";
-                        if (data.Text !== null || data.Error !== null) {
-
-
-                            if (data.Text !== null) {
-                                message = data.Text;
-                                openModalPopUp(false, data.Text, data.textInEnglish);
-                                hasNewSession = false;
-                                NewSessionActive(hasNewSession);
-                            }
-
-                            if (data.Error !== null) {
-                                message = data.Error;
-                                openModalPopUp(true, message);
-                            }
-                        } else {
-                            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-                            $('#message-list').append(response.replace(/\n/g, "<br>"));
-                            $("#userQuestionTextBox").val('');
-                        }
-                    },
-                    failure: function (data) {
-                    }
-                });
-            });
+            //$('body').on('click', '#resendOTP', function (e) {
+            //    e.preventDefault();
+            //    askQuestions('resend OTP');
+            //});
         });
     });
 
-    var openModalPopUp = function (hasError, message, textInEnglish) {
-            NewSessionActive(false);
-            if(!hasError){
-                var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-                $('#message-list').append(response.replace(/\n/g, "<br>"));
-                 
-                if(String(message).toLowerCase() == "invalid otp" || String(message).toLowerCase() == "अमान्य ओ. टी. पी")
-                {
-                      var resendOTPBtn = "<div class='message left'><button class='send-button bg-success' onclick='resendOTP()'>Resend</button></div>";
-                   $('#message-list').append(resendOTPBtn);
-                  }
-                
-                  $("#userQuestionTextBox").val('');
+    function openModalPopUp(hasError, message) {
+        chatResponseView(message);
 
-                $("#verifyModal").modal("hide");
-                $("#beneficiaryModal").modal("hide");
-                inputRecordBtn.removeAttribute('hidden', '');
-                inputBtn.setAttribute('hidden', 'hidden');
-
+        if (String(message).toLowerCase() == "invalid otp" || String(message).toLowerCase() == "अमान्य ओ. टी. पी") {
+            var resendOTPBtn = "<div class='message left'><button class='send-button bg-success' onclick='resendOTP(this);'>Resend OTP</button></div>";
+            $('#message-list').append(resendOTPBtn);
         }
-        else {
-            toastMessagePopup(message);
+        $("#userQuestionTextBox").val('');
+        $('#responseLoader').remove();
+    }
+
+    function resendOTP(element) {
+        $(element).remove();
+        chatLoader();
+        askQuestions('resend OTP');
+    }
+
+    function chatResponseView(message) {
+        if (message!="") {
+        var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+            $('#message-list').append(response.replace(/\n/g, "<br>"));
         }
     }
 
-    var toastMessagePopup = function (message) {
-        const toastBody = document.getElementById('toastBody');
-        const toastLiveExample = document.getElementById('liveToast');
-        toastBody.innerText = message;
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
-        toastBootstrap.show();
+    function askQuestions(input) {
+        $.ajax({
+            type: "POST",
+            url: "/Home/AskQuestions",
+            dataType: "json",
+            data: { querstion: input },
+            success: function (data) {
+                var message = "";
+                if (data.Text !== null || data.Error !== null) {
+
+                    if (data.Text !== null) {
+                        message = data.Text;
+                        openModalPopUp(false, data.Text, data.textInEnglish);
+                    }
+
+                    if (data.Error !== null) {
+                        message = data.Error;
+                        openModalPopUp(true, message);
+                    }
+
+                } else {
+                    var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+                    $('#message-list').append(response.replace(/\n/g, "<br>"));
+                    $("#userQuestionTextBox").val('');
+
+                }
+            },
+            failure: function (data) {
+            }
+        });
     }
 
     function getLocalStream() {
@@ -421,100 +152,9 @@
         });
     }
 
-    function listenStopEvent() {
-        //START To listen recording stop event
-        //recorderInstance.addEventListener('stop', () => {
-        //    const mimeType = 'audio/wav';
-        //    const recording = new Blob(chunks, {
-        //        type: mimeType
-        //    });
-        //    var reader = new window.FileReader();
-        //    reader.readAsDataURL(recording);
-
-        //    reader.onloadend = function () {
-        //        base64 = reader.result;
-        //        base64 = base64.split(',')[1];
-        //        console.log('base64: ', base64);
-
-        //        $.ajax({
-        //            type: "POST",
-        //            url: "/Home/AskAudioQuestions",
-        //            dataType: "json",
-        //            data: { base64Question: base64 },
-        //            success: function (data) {
-        //                console.log("data: ", data);
-        //                var message = "";
-
-        //                if (data.Text !== null || data.Error !== null) {
-
-        //                    if (data.Text !== null) {
-        //                        message = data.Text;
-        //                        //openModalPopUp(false, data.Text);
-        //                        $(inputTextId).val(message);
-        //                    }
-
-        //                    if (data.Error !== null) {
-        //                        message = data.Error;
-        //                        openModalPopUp(true, message);
-        //                    }
-        //                } else {
-        //                    var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
-        //                    $('#message-list').append(response.replace(/\n/g, "<br>"));
-        //                    $("#userQuestionTextBox").val('');
-        //                }
-        //            },
-        //            failure: function (data) {
-        //            }
-        //        });
-        //    }
-        //    chunks = [];
-        //});
-        // END
-    }
-
-    function initializeAudio() {
-
-        //if ('MediaRecorder' in window) {
-        //    try {
-
-        //        navigator.mediaDevices
-        //            .getUserMedia({
-        //                audio: true,
-        //                video: false
-        //            })
-        //            .then((stream) => {
-
-        //                const mimeType = 'audio/webm';
-
-        //                const recorder = new MediaRecorder(stream, { type: mimeType });
-
-        //                recorderInstance = recorder;
-
-        //                listenStopEvent();
-
-        //                recorder.addEventListener('dataavailable', event => {
-        //                    if (typeof event.data === 'undefined') return;
-        //                    if (event.data.size === 0) return;
-        //                    chunks.push(event.data);
-        //                });
-        //            })
-        //            .catch((err) => {
-
-        //            });
-
-        //    } catch (error) {
-        //        renderError(
-        //            'You denied access to the microphone so this demo will not work.'
-        //        );
-        //    }
-        //} else {
-        //}
-    }
-
     function startRecording() {
 
         var constraints = { audio: true, video: false }
-
         /*
             We're using the standard promise based getUserMedia()
             https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
@@ -566,10 +206,11 @@
 
         reader.onloadend = function () {
             base64 = reader.result;
-            console.log('reader.result: ', reader.result);
+            //console.log('reader.result: ', reader.result);
             base64 = base64.split(',')[1];
-            console.log('base64 wav: ', base64);
-
+            //console.log('base64 wav: ', base64);
+            loadAudioPlayer(blob);
+            chatLoader();
             $.ajax({
                 type: "POST",
                 url: "/Home/AskAudioQuestions",
@@ -583,9 +224,8 @@
 
                         if (data.Text !== null) {
                             message = data.Text;
-                            //openModalPopUp(false, data.Text);
                             $(inputTextId).val(message);
-                            showHideAudioAndTextInputButton($("#userQuestionTextBox").val());
+                            openModalPopUp(false, data.Text);
                         }
 
                         if (data.Error !== null) {
@@ -596,6 +236,7 @@
                         var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
                         $('#message-list').append(response.replace(/\n/g, "<br>"));
                         $("#userQuestionTextBox").val('');
+                        $('#responseLoader').remove();
                     }
                 },
                 failure: function (data) {
@@ -604,22 +245,29 @@
         }
     }
 
-
     function renderError(message) {
-        toastMessagePopup(message);
+        chatResponseView(message);
     }
 
-    function NewSessionActive(status) {
-        const recordVoice = document.getElementById('record-voice');
-        const messageList = document.getElementById('message-list');
-        if (status) {
-            $(recordVoice).show();
-            $(messageList).hide();
-        }
-        else {
-            $(recordVoice).hide();
-            $(messageList).show();
-        }
+    function loadAudioPlayer(blob) {
+        const blobUrl = URL.createObjectURL(blob);
+        const div = document.createElement('div');
+        div.className = "message right";
+        const audio = document.createElement('audio');
+        const anchor = document.createElement('a');
+        anchor.setAttribute('href', blobUrl);
+        const now = new Date();
+        anchor.setAttribute(
+            'download',
+            `recording-${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDay().toString().padStart(2, '0')}--${now.getHours().toString().padStart(2, '0')}-${now.getMinutes().toString().padStart(2, '0')}-${now.getSeconds().toString().padStart(2, '0')}.webm`
+        );
+        audio.setAttribute('src', blobUrl);
+        audio.setAttribute('controls', 'controls');
+        div.appendChild(audio);
+        div.appendChild(anchor);
+        $('#message-list').append(div);
+
     }
+
 </script>
 
