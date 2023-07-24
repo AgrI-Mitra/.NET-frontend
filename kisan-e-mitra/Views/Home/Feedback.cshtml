@@ -81,13 +81,13 @@
     });
 
     function giveRating(img, image) {
-        img.attr("src", "~/Content/Images/" + image)
-            .prevAll("img").attr("src", "~/Content/Images/" + image);
+        img.attr("src", "../Content/Images/" + image)
+            .prevAll("img").attr("src", "../Content/Images/" + image);
     }
 
     function removeRating(img, image) {
-        img.attr("src", "~/Content/Images/" + image)
-            .nextAll("img").attr("src", "~/Content/Images/" + image);
+        img.attr("src", "../Content/Images/" + image)
+            .nextAll("img").attr("src", "../Content/Images/" + image);
     }
 
     $(function () {

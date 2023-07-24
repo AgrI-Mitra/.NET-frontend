@@ -213,10 +213,10 @@
             isRecording = !isRecording;
 
             if (isRecording) {
-                $(recordImageID).attr("src", "~/Content/images/stop.gif");
+                $(recordImageID).attr("src", "../Content/images/stop.gif");
                 startRecording();
             } else {
-                $(recordImageID).attr("src", "~/Content/images/startIcon.svg");
+                $(recordImageID).attr("src", "../Content/images/startIcon.svg");
                 stopRecording();
             }
         }
@@ -446,6 +446,7 @@
             }
             else if (shouldOpenOtpModal) {
                 $("#aadhar4DigitModal").modal("hide");
+                $("#beneficiaryModal").modal("hide");
                 $("#verifyModal").modal("show");
             }
             else {
