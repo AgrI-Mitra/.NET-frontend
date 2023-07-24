@@ -6,7 +6,7 @@
     <div id="record-voice" class="record-voice">
         <div>
             <button id="inputMainRecordBtn" class="send-button bg-light">
-                <img id="recordingMainImage" src="/Content/images/startIcon.svg" width="128" height="128" />
+                <img id="recordingMainImage" src="~/Content/images/startIcon.svg" width="128" height="128" />
             </button>
         </div>
     </div>
@@ -20,7 +20,7 @@
             @Resources.Resource.label_send
         </button>
         <button id="inputRecordBtn" class="send-button bg-success">
-            <img id="recordingImage" src="/Content/images/startIcon.svg" width="32" height="32" />
+            <img id="recordingImage" src="~/Content/images/startIcon.svg" width="32" height="32" />
         </button>
     </div>
 </div>
@@ -41,7 +41,7 @@
             </div>
             <div class="modal-footer justify-content-center">
                 <button id="identityRecordBtn" class="send-button bg-light">
-                    <img id="identityRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
+                    <img id="identityRecordImage" src="~/Content/images/startIcon.svg" width="32" height="32" />
                 </button>
                 <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
                 <button id="submitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
@@ -66,7 +66,7 @@
             </div>
             <div class="modal-footer justify-content-center">
                 <button id="aadhar4DigitModalRecordBtn" class="send-button bg-light">
-                    <img id="aadhar4DigitModalRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
+                    <img id="aadhar4DigitModalRecordImage" src="~/Content/images/startIcon.svg" width="32" height="32" />
                 </button>
                 <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
                 <button id="aadhar4DigitModalSubmitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
@@ -94,7 +94,7 @@
             </div>
             <div class="modal-footer justify-content-center">
                 <button id="verifyRecordBtn" class="send-button bg-light">
-                    <img id="verifyRecordImage" src="/Content/images/startIcon.svg" width="32" height="32" />
+                    <img id="verifyRecordImage" src="~/Content/images/startIcon.svg" width="32" height="32" />
                 </button>
                 <button type="button" class="send-button bg-success" data-bs-dismiss="modal">@Resources.Resource.label_close</button>
                 <button id="verifySubmitButton" type="button" class="send-button bg-success">@Resources.Resource.label_submit</button>
@@ -117,6 +117,13 @@
 </div>
 
 <script type="text/javascript">
+
+    var askQuestionApiUrl = '@Url.Action("AskQuestions", "Home")';
+    var identifyUserApiUrl = '@Url.Action("IdentifyUser", "Home")';
+    var verifyOTPApiUrl = '@Url.Action("VerifyOTP", "Home")';
+    var askAudioQuestionsApiUrl = '@Url.Action("AskAudioQuestions", "Home")';
+    
+
     var inputTextId = "";
     let chunks = [];
     initializeAudio();
@@ -206,10 +213,10 @@
             isRecording = !isRecording;
 
             if (isRecording) {
-                $(recordImageID).attr("src", "/Content/images/stop.gif");
+                $(recordImageID).attr("src", "~/Content/images/stop.gif");
                 startRecording();
             } else {
-                $(recordImageID).attr("src", "/Content/images/startIcon.svg");
+                $(recordImageID).attr("src", "~/Content/images/startIcon.svg");
                 stopRecording();
             }
         }
@@ -228,7 +235,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/Home/AskQuestions",
+                    url: askQuestionApiUrl,
                     dataType: "json",
                     data: { querstion: querstionInput },
                     success: function (data) {
@@ -266,7 +273,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/Home/IdentifyUser",
+                    url: identifyUserApiUrl,
                     dataType: "json",
                     data: { identifyID: inputText },
                     success: function (data) {
@@ -301,7 +308,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/Home/VerifyOTP",
+                    url: verifyOTPApiUrl,
                     dataType: "json",
                     data: { otp: verifyInputText },
                     success: function (data) {
@@ -338,7 +345,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/Home/VerifyOTP",
+                    url: verifyOTPApiUrl,
                     dataType: "json",
                     data: { otp: verifyInputText },
                     success: function (data) {
@@ -636,7 +643,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/Home/AskAudioQuestions",
+                url: askAudioQuestionsApiUrl,
                 dataType: "json",
                 data: { base64Question: base64 },
                 success: function (data) {

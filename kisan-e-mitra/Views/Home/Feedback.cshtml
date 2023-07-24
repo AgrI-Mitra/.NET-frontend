@@ -71,6 +71,8 @@
 </div>
 
 <script type="text/javascript">
+    var submitRatingApiUrl = '@Url.Action("SubmitRating", "Home")';
+    var submitReviewApiUrl = '@Url.Action("SubmitReview", "Home")';
 
     var rating = 0;
 
@@ -79,13 +81,13 @@
     });
 
     function giveRating(img, image) {
-        img.attr("src", "/Content/Images/" + image)
-            .prevAll("img").attr("src", "/Content/Images/" + image);
+        img.attr("src", "~/Content/Images/" + image)
+            .prevAll("img").attr("src", "~/Content/Images/" + image);
     }
 
     function removeRating(img, image) {
-        img.attr("src", "/Content/Images/" + image)
-            .nextAll("img").attr("src", "/Content/Images/" + image);
+        img.attr("src", "~/Content/Images/" + image)
+            .nextAll("img").attr("src", "~/Content/Images/" + image);
     }
 
     $(function () {
@@ -103,7 +105,7 @@
         if (rating > 0) {
             $.ajax({
                 type: "POST",
-                url: "/Home/SubmitRating",
+                url: submitRatingApiUrl,
                 dataType: "json",
                 data: { rating: rating },
                 success: function (data) {
@@ -122,7 +124,7 @@
         console.log('review: ', review);
         $.ajax({
             type: "POST",
-            url: "/Home/SubmitReview",
+            url: submitReviewApiUrl,
             dataType: "json",
             data: { review: review },
             success: function (data) {

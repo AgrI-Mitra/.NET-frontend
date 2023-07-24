@@ -50,6 +50,8 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
+    var changeLanguageApiUrl = '@Url.Action("ChangeLanguage", "Home")';
+
         $(document).ready(function () {
 
             $("#ddlLanguage").val("@ViewBag.LanguageModel.SelectedLanguage");
@@ -60,7 +62,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/Home/ChangeLanguage",
+                    url: changeLanguageApiUrl,
                     dataType: "json",
                     data: { lang: selValue },
                     success: function (data) {
