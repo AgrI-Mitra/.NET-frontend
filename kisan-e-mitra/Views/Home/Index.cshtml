@@ -124,12 +124,13 @@
                 var message = "";
 
                 const contentType = 'audio/wav';
+
                 if (data?.audio?.text) {
                     const blob = b64toBlob(data.audio.text, contentType);
                     loadAudioPlayer(blob, "left");
                 }
 
-                else if (data.Text !== null || data.Error !== null) {
+                if (data.Text !== null || data.Error !== null) {
 
                     if (data.Text !== null) {
                         message = data.Text;
