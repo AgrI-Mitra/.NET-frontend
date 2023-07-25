@@ -112,7 +112,7 @@
 
     function askQuestions(input) {
         chatLoader();
-
+        $("#userQuestionTextBox").val('');
         $.ajax({
             type: "POST",
             url: "/Home/AskQuestions",
