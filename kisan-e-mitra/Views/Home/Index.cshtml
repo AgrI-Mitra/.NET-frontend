@@ -36,6 +36,10 @@
         $('#message-list').append(responseLoader);
     }
 
+    function hideChatLoader() {
+        $('#responseLoader').remove();
+    }
+
     $(document).ready(function () {
 
         var isRecording = false;
@@ -68,7 +72,6 @@
                     var userQuery = "<div class='message right'><div class='message-content'>" + querstionInput + "</div></div>";
                     $('#message-list').append(userQuery.replace(/\n/g, "<br>"));
                 }
-                chatLoader();
                 askQuestions(querstionInput);
             });
 
@@ -96,7 +99,6 @@
 
     function resendOTP(element) {
         $(element).remove();
-        chatLoader();
         askQuestions('resend OTP');
     }
 
@@ -108,15 +110,26 @@
     }
 
     function askQuestions(input) {
+        chatLoader();
+
         $.ajax({
             type: "POST",
             url: "/Home/AskQuestions",
             dataType: "json",
             data: { querstion: input },
             success: function (data) {
+
+                hideChatLoader();
                 console.log('ask question data: ', data);
                 var message = "";
-                if (data.Text !== null || data.Error !== null) {
+
+                const contentType = 'audio/wav';
+                if (data?.audio?.text) {
+                    const blob = b64toBlob(data.audio.text, contentType);
+                    loadAudioPlayer(blob, "left");
+                }
+
+                else if (data.Text !== null || data.Error !== null) {
 
                     if (data.Text !== null) {
                         message = data.Text;
@@ -224,7 +237,7 @@
                 success: function (data) {
                     console.log("AskAudioQuestions data: ", data);
                     var message = "";
-                    $('#responseLoader').remove();
+                    hideChatLoader();
                     if (data.Text) {
                         showUserRecordedMessageInTextBox(data.Text);
                     }
@@ -257,10 +270,10 @@
         chatResponseView(message);
     }
 
-    function loadAudioPlayer(blob) {
+    function loadAudioPlayer(blob, alignment = 'right') {
         const blobUrl = URL.createObjectURL(blob);
         const div = document.createElement('div');
-        div.className = "message right";
+        div.className = "message " + alignment;
         const audio = document.createElement('audio');
         const anchor = document.createElement('a');
         anchor.setAttribute('href', blobUrl);
@@ -275,6 +288,26 @@
         div.appendChild(anchor);
         $('#message-list').append(div);
 
+    }
+
+    const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+        const byteCharacters = atob(b64Data);
+        const byteArrays = [];
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+
+        const blob = new Blob(byteArrays, { type: contentType });
+        return blob;
     }
 
 </script>
