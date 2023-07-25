@@ -40,7 +40,25 @@
         $('#responseLoader').remove();
     }
 
+    function enableDisableSendButton(textValue){
+        if(textValue){
+                $("#inputBtn").removeAttr('disabled');
+
+            } else {
+               $("#inputBtn").attr('disabled', 'disabled');
+      }
+    }
+
     $(document).ready(function () {
+
+        enableDisableSendButton();
+
+        $('#userQuestionTextBox').on('change paste keyup input', function () {
+            var textValue = $(this).val();
+
+            // If value is there then only keep the send button enabled else keep it disabled.
+            enableDisableSendButton(textValue);
+        });
 
         var isRecording = false;
         getLocalStream();
@@ -54,15 +72,16 @@
         function recordAudio(recordImageID) {
             isRecording = !isRecording;
 
-            console.log('isRecording: ', isRecording);
             if (isRecording) {
                 $(recordImageID).attr("src", "../Content/images/stop.gif");
+
+                $("#inputBtn").attr('disabled', 'disabled');
                 startRecording();
             } else {
                 $(recordImageID).attr("src", "../Content/images/startIcon.svg");
+                $("#inputBtn").removeAttr('disabled');
                 stopRecording();
             }
-            console.log('data error');
         }
 
         $(function () {
@@ -94,7 +113,7 @@
             var resendOTPBtn = "<div class='message left'><button class='send-button bg-success' onclick='resendOTP(this);'>Resend OTP</button></div>";
             $('#message-list').append(resendOTPBtn);
         }
-        $("#userQuestionTextBox").val('');
+        $("#userQuestionTextBox").val('').change();
         $('#responseLoader').remove();
     }
 
@@ -112,7 +131,7 @@
 
     function askQuestions(input) {
         chatLoader();
-        $("#userQuestionTextBox").val('');
+        $("#userQuestionTextBox").val('').change();
 
         scrollToBottom();
         $.ajax({
@@ -123,7 +142,6 @@
             success: function (data) {
 
                 hideChatLoader();
-                console.log('ask question data: ', data);
                 var message = "";
 
                 const contentType = 'audio/wav';
@@ -148,8 +166,7 @@
                 } else {
                     var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
                     $('#message-list').append(response.replace(/\n/g, "<br>"));
-                    $("#userQuestionTextBox").val('');
-
+                    $("#userQuestionTextBox").val('').change();
                 }
 
                 scrollToBottom();
@@ -246,7 +263,6 @@
                 dataType: "json",
                 data: { base64Question: base64 },
                 success: function (data) {
-                    console.log("AskAudioQuestions data: ", data);
                     var message = "";
                     hideChatLoader();
                     if (data.Text) {
@@ -267,7 +283,7 @@
                     } else {
                         var response = "<div class='message right'><div class='message-content'>" + message + "</div></div>";
                         $('#message-list').append(response.replace(/\n/g, "<br>"));
-                        $("#userQuestionTextBox").val('');
+                        $("#userQuestionTextBox").val('').change();
                         $('#responseLoader').remove();
                     }
 

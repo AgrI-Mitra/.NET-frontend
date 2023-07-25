@@ -12,12 +12,12 @@
     padding: 10px;
 }
 
-    .record-voice div {
-        height: 70vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+.record-voice div {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .message-list {
     flex-grow: 1;
@@ -39,6 +39,10 @@
     justify-content: flex-end;
 }
 
+.right div.message-content {
+    background-color: rgba(33, 150, 83, 0.2) !important;
+}
+
 .message-content {
     background-color: #fff;
     padding: 10px;
@@ -49,6 +53,7 @@
     display: flex;
     align-items: center;
     margin-top: -10px;
+    z-index: 999999;
 }
 
 .message-input {
@@ -72,9 +77,15 @@
     font-size: 15px !important;
 }
 
-    .send-button:hover {
-        background-color: #0069d9;
-    }
+.send-button:hover {
+    background-color: #0069d9;
+}
+
+.send-button:disabled,
+.send-button[disabled] {
+    background-color: lightgray !important;
+    color: gray;
+}
 
 .page-title {
     margin-top: 4vh;
@@ -112,9 +123,9 @@
     color: #219653 !important;
 }
 
-    .dial-info :hover {
-        color: #219653 !important;
-    }
+.dial-info :hover {
+    color: #219653 !important;
+}
 
 .faq-buttons {
     font-size: 1.65vh !important;
@@ -127,15 +138,15 @@
     background-color: #219653 !important;
 }
 
-    .faq-buttons a {
-        text-decoration: none;
-        color: #fff;
-    }
+.faq-buttons a {
+    text-decoration: none;
+    color: #fff;
+}
 
-        .faq-buttons a:hover {
-            color: #fff;
-            text-decoration: none;
-        }
+.faq-buttons a:hover {
+    color: #fff;
+    text-decoration: none;
+}
 
 .faq-connect-card textarea {
     padding: 5px;
@@ -158,34 +169,34 @@
     animation-delay: 0.5s;
 }
 
-    .dot-flashing::before, .dot-flashing::after {
-        content: "";
-        display: inline-block;
-        position: absolute;
-        top: 0;
-    }
+.dot-flashing::before, .dot-flashing::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+}
 
-    .dot-flashing::before {
-        left: -15px;
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        background-color: #219653;
-        color: #219653;
-        animation: dot-flashing 1s infinite alternate;
-        animation-delay: 0s;
-    }
+.dot-flashing::before {
+    left: -15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #219653;
+    color: #219653;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 0s;
+}
 
-    .dot-flashing::after {
-        left: 15px;
-        width: 10px;
-        height: 10px;
-        border-radius: 5px;
-        background-color: #219653;
-        color: #219653;
-        animation: dot-flashing 1s infinite alternate;
-        animation-delay: 1s;
-    }
+.dot-flashing::after {
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #219653;
+    color: #219653;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 1s;
+}
 
 @keyframes dot-flashing {
     0% {
