@@ -281,7 +281,7 @@
                             openModalPopUp(message);
                         }
                     } else {
-                        var response = "<div class='message right'><div class='message-content'>" + message + "</div></div>";
+                        var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
                         $('#message-list').append(response.replace(/\n/g, "<br>"));
                         $("#userQuestionTextBox").val('').change();
                         $('#responseLoader').remove();
