@@ -10,5 +10,12 @@ namespace kishan_bot.Models
         public string textInEnglish { get; set; }
         public string Text { get; set; }
         public string Error { get; set; }
+        public SiteResponseAudioBody audio { get; set; }
+    }
+
+    public class SiteResponseAudioBody
+    {
+        public string text { get; set; }
+        public string error { get; set; }
     }
 }

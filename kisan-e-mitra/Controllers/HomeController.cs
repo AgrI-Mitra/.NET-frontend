@@ -25,6 +25,18 @@ namespace KisanEMitra.Controllers
         {
             return View();
         }
+
+        public ActionResult Logout()
+        {
+            HttpContext context = System.Web.HttpContext.Current;
+            System.Web.SessionState.SessionIDManager Manager = new System.Web.SessionState.SessionIDManager();
+
+            Manager.RemoveSessionID(context);
+
+            Session.RemoveAll();
+
+            return View("Index");
+        }
         public async Task<ActionResult> Index()
         {
 

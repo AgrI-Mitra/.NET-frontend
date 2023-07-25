@@ -35,9 +35,9 @@
         const responseLoader = "<div id='responseLoader' class='message left'><div class='dot-flashing'></div></div>"
         $('#message-list').append(responseLoader);
     }
-    
+
     $(document).ready(function () {
-       
+
         var isRecording = false;
         getLocalStream();
 
@@ -79,7 +79,11 @@
         });
     });
 
-    function openModalPopUp(hasError, message) {
+    function showUserRecordedMessageInTextBox(message) {
+        $("#userQuestionTextBox").val(message);
+    }
+
+    function openModalPopUp(message) {
         chatResponseView(message);
 
         if (String(message).toLowerCase() == "invalid otp" || String(message).toLowerCase() == "अमान्य ओ. टी. पी") {
@@ -97,8 +101,8 @@
     }
 
     function chatResponseView(message) {
-        if (message!="") {
-        var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+        if (message != "") {
+            var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
             $('#message-list').append(response.replace(/\n/g, "<br>"));
         }
     }
@@ -110,17 +114,18 @@
             dataType: "json",
             data: { querstion: input },
             success: function (data) {
+                console.log('ask question data: ', data);
                 var message = "";
                 if (data.Text !== null || data.Error !== null) {
 
                     if (data.Text !== null) {
                         message = data.Text;
-                        openModalPopUp(false, data.Text, data.textInEnglish);
+                        openModalPopUp(data.Text, data.textInEnglish);
                     }
 
                     if (data.Error !== null) {
                         message = data.Error;
-                        openModalPopUp(true, message);
+                        openModalPopUp(message);
                     }
 
                 } else {
@@ -185,7 +190,7 @@
             //start the recording process
             rec.record();
 
-        }).catch(function (err) {});
+        }).catch(function (err) { });
     }
 
     function stopRecording() {
@@ -217,23 +222,26 @@
                 dataType: "json",
                 data: { base64Question: base64 },
                 success: function (data) {
-                    console.log("data: ", data);
+                    console.log("AskAudioQuestions data: ", data);
                     var message = "";
-
-                    if (data.Text !== null || data.Error !== null) {
+                    $('#responseLoader').remove();
+                    if (data.Text) {
+                        showUserRecordedMessageInTextBox(data.Text);
+                    }
+                    else if (data.Text !== null || data.Error !== null) {
 
                         if (data.Text !== null) {
                             message = data.Text;
                             $(inputTextId).val(message);
-                            openModalPopUp(false, data.Text);
+                            openModalPopUp(data.Text);
                         }
 
                         if (data.Error !== null) {
                             message = data.Error;
-                            openModalPopUp(true, message);
+                            openModalPopUp(message);
                         }
                     } else {
-                        var response = "<div class='message left'><div class='message-content'>" + message + "</div></div>";
+                        var response = "<div class='message right'><div class='message-content'>" + message + "</div></div>";
                         $('#message-list').append(response.replace(/\n/g, "<br>"));
                         $("#userQuestionTextBox").val('');
                         $('#responseLoader').remove();
