@@ -113,6 +113,8 @@
     function askQuestions(input) {
         chatLoader();
         $("#userQuestionTextBox").val('');
+
+        scrollToBottom();
         $.ajax({
             type: "POST",
             url: "/Home/AskQuestions",
@@ -149,10 +151,16 @@
                     $("#userQuestionTextBox").val('');
 
                 }
+
+                scrollToBottom();
             },
             failure: function (data) {
             }
         });
+    }
+
+    function scrollToBottom() {
+        $("#message-list").animate({ scrollTop: $('#message-list').prop("scrollHeight") }, 500);
     }
 
     function getLocalStream() {
@@ -231,6 +239,7 @@
             //console.log('base64 wav: ', base64);
             loadAudioPlayer(blob);
             chatLoader();
+            scrollToBottom();
             $.ajax({
                 type: "POST",
                 url: "/Home/AskAudioQuestions",
@@ -261,6 +270,8 @@
                         $("#userQuestionTextBox").val('');
                         $('#responseLoader').remove();
                     }
+
+                    scrollToBottom();
                 },
                 failure: function (data) {
                 }
