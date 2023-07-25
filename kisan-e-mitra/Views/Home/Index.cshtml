@@ -11,7 +11,7 @@
             @Resources.Resource.label_send
         </button>
         <button id="inputRecordBtn" class="send-button bg-success">
-            <img id="recordingImage" src="../Content/images/startIcon.svg" width="26" height="26" />
+            <img id="recordingImage" src="~/Content/images/startIcon.svg" width="26" height="26" />
         </button>
     </div>
 </div>
@@ -46,19 +46,20 @@
         getLocalStream();
 
         $("#inputRecordBtn").click(function () {
-            recordAudio(recordImageID);
             inputTextId = "#userQuestionTextBox";
             var recordImageID = "#recordingImage";
+            recordAudio(recordImageID);
         });
 
         function recordAudio(recordImageID) {
             isRecording = !isRecording;
 
+            console.log('isRecording: ', isRecording);
             if (isRecording) {
-                $(recordImageID).attr("src", "Content/images/stop.gif");
+                $(recordImageID).attr("src", "../Content/images/stop.gif");
                 startRecording();
             } else {
-                $(recordImageID).attr("src", "Content/images/startIcon.svg");
+                $(recordImageID).attr("src", "../Content/images/startIcon.svg");
                 stopRecording();
             }
             console.log('data error');
