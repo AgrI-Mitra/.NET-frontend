@@ -1,12 +1,21 @@
 ﻿/* Set padding to keep content from hitting the edges */
-html, body {
-   background-color: rgb(246, 249, 254) !important;
+
+
+@font-face {
+    font-family: Mulish-regular, sans-serif;
+    src: url('../Font//Mulish-Regular.a4c4b1ab.ttf');
 }
-.main-page-content{
+
+html, body {
+    background-color: rgb(246, 249, 254) !important;
+    font-family: Mulish-regular, sans-serif;
+}
+
+.main-page-content {
     height: 500px;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: Mulish-regular, sans-serif;
     display: flex;
     flex-direction: column;
     /*background: #d0d0d0;*/
@@ -35,20 +44,22 @@ html, body {
 }
 
 .bottom-container {
-    display:flex;
+    display: flex;
     flex-direction: column;
 }
 
 .chatbox {
     flex: 1;
-    flex-shrink:2;
+    flex-shrink: 2;
     margin-bottom: 10px;
     padding: 10px;
     background-color: #ffffff;
 }
-.chatbox input{
-    width:90%;
-}
+
+    .chatbox input {
+        width: 90%;
+    }
+
     .chatbox button {
         width: 100px;
         background-color: #219653;
