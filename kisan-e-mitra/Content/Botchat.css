@@ -46,6 +46,7 @@
     background-color: #fff;
     padding: 10px;
     border-radius: 25px;
+    line-break: anywhere;
 }
 
 .input-container {
@@ -169,6 +170,7 @@ div.more-page-label {
 .dot-flashing {
     position: relative;
     margin-top: 30px;
+    margin-left: 0.5rem !important;
     width: 10px;
     height: 10px;
     border-radius: 5px;
@@ -231,4 +233,12 @@ audio {
 .avatar-img{
     width: 45px !important;
     height:100%;
+}
+
+.welcome-message-container{
+    padding: 20px 0px;
+}
+
+.language-buttons{
+    margin-top: 10px;
 }

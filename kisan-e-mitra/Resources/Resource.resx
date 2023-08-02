@@ -339,6 +339,9 @@
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>Please wait before resending OTP</value>
   </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>Hey there, I am KISAN MITRA. Your Personal Digital Assistant. Please let me know how can I help you?</value>
+  </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>Successfully disliked the response</value>
   </data>

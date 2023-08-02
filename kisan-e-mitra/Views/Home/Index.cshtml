@@ -3,7 +3,30 @@
 }
 
 <div class="chat-container container-fluid">
+    
     <div id="message-list" class="message-list">
+        <div id="welcome-message" class="welcome-message-container">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">
+                        @Resources.Resource.message_welcome_greeting
+                    </p>
+                    @foreach (var language in ViewBag.LanguageModel.Languages)
+                    {
+                        if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
+                        {
+                            <button type="button" class="btn btn-outline-primary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-outline-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
     </div>
     <div class="input-container d-flex flex-row container-fluid">
         <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" placeholder="@Resources.Resource.message_ask_ur_question">
@@ -34,7 +57,7 @@
     var audioContext //audio context to help us record
 
     function chatLoader() {
-        const responseLoader = "<div id='responseLoader' class='message left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='ms-2 dot-flashing'></div></div>"
+        const responseLoader = "<div id='responseLoader' class='message left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'> <div class='dot-flashing-container ms-3'><div class='ms-2 dot-flashing'></div></div></div>"
         $('#message-list').append(responseLoader);
     }
 
@@ -125,7 +148,7 @@
         $("#userQuestionTextBox").val('');
         $("#userQuestionTextBox").trigger('change');
 
-        $('#responseLoader').remove();
+        hideChatLoader();
     }
 
     function resendOTP(element) {
@@ -300,7 +323,7 @@
                         $("#userQuestionTextBox").val('');
                         $("#userQuestionTextBox").trigger('change');
 
-                        $('#responseLoader').remove();
+                        hideChatLoader();
                     }
 
                     scrollToBottom();
@@ -370,6 +393,21 @@
 
         const blob = new Blob(byteArrays, { type: contentType });
         return blob;
+    }
+
+    function changeLanguage(language) {
+        $.ajax({
+            type: "POST",
+            url: "/Home/ChangeLanguage",
+            dataType: "json",
+            data: { lang: language },
+            success: function (data) {
+                location.reload();
+            },
+            failure: function (data) {
+                alert('oops something went wrong');
+            }
+        });
     }
 
 </script>

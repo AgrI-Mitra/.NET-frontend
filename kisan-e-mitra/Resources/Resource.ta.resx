@@ -339,6 +339,9 @@
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>OTP மீண்டும் அனுப்புவதற்கு தயாராக இருக்கவும்</value>
   </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>ஏய், நான் கிசான் மித்ரா. உங்கள் தனிப்பட்ட டிஜிட்டல் உதவியாளர். தயவு செய்து நான் உங்களுக்கு எப்படி உதவ முடியும் என்பதைத் தெரிவிக்கவும்?</value>
+  </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>பதிலை விருப்பத்தை அகற்றுகின்றீர்கள் என்பதை வெற்றிகரமாக அமைத்துக் கொண்டீர்கள்</value>
   </data>

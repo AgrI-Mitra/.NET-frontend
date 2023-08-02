@@ -339,6 +339,9 @@
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>ওটিপি পুনরায় পাঠানোর আগে অনুগ্রহ করে অপেক্ষা করুন</value>
   </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>এই যে, আমি কিষাণ মিত্র। আপনার ব্যক্তিগত ডিজিটাল সহকারী। আমি আপনাকে কিভাবে সাহায্য করতে পারেন দয়া করে আমাকে জানান?</value>
+  </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>সাফল্যের সাথে প্রতিক্রিয়াটি অপছন্দ হয়েছে</value>
   </data>

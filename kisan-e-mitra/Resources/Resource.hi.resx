@@ -339,6 +339,9 @@
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>ओटीपी फिर से भेजने से पहले कृपया प्रतीक्षा करें</value>
   </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>नमस्ते, मैं किसान मित्र हूं। आपका व्यक्तिगत डिजिटल सहायक। कृपया मुझे बताएं कि मैं आपकी कैसे मदद कर सकता हूं?</value>
+  </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>सफलतापूर्वक प्रतिक्रिया नापसंद की गई</value>
   </data>

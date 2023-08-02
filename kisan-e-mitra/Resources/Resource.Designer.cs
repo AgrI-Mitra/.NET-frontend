@@ -727,6 +727,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hey there, I am KISAN MITRA. Your Personal Digital Assistant. Please let me know how can I help you?.
+        /// </summary>
+        public static string message_welcome_greeting {
+            get {
+                return ResourceManager.GetString("message.welcome_greeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Successfully disliked the response.
         /// </summary>
         public static string toast_reaction_dislike {
