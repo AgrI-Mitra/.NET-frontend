@@ -72,32 +72,6 @@ namespace KisanEMitra.Services
             return siteUserBody;
         }
 
-        public async Task<SiteResponseBody> VerifyOTP(string UserID, UserQueryBody UserQuery)
-        {
-            var siteUserBody = new SiteResponseBody();
-            try
-            {
-                this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
-                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
-                if (response.StatusCode == System.Net.HttpStatusCode.Created)
-                {
-                    siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
-                }
-                else
-                {
-                    siteUserBody.Text = response.ReasonPhrase;
-                    siteUserBody.Error = response.StatusCode.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                siteUserBody.Text = "Rest API call issue.";
-                siteUserBody.Error = ex.Message;
-            }
-
-            return siteUserBody;
-        }
-
         public async Task<SiteResponseBody> AskQuestionAsync(string UserID, UserQueryBody UserQuery)
         {
             var siteUserBody = new SiteResponseBody();

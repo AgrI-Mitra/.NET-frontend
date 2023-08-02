@@ -1,14 +1,10 @@
 ﻿using KisanEMitra.Models;
 using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using WebGrease.Activities;
 
 namespace KisanEMitra.Controllers
 {
@@ -100,23 +96,6 @@ namespace KisanEMitra.Controllers
             };
 
             var responseBody = await this.agrimitraService.IdentifyUser(userSessionID, userQueryBody);
-            if (responseBody == null)
-                return Json(null);
-
-            return Json(responseBody, JsonRequestBehavior.AllowGet);
-        }
-
-
-        [HttpPost]
-        public async Task<JsonResult> VerifyOTP(string otp)
-        {
-            var userSessionID = (string)Session["userSessionID"];
-            var userQueryBody = new UserQueryBody()
-            {
-                Text = otp,
-                inputLanguage = GetSelectedLanguage().SelectedLanguage
-            };
-            var responseBody = await this.agrimitraService.VerifyOTP(userSessionID, userQueryBody);
             if (responseBody == null)
                 return Json(null);
 
@@ -218,13 +197,6 @@ namespace KisanEMitra.Controllers
             return File(fullName, "application/pdf", filename);
         }
 
-        public FileResult download(string filename)
-        {
-            string fullName = Server.MapPath("~" + "/Content/Files/" + filename);
-
-            return File(fullName, "application/pdf", filename);
-        }
-
         private LanguageModel GetSelectedLanguage()
         {
             string selectedLanguage;
@@ -249,7 +221,7 @@ namespace KisanEMitra.Controllers
 
             var languageModel = new LanguageModel
             {
-                Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageFullName"),
+                Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageLabel"),
                 SelectedLanguage = selectedLanguage
             };
             return languageModel;

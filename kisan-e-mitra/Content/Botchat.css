@@ -1,7 +1,7 @@
 ﻿.chat-container {
     display: flex;
     flex-direction: column;
-    background-color: #f2f2f2;
+    background-color: rgb(246, 249, 254) !important;
     height: calc(100vh - 140px); /* excluding the height of the header */
 }
 

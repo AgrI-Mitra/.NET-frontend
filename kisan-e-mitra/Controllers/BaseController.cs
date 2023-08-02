@@ -57,7 +57,7 @@ namespace KisanEMitra.Controllers
 
             var languageModel = new LanguageModel
             {
-                Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageFullName"),
+                Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageLabel"),
                 SelectedLanguage = selectedLanguage
             };
             ViewBag.languageModel = languageModel;

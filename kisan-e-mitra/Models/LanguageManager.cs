@@ -15,6 +15,8 @@ namespace KisanEMitra.Models
             get;
             set;
         }
+
+        public string LanguageLabel { get; set; }
         public string LanguageCultureName
         {
             get;
@@ -32,19 +34,19 @@ namespace KisanEMitra.Models
     {
         public static List<Languages> AvailableLanguages = new List<Languages> {
             new Languages {
-                LanguageFullName = "English", LanguageCultureName = "en"
+                LanguageFullName = "English", LanguageLabel = "English",  LanguageCultureName = "en"
             },
             new Languages {
-                LanguageFullName = "Hindi", LanguageCultureName = "hi"
+                LanguageFullName = "Hindi", LanguageLabel = "हिंदी", LanguageCultureName = "hi"
             },
             new Languages {
-                LanguageFullName = "Bangla", LanguageCultureName = "bn"
+                LanguageFullName = "Bangla", LanguageLabel = "বাংলা",LanguageCultureName = "bn"
             },
             new Languages {
-                LanguageFullName = "Tamil", LanguageCultureName = "ta"
+                LanguageFullName = "Tamil", LanguageLabel = "தமிழ்", LanguageCultureName = "ta"
             },
             new Languages {
-                LanguageFullName = "Telugu", LanguageCultureName = "te"
+                LanguageFullName = "Telugu", LanguageLabel = "తెలుగు", LanguageCultureName = "te"
             },
         };
 
