@@ -227,3 +227,8 @@ audio {
 .right audio::-webkit-media-controls-panel {
     background-color: rgba(33, 150, 83, 0.2);
 }
+
+.avatar-img{
+    width: 45px !important;
+    height:100%;
+}
