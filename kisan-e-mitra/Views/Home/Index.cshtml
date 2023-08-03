@@ -2,47 +2,45 @@
     ViewBag.Title = Resources.Resource.label_title;
 }
 
-<div class="chat-container container-fluid">
-
-    <div id="message-list" class="message-list">
-        <div id="welcome-message" class="welcome-message-container">
-            <div class="card text-center">
-                <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <p class="card-text">
-                        @Resources.Resource.message_welcome_greeting
-                    </p>
-                    <p>
-                        @Resources.Resource.message_language_selection
-                    </p>
-                    @foreach (var language in ViewBag.LanguageModel.Languages)
-                    {
-                        if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
+    <div class="chat-container">
+        <div id="message-list" class="message-list">
+            <div id="welcome-message" class="user-msg-left">
+                <div class="card text-center" style="border-radius:20px;">
+                    <div class="card-body">
+                        <h5 class="card-title"></h5>
+                        <p class="card-text">
+                            @Resources.Resource.message_welcome_greeting
+                        </p>
+                        <p>
+                            @Resources.Resource.message_language_selection
+                        </p>
+                        @foreach (var language in ViewBag.LanguageModel.Languages)
                         {
-                            <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                            if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
+                            {
+                                <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                            }
                         }
-                        else
-                        {
-                            <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
-                        }
-                    }
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="input-container d-flex flex-row container-fluid">
-        <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" placeholder="@Resources.Resource.message_ask_ur_question">
-        <div class="d-flex img-fluid" style="max-height: 80px;">
-            <button id="inputBtn" class="send-button bg-success img-fluid">
-                @Resources.Resource.label_send
-            </button>
-            <button id="inputRecordBtn" class="send-button bg-success img-fluid">
-                <img id="recordingImage" src="~/Content/images/startIcon.svg" class="img-fluid" />
-            </button>
+        <div class="input-container d-flex flex-row container-fluid">
+            <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" placeholder="@Resources.Resource.message_ask_ur_question">
+            <button id="inputBtn" type="submit" class="send-button img-fluid sendtext">Search</button>
+            <div class="d-flex img-fluid" style="max-height: 80px;">
+                <!--<button id="inputBtn" class="send-button bg-success img-fluid">@Resources.Resource.label_send</button>-->
+                <button id="inputRecordBtn" class="send-button img-fluid bg-transparent">
+                    <img id="recordingImage" src="~/Content/images/startIcon.svg" class="img-fluid" />
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
 
 <script type="text/javascript">
@@ -60,7 +58,7 @@
     var audioContext //audio context to help us record
 
     function chatLoader() {
-        const responseLoader = "<div id='responseLoader' class='message left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'> <div class='dot-flashing-container ms-3'><div class='ms-2 dot-flashing'></div></div></div>"
+        const responseLoader = "<div id='responseLoader' class='message left user-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'> <div class='dot-flashing-container ms-3'><div class='ms-2 dot-flashing'></div></div></div>"
         $('#message-list').append(responseLoader);
     }
 
@@ -70,25 +68,25 @@
 
     function enableDisableSendButton(textValue) {
         if (textValue) {
-            $("#inputBtn").removeAttr('disabled');
-            $("#inputBtn").css("display", "flex");
-            $("#inputRecordBtn").css("display", "none");
+            $('#inputBtn').prop('disabled', false)
+            //$("#inputBtn").css("display", "flex");
+            //$("#inputRecordBtn").css("display", "none");
 
         } else {
-            $("#inputBtn").attr('disabled', 'disabled');
-
-            $("#inputBtn").css("display", "none");
-            $("#inputRecordBtn").css("display", "flex");
+            $('#inputBtn').prop('disabled', true)
+            //$("#inputBtn").css("display", "none");
+            //$("#inputRecordBtn").css("display", "flex");
 
         }
     }
 
     $(document).ready(function () {
-
         var languageChangedGreeting = sessionStorage.getItem('languageChangedMessage');
         console.log('languageChangedGreeting : ', languageChangedGreeting);
         if (languageChangedGreeting) {
-            showLanguageChangedMessage(languageChangedGreeting);
+            //showLanguageChangedMessage(languageChangedGreeting);
+            var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + languageChangedGreeting + "</div></div>";
+            $('#message-list').append(response.replace(/\n/g, "<br>"));
             sessionStorage.removeItem('languageChangedMessage');
         }
 
@@ -130,7 +128,7 @@
                 e.preventDefault();
                 querstionInput = $('#userQuestionTextBox').val();
                 if (querstionInput) {
-                    var userQuery = "<div class='message right'><div class='message-content'>" + querstionInput + "</div></div>";
+                    var userQuery = "<div class='message left user-msg-left'><img src='../Content/images/user.svg' alt='avatar 1' class='rounded-circle' style='width: 45px; height: 100%; background-color:#219653;'><div class='message-content'>" + querstionInput + "</div></div>";
                     $('#message-list').append(userQuery.replace(/\n/g, "<br>"));
                 }
                 askQuestions(querstionInput);
@@ -152,7 +150,7 @@
         chatResponseView(message);
 
         if (String(message).toLowerCase() == "invalid otp" || String(message).toLowerCase() == "अमान्य ओ. टी. पी") {
-            var resendOTPBtn = "<div class='message left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><button class='send-button bg-success' onclick='resendOTP(this);'>Resend OTP</button></div>";
+            var resendOTPBtn = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><button class='send-button bg-success' onclick='resendOTP(this);'>Resend OTP</button></div>";
             $('#message-list').append(resendOTPBtn);
         }
         $("#userQuestionTextBox").val('');
@@ -168,13 +166,14 @@
 
     function chatResponseView(message) {
         if (message != "") {
-            var response = "<div class='message left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
+            var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
             $('#message-list').append(response.replace(/\n/g, "<br>"));
         }
     }
 
     function showLanguageChangedMessage(message) {
-        var response = "<div class='message left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
+        console.log("msg1:" + message);
+        var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
         $('#message-list').append(response.replace(/\n/g, "<br>"));
     }
 
@@ -214,7 +213,7 @@
                     }
 
                 } else {
-                    var response = "<div class='message left'> <img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
+                    var response = "<div class='message left system-msg-left'> <img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
                     $('#message-list').append(response.replace(/\n/g, "<br>"));
                     $("#userQuestionTextBox").val('');
                     $("#userQuestionTextBox").trigger('change');
@@ -333,7 +332,7 @@
                             openModalPopUp(message);
                         }
                     } else {
-                        var response = "<div class='message left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
+                        var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
                         $('#message-list').append(response.replace(/\n/g, "<br>"));
                         $("#userQuestionTextBox").val('');
                         $("#userQuestionTextBox").trigger('change');
@@ -360,8 +359,19 @@
 
         // Avatar image
         if (alignment == 'left') {
+            div.className += " system-msg-left";
             const avatarImg = document.createElement('img');
             avatarImg.src = '../Content/images/MOA_logo.png';
+            avatarImg.alt = 'avatar 1';
+            avatarImg.className = 'avatar-img';
+            avatarImg.style.width = '45px';
+            avatarImg.style.width = '100%';
+            div.appendChild(avatarImg);
+        }
+        else {
+            div.className += " user-msg-left";
+            const avatarImg = document.createElement('img');
+            avatarImg.src = '../Content/images/user.png';
             avatarImg.alt = 'avatar 1';
             avatarImg.className = 'avatar-img';
             avatarImg.style.width = '45px';

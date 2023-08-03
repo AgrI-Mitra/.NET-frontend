@@ -223,6 +223,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Botchat.css" />
+    <Content Include="Content\images\background_mainpage.jpg" />
     <Content Include="Content\images\c4gt_logo.png" />
     <Content Include="Content\images\loadingChat.gif" />
     <Content Include="Content\images\right.svg" />
@@ -259,6 +260,7 @@
     <Content Include="Content\images\right.jsx" />
     <Content Include="Content\images\robot.png" />
     <Content Include="Content\images\search.svg" />
+    <Content Include="Content\images\send_text.svg" />
     <Content Include="Content\images\share.svg" />
     <Content Include="Content\images\sidebar.png" />
     <Content Include="Content\images\speakerHome.svg" />
@@ -271,6 +273,7 @@
     <Content Include="Content\images\thumbs-up.svg" />
     <Content Include="Content\images\user-alt.svg" />
     <Content Include="Content\images\user-circle.svg" />
+    <Content Include="Content\images\user.svg" />
     <Content Include="Content\js\recorder.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

@@ -65,11 +65,23 @@ html, body {
         background-color: #219653;
     }
 
-
 .tab-bar {
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: 60px;
     background-color: #333;
+}
+.chat-container-bg-imgs {
+    padding: 40px;
+    background-image: url("../Content/images/background_mainpage.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+.chat-container-top {
+    background-color: #FFFFFF !important;
+    border: 1px solid #d1d1d1;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
 }
