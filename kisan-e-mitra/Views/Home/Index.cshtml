@@ -3,7 +3,7 @@
 }
 
 <div class="chat-container container-fluid">
-    
+
     <div id="message-list" class="message-list">
         <div id="welcome-message" class="welcome-message-container">
             <div class="card text-center">
@@ -12,15 +12,18 @@
                     <p class="card-text">
                         @Resources.Resource.message_welcome_greeting
                     </p>
+                    <p>
+                        @Resources.Resource.message_language_selection
+                    </p>
                     @foreach (var language in ViewBag.LanguageModel.Languages)
                     {
                         if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
                         {
-                            <button type="button" class="btn btn-outline-primary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                            <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
                         }
                         else
                         {
-                            <button type="button" class="btn btn-outline-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                            <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
                         }
                     }
 
@@ -81,6 +84,13 @@
     }
 
     $(document).ready(function () {
+
+        var languageChangedGreeting = sessionStorage.getItem('languageChangedMessage');
+        console.log('languageChangedGreeting : ', languageChangedGreeting);
+        if (languageChangedGreeting) {
+            showLanguageChangedMessage(languageChangedGreeting);
+            sessionStorage.removeItem('languageChangedMessage');
+        }
 
         enableDisableSendButton();
 
@@ -161,6 +171,11 @@
             var response = "<div class='message left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
             $('#message-list').append(response.replace(/\n/g, "<br>"));
         }
+    }
+
+    function showLanguageChangedMessage(message) {
+        var response = "<div class='message left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
+        $('#message-list').append(response.replace(/\n/g, "<br>"));
     }
 
     function askQuestions(input) {
@@ -396,12 +411,17 @@
     }
 
     function changeLanguage(language) {
+
         $.ajax({
             type: "POST",
             url: "/Home/ChangeLanguage",
             dataType: "json",
             data: { lang: language },
             success: function (data) {
+
+                sessionStorage.setItem('languageChangedMessage', data.Message);
+                //showLanguageChangedMessage(data.Message);
+
                 location.reload();
             },
             failure: function (data) {

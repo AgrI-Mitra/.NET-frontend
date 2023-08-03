@@ -367,7 +367,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kisan e-Mitra.
+        ///   Looks up a localized string similar to Kisan-eMitra.
         /// </summary>
         public static string label_title {
             get {
@@ -516,6 +516,33 @@ namespace Resources {
         public static string message_invalid_otp {
             get {
                 return ResourceManager.GetString("message.invalid_otp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alright. The conversation will be continued in English..
+        /// </summary>
+        public static string message_language_changed {
+            get {
+                return ResourceManager.GetString("message.language_changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dear Beneficiary ! 😃 &lt;br&gt;  I am eMitra, your PMKISAN guide. I can help you with the scheme payment related queries!.
+        /// </summary>
+        public static string message_language_changed_greeting {
+            get {
+                return ResourceManager.GetString("message.language_changed_greeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to From below list, Select which language do you want to continue with?.
+        /// </summary>
+        public static string message_language_selection {
+            get {
+                return ResourceManager.GetString("message.language_selection", resourceCulture);
             }
         }
         

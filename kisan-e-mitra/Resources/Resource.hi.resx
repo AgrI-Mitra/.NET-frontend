@@ -220,7 +220,7 @@
     <value>समीक्षा प्रस्तुत करें</value>
   </data>
   <data name="label.title" xml:space="preserve">
-    <value>Kisan e-Mitra</value>
+    <value>किसान-eमित्र</value>
   </data>
   <data name="label.welcome" xml:space="preserve">
     <value>स्वागत</value>
@@ -269,6 +269,15 @@
   </data>
   <data name="message.invalid_otp" xml:space="preserve">
     <value>अमान्य ओटीपी</value>
+  </data>
+  <data name="message.language_changed" xml:space="preserve">
+    <value>ठीक है। हिंदी में बातचीत जारी रहेगी।</value>
+  </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>प्रिय लाभार्थी! 😃 &lt;br&gt; मैं ई-मित्र हूं, आपका पीएमकिसान गाइड। मैं योजना भुगतान संबंधी प्रश्नों में आपकी सहायता कर सकता हूँ!</value>
+  </data>
+  <data name="message.language_selection" xml:space="preserve">
+    <value>नीचे दी गई सूची से चुनें, आप किस भाषा में जारी रखना चाहते हैं?</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>अभी तक पंजीकृत नहीं हैं?</value>

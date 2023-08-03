@@ -24,6 +24,13 @@ namespace KisanEMitra.Controllers
 
         public ActionResult Logout()
         {
+            KillSession();
+
+            return View("Index");
+        }
+
+        private void KillSession()
+        {
             HttpContext context = System.Web.HttpContext.Current;
             System.Web.SessionState.SessionIDManager Manager = new System.Web.SessionState.SessionIDManager();
 
@@ -31,11 +38,11 @@ namespace KisanEMitra.Controllers
 
             Session.RemoveAll();
 
-            return View("Index");
+            var defaultLanguage = LanguageManager.GetDefaultLanguage();
+            new LanguageManager().SetLanguage(defaultLanguage);
         }
         public async Task<ActionResult> Index()
         {
-
             HttpContext context = System.Web.HttpContext.Current;
             System.Web.SessionState.SessionIDManager Manager = new System.Web.SessionState.SessionIDManager();
 
@@ -72,7 +79,7 @@ namespace KisanEMitra.Controllers
             new LanguageManager().SetLanguage(lang);
             return Json(new AjaxActionResponse()
             {
-                Message = "Language Changed.",
+                Message = Resources.Resource.message_language_changed.ToString() + " <br>" + Resources.Resource.message_language_changed_greeting.ToString(),
                 Success = true
             });
         }

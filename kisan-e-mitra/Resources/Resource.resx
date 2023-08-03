@@ -220,7 +220,7 @@
     <value>Submit Review</value>
   </data>
   <data name="label.title" xml:space="preserve">
-    <value>Kisan e-Mitra</value>
+    <value>Kisan-eMitra</value>
   </data>
   <data name="label.welcome" xml:space="preserve">
     <value>Welcome</value>
@@ -269,6 +269,15 @@
   </data>
   <data name="message.invalid_otp" xml:space="preserve">
     <value>Invalid Otp</value>
+  </data>
+  <data name="message.language_changed" xml:space="preserve">
+    <value>Alright. The conversation will be continued in English.</value>
+  </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>Dear Beneficiary ! 😃 &lt;br&gt;  I am eMitra, your PMKISAN guide. I can help you with the scheme payment related queries!</value>
+  </data>
+  <data name="message.language_selection" xml:space="preserve">
+    <value>From below list, Select which language do you want to continue with?</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>Not registered yet ?</value>
