@@ -29,15 +29,16 @@
     display: flex;
     align-items: flex-start;
     margin-bottom: 10px;
-    width:50%;
 }
 
 .left {
     justify-content: flex-start;
+    margin-right: 10%;
 }
 
 .right {
     justify-content: flex-end;
+    margin-left: 10%;
 }
 
     .right div.message-content {
