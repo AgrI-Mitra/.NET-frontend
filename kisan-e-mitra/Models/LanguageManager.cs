@@ -34,10 +34,10 @@ namespace KisanEMitra.Models
     {
         public static List<Languages> AvailableLanguages = new List<Languages> {
             new Languages {
-                LanguageFullName = "English", LanguageLabel = "English",  LanguageCultureName = "en"
+                LanguageFullName = "Hindi", LanguageLabel = "हिंदी", LanguageCultureName = "hi"
             },
             new Languages {
-                LanguageFullName = "Hindi", LanguageLabel = "हिंदी", LanguageCultureName = "hi"
+                LanguageFullName = "English", LanguageLabel = "English",  LanguageCultureName = "en"
             },
             new Languages {
                 LanguageFullName = "Bangla", LanguageLabel = "বাংলা",LanguageCultureName = "bn"
