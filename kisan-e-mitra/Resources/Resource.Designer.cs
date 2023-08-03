@@ -520,7 +520,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alright. The conversation will be continued in English..
+        ///   Looks up a localized string similar to Thank you for selecting the language..
         /// </summary>
         public static string message_language_changed {
             get {
@@ -529,7 +529,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dear Beneficiary ! 😃 &lt;br&gt;  I am eMitra, your PMKISAN guide. I can help you with the scheme payment related queries!.
+        ///   Looks up a localized string similar to Dear Beneficiary, &lt;br&gt; I am eMitra, your PMKISAN guide. I can help you with the scheme payment related queries! &lt;br&gt; Please type your query, or tell your query using the voice button at the bottom right corner..
         /// </summary>
         public static string message_language_changed_greeting {
             get {
@@ -538,7 +538,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to From below list, Select which language do you want to continue with?.
+        ///   Looks up a localized string similar to Select a language from the list below, in which language would you like to continue?.
         /// </summary>
         public static string message_language_selection {
             get {
@@ -754,7 +754,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hey there, I am KISAN MITRA. Your Personal Digital Assistant. Please let me know how can I help you?.
+        ///   Looks up a localized string similar to Welcome to PM KISAN-eMitra! Your Personal Assistant. Please let me know how can I help you?.
         /// </summary>
         public static string message_welcome_greeting {
             get {

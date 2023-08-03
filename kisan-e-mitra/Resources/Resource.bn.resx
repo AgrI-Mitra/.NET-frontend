@@ -270,6 +270,12 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>অবৈধ ওটিপি</value>
   </data>
+  <data name="message.language_changed" xml:space="preserve">
+    <value>ভাষা নির্বাচন করার জন্য আপনাকে ধন্যবাদ.</value>
+  </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>প্রিয় সুবিধাভোগী, &lt;br&gt; আমি ইমিত্র, আপনার PMKISAN গাইড। আমি স্কিম পেমেন্ট সংক্রান্ত প্রশ্নে আপনাকে সাহায্য করতে পারি! &lt;br&gt; অনুগ্রহ করে আপনার ক্যোয়ারী টাইপ করুন, অথবা নিচের ডান কোণায় ভয়েস বোতাম ব্যবহার করে আপনার ক্যোয়ারী বলুন।</value>
+  </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>এখনো নিবন্ধিত হননি?</value>
   </data>
@@ -341,6 +347,9 @@
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
     <value>এই যে, আমি কিষাণ মিত্র। আপনার ব্যক্তিগত ডিজিটাল সহকারী। আমি আপনাকে কিভাবে সাহায্য করতে পারেন দয়া করে আমাকে জানান?</value>
+  </data>
+  <data name="message.welcome_greeting1" xml:space="preserve">
+    <value>PM KISAN-eMitra স্বাগতম! আপনার ব্যক্তিগত সহকারী। আমি আপনাকে কিভাবে সাহায্য করতে পারেন দয়া করে আমাকে জানান?</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>সাফল্যের সাথে প্রতিক্রিয়াটি অপছন্দ হয়েছে</value>

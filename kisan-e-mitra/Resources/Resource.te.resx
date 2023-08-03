@@ -270,6 +270,12 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>చెల్లని OTP</value>
   </data>
+  <data name="message.language_changed" xml:space="preserve">
+    <value>భాషను ఎంచుకున్నందుకు ధన్యవాదాలు.</value>
+  </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>ప్రియమైన లబ్ధిదారుడా, &lt;br&gt; నేను eMitra, మీ PMKISAN గైడ్. స్కీమ్ చెల్లింపు సంబంధిత ప్రశ్నలకు నేను మీకు సహాయం చేయగలను! &lt;br&gt; దయచేసి మీ ప్రశ్నను టైప్ చేయండి లేదా దిగువ కుడి మూలలో ఉన్న వాయిస్ బటన్‌ని ఉపయోగించి మీ ప్రశ్నను చెప్పండి.</value>
+  </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>ఇంకా నమోదు చేయలేదునుందా?</value>
   </data>
@@ -341,6 +347,9 @@
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
     <value>హే, నేను కిసాన్ మిత్ర. మీ వ్యక్తిగత డిజిటల్ అసిస్టెంట్. నేను మీకు ఎలా సహాయం చేయగలను దయచేసి నాకు తెలియజేయండి?</value>
+  </data>
+  <data name="message.welcome_greeting1" xml:space="preserve">
+    <value>PM KISAN-eMitraకి స్వాగతం! మీ వ్యక్తిగత సహాయకుడు. నేను మీకు ఎలా సహాయం చేయగలను దయచేసి నాకు తెలియజేయండి?</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>సమాధానంని సరిగా ఇష్టపడండి</value>
