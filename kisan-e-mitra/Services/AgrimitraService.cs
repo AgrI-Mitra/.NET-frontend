@@ -16,7 +16,7 @@ namespace KisanEMitra.Services
         public static class APIPaths
         {
             public static string User = "user/generateUserId";
-            public static string Prompt = "prompt/2";
+            public static string Prompt = "prompt/3";
             public static string TemoUserId = "benAudio-serI-4enA-dioU-erIdbenAudio"; //For Local Testing
         }
 
