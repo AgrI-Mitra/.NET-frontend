@@ -88,6 +88,8 @@ html, body {
 
 @media only screen and (max-width: 480px) {
     .chat-container-top {
-       
+    background-color: #FFFFFF !important;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
     }
 }
