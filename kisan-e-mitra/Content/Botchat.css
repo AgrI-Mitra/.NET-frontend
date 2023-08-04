@@ -268,7 +268,7 @@ button[type="submit"] {
     border-radius: inherit;
     background: url('../Content/images/send_text.svg') no-repeat center;
     cursor: pointer;
-    opacity: 0.7;
+    opacity: 0.4;
     width: 60px;
     height: 60px;
 }
@@ -305,5 +305,6 @@ button[type="submit"] {
         box-shadow: 0 0 3px 0 #1183d6;
         border-color: #1183d6;
         outline: none;
+        fill:green;
     }
 

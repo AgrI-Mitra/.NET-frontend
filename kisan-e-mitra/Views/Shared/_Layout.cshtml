@@ -25,7 +25,7 @@
             @Resources.Resource.label_title
         </div>
         <div style="min-width: fit-content;" class="px-4">
-            @Html.DropDownList("@selectedLanguage", languages, new { @class = "form-control", id = "ddlLanguage" })
+            @Html.DropDownList("@selectedLanguage", languages, new { @class = "form-control text-center", id = "ddlLanguage" })
         </div>
     </div>
     @RenderBody()
@@ -69,7 +69,8 @@
                     dataType: "json",
                     data: { lang: selValue },
                     success: function (data) {
-                        showLanguageChangedMessage(data.Message);
+                        sessionStorage.setItem('languageChangedMessage', data.Message);
+                        //showLanguageChangedMessage(data.Message);
                         location.reload();
                     },
                     failure: function (data) {
