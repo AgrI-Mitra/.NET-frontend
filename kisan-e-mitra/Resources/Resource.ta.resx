@@ -270,11 +270,10 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>தவறான OTP</value>
   </data>
-  <data name="message.language_changed" xml:space="preserve">
-    <value>மொழியைத் தேர்ந்தெடுத்ததற்கு நன்றி.</value>
-  </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>அன்புள்ள பயனாளியே, &lt;br&gt; நான் இமித்ரா, உங்கள் PMKISAN வழிகாட்டி. ஸ்கீம் பேமெண்ட் தொடர்பான கேள்விகளுக்கு நான் உங்களுக்கு உதவ முடியும்! &lt;br&gt; உங்கள் வினவலைத் தட்டச்சு செய்யவும் அல்லது கீழ் வலது மூலையில் உள்ள குரல் பொத்தானைப் பயன்படுத்தி உங்கள் வினவலைச் சொல்லவும்.</value>
+    <value>அன்புள்ள பயனாளி, &lt;br&gt;
+நான் eMitra,&lt;br&gt; உங்கள் பிரதம உழைப்பாளி கையேடு செய்யும். நான் திட்டமிடப்பட்ட செலுத்துதல்களுக்கு உங்கள் கேள்விகளுக்கு உதவ முடியும்!&lt;br&gt;
+உங்கள் கேள்வியை எழுத்துக்களஞ்சியத்தில் உள்ளிடவும் அல்லது கீழே வலது மேல் குறிப்பிட்ட ஆவணத்தைப் பயன்படுத்தி உங்கள் கேள்வியை அறிவிக்கவும்!</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>இன்னும் பதிவு செய்யவில்லையா?</value>

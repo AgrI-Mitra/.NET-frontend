@@ -270,13 +270,11 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>अमान्य ओटीपी</value>
   </data>
-  <data name="message.language_changed" xml:space="preserve">
-    <value>भाषा चुनने के लिए धन्यवाद।</value>
-  </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>प्रिय लाभार्थी,
- &lt;br&gt; मैं eMitra, आपका पीएमकिसान गाइड हूं। मैं योजना से संबंधित भुगतान संबंधित प्रश्नों में आपकी सहायता कर सकता हूं!
- &lt;br&gt; कृपया अपना प्रश्न टाइप करें, या नीचे दाएँ कोने में वॉइस बटन का उपयोग करके अपना प्रश्न बताएं।</value>
+    <value>भाषा चुनने के लिए धन्यवाद। &lt;br&gt;
+प्रिय लाभार्थी,&lt;br&gt;
+मैं eMitra, आपका पीएमकिसान गाइड हूं। मैं योजना से संबंधित भुगतान संबंधित प्रश्नों में आपकी सहायता कर सकता हूं!&lt;br&gt;
+कृपया अपना प्रश्न टाइप करें, या नीचे दाएँ कोने में वॉइस बटन का उपयोग करके अपना प्रश्न बताएं।</value>
   </data>
   <data name="message.language_selection" xml:space="preserve">
     <value>नीचे दी गई सूची से भाषा चुनें, आप किस भाषा में जारी रखना चाहते हैं?</value>
@@ -351,7 +349,7 @@
     <value>ओटीपी फिर से भेजने से पहले कृपया प्रतीक्षा करें</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>पीम किसान-eमित्र में आपका स्वागत है! आपका व्यक्तिगत सहायक। कृपया मुझे बताएं कि मैं आपकी कैसे मदद कर सकता हूं?</value>
+    <value>किसान-eमित्र में आपका स्वागत है! आपका व्यक्तिगत सहायक। &lt;br&gt;कृपया मुझे बताएं कि मैं आपकी कैसे मदद कर सकता हूं?</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>सफलतापूर्वक प्रतिक्रिया नापसंद की गई</value>

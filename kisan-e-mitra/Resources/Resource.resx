@@ -270,14 +270,10 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>Invalid Otp</value>
   </data>
-  <data name="message.language_changed" xml:space="preserve">
-    <value>Thank you for selecting the language.</value>
-  </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>Dear Beneficiary, &lt;br&gt; I am eMitra, your PMKISAN guide. I can help you with the scheme payment related queries! &lt;br&gt; Please type your query, or tell your query using the voice button at the bottom right corner.</value>
-  </data>
-  <data name="message.language_selection" xml:space="preserve">
-    <value>Select a language from the list below, in which language would you like to continue?</value>
+    <value>Thank you for selecting the language. The conversation will be continued in English.
+&lt;br&gt; Dear Beneficiary! Please let me know how can I help you?
+&lt;br&gt; (Please type your query in the below box, or tell your query using the voice button at the bottom right corner.)</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>Not registered yet ?</value>
@@ -349,7 +345,7 @@
     <value>Please wait before resending OTP</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>Welcome to PM KISAN-eMitra! Your Personal Assistant. Please let me know how can I help you?</value>
+    <value>Welcome to KISAN-eMitra! Your Personal Assistant. &lt;br&gt; Select a language from the list below, in which language would you like to continue?</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>Successfully disliked the response</value>

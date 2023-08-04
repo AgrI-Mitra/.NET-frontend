@@ -520,29 +520,13 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thank you for selecting the language..
-        /// </summary>
-        public static string message_language_changed {
-            get {
-                return ResourceManager.GetString("message.language_changed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dear Beneficiary, &lt;br&gt; I am eMitra, your PMKISAN guide. I can help you with the scheme payment related queries! &lt;br&gt; Please type your query, or tell your query using the voice button at the bottom right corner..
+        ///   Looks up a localized string similar to Thank you for selecting the language. The conversation will be continued in English.
+        ///&lt;br&gt; Dear Beneficiary! Please let me know how can I help you?
+        ///&lt;br&gt; (Please type your query in the below box, or tell your query using the voice button at the bottom right corner.).
         /// </summary>
         public static string message_language_changed_greeting {
             get {
                 return ResourceManager.GetString("message.language_changed_greeting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select a language from the list below, in which language would you like to continue?.
-        /// </summary>
-        public static string message_language_selection {
-            get {
-                return ResourceManager.GetString("message.language_selection", resourceCulture);
             }
         }
         
@@ -754,7 +738,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to PM KISAN-eMitra! Your Personal Assistant. Please let me know how can I help you?.
+        ///   Looks up a localized string similar to Welcome to KISAN-eMitra! Your Personal Assistant. &lt;br&gt; Select a language from the list below, in which language would you like to continue?.
         /// </summary>
         public static string message_welcome_greeting {
             get {

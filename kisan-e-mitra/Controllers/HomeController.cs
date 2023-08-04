@@ -79,7 +79,7 @@ namespace KisanEMitra.Controllers
             new LanguageManager().SetLanguage(lang);
             return Json(new AjaxActionResponse()
             {
-                Message = Resources.Resource.message_language_changed.ToString() + " <br>" + Resources.Resource.message_language_changed_greeting.ToString(),
+                Message = Resources.Resource.message_language_changed_greeting.ToString(),
                 Success = true
             });
         }

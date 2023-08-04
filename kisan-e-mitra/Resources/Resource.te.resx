@@ -270,11 +270,10 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>చెల్లని OTP</value>
   </data>
-  <data name="message.language_changed" xml:space="preserve">
-    <value>భాషను ఎంచుకున్నందుకు ధన్యవాదాలు.</value>
-  </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>ప్రియమైన లబ్ధిదారుడా, &lt;br&gt; నేను eMitra, మీ PMKISAN గైడ్. స్కీమ్ చెల్లింపు సంబంధిత ప్రశ్నలకు నేను మీకు సహాయం చేయగలను! &lt;br&gt; దయచేసి మీ ప్రశ్నను టైప్ చేయండి లేదా దిగువ కుడి మూలలో ఉన్న వాయిస్ బటన్‌ని ఉపయోగించి మీ ప్రశ్నను చెప్పండి.</value>
+    <value>ప్రియ లాభార్థి,&lt;br&gt;
+నేను eMitra,&lt;br&gt; మీ ప్రధాన మంత్రి-రైతు గైడ్ గా ఉన్నాను. నేను పథకంతో సంబంధించిన చెల్లను సంబంధించిన ప్రశ్నలకు మీ సహాయం చేస్తాను!&lt;br&gt;
+మీ ప్రశ్నను టైప్ చేయండి లేదా క్రింది కొన్నీరు వాయిస్ బటన్‌ను ఉపయోగించి మీ ప్రశ్నను పాటించండి!</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>ఇంకా నమోదు చేయలేదునుందా?</value>

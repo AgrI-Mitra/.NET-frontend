@@ -9,10 +9,7 @@
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">
-                        @Resources.Resource.message_welcome_greeting
-                    </p>
-                    <p>
-                        @Resources.Resource.message_language_selection
+                        @(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))
                     </p>
                     @foreach (var language in ViewBag.LanguageModel.Languages)
                     {
