@@ -225,6 +225,7 @@
     <Content Include="Content\Botchat.css" />
     <Content Include="Content\images\background_mainpage.jpg" />
     <Content Include="Content\images\c4gt_logo.png" />
+    <Content Include="Content\images\background.png" />
     <Content Include="Content\images\loadingChat.gif" />
     <Content Include="Content\images\right.svg" />
     <Content Include="Content\images\call-icon.svg" />

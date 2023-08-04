@@ -14,17 +14,11 @@
         IEnumerable<SelectListItem> languages = ViewBag.LanguageModel.Languages;
         var selectedLanguage = ViewBag.LanguageModel.SelectedLanguage;
     }
-
-    <div class="d-flex justify-content-between align-items-center chat-container-top">
+    <div class="app-container">
+        <div class="d-flex justify-content-between align-items-center chat-container-top">
         <div class="d-flex" style="max-height: 64px;">
             <span class="d-flex justify-content-start p-2">
                 <img src="~/Content/images/emblem.png" alt="Logo 1" class="img-fluid rounded-circle" style="width: 54px; height: 54px; ">
-            </span>
-            <span class="d-flex justify-content-center p-2">
-                <img src="~/Content/images/MOA_logo.png" alt="Logo 1" class="img-fluid rounded-circle" style="width: 54px; height: 54px; ">
-            </span>
-            <span class="d-flex justify-content-end p-2">
-                <img src="~/Content/images/phone.png" alt="Logo 1" class="img-fluid rounded-circle" style="width: 54px; height: 54px;">
             </span>
         </div>
         <div style="color: #219653; font-size: 3vh; font-weight: 700; font-family: Mulish-bold,sans-serif; white-space:nowrap;" >
@@ -35,21 +29,23 @@
         </div>
     </div>
     @RenderBody()
+    </div>
+    
     @*<div class="bottom-section">
-        <div class="bottom-container">
-            <div class="tab-bar">
-                <a class="tab" href="@Url.Action("Index","Home")">
-                    <img src="~/Content/images/home.svg" width="32" height="32" />
-                </a>
-                <a href="@Url.Action("ChatHistory","Home")">
-                    <img src="~/Content/images/message-menu.svg" width="32" height="32" />
-                </a>
-                <a class="tab" href="@Url.Action("More","Home")">
-                    <img src="~/Content/images/menu.svg" width="32" height="32" />
-                </a>
+            <div class="bottom-container">
+                <div class="tab-bar">
+                    <a class="tab" href="@Url.Action("Index","Home")">
+                        <img src="~/Content/images/home.svg" width="32" height="32" />
+                    </a>
+                    <a href="@Url.Action("ChatHistory","Home")">
+                        <img src="~/Content/images/message-menu.svg" width="32" height="32" />
+                    </a>
+                    <a class="tab" href="@Url.Action("More","Home")">
+                        <img src="~/Content/images/menu.svg" width="32" height="32" />
+                    </a>
+                </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
