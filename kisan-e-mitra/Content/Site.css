@@ -9,9 +9,6 @@
 html, body {
     background: url('../Content/images/background.png'), lightgray 50% / cover no-repeat;
     font-family: Mulish-regular, sans-serif;
-    /*background-image: url("../Content/images/background_mainpage.jpg");
-    background-position: center;
-    background-size: cover;*/
 }
 
 .main-page-content {
@@ -21,7 +18,6 @@ html, body {
     font-family: Mulish-regular, sans-serif;
     display: flex;
     flex-direction: column;
-    /*background: #d0d0d0;*/
 }
 
 .top-bar {
@@ -80,20 +76,8 @@ html, body {
 }
 
 .chat-container-top {
-    /*background-color: #FFFFFF !important;
-    border: 1px solid rgba(0,0,0,0);
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;*/
     border-bottom: 1px solid #EAE9E9;
     padding: 0px 25px;
-}
-
-@media only screen and (max-width: 480px) {
-    .chat-container-top {
-    /*background-color: #FFFFFF !important;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;*/
-    }
 }
 
 .app-container {

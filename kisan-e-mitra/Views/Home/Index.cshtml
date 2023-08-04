@@ -122,7 +122,7 @@
                 e.preventDefault();
                 querstionInput = $('#userQuestionTextBox').val();
                 if (querstionInput) {
-                    var userQuery = "<div class='message left user-msg-left'><img src='../Content/images/user.svg' alt='avatar 1' class='rounded-circle' style='width: 45px; height: 100%; background-color:#219653;'><div class='message-content'>" + querstionInput + "</div></div>";
+                    var userQuery = "<div class='message left user-msg-left'><img src='../Content/images/user.svg' alt='avatar 1' class='avatar-img user-avatar-img rounded-circle'><div class='message-content'>" + querstionInput + "</div></div>";
                     $('#message-list').append(userQuery.replace(/\n/g, "<br>"));
                 }
                 askQuestions(querstionInput);
@@ -366,6 +366,7 @@
     }
 
     function loadAudioPlayer(blob, alignment = 'right') {
+        console.log('loadAudioPlayer: ', alignment);
         const blobUrl = URL.createObjectURL(blob);
         const div = document.createElement('div');
         div.className = "message " + alignment;
@@ -386,9 +387,7 @@
             const avatarImg = document.createElement('img');
             avatarImg.src = '../Content/images/user.svg';
             avatarImg.alt = 'avatar 1';
-            avatarImg.className = 'avatar-img';
-            avatarImg.style.width = '45px';
-            avatarImg.style.width = '100%';
+            avatarImg.className = 'avatar-img user-avatar-img rounded-circle';
             div.appendChild(avatarImg);
         }
 
