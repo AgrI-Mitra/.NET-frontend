@@ -345,10 +345,8 @@
     <value>ওটিপি পুনরায় পাঠানোর আগে অনুগ্রহ করে অপেক্ষা করুন</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>এই যে, আমি কিষাণ মিত্র। আপনার ব্যক্তিগত ডিজিটাল সহকারী। আমি আপনাকে কিভাবে সাহায্য করতে পারেন দয়া করে আমাকে জানান?</value>
-  </data>
-  <data name="message.welcome_greeting1" xml:space="preserve">
-    <value>PM KISAN-eMitra স্বাগতম! আপনার ব্যক্তিগত সহকারী। আমি আপনাকে কিভাবে সাহায্য করতে পারেন দয়া করে আমাকে জানান?</value>
+    <value>কৃষক-eমিত্রে স্বাগতম! আপনার ব্যক্তিগত সহকারী। দয়া করে আমাকে বলুন আমি কীভাবে আপনাকে সাহায্য করতে পারি?
+&lt;br&gt;নীচের তালিকা থেকে একটি ভাষা নির্বাচন করুন।</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>সাফল্যের সাথে প্রতিক্রিয়াটি অপছন্দ হয়েছে</value>
