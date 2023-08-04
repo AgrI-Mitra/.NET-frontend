@@ -32,8 +32,8 @@
         </div>
         <div class="input-container d-flex flex-row container-fluid">
             <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" placeholder="@Resources.Resource.message_ask_ur_question">
-            <button id="inputBtn" type="submit" class="send-button img-fluid sendtext">Search</button>
             <div class="d-flex img-fluid" style="max-height: 80px;">
+                <button id="inputBtn" type="submit" class="send-button img-fluid sendtext"></button>
                 <!--<button id="inputBtn" class="send-button bg-success img-fluid">@Resources.Resource.label_send</button>-->
                 <button id="inputRecordBtn" class="send-button img-fluid bg-transparent">
                     <img id="recordingImage" src="~/Content/images/startIcon.svg" class="img-fluid" />
@@ -146,10 +146,9 @@
         $("#userQuestionTextBox").trigger('change');
     }
 
-    function openModalPopUp(message) {
+    function openModalPopUp(message, textInEnglish) {
         chatResponseView(message);
-
-        if (String(message).toLowerCase() == "invalid otp" || String(message).toLowerCase() == "अमान्य ओ. टी. पी") {
+        if (String(textInEnglish).toLowerCase() == "invalid otp") {
             var resendOTPBtn = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><button class='send-button bg-success' onclick='resendOTP(this);'>Resend OTP</button></div>";
             $('#message-list').append(resendOTPBtn);
         }
@@ -324,7 +323,7 @@
                         if (data.Text !== null) {
                             message = data.Text;
                             $(inputTextId).val(message);
-                            openModalPopUp(data.Text);
+                            openModalPopUp(data.Text, data.textInEnglish);
                         }
 
                         if (data.Error !== null) {
@@ -371,7 +370,7 @@
         else {
             div.className += " user-msg-left";
             const avatarImg = document.createElement('img');
-            avatarImg.src = '../Content/images/user.png';
+            avatarImg.src = '../Content/images/user.svg';
             avatarImg.alt = 'avatar 1';
             avatarImg.className = 'avatar-img';
             avatarImg.style.width = '45px';
