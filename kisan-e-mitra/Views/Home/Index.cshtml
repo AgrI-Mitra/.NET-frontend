@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="input-container d-flex flex-row container-fluid">
-        <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" placeholder="@Resources.Resource.message_ask_ur_question">
+        <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" onkeypress="onInputBoxKeyPressed(event)" placeholder="@Resources.Resource.message_ask_ur_question">
         <div class="d-flex img-fluid" style="max-height: 80px;">
             <button id="inputBtn" type="submit" class="send-button img-fluid sendtext"></button>
             <!--<button id="inputBtn" class="send-button bg-success img-fluid">@Resources.Resource.label_send</button>-->
@@ -158,8 +158,10 @@
         hideChatLoader();
     }
 
-    function formatChatBotResponse(chatResponse) {
-
+    function onInputBoxKeyPressed(event) {
+        if (event.keyCode == 13 || event.key == "Enter") {
+            $("#inputBtn").click();
+        }
     }
 
     function resendOTP(element) {
@@ -169,7 +171,7 @@
 
     function chatResponseView(message) {
         if (message != "") {
-            
+
             var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
 
             // AADHAR Info UI Format START
@@ -183,7 +185,7 @@
             response = response.replace("</table>", tableWrapperSuffix);
             response = response.replace("aadhar-table", "aadhar-table table-sm table");
             // AADHAR Info UI Format END
-            
+
             $('#message-list').append(response.replace(/\n/g, "<br>"));
         }
     }
