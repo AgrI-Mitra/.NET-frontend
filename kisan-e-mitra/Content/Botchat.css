@@ -265,7 +265,7 @@ button[type="submit"] {
     margin: 0px 0px 0px -60px;
     border: 1px solid transparent;
     border-radius: inherit;
-    background: url('../Content/images/send_text.svg') no-repeat center;
+    background: url('../Content/images/send-text-highlight.svg') no-repeat center;
     cursor: pointer;
     opacity: 0.4;
     width: 60px;

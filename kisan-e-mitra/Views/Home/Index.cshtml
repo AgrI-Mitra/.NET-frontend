@@ -33,7 +33,8 @@
     <div class="input-container d-flex flex-row container-fluid">
         <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" onkeypress="onInputBoxKeyPressed(event)" placeholder="@Resources.Resource.message_ask_ur_question">
         <div class="d-flex img-fluid" style="max-height: 80px;">
-            <button id="inputBtn" type="submit" class="send-button img-fluid sendtext"></button>
+            <button id="inputBtn" type="submit" class="send-button img-fluid sendtext">
+            </button>
             <!--<button id="inputBtn" class="send-button bg-success img-fluid">@Resources.Resource.label_send</button>-->
             <button id="inputRecordBtn" class="send-button img-fluid bg-transparent">
                 <img id="recordingImage" src="~/Content/images/startIcon.svg" class="img-fluid" />
@@ -68,21 +69,17 @@
 
     function enableDisableSendButton(textValue) {
         if (textValue) {
-            $('#inputBtn').prop('disabled', false)
-            //$("#inputBtn").css("display", "flex");
-            //$("#inputRecordBtn").css("display", "none");
+            $("#inputBtn").css({ opacity: 1 });
+            $('#inputBtn').prop('disabled', false);
 
         } else {
-            $('#inputBtn').prop('disabled', true)
-            //$("#inputBtn").css("display", "none");
-            //$("#inputRecordBtn").css("display", "flex");
-
+            $("#inputBtn").css({ opacity: 0.4 });
+            $('#inputBtn').prop('disabled', true);
         }
     }
 
     $(document).ready(function () {
         var languageChangedGreeting = sessionStorage.getItem('languageChangedMessage');
-        console.log('languageChangedGreeting : ', languageChangedGreeting);
         if (languageChangedGreeting) {
             //showLanguageChangedMessage(languageChangedGreeting);
             var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + languageChangedGreeting + "</div></div>";

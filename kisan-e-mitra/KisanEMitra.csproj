@@ -163,6 +163,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Content Include="Content\images\send-text-highlight.svg" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatHistoryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
