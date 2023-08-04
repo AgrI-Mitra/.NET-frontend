@@ -2,45 +2,45 @@
     ViewBag.Title = Resources.Resource.label_title;
 }
 
-    <div class="chat-container">
-        <div id="message-list" class="message-list">
-            <div id="welcome-message" class="user-msg-left">
-                <div class="card text-center" style="border-radius:20px;">
-                    <div class="card-body">
-                        <h5 class="card-title"></h5>
-                        <p class="card-text">
-                            @Resources.Resource.message_welcome_greeting
-                        </p>
-                        <p>
-                            @Resources.Resource.message_language_selection
-                        </p>
-                        @foreach (var language in ViewBag.LanguageModel.Languages)
+<div class="chat-container">
+    <div id="message-list" class="message-list">
+        <div id="welcome-message" class="user-msg-left">
+            <div class="card text-center" style="border-radius:20px;">
+                <div class="card-body">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text">
+                        @Resources.Resource.message_welcome_greeting
+                    </p>
+                    <p>
+                        @Resources.Resource.message_language_selection
+                    </p>
+                    @foreach (var language in ViewBag.LanguageModel.Languages)
+                    {
+                        if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
                         {
-                            if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
-                            {
-                                <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
-                            }
-                            else
-                            {
-                                <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
-                            }
+                            <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
                         }
+                        else
+                        {
+                            <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                        }
+                    }
 
-                    </div>
                 </div>
             </div>
         </div>
-        <div class="input-container d-flex flex-row container-fluid">
-            <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" placeholder="@Resources.Resource.message_ask_ur_question">
-            <div class="d-flex img-fluid" style="max-height: 80px;">
-                <button id="inputBtn" type="submit" class="send-button img-fluid sendtext"></button>
-                <!--<button id="inputBtn" class="send-button bg-success img-fluid">@Resources.Resource.label_send</button>-->
-                <button id="inputRecordBtn" class="send-button img-fluid bg-transparent">
-                    <img id="recordingImage" src="~/Content/images/startIcon.svg" class="img-fluid" />
-                </button>
-            </div>
+    </div>
+    <div class="input-container d-flex flex-row container-fluid">
+        <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" placeholder="@Resources.Resource.message_ask_ur_question">
+        <div class="d-flex img-fluid" style="max-height: 80px;">
+            <button id="inputBtn" type="submit" class="send-button img-fluid sendtext"></button>
+            <!--<button id="inputBtn" class="send-button bg-success img-fluid">@Resources.Resource.label_send</button>-->
+            <button id="inputRecordBtn" class="send-button img-fluid bg-transparent">
+                <img id="recordingImage" src="~/Content/images/startIcon.svg" class="img-fluid" />
+            </button>
         </div>
     </div>
+</div>
 
 
 <script type="text/javascript">
@@ -158,6 +158,10 @@
         hideChatLoader();
     }
 
+    function formatChatBotResponse(chatResponse) {
+
+    }
+
     function resendOTP(element) {
         $(element).remove();
         askQuestions('resend OTP');
@@ -165,7 +169,21 @@
 
     function chatResponseView(message) {
         if (message != "") {
+            
             var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
+
+            // AADHAR Info UI Format START
+            // If aadhar info is available in chat response then we need to display it in table format
+            // Add bootstrap table class and "table-responsive card" classes as wrapper to beautify the table
+
+            var tableWrapperPrefix = '<div class="table-responsive card"> <table';
+            var tableWrapperSuffix = '</table> </div>';
+
+            response = response.replace("<table", tableWrapperPrefix);
+            response = response.replace("</table>", tableWrapperSuffix);
+            response = response.replace("aadhar-table", "aadhar-table table-sm table");
+            // AADHAR Info UI Format END
+            
             $('#message-list').append(response.replace(/\n/g, "<br>"));
         }
     }

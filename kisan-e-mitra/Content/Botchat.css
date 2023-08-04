@@ -41,7 +41,6 @@
 .left {
     justify-content: flex-start;
     padding: 15px;
- 
 }
 
 .user-msg-left {
@@ -281,7 +280,7 @@ button[type="submit"] {
     cursor: pointer;
     outline: none;
     margin-left: 10px;
-    width:30px;
+    width: 30px;
     border: 1px solid #219653;
     border-radius: 4px;
 }
@@ -308,3 +307,10 @@ button[type="submit"] {
         fill:green;
     }
 
+table.aadhar-table {
+    margin-bottom: 0px;
+}
+
+.aadhar-table tbody tr td:first-child {
+    font-weight: bold;
+}

@@ -42,7 +42,7 @@ html, body {
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0;
+    right: 0; 
     background-color: #f1f1f1;
 }
 
@@ -76,7 +76,7 @@ html, body {
     background-color: #333;
 }
 .chat-container-bg-imgs {
-    padding: 40px;
+    padding: 2%;
 }
 
 .chat-container-top {
