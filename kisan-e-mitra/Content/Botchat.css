@@ -42,6 +42,7 @@
     border-bottom: 1px solid #d1d1d1;
     padding: 2% 5%;
 }
+
 .message-content {
     padding: 10px;
     border-radius: 25px;
@@ -88,7 +89,7 @@
 .page-title {
     margin-top: 4vh;
     margin-left: 2vh;
-    font-family: Mulish-Bold;
+    font-family: Montserrat;
     font-size: 4.265vh;
     font-weight: 700;
     color: #219653;
@@ -118,7 +119,7 @@ div.more-page-label {
     align-items: center;
     margin-top: 2vh;
     margin-left: 2vh;
-    font-family: Mulish-Bold;
+    font-family: Montserrat;
     font-size: 4.2vh;
     font-weight: 700;
     color: #219653 !important;
@@ -133,7 +134,7 @@ div.more-page-label {
     color: #fff;
     margin: 4vh auto 0;
     text-align: center;
-    font-family: Mulish-regular;
+    font-family: Montserrat;
     padding: 2vh;
     border: none;
     background-color: #219653 !important;
@@ -296,4 +297,10 @@ table.aadhar-table {
 
 .user-avatar-img {
     background-color: #219653;
+}
+
+.div-row div:nth-child(2) {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1%;
 }

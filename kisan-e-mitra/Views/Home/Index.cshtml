@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = Resources.Resource.label_title;
 }
 
@@ -172,12 +172,16 @@
             // If aadhar info is available in chat response then we need to display it in table format
             // Add bootstrap table class and "table-responsive card" classes as wrapper to beautify the table
 
-            var tableWrapperPrefix = '<div class="table-responsive card"> <table';
-            var tableWrapperSuffix = '</table> </div>';
+            //Remove all the table related element and replace them with div to show adhar info in a new UI
+            response = response.replaceAll("<table", "<div");
+            response = response.replaceAll("<tbody", "<div");
+            response = response.replaceAll("<tr", '<div class="div-row"');
+            response = response.replaceAll("<td", "<div");
 
-            response = response.replace("<table", tableWrapperPrefix);
-            response = response.replace("</table>", tableWrapperSuffix);
-            response = response.replace("aadhar-table", "aadhar-table table-sm table");
+            response = response.replaceAll("/table>", "/div>");
+            response = response.replaceAll("/tbody>", "/div>");
+            response = response.replaceAll("/tr>", "/div>");
+            response = response.replaceAll("/td>", "/div>");
             // AADHAR Info UI Format END
 
             $('#message-list').append(response.replace(/\n/g, "<br>"));

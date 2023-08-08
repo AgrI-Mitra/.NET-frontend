@@ -163,6 +163,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Content Include="Content\images\pause-circle.svg" />
+    <Content Include="Content\images\play-circle.svg" />
     <Content Include="Content\images\send-text-highlight.svg" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatHistoryController.cs" />
@@ -290,6 +292,8 @@
     <Content Include="Font\Mulish-Regular.a4c4b1ab.ttf" />
     <Content Include="Content\Files\my_odia_manual.pdf" />
     <Content Include="Content\Files\my_eng_manual.pdf" />
+    <Content Include="Font\Montserrat-Bold.ttf" />
+    <Content Include="Font\Montserrat-Regular.ttf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

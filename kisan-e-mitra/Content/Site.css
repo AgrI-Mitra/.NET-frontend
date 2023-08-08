@@ -2,20 +2,26 @@
 
 
 @font-face {
-    font-family: Mulish-regular, sans-serif;
-    src: url('../Font//Mulish-Regular.a4c4b1ab.ttf');
+    font-family: 'Montserrat', sans-serif;
+    src: url('../Font/Montserrat-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Montserrat', sans-serif;
+    src: url('../Font/Montserrat-Bold.ttf');
+    font-weight: 700;
 }
 
 html, body {
     background: url('../Content/images/background.png'), lightgray 50% / cover no-repeat;
-    font-family: Mulish-regular, sans-serif;
+    font-family: Montserrat, sans-serif;
 }
 
 .main-page-content {
     height: 500px;
     margin: 0;
     padding: 0;
-    font-family: Mulish-regular, sans-serif;
+    font-family: Montserrat, sans-serif;
     display: flex;
     flex-direction: column;
 }
