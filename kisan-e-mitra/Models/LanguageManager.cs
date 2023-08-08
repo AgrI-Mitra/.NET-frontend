@@ -40,6 +40,9 @@ namespace KisanEMitra.Models
                 LanguageFullName = "English", LanguageLabel = "English",  LanguageCultureName = "en"
             },
             new Languages {
+                LanguageFullName = "Gujarati", LanguageLabel = "ગુજરાતી", LanguageCultureName = "gu"
+            },
+            new Languages {
                 LanguageFullName = "Bangla", LanguageLabel = "বাংলা",LanguageCultureName = "bn"
             },
             new Languages {
