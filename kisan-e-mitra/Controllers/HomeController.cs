@@ -22,11 +22,16 @@ namespace KisanEMitra.Controllers
             return View();
         }
 
-        public ActionResult Logout()
+        [HttpPost]
+        public JsonResult Logout()
         {
             KillSession();
 
-            return View("Index");
+            return Json(new AjaxActionResponse()
+            {
+                Message = "Session refreshed",
+                Success = true
+            });
         }
 
         private void KillSession()

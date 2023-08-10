@@ -28,6 +28,9 @@
         </div>
     </div>
     <div class="input-container d-flex flex-row container-fluid">
+        <button class="img-fluid bg-transparent send-button" style="padding-left:0px;" onclick="restartSession();">
+            <img src="~/Content/images/restart.svg" class="img-fluid" />
+        </button>
         <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" onkeypress="onInputBoxKeyPressed(event)" placeholder="@Resources.Resource.message_ask_ur_question">
         <div class="d-flex img-fluid" style="max-height: 80px;">
             <button id="inputBtn" type="submit" class="send-button img-fluid sendtext">
@@ -452,6 +455,22 @@
             },
             failure: function (data) {
                 alert('oops something went wrong');
+            }
+        });
+    }
+
+    function restartSession() {
+
+        scrollToBottom();
+        $.ajax({
+            type: "POST",
+            url: "/Home/Logout",
+            dataType: "json",
+            data: null,
+            success: function (data) {
+                location.reload();
+            },
+            failure: function (data) {
             }
         });
     }
