@@ -6,9 +6,9 @@
     <div id="message-list" class="message-list">
         <div id="welcome-message" class="user-msg-left">
             <div class="card text-center" style="border-radius:20px;">
-                <div class="card-body">
+                <div class="card-body py-1">
                     <h5 class="card-title"></h5>
-                    <p class="card-text">
+                    <p class="card-text mb-0">
                         @(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))
                     </p>
                     @foreach (var language in ViewBag.LanguageModel.Languages)
