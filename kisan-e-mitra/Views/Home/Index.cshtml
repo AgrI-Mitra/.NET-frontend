@@ -130,7 +130,7 @@
         $(function () {
             $('body').on('click', '#inputBtn', function (e) {
                 e.preventDefault();
-                querstionInput = $('#userQuestionTextBox').val();
+                querstionInput = $('#userQuestionTextBox').text();
                 if (querstionInput) {
 
                     if (lastUserTypedMessageId != null && lastUserTypedMessageId != "") {
