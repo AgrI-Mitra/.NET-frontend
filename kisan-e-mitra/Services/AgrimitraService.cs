@@ -14,6 +14,7 @@ namespace KisanEMitra.Services
         private readonly HttpClient httpClient;
         private readonly string baseURL = "https://bff.agrimitra.samagra.io/";
         private readonly string bhashiniApiBaseUrl = "https://dhruva-api.bhashini.gov.in/services/inference/pipeline";
+        private readonly string bhashiniApiAuthorizationHeaderKey = "5UMLSGg_KyJTjoTG4nmJP3mXstSXLJHs27a-uG0F1qWUNx9hJeQlEA7QQtFCnnXa";
         private readonly List<BhashiniApiServiceId> bhashiniApiServiceIds = new List<BhashiniApiServiceId>() {
             new BhashiniApiServiceId {
                 ServiceId = "ai4bharat/indic-tts-coqui-misc-gpu--t4", LanguageCode = "en"
@@ -101,8 +102,7 @@ namespace KisanEMitra.Services
 
             try
             {
-                httpClient.DefaultRequestHeaders.Add("Authorization", "5UMLSGg_KyJTjoTG4nmJP3mXstSXLJHs27a-uG0F1qWUNx9hJeQlEA7QQtFCnnXa");
-                //httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
+                httpClient.DefaultRequestHeaders.Add("Authorization", bhashiniApiAuthorizationHeaderKey);
                 var response = await httpClient.PostAsJsonAsync($"{bhashiniApiBaseUrl}", bhashiniApiRequestBody);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
