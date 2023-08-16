@@ -75,17 +75,60 @@ namespace KisanEMitra.Controllers
 
             var languageModel = GetSelectedLanguage();
             ViewBag.LanguageModel = languageModel;
+
+            //// Get current language audio for welcome note
+            //List<string> strings = new List<string>
+            //{
+            //    Resources.Resource.message_welcome_greeting.ToString(),
+            //    Resources.Resource.message_language_changed_greeting.ToString()
+            //};
+
+            //var greetingMessagesAudioStrings = await TextToSpeach(strings);
+
+            //// Load audio base64 strings to view bag so we can play audio using it
+            //List<string> audioBase64Strings = new List<string>();
+            //foreach (var item in greetingMessagesAudioStrings)
+            //{
+            //    audioBase64Strings.Add(item.audioContent);
+            //}
+
+            //ViewBag.AudioBase64Strings = audioBase64Strings;
+            await SetAudioBase64StringToViewBagAsync();
             return View();
         }
 
+        private async Task SetAudioBase64StringToViewBagAsync()
+        {
+            // Get current language audio for welcome note
+            List<string> strings = new List<string>
+            {
+                Resources.Resource.message_welcome_greeting.ToString(),
+                Resources.Resource.message_language_changed_greeting.ToString()
+            };
+
+            var greetingMessagesAudioStrings = await TextToSpeach(strings);
+
+            // Load audio base64 strings to view bag so we can play audio using it
+            List<string> audioBase64Strings = new List<string>();
+            foreach (var item in greetingMessagesAudioStrings)
+            {
+                audioBase64Strings.Add(item.audioContent);
+            }
+
+            ViewBag.AudioBase64Strings = audioBase64Strings;
+        }
         [HttpPost]
-        public JsonResult ChangeLanguage(string lang)
+        public async Task<JsonResult> ChangeLanguage(string lang)
         {
             new LanguageManager().SetLanguage(lang);
+
+            //await SetAudioBase64StringToViewBagAsync();
+
             return Json(new AjaxActionResponse()
             {
                 Message = Resources.Resource.message_language_changed_greeting.ToString(),
-                Success = true
+                Success = true,
+                //Data = ViewBag.AudioBase64Strings
             });
         }
 
@@ -128,6 +171,29 @@ namespace KisanEMitra.Controllers
                 return Json(null);
 
             return Json(responseBody, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<List<BhashiniApiResponseAudioInfo>> TextToSpeach(List<string> texts)
+        {
+            var bhashiniApiInput = new List<BhashiniApiRequestBodyInput>();
+
+            foreach (var text in texts)
+            {
+                bhashiniApiInput.Add(new BhashiniApiRequestBodyInput
+                {
+                    source = text
+                });
+            }
+
+            var responseBody = await agrimitraService.GetTextToSpeech(GetSelectedLanguage().SelectedLanguage, bhashiniApiInput);
+
+            var languageModel = GetSelectedLanguage();
+            ViewBag.LanguageModel = languageModel;
+
+            //if (responseBody == null)
+            //    return Json(null);
+
+            return responseBody.audio;
         }
 
         [HttpPost]

@@ -11,8 +11,8 @@
 </head>
 <body class="body-content chat-container-bg-imgs">
     @{
-        IEnumerable<SelectListItem> languages = ViewBag.LanguageModel.Languages;
-        var selectedLanguage = ViewBag.LanguageModel.SelectedLanguage;
+        IEnumerable<SelectListItem> languages = ViewBag?.LanguageModel?.Languages;
+        var selectedLanguage = ViewBag?.LanguageModel?.SelectedLanguage;
     }
     <div class="app-container">
         <div class="d-flex justify-content-between align-items-center chat-container-top">
