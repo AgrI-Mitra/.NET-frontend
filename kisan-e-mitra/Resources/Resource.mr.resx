@@ -118,244 +118,244 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="error.disconnected" xml:space="preserve">
-    <value>You are disconnected. Please refresh or login again.</value>
+    <value>तुम्ही डिस्कनेक्ट आहात. कृपया रिफ्रेश करा किंवा पुन्हा लॉग इन करा.</value>
   </data>
   <data name="error.empty_msg" xml:space="preserve">
-    <value>Please type or select a message to send.</value>
+    <value>कृपया पाठवण्यासाठी संदेश टाइप करा किंवा निवडा.</value>
   </data>
   <data name="error.fail_to_submit" xml:space="preserve">
-    <value>Failed to submit rating.</value>
+    <value>रेटिंग सबमिट करण्यात अयशस्वी.</value>
   </data>
   <data name="error.fail_to_submit_review" xml:space="preserve">
-    <value>Failed to submit review.</value>
+    <value>पुनरावलोकन सबमिट करण्यात अयशस्वी.</value>
   </data>
   <data name="error.otp_not_sent" xml:space="preserve">
-    <value>OTP not sent</value>
+    <value>OTP पाठवला नाही</value>
   </data>
   <data name="error.sending_otp" xml:space="preserve">
-    <value>Error sending OTP</value>
+    <value>OTP पाठवताना त्रुटी</value>
   </data>
   <data name="error.userid_not_registered" xml:space="preserve">
-    <value>UserID not registered.</value>
+    <value>UserID नोंदणीकृत नाही.</value>
   </data>
   <data name="error.wait_new_chat" xml:space="preserve">
-    <value>Please wait for reply.</value>
+    <value>कृपया उत्तराची प्रतीक्षा करा.</value>
   </data>
   <data name="label.back" xml:space="preserve">
-    <value>Back</value>
+    <value>मागे</value>
   </data>
   <data name="label.chats" xml:space="preserve">
-    <value>Chats</value>
+    <value>गप्पा</value>
   </data>
   <data name="label.click" xml:space="preserve">
-    <value>Reload</value>
+    <value>रीलोड करा</value>
   </data>
   <data name="label.close" xml:space="preserve">
-    <value>Close</value>
+    <value>बंद</value>
   </data>
   <data name="label.confirm_delete" xml:space="preserve">
-    <value>Are you sure you want to delete this conversation?</value>
+    <value>तुमची खात्री आहे की तुम्ही हे संभाषण हटवू इच्छिता?</value>
   </data>
   <data name="label.continue" xml:space="preserve">
-    <value>Continue</value>
+    <value>सुरू</value>
   </data>
   <data name="label.dial" xml:space="preserve">
-    <value>Dial</value>
+    <value>डायल करा</value>
   </data>
   <data name="label.examples" xml:space="preserve">
-    <value>Examples</value>
+    <value>उदाहरणे</value>
   </data>
   <data name="label.extension_worker" xml:space="preserve">
-    <value>Extension Worker</value>
+    <value>विस्तार कार्यकर्ता</value>
   </data>
   <data name="label.faqs" xml:space="preserve">
-    <value>FAQs</value>
+    <value>वारंवार विचारले जाणारे प्रश्न</value>
   </data>
   <data name="label.farmer" xml:space="preserve">
-    <value>Farmer</value>
+    <value>शेतकरी</value>
   </data>
   <data name="label.feedback" xml:space="preserve">
-    <value>Feedback</value>
+    <value>अभिप्राय</value>
   </data>
   <data name="label.logout" xml:space="preserve">
-    <value>Logout</value>
+    <value>बाहेर पडणे</value>
   </data>
   <data name="label.mobile_number" xml:space="preserve">
-    <value>Mobile Number</value>
+    <value>मोबाईल नंबर</value>
   </data>
   <data name="label.more" xml:space="preserve">
-    <value>More</value>
+    <value>अधिक</value>
   </data>
   <data name="label.new_chat" xml:space="preserve">
-    <value>New chat</value>
+    <value>नवीन गप्पा</value>
   </data>
   <data name="label.no_history" xml:space="preserve">
-    <value>No Chats</value>
+    <value>गप्पा नाहीत</value>
   </data>
   <data name="label.popUpTitle" xml:space="preserve">
-    <value>Dear Beneficiary, Thank for reaching out to us with your query. In order to provide you with the correct resolution, we kindly request you to provide us with your Aadhaar Number / PM KISAN ID / Phone no.</value>
+    <value>प्रिय लाभार्थी, तुमच्या प्रश्नासह आमच्यापर्यंत पोहोचल्याबद्दल धन्यवाद. तुम्हाला योग्य रिझोल्यूशन प्रदान करण्यासाठी, आम्ही तुम्हाला तुमचा आधार क्रमांक / PM किसान आयडी / फोन नंबर प्रदान करण्याची विनंती करतो.</value>
   </data>
   <data name="label.popUpTitle2" xml:space="preserve">
-    <value>Enter your last 4 digits of Aadhaar</value>
+    <value>तुमचे आधारचे शेवटचे ४ अंक टाका</value>
   </data>
   <data name="label.popUpTitle3" xml:space="preserve">
-    <value>Dear Beneficiary, request you to kindly enter the OTP that has been received by you.</value>
+    <value>प्रिय लाभार्थी, आपणास प्राप्त झालेला OTP प्रविष्ट करण्याची विनंती.</value>
   </data>
   <data name="label.profile" xml:space="preserve">
-    <value>Profile</value>
+    <value>प्रोफाइल</value>
   </data>
   <data name="label.search" xml:space="preserve">
-    <value>Search</value>
+    <value>शोधा</value>
   </data>
   <data name="label.send" xml:space="preserve">
-    <value>Send</value>
+    <value>पाठवा</value>
   </data>
   <data name="label.splash_title" xml:space="preserve">
-    <value>Kisan e-Mitra</value>
+    <value>किसान e-मित्र</value>
   </data>
   <data name="label.submit" xml:space="preserve">
-    <value>Submit</value>
+    <value>प्रस्तुत करणे</value>
   </data>
   <data name="label.submit_review" xml:space="preserve">
-    <value>Submit Review</value>
+    <value>पुनरावलोकन सबमिट करा</value>
   </data>
   <data name="label.title" xml:space="preserve">
-    <value>Kisan-eMitra</value>
+    <value>किसान-मित्र</value>
   </data>
   <data name="label.welcome" xml:space="preserve">
-    <value>Welcome</value>
+    <value>स्वागत आहे</value>
   </data>
   <data name="message.ask_ur_question" xml:space="preserve">
-    <value>Ask Your Question</value>
+    <value>तुमचा प्रश्न विचारा</value>
   </data>
   <data name="message.cannot_answer_again" xml:space="preserve">
-    <value>Cannot answer again</value>
+    <value>पुन्हा उत्तर देऊ शकत नाही</value>
   </data>
   <data name="message.coming_soon" xml:space="preserve">
-    <value>Coming Soon!</value>
+    <value>लवकरच येत आहे!</value>
   </data>
   <data name="message.coming_soon_description" xml:space="preserve">
-    <value>We are going to launch this feature very soon. Stay tuned!</value>
+    <value>आम्ही लवकरच हे फीचर लाँच करणार आहोत. संपर्कात रहा!</value>
   </data>
   <data name="message.dialer_popup" xml:space="preserve">
-    <value>You may speak to an Ama Krushi expert to get a satisfactory response</value>
+    <value>समाधानकारक प्रतिसाद मिळावा यासाठी तुम्ही अमा कृषी तज्ञाशी बोलू शकता</value>
   </data>
   <data name="message.dial_description" xml:space="preserve">
-    <value>To connect with call centre</value>
+    <value>कॉल सेंटर शी कनेक्ट करण्‍यासाठी</value>
   </data>
   <data name="message.didnt_receive" xml:space="preserve">
-    <value>Didn't receive the OTP?</value>
+    <value>OTP प्राप्त झाला नाही?</value>
   </data>
   <data name="message.down_time_retry" xml:space="preserve">
-    <value>Retry</value>
+    <value>पुन्हा प्रयत्न करा</value>
   </data>
   <data name="message.enter_mobile" xml:space="preserve">
-    <value>Enter Mobile Number</value>
+    <value>मोबाईल नंबर टाका</value>
   </data>
   <data name="message.example_ques_one" xml:space="preserve">
-    <value>Where is my money?</value>
+    <value>माझे पैसे कुठे आहेत?</value>
   </data>
   <data name="message.example_ques_three" xml:space="preserve">
-    <value>Whom do I need to speak to in order to get my money?</value>
+    <value>माझे पैसे मिळविण्यासाठी मला कोणाशी बोलणे आवश्यक आहे?</value>
   </data>
   <data name="message.example_ques_two" xml:space="preserve">
-    <value>What is the status of my application?</value>
+    <value>माझ्या अर्जाची स्थिती काय आहे?</value>
   </data>
   <data name="message.helpful" xml:space="preserve">
-    <value>Was this helpful?</value>
+    <value>हे उपयुक्त होते का?</value>
   </data>
   <data name="message.invalid_mobile" xml:space="preserve">
-    <value>Enter a 10 digit number!</value>
+    <value>10 अंकी क्रमांक प्रविष्ट करा!</value>
   </data>
   <data name="message.invalid_otp" xml:space="preserve">
-    <value>Invalid Otp</value>
+    <value>अवैध Otp</value>
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>Thank you for selecting the language.
-Dear Beneficiary,
-I am eMitra, your PMKISAN guide. I can help you with the scheme payment related queries!
-Please type your query, or tell your query using the voice button at the bottom right corner.</value>
+    <value>भाषा निवडल्याबद्दल धन्यवाद.
+प्रिय लाभार्थी,
+मी eMitra, तुमचा PMKISAN मार्गदर्शक आहे. मी तुम्हाला स्कीम पेमेंट संबंधित प्रश्नांमध्ये मदत करू शकतो!
+कृपया तुमची क्वेरी टाइप करा किंवा तळाशी उजव्या कोपर्‍यातील व्हॉइस बटण वापरून तुमची क्वेरी सांगा.</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
-    <value>Not registered yet ?</value>
+    <value>अद्याप नोंदणी केली नाही?</value>
   </data>
   <data name="message.no_history" xml:space="preserve">
-    <value>Your Chat History with AI will come here</value>
+    <value>तुमचा AI सह चॅट इतिहास येथे येईल</value>
   </data>
   <data name="message.otp_message" xml:space="preserve">
-    <value>We will send you a one time password on this</value>
+    <value>यावर आम्ही तुम्हाला वन टाइम पासवर्ड पाठवू</value>
   </data>
   <data name="message.otp_not_sent" xml:space="preserve">
-    <value>Otp not sent</value>
+    <value>Otp पाठवला नाही</value>
   </data>
   <data name="message.otp_sent_again" xml:space="preserve">
-    <value>OTP sent again</value>
+    <value>OTP पुन्हा पाठवला</value>
   </data>
   <data name="message.otp_verification" xml:space="preserve">
-    <value> OTP Verification</value>
+    <value>OTP पडताळणी</value>
   </data>
   <data name="message.rating" xml:space="preserve">
-    <value>Did you find this useful?</value>
+    <value>तुम्हाला हे उपयुक्त वाटले?</value>
   </data>
   <data name="message.rating_description" xml:space="preserve">
-    <value>Tap a star to rate</value>
+    <value>रेट करण्यासाठी तारेवर टॅप करा</value>
   </data>
   <data name="message.rating_submitted" xml:space="preserve">
-    <value>Rating Submitted!</value>
+    <value>रेटिंग सबमिट केले!</value>
   </data>
   <data name="message.recorder_error" xml:space="preserve">
-    <value>Sorry, there is an issue processing your request at the moment. Please try again later.</value>
+    <value>क्षमस्व, याक्षणी आपल्या विनंतीवर प्रक्रिया करताना समस्या आहे. कृपया पुन्हा प्रयत्न करा.</value>
   </data>
   <data name="message.recorder_wait" xml:space="preserve">
-    <value>Please wait while we process your request...</value>
+    <value>आम्ही तुमच्या विनंतीवर प्रक्रिया करेपर्यंत कृपया प्रतीक्षा करा...</value>
   </data>
   <data name="message.register_at_krushak" xml:space="preserve">
-    <value>Register at Krushak Odisha</value>
+    <value>Krushak Odisha येथे नोंदणी करा</value>
   </data>
   <data name="message.register_message" xml:space="preserve">
-    <value>If you are already registered then use your mobile number to login.</value>
+    <value>तुम्ही आधीच नोंदणीकृत असाल तर लॉगिन करण्यासाठी तुमचा मोबाईल नंबर वापरा.</value>
   </data>
   <data name="message.resend_again" xml:space="preserve">
-    <value>Resend again</value>
+    <value>पुन्हा पाठवा</value>
   </data>
   <data name="message.retry" xml:space="preserve">
-    <value>Please retry.</value>
+    <value>कृपया पुन्हा प्रयत्न करा.</value>
   </data>
   <data name="message.review" xml:space="preserve">
-    <value>Write your review (optional)</value>
+    <value>तुमचे पुनरावलोकन लिहा (पर्यायी)</value>
   </data>
   <data name="message.review_description" xml:space="preserve">
-    <value>Please write your experience's feedback.</value>
+    <value>कृपया तुमचा अनुभव अभिप्राय लिहा.</value>
   </data>
   <data name="message.review_submitted" xml:space="preserve">
-    <value>Review Submitted!</value>
+    <value>पुनरावलोकन सबमिट केले!</value>
   </data>
   <data name="message.socket_disconnect_msg" xml:space="preserve">
-    <value>to connect again.</value>
+    <value>पुन्हा कनेक्ट करण्यासाठी.</value>
   </data>
   <data name="message.taking_longer" xml:space="preserve">
-    <value>Please wait, servers are taking longer than usual.</value>
+    <value>कृपया प्रतीक्षा करा, सर्व्हर नेहमीपेक्षा जास्त वेळ घेत आहेत.</value>
   </data>
   <data name="message.temporarily_down" xml:space="preserve">
-    <value>We're temporarily down</value>
+    <value>आम्ही तात्पुरते खाली आहोत</value>
   </data>
   <data name="message.temporarily_down_description" xml:space="preserve">
-    <value>We are experiencing high user volume at the moment, please try logging in after some time</value>
+    <value>आम्ही याक्षणी उच्च वापरकर्ता आवाज अनुभवत आहोत, कृपया काही वेळाने लॉग इन करण्याचा प्रयत्न करा</value>
   </data>
   <data name="message.wait_resending_otp" xml:space="preserve">
-    <value>Please wait before resending OTP</value>
+    <value>OTP पुन्हा पाठवण्यापूर्वी कृपया प्रतीक्षा करा</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>Welcome to Kisan-eMitra! Your personal assistant. Please let me know how I can help you? 
-&lt;br&gt;Select a language from the list below.</value>
+    <value>किसान-ईमित्र मध्ये आपले स्वागत आहे! तुमचा वैयक्तिक सहाय्यक. कृपया मला कळवा की मी तुम्हाला कशी मदत करू शकतो?
+&lt;br&gt;खालील सूचीमधून भाषा निवडा.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
-    <value>Successfully disliked the response</value>
+    <value>प्रतिसाद यशस्वीरित्या नापसंत झाला</value>
   </data>
   <data name="toast.reaction_like" xml:space="preserve">
-    <value>Successfully liked the response</value>
+    <value>प्रतिसाद आवडला यशस्वी</value>
   </data>
   <data name="toast.reaction_reset" xml:space="preserve">
-    <value>Successfully removed the response</value>
+    <value>प्रतिसाद यशस्वीरित्या काढला</value>
   </data>
 </root>
