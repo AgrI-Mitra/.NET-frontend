@@ -25,7 +25,7 @@ namespace KisanEMitra
             var container = new UnityContainer();
 
             container.RegisterType<IAgrimitraService, AgrimitraService>();
-
+            container.RegisterType<IBhashiniService, BhashiniService>();
             return container;
         }
 
@@ -33,6 +33,7 @@ namespace KisanEMitra
         {
             var container = new UnityContainer();
             container.RegisterType<IAgrimitraService, AgrimitraService>();
+            container.RegisterType<IBhashiniService, BhashiniService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

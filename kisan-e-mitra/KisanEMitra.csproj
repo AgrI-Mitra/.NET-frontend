@@ -212,7 +212,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.hi.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\BhashiniService.cs" />
     <Compile Include="Services\AgrimitraService.cs" />
+    <Compile Include="Services\Contracts\IBhashiniService.cs" />
     <Compile Include="Services\Contracts\IAgrimitraService.cs" />
   </ItemGroup>
   <ItemGroup>

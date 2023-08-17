@@ -10,11 +10,13 @@ namespace KisanEMitra.Controllers
 {
     public class HomeController : LanguageController
     {
-        public IAgrimitraService agrimitraService { get; set; }
+        public IAgrimitraService AgrimitraService { get; set; }
+        private IBhashiniService BhashiniService { get; set; }
 
-        public HomeController(IAgrimitraService _agrimitraService)
+        public HomeController(IAgrimitraService _agrimitraService, IBhashiniService bhashiniService)
         {
-            this.agrimitraService = _agrimitraService;
+            this.AgrimitraService = _agrimitraService;
+            this.BhashiniService = bhashiniService;
         }
 
         public ActionResult Splash()
@@ -63,7 +65,7 @@ namespace KisanEMitra.Controllers
                     return RedirectToAction("Index", "Error", errorMessage);
                 }
 
-                userSessionID = await this.agrimitraService.GetUserSessionIDAsync(fingerPrint);
+                userSessionID = await AgrimitraService.GetUserSessionIDAsync(fingerPrint);
                 if (userSessionID == null)
                 {
                     var errorMessage = "Session is not created. Please try again later.";
@@ -150,7 +152,7 @@ namespace KisanEMitra.Controllers
                 inputLanguage = GetSelectedLanguage().SelectedLanguage
             };
 
-            var responseBody = await this.agrimitraService.IdentifyUser(userSessionID, userQueryBody);
+            var responseBody = await AgrimitraService.IdentifyUser(userSessionID, userQueryBody);
             if (responseBody == null)
                 return Json(null);
 
@@ -166,7 +168,7 @@ namespace KisanEMitra.Controllers
                 Text = querstion,
                 inputLanguage = GetSelectedLanguage().SelectedLanguage
             };
-            var responseBody = await this.agrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
+            var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
             if (responseBody == null)
                 return Json(null);
 
@@ -185,7 +187,7 @@ namespace KisanEMitra.Controllers
                 });
             }
 
-            var responseBody = await agrimitraService.GetTextToSpeech(GetSelectedLanguage().SelectedLanguage, bhashiniApiInput);
+            var responseBody = await BhashiniService.GetTextToSpeech(GetSelectedLanguage().SelectedLanguage, bhashiniApiInput);
 
             var languageModel = GetSelectedLanguage();
             ViewBag.LanguageModel = languageModel;
@@ -206,7 +208,7 @@ namespace KisanEMitra.Controllers
                 Media = new MediaQuery() { Category = "base64audio", Text = base64Question },
                 inputLanguage = GetSelectedLanguage().SelectedLanguage
             };
-            var responseBody = await this.agrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
+            var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
             if (responseBody == null)
                 return Json(null);
 
