@@ -15,8 +15,8 @@ namespace KisanEMitra.Controllers
 
         public HomeController(IAgrimitraService _agrimitraService, IBhashiniService bhashiniService)
         {
-            this.AgrimitraService = _agrimitraService;
-            this.BhashiniService = bhashiniService;
+            AgrimitraService = _agrimitraService;
+            BhashiniService = bhashiniService;
         }
 
         public ActionResult Splash()
@@ -78,23 +78,6 @@ namespace KisanEMitra.Controllers
             var languageModel = GetSelectedLanguage();
             ViewBag.LanguageModel = languageModel;
 
-            //// Get current language audio for welcome note
-            //List<string> strings = new List<string>
-            //{
-            //    Resources.Resource.message_welcome_greeting.ToString(),
-            //    Resources.Resource.message_language_changed_greeting.ToString()
-            //};
-
-            //var greetingMessagesAudioStrings = await TextToSpeach(strings);
-
-            //// Load audio base64 strings to view bag so we can play audio using it
-            //List<string> audioBase64Strings = new List<string>();
-            //foreach (var item in greetingMessagesAudioStrings)
-            //{
-            //    audioBase64Strings.Add(item.audioContent);
-            //}
-
-            //ViewBag.AudioBase64Strings = audioBase64Strings;
             await SetAudioBase64StringToViewBagAsync();
             return View();
         }
@@ -120,17 +103,14 @@ namespace KisanEMitra.Controllers
             ViewBag.AudioBase64Strings = audioBase64Strings;
         }
         [HttpPost]
-        public async Task<JsonResult> ChangeLanguage(string lang)
+        public JsonResult ChangeLanguage(string lang)
         {
             new LanguageManager().SetLanguage(lang);
-
-            //await SetAudioBase64StringToViewBagAsync();
 
             return Json(new AjaxActionResponse()
             {
                 Message = Resources.Resource.message_language_changed_greeting.ToString(),
-                Success = true,
-                //Data = ViewBag.AudioBase64Strings
+                Success = true
             });
         }
 
@@ -192,9 +172,6 @@ namespace KisanEMitra.Controllers
             var languageModel = GetSelectedLanguage();
             ViewBag.LanguageModel = languageModel;
 
-            //if (responseBody == null)
-            //    return Json(null);
-
             return responseBody.audio;
         }
 
@@ -217,17 +194,8 @@ namespace KisanEMitra.Controllers
 
         public ActionResult ChatHistory()
         {
-
             List<ChatHistory> chatHistories = new List<ChatHistory>();
 
-            //for (int i = 0; i < 20; i++)
-            //{
-            //    chatHistories.Add(new ChatHistory
-            //    {
-            //        Message = i.ToString(),
-            //        Alignment = i % 2 == 0 ? "left" : "right",
-            //    });
-            //}
             ViewBag.LanguageModel = GetSelectedLanguage();
             return View(chatHistories);
         }

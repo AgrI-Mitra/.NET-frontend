@@ -1,5 +1,4 @@
 ﻿using kishan_bot.Models;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace KisanEMitra.Services.Contracts

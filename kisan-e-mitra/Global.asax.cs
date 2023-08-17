@@ -3,7 +3,6 @@ using KisanEMitra.Services.Contracts;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.Services.Description;
 using Unity;
 using Unity.AspNet.Mvc;
 
@@ -18,15 +17,6 @@ namespace KisanEMitra
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             RegisterComponents();
-        }
-
-        private static IUnityContainer BuildUnityContainer()
-        {
-            var container = new UnityContainer();
-
-            container.RegisterType<IAgrimitraService, AgrimitraService>();
-            container.RegisterType<IBhashiniService, BhashiniService>();
-            return container;
         }
 
         public static void RegisterComponents()

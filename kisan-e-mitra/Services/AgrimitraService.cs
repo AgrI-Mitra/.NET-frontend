@@ -1,9 +1,7 @@
 ﻿using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
@@ -18,7 +16,6 @@ namespace KisanEMitra.Services
         {
             public static string User = "user/generateUserId";
             public static string Prompt = "prompt/3";
-            public static string TemoUserId = "benAudio-serI-4enA-dioU-erIdbenAudio"; //For Local Testing
         }
 
         public AgrimitraService(HttpClient httpClient)
