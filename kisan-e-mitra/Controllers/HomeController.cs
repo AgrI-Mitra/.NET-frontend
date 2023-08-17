@@ -269,7 +269,7 @@ namespace KisanEMitra.Controllers
 
             var languageModel = new LanguageModel
             {
-                Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageLabel"),
+                Languages = new SelectList(LanguageManager.GetLanguagesOrderedByPosition(), "LanguageCultureName", "LanguageLabel"),
                 SelectedLanguage = selectedLanguage
             };
             return languageModel;

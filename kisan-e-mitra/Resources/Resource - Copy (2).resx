@@ -272,10 +272,8 @@
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
     <value>Thank you for selecting the language.
-
-Dear Beneficiary, 
-
-I am your Personal Assistant. I can help you with the scheme payment related queries!
+Dear Beneficiary,
+I am eMitra, your PMKISAN guide. I can help you with the scheme payment related queries!
 Please type your query, or tell your query using the voice button at the bottom right corner.</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">

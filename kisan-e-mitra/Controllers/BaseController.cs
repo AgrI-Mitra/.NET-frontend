@@ -1,5 +1,6 @@
 ﻿using KisanEMitra.Models;
 using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -43,7 +44,7 @@ namespace KisanEMitra.Controllers
 
             var languageModel = new LanguageModel
             {
-                Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageLabel"),
+                Languages = new SelectList(LanguageManager.GetLanguagesOrderedByPosition(), "LanguageCultureName", "LanguageLabel"),
                 SelectedLanguage = selectedLanguage
             };
             ViewBag.languageModel = languageModel;

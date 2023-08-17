@@ -35,8 +35,12 @@ namespace KisanEMitra.Services
             },
             new BhashiniApiServiceId
             {
-                ServiceId = "ai4bharat/indic-tts-coqui-indo_aryan-gpu--t4", LanguageCode = "gu"
+                ServiceId = "ai4bharat/indic-tts-coqui-indo_aryan-gpu--t4", LanguageCode = "mr"
             },
+            new BhashiniApiServiceId
+            {
+                ServiceId = "ai4bharat/indic-tts-coqui-indo_aryan-gpu--t4", LanguageCode = "or"
+            }
         };
 
         public static class APIPaths

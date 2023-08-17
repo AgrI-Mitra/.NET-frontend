@@ -22,6 +22,7 @@ namespace KisanEMitra.Models
             get;
             set;
         }
+        public int Position { get; set; }
     }
 
     public class LanguageModel
@@ -34,32 +35,40 @@ namespace KisanEMitra.Models
     {
         public static List<Languages> AvailableLanguages = new List<Languages> {
             new Languages {
-                LanguageFullName = "Hindi", LanguageLabel = "हिंदी", LanguageCultureName = "hi"
+                LanguageFullName = "Hindi", LanguageLabel = "हिंदी", LanguageCultureName = "hi", Position = 1
             },
             new Languages {
-                LanguageFullName = "English", LanguageLabel = "English",  LanguageCultureName = "en"
+                LanguageFullName = "English", LanguageLabel = "English",  LanguageCultureName = "en", Position = 7
             },
             new Languages {
-                LanguageFullName = "Gujarati", LanguageLabel = "ગુજરાતી", LanguageCultureName = "gu"
+                LanguageFullName = "Marathi", LanguageLabel = "मराठी", LanguageCultureName = "mr", Position= 5
             },
             new Languages {
-                LanguageFullName = "Bangla", LanguageLabel = "বাংলা",LanguageCultureName = "bn"
+                LanguageFullName = "Bangla", LanguageLabel = "বাংলা",LanguageCultureName = "bn", Position = 6
             },
             new Languages {
-                LanguageFullName = "Tamil", LanguageLabel = "தமிழ்", LanguageCultureName = "ta"
+                LanguageFullName = "Tamil", LanguageLabel = "தமிழ்", LanguageCultureName = "ta", Position= 2
             },
             new Languages {
-                LanguageFullName = "Telugu", LanguageLabel = "తెలుగు", LanguageCultureName = "te"
+                LanguageFullName = "Telugu", LanguageLabel = "తెలుగు", LanguageCultureName = "te", Position = 4
+            },
+            new Languages {
+                LanguageFullName = "Odia", LanguageLabel = "ଓଡ଼ିଆ", LanguageCultureName = "or", Position = 3
             },
         };
 
         public static bool IsLanguageAvailable(string lang)
         {
-            return AvailableLanguages.Where(a => a.LanguageCultureName.Equals(lang)).FirstOrDefault() != null ? true : false;
+            return AvailableLanguages.FirstOrDefault(a => a.LanguageCultureName.Equals(lang)) != null;
         }
         public static string GetDefaultLanguage()
         {
-            return AvailableLanguages[0].LanguageCultureName;
+            return AvailableLanguages.Single(f => f.Position == 1).LanguageCultureName;
+        }
+
+        public static List<Languages> GetLanguagesOrderedByPosition()
+        {
+            return AvailableLanguages.OrderBy(o => o.Position).ToList();
         }
 
         public void SetLanguage(string lang)

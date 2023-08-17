@@ -521,10 +521,8 @@ namespace Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to Thank you for selecting the language.
-        ///
-        ///Dear Beneficiary, 
-        ///
-        ///I am your Personal Assistant. I can help you with the scheme payment related queries!
+        ///Dear Beneficiary,
+        ///I am eMitra, your PMKISAN guide. I can help you with the scheme payment related queries!
         ///Please type your query, or tell your query using the voice button at the bottom right corner..
         /// </summary>
         public static string message_language_changed_greeting {
