@@ -1,5 +1,6 @@
 ﻿using KisanEMitra.Services;
 using KisanEMitra.Services.Contracts;
+using System;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -12,6 +13,7 @@ namespace KisanEMitra
     {
         protected void Application_Start()
         {
+            MvcHandler.DisableMvcResponseHeader = true;
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
