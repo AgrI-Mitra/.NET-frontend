@@ -182,8 +182,8 @@
     <Compile Include="Models\SiteResponseBody.cs" />
     <Compile Include="Models\UserQueryBody.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Resource - Copy %282%29.Designer.cs">
-      <DependentUpon>Resource - Copy %282%29.resx</DependentUpon>
+    <Compile Include="Resources\Resource.mr.Designer.cs">
+      <DependentUpon>Resource.mr.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -380,9 +380,9 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Resource - Copy %282%29.resx">
+    <EmbeddedResource Include="Resources\Resource.mr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource - Copy %282%29.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resource.mr.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.or.resx">
