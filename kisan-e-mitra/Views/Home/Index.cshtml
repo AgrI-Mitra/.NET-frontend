@@ -8,29 +8,25 @@
 @Html.Hidden("language-change-greeting-message-base64", (object)languageChangeGreetingBase64.ToString())
 <div class="chat-container">
     <div id="message-list" class="message-list">
-        <div id="welcome-message" class="user-msg-left">
-            <div class="card text-center" style="border-radius:20px;">
-                <div class="card-body p-1">
-                    <h5 class="card-title"></h5>
-                    <p class="card-text mb-0">
-                        @(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))
-                        <img id="playMessageImg-welcome-greeting-message-base64-audio" class="align-self-start" onclick="playAudio('welcome-greeting-message-base64-audio');" src="../Content/images/start-audio.svg" alt="avatar 1" style="width: 36px; height: 100%;">
-                    </p>
-
-                    @foreach (var language in ViewBag.LanguageModel.Languages)
+        <div id="welcome-message" class="system-msg-left message left">
+            <img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'>
+            <div class="message-content">
+                @(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))
+                <br />
+                @foreach (var language in ViewBag.LanguageModel.Languages)
+                {
+                    if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
                     {
-                        if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
-                        {
-                            <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
-                        }
-                        else
-                        {
-                            <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
-                        }
+                        <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
                     }
-
-                </div>
+                    else
+                    {
+                        <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                    }
+                }
             </div>
+            
+            <img id="playMessageImg-welcome-greeting-message-base64-audio" class="align-self-start" onclick="playAudio('welcome-greeting-message-base64-audio');" src="../Content/images/start-audio.svg" alt="avatar 1" style="width: 36px; height: 100%;">
         </div>
     </div>
     <div class="input-container d-flex flex-row container-fluid">
