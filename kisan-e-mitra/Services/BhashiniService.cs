@@ -70,7 +70,7 @@ namespace KisanEMitra.Services
             {
                 language = bhashiniApiRequestBodyPipelineTaskConfigLanguage,
                 serviceId = serviceId,
-                gender = "female",
+                gender = "male",
                 samplingRate = 8000
             };
 
