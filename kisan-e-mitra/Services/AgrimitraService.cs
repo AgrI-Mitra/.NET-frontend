@@ -11,11 +11,14 @@ namespace KisanEMitra.Services
     {
         private readonly HttpClient httpClient;
         private readonly string baseURL = "https://apichatbot.pmkisan.gov.in/";
+        private readonly string userApiBaseEndPoint = "user/";
 
         public static class APIPaths
         {
             public static string User = "user/generateUserId";
-            public static string Prompt = "prompt/3";
+            public static string Prompt = "prompt";
+            public static string ChatHistory = "history";
+            public static string ApiVersion = "/3";
         }
 
         public AgrimitraService(HttpClient httpClient)
@@ -75,9 +78,69 @@ namespace KisanEMitra.Services
             var siteUserBody = new SiteResponseBody();
             try
             {
+                httpClient.DefaultRequestHeaders.Add("User-id", UserID);
+
+                var response = await httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}{APIPaths.ApiVersion}", UserQuery);
+
+
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
+                }
+                else
+                {
+                    siteUserBody.Text = response.ReasonPhrase;
+                    siteUserBody.Error = response.StatusCode.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                siteUserBody.Text = "Rest API call issue.";
+                siteUserBody.Error = ex.Message;
+            }
+
+            return siteUserBody;
+        }
+
+        public async Task<SiteResponseBody> LikeDislikeUnlikeMessage(string UserID)
+        {
+            var siteUserBody = new SiteResponseBody();
+            try
+            {
+                // Set end point from actionType
                 this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
 
-                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
+                var response = await httpClient.GetAsync($"{userApiBaseEndPoint + APIPaths.ChatHistory + APIPaths.ApiVersion}");
+
+
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
+                }
+                else
+                {
+                    siteUserBody.Text = response.ReasonPhrase;
+                    siteUserBody.Error = response.StatusCode.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                siteUserBody.Text = "Rest API call issue.";
+                siteUserBody.Error = ex.Message;
+            }
+
+            return siteUserBody;
+        }
+
+        public async Task<SiteResponseBody> GetChatHistory(string UserID, string messageId, string actionType)
+        {
+            var siteUserBody = new SiteResponseBody();
+            try
+            {
+                // Set end point from actionType
+                this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
+
+                var response = await httpClient.GetAsync($"{actionType}/{messageId}");
 
 
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
