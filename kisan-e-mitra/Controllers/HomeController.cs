@@ -155,6 +155,42 @@ namespace KisanEMitra.Controllers
             return Json(responseBody, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> LikeMessage(string messageId)
+        {
+            var userSessionID = (string)Session["userSessionID"];
+
+            var responseBody = await AgrimitraService.LikeDislikeUnlikeMessage(userSessionID, messageId, "like");
+            if (responseBody == null)
+                return Json(null);
+
+            return Json(responseBody, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DislikeMessage(string messageId)
+        {
+            var userSessionID = (string)Session["userSessionID"];
+
+            var responseBody = await AgrimitraService.LikeDislikeUnlikeMessage(userSessionID, messageId, "dislike");
+            if (responseBody == null)
+                return Json(null);
+
+            return Json(responseBody, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UnlikeMessage(string messageId)
+        {
+            var userSessionID = (string)Session["userSessionID"];
+
+            var responseBody = await AgrimitraService.LikeDislikeUnlikeMessage(userSessionID, messageId, "removelike");
+            if (responseBody == null)
+                return Json(null);
+
+            return Json(responseBody, JsonRequestBehavior.AllowGet);
+        }
+
         public async Task<List<BhashiniApiResponseAudioInfo>> TextToSpeach(List<string> texts)
         {
             var bhashiniApiInput = new List<BhashiniApiRequestBodyInput>();

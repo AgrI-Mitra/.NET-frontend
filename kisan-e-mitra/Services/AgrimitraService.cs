@@ -1,9 +1,11 @@
 ﻿using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Web.Services.Description;
 
 namespace KisanEMitra.Services
 {
@@ -19,6 +21,7 @@ namespace KisanEMitra.Services
             public static string Prompt = "prompt";
             public static string ChatHistory = "history";
             public static string ApiVersion = "/3";
+            public static string Message = "user/message/";
         }
 
         public AgrimitraService(HttpClient httpClient)
@@ -102,7 +105,7 @@ namespace KisanEMitra.Services
             return siteUserBody;
         }
 
-        public async Task<SiteResponseBody> LikeDislikeUnlikeMessage(string UserID)
+        public async Task<SiteResponseBody> GetChatHistory(string UserID)
         {
             var siteUserBody = new SiteResponseBody();
             try
@@ -132,31 +135,29 @@ namespace KisanEMitra.Services
             return siteUserBody;
         }
 
-        public async Task<SiteResponseBody> GetChatHistory(string UserID, string messageId, string actionType)
+        public async Task<GenericApiResponse> LikeDislikeUnlikeMessage(string UserID, string messageId, string actionType)
         {
-            var siteUserBody = new SiteResponseBody();
+            var siteUserBody = new GenericApiResponse();
             try
             {
                 // Set end point from actionType
                 this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
 
-                var response = await httpClient.GetAsync($"{actionType}/{messageId}");
+                var response = await httpClient.GetAsync($"/{APIPaths.Message}{actionType}/{messageId}");
 
 
-                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
+                    siteUserBody.IsSuccess = true;
                 }
                 else
                 {
-                    siteUserBody.Text = response.ReasonPhrase;
-                    siteUserBody.Error = response.StatusCode.ToString();
+                    siteUserBody.IsSuccess = false;
                 }
             }
             catch (Exception ex)
             {
-                siteUserBody.Text = "Rest API call issue.";
-                siteUserBody.Error = ex.Message;
+                siteUserBody.IsSuccess = false;
             }
 
             return siteUserBody;

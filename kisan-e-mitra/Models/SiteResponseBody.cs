@@ -15,6 +15,11 @@ namespace kishan_bot.Models
         public string messageId { get; set; }
     }
 
+    public class GenericApiResponse
+    {
+        public bool IsSuccess { get; set; }
+    }
+
     public class SiteResponseAudioBody
     {
         public string text { get; set; }

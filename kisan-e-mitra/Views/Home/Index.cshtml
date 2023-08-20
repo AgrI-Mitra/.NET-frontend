@@ -8,25 +8,30 @@
 @Html.Hidden("language-change-greeting-message-base64", (object)languageChangeGreetingBase64.ToString())
 <div class="chat-container">
     <div id="message-list" class="message-list">
-        <div id="welcome-message" class="system-msg-left message left">
-            <img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'>
-            <div class="message-content">
+        <div id="welcome-message" class="system-msg-left message left chatbot-message-wrapper">
+            <img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;' class="chatbot-message-wrapper-column-one">
+            <div class="message-content chatbot-message-wrapper-column-two">
                 @(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))
                 <br />
-                @foreach (var language in ViewBag.LanguageModel.Languages)
-                {
-                    if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
+                <div>
+                    @foreach (var language in ViewBag.LanguageModel.Languages)
                     {
-                        <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                        if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
+                        {
+                            <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                        }
                     }
-                    else
-                    {
-                        <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
-                    }
-                }
+                </div>
+
+            </div>
+            <div class="align-self-start chatbot-message-wrapper-column-three">
+                <img id="playMessageImg-welcome-greeting-message-base64-audio" onclick="playAudio('welcome-greeting-message-base64-audio');" src="../Content/images/start-audio.svg" alt="avatar 1" style="width: 36px; height: 100%;">
             </div>
 
-            <img id="playMessageImg-welcome-greeting-message-base64-audio" class="align-self-start" onclick="playAudio('welcome-greeting-message-base64-audio');" src="../Content/images/start-audio.svg" alt="avatar 1" style="width: 36px; height: 100%;">
         </div>
     </div>
     <div class="input-container d-flex flex-row container-fluid">
@@ -217,15 +222,15 @@
     function chatResponseView(message, messageId) {
         if (message != "") {
 
-            var response = "<div class='message left system-msg-left'>"
-                + "<img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'>"
-                + "<div class='message-content ms-2'>"
+            var response = "<div class='system-msg-left message left chatbot-message-wrapper'>"
+                + "<img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;' class='chatbot-message-wrapper-column-one'>"
+                + "<div class='message-content ms-2 chatbot-message-wrapper-column-two'>"
                 + message
                 + "</div>"
-                + "<img id='playMessageImg-" + messageId + "'"
-                + "class='align-self-start' onclick = 'playAudio("
-                + "\"" + messageId + "\""
-                + ");' src='../Content/images/start-audio.svg' alt='avatar 1' style='width: 36px; height: 100%;'>"
+                + "<div class='align-self-start chatbot-message-wrapper-column-three'>"
+                + "<img id='playMessageImg-" + messageId + "' src='../Content/images/start-audio.svg' alt='avatar 1' style='width:36px; height:100%;' onclick='playAudio(\"" + messageId + "\")'>"
+                + "<img id='thumbLikeButton-" + messageId + "' src='../Content/images/thumb_like.svg' alt='avatar 1' style='width:36px; height:100%;' onclick='likeMessage(\"" + messageId + "\")'>"
+                + "<img id='thumbDisikeButton-" + messageId + "' src='../Content/images/thumb_dislike.svg' alt='avatar 1' style='width: 36px; height: 100%;' onclick='dislikeMessage(\"" + messageId + "\")'></div>"
                 + "</div>";
 
             // AADHAR Info UI Format START
@@ -320,6 +325,106 @@
                 scrollToBottom();
             },
             failure: function (data) {
+            }
+        });
+    }
+
+    function likeMessage(messageId) {
+        chatLoader();
+
+        // Check the current state of like button whether it is liked or unliked.
+        // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
+        var likeButtonSource = $("#thumbLikeButton-" + messageId)[0].src;
+
+        var likeMessageApiEndPoint = "LikeMessage";
+        var likeImageToReplace = "thumb_like_highlight.svg";
+
+        var isLikeHighlight = false;
+
+        if (likeButtonSource.indexOf('highlight') >= 0) {
+
+            isLikeHighlight = true;
+
+            likeMessageApiEndPoint = "UnlikeMessage";
+            likeImageToReplace = "thumb_like.svg"
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/" + likeMessageApiEndPoint,
+            dataType: "json",
+            data: { messageId: messageId },
+            success: function (data) {
+                hideChatLoader();
+
+                if (data.IsSuccess == true) {
+
+                    // Highlight the like button
+                    $("#thumbLikeButton-" + messageId).attr("src", "../Content/images/" + likeImageToReplace);
+
+                    // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+                    if (isLikeHighlight) {
+                        $("#thumbLikeButton-" + messageId).removeClass("feedback-animation");
+                    } else {
+                        $("#thumbLikeButton-" + messageId).addClass("feedback-animation");
+                    }
+
+                    $("#thumbDisikeButton-" + messageId).removeClass("feedback-animation");// Remove animation class from dislike button, to display animation when user hits the same button again
+
+                    $("#thumbDisikeButton-" + messageId).attr("src", "../Content/images/thumb_dislike.svg"); // Change image to color less icon for dislike button as user has clicked on like button now
+                }
+            },
+            failure: function (data) {
+                hideChatLoader();
+            }
+        });
+    }
+
+    function dislikeMessage(messageId) {
+        chatLoader();
+
+        // Check the current state of like button whether it is liked or unliked.
+        // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
+        var dislikeButtonSource = $("#thumbDisikeButton-" + messageId)[0].src;
+
+        var dislikeMessageApiEndPoint = "DislikeMessage";
+        var dislikeImageToReplace = "thumb_dislike_highlight.svg";
+        var isDislikeHighlight = false;
+        if (dislikeButtonSource.indexOf('highlight') >= 0) {
+
+            isDislikeHighlight = true;
+
+            dislikeMessageApiEndPoint = "UnlikeMessage";
+            dislikeImageToReplace = "thumb_dislike.svg";
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/" + dislikeMessageApiEndPoint,
+            dataType: "json",
+            data: { messageId: messageId },
+            success: function (data) {
+                hideChatLoader();
+
+                if (data.IsSuccess == true) {
+
+                    // Highlight the like button
+                    $("#thumbDisikeButton-" + messageId).attr("src", "../Content/images/" + dislikeImageToReplace);
+
+                    // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+                    if (isDislikeHighlight) {
+                        $("#thumbDisikeButton-" + messageId).removeClass("feedback-animation");
+                    } else {
+                        $("#thumbDisikeButton-" + messageId).addClass("feedback-animation");
+                    }
+
+                    $("#thumbLikeButton-" + messageId).removeClass("feedback-animation"); // Remove animation class from like button, to display animation when user hits the same button again
+
+                    $("#thumbLikeButton-" + messageId).attr("src", "../Content/images/thumb_like.svg");
+                }
+            },
+            failure: function (data) {
+                hideChatLoader();
             }
         });
     }

@@ -295,6 +295,10 @@
     <Content Include="Content\images\stop.gif" />
     <Content Include="Content\images\sun.svg" />
     <Content Include="Content\images\thumbs-up.svg" />
+    <Content Include="Content\images\thumb_dislike_highlight.svg" />
+    <Content Include="Content\images\thumb_dislike.svg" />
+    <Content Include="Content\images\thumb_like_highlight.svg" />
+    <Content Include="Content\images\thumb_like.svg" />
     <Content Include="Content\images\user-alt.svg" />
     <Content Include="Content\images\user-circle.svg" />
     <Content Include="Content\images\user.svg" />
