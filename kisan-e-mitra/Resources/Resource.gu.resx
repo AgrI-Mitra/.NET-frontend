@@ -318,6 +318,9 @@
   <data name="message.resend_again" xml:space="preserve">
     <value>ફરી મોકલો</value>
   </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value />
+  </data>
   <data name="message.retry" xml:space="preserve">
     <value>કૃપા કરીને ફરી પ્રયાસ કરો.</value>
   </data>

@@ -321,6 +321,9 @@
   <data name="message.resend_again" xml:space="preserve">
     <value>पुनः भेजें</value>
   </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value>OTP पुनः भेजें</value>
+  </data>
   <data name="message.retry" xml:space="preserve">
     <value>कृपया पुनः प्रयास करें।</value>
   </data>

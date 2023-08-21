@@ -657,6 +657,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resent OTP.
+        /// </summary>
+        public static string message_resend_otp {
+            get {
+                return ResourceManager.GetString("message.resend_otp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please retry..
         /// </summary>
         public static string message_retry {

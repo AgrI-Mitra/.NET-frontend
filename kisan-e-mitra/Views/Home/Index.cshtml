@@ -2,10 +2,12 @@
     ViewBag.Title = Resources.Resource.label_title;
     var welcomeNoteGreetingBase64 = ViewBag.AudioBase64Strings[0];
     var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
+    var resendOtpTranslation = Resources.Resource.message_resend_otp;
 }
 
 @Html.Hidden("welcome-greeting-message-base64", (object)welcomeNoteGreetingBase64.ToString())
 @Html.Hidden("language-change-greeting-message-base64", (object)languageChangeGreetingBase64.ToString())
+@Html.Hidden("resend-otp-translation", (object)resendOtpTranslation.ToString())
 <div class="chat-container">
     <div id="message-list" class="message-list">
         <div id="welcome-message" class="system-msg-left message left chatbot-message-wrapper">
@@ -199,7 +201,9 @@
     function processChatBotResponse(message, messageId, textInEnglish) {
         chatResponseView(message, messageId);
         if (String(textInEnglish).toLowerCase() == "invalid otp") {
-            var resendOTPBtn = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><button class='send-button bg-success' onclick='resendOTP(this);'>Resend OTP</button></div>";
+
+            var resendOtpTranslation = $("#resend-otp-translation").val();
+            var resendOTPBtn = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><button class='send-button bg-success' onclick='resendOTP(this);'>" + resendOtpTranslation + "</button></div>";
             $('#message-list').append(resendOTPBtn);
         }
         $("#userQuestionTextBox").val('');

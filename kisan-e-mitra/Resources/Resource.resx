@@ -317,6 +317,9 @@ Type your query or speak using the mic button.</value>
   <data name="message.resend_again" xml:space="preserve">
     <value>Resend again</value>
   </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value>Resent OTP</value>
+  </data>
   <data name="message.retry" xml:space="preserve">
     <value>Please retry.</value>
   </data>

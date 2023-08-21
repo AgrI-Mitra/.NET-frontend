@@ -317,6 +317,9 @@
   <data name="message.resend_again" xml:space="preserve">
     <value>మళ్ళీ పంపండి</value>
   </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value>OTP మళ్ళీ పంపండి</value>
+  </data>
   <data name="message.retry" xml:space="preserve">
     <value>దయచేసి మళ్ళీ ప్రయత్నించండి.</value>
   </data>
