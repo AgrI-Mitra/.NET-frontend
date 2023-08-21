@@ -295,6 +295,10 @@ table.aadhar-table {
     font-size: 0.8em;
 }
 
+.aadhar-table {
+    display: flex;
+}
+
 .user-avatar-img {
     background-color: #219653;
 }
@@ -346,5 +350,3 @@ table.aadhar-table {
         height: 45px !important;
     }
 }
-
-
