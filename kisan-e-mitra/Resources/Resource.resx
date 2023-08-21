@@ -348,7 +348,8 @@ Type your query or speak using the mic button.</value>
     <value>Please wait before resending OTP</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you?</value>
+    <value>Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you? 
+You may select your preferred language.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>Successfully disliked the response</value>
