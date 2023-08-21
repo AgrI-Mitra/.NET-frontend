@@ -13,6 +13,7 @@ namespace kishan_bot.Models
         public SiteResponseAudioBody audio { get; set; }
 
         public string messageId { get; set; }
+        public string messageType { get; set; }
     }
 
     public class GenericApiResponse
@@ -100,6 +101,6 @@ namespace kishan_bot.Models
     public class BhashiniApiServiceId
     {
         public string LanguageCode { get; set; }
-        public string ServiceId { get; set;}
+        public string ServiceId { get; set; }
     }
 }

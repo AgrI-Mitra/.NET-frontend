@@ -198,8 +198,8 @@
         $("#userQuestionTextBox").trigger('change');
     }
 
-    function processChatBotResponse(message, messageId, textInEnglish) {
-        chatResponseView(message, messageId);
+    function processChatBotResponse(message, messageId, messageType, textInEnglish) {
+        chatResponseView(message, messageId, messageType);
         if (String(textInEnglish).toLowerCase() == "invalid otp") {
 
             var resendOtpTranslation = $("#resend-otp-translation").val();
@@ -223,8 +223,13 @@
         askQuestions('resend OTP');
     }
 
-    function chatResponseView(message, messageId) {
+    function chatResponseView(message, messageId, messageType) {
         if (message != "") {
+            console.log("message Type: ", messageType);
+            var feedbackOption = "<img id='thumbLikeButton-" + messageId + "' src='../Content/images/thumb_like.svg' alt='avatar 1' style='width:36px; height:100%;' onclick='likeMessage(\"" + messageId + "\")'>"
+                + "<img id='thumbDisikeButton-" + messageId + "' src='../Content/images/thumb_dislike.svg' alt='avatar 1' style='width: 36px; height: 100%;' onclick='dislikeMessage(\"" + messageId + "\")'></div>";
+
+            var feedbackOptionHtml = messageType == "final_response" ? feedbackOption : "";
 
             var response = "<div class='system-msg-left message left chatbot-message-wrapper'>"
                 + "<img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;' class='chatbot-message-wrapper-column-one'>"
@@ -233,8 +238,7 @@
                 + "</div>"
                 + "<div class='align-self-start chatbot-message-wrapper-column-three'>"
                 + "<img id='playMessageImg-" + messageId + "' src='../Content/images/start-audio.svg' alt='avatar 1' style='width:36px; height:100%;' onclick='playAudio(\"" + messageId + "\")'>"
-                + "<img id='thumbLikeButton-" + messageId + "' src='../Content/images/thumb_like.svg' alt='avatar 1' style='width:36px; height:100%;' onclick='likeMessage(\"" + messageId + "\")'>"
-                + "<img id='thumbDisikeButton-" + messageId + "' src='../Content/images/thumb_dislike.svg' alt='avatar 1' style='width: 36px; height: 100%;' onclick='dislikeMessage(\"" + messageId + "\")'></div>"
+                + feedbackOptionHtml
                 + "</div>";
 
             // AADHAR Info UI Format START
@@ -312,10 +316,10 @@
 
                     if (data.Text !== null) {
                         message = data.Text;
-                        processChatBotResponse(data.Text, data.messageId, data.textInEnglish);
+                        processChatBotResponse(data.Text, data.messageId, data.messageType, data.textInEnglish);
                     } else if (data.Error !== null) {
                         message = data.Error;
-                        processChatBotResponse(message, data.messageId);
+                        processChatBotResponse(message, data.messageId, data.messageType);
                     }
 
                 } else {
@@ -531,10 +535,10 @@
                         if (data.Text !== null) {
                             message = data.Text;
                             $(inputTextId).val(message);
-                            processChatBotResponse(data.Text, data.messgaeId, data.textInEnglish);
+                            processChatBotResponse(data.Text, data.messgaeId, data.messageType, data.textInEnglish);
                         } else if (data.Error !== null) {
                             message = data.Error;
-                            processChatBotResponse(message, data.messageId);
+                            processChatBotResponse(message, data.messageId, data.messageType);
                         }
                     } else {
                         var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
