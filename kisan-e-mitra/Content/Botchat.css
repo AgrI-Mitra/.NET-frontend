@@ -313,6 +313,7 @@ table.aadhar-table {
     display: flex;
     flex: 1 1 60%;
     flex-wrap: wrap;
+    flex-flow: column wrap;
 }
 
 .chatbot-message-wrapper-column-three {
