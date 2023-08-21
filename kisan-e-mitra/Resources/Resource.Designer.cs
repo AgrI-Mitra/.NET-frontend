@@ -521,11 +521,8 @@ namespace Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to Thank you for selecting the language.
-        ///
-        ///Dear Beneficiary, 
-        ///
-        ///I am your Personal Assistant. I can help you with the scheme payment related queries!
-        ///Please type your query, or tell your query using the voice button at the bottom right corner..
+        ///Dear Beneficiary,
+        ///Type your query or speak using the mic button..
         /// </summary>
         public static string message_language_changed_greeting {
             get {
@@ -741,8 +738,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to Kisan-eMitra! Your personal assistant. Please let me know how I can help you? 
-        ///&lt;br&gt;Select a language from the list below..
+        ///   Looks up a localized string similar to Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you?.
         /// </summary>
         public static string message_welcome_greeting {
             get {
