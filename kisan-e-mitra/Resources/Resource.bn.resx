@@ -220,7 +220,7 @@
     <value>পর্যালোচনা জমা দিন</value>
   </data>
   <data name="label.title" xml:space="preserve">
-    <value>Kisan e-Mitra</value>
+    <value>কৃষক-eমিত্র</value>
   </data>
   <data name="label.welcome" xml:space="preserve">
     <value>স্বাগতম</value>
@@ -270,6 +270,11 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>অবৈধ ওটিপি</value>
   </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>ভাষা নির্বাচন করার জন্য আপনাকে ধন্যবাদ।
+প্রিয় সুবিধাভোগী,
+আপনার ক্যোয়ারী টাইপ করুন বা মাইক বোতামটি ব্যবহার করে কথা বলুন।</value>
+  </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>এখনো নিবন্ধিত হননি?</value>
   </data>
@@ -312,6 +317,9 @@
   <data name="message.resend_again" xml:space="preserve">
     <value>আবার পুনরায় পাঠান</value>
   </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value>পুনরায় OTP পাঠান</value>
+  </data>
   <data name="message.retry" xml:space="preserve">
     <value>অনুগ্রহ করে আবার চেষ্টা করুন।</value>
   </data>
@@ -338,6 +346,10 @@
   </data>
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>ওটিপি পুনরায় পাঠানোর আগে অনুগ্রহ করে অপেক্ষা করুন</value>
+  </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>কিসান-eমিত্রে স্বাগতম! আমি আপনার ব্যক্তিগত সহকারী। দয়া করে আমাকে জানান আমি কীভাবে আপনাকে সাহায্য করতে পারি?
+আপনি আপনার পছন্দসই ভাষা নির্বাচন করতে পারেন।</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>সাফল্যের সাথে প্রতিক্রিয়াটি অপছন্দ হয়েছে</value>

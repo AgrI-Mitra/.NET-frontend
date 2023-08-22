@@ -220,7 +220,7 @@
     <value>समीक्षा प्रस्तुत करें</value>
   </data>
   <data name="label.title" xml:space="preserve">
-    <value>Kisan e-Mitra</value>
+    <value>किसान-eमित्र</value>
   </data>
   <data name="label.welcome" xml:space="preserve">
     <value>स्वागत</value>
@@ -270,6 +270,14 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>अमान्य ओटीपी</value>
   </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>भाषा का चयन करने के लिए धन्यवाद।
+प्रिय लाभार्थी,
+अपनी क्वेरी टाइप करें या माइक बटन का उपयोग करके बोलें।</value>
+  </data>
+  <data name="message.language_selection" xml:space="preserve">
+    <value>नीचे दी गई सूची से भाषा चुनें, आप किस भाषा में जारी रखना चाहते हैं?</value>
+  </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>अभी तक पंजीकृत नहीं हैं?</value>
   </data>
@@ -312,6 +320,9 @@
   <data name="message.resend_again" xml:space="preserve">
     <value>पुनः भेजें</value>
   </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value>OTP पुनः भेजें</value>
+  </data>
   <data name="message.retry" xml:space="preserve">
     <value>कृपया पुनः प्रयास करें।</value>
   </data>
@@ -338,6 +349,9 @@
   </data>
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>ओटीपी फिर से भेजने से पहले कृपया प्रतीक्षा करें</value>
+  </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>किसान-eमित्रा में आपका स्वागत है! मैं आपका निजी सहायक हूं। कृपया मुझे बताएं कि मैं आपकी कैसे मदद कर सकता हूं?&lt;br&gt;आप अपनी पसंदीदा भाषा का चयन कर सकते हैं।</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>सफलतापूर्वक प्रतिक्रिया नापसंद की गई</value>

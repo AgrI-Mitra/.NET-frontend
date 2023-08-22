@@ -220,7 +220,7 @@
     <value>மதிப்பீட்டை சமர்ப்பிக்கவும்</value>
   </data>
   <data name="label.title" xml:space="preserve">
-    <value>Kisan e-Mitra</value>
+    <value>கிசான்-eமித்ரா</value>
   </data>
   <data name="label.welcome" xml:space="preserve">
     <value>வரவேற்பு</value>
@@ -270,6 +270,11 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>தவறான OTP</value>
   </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>மொழியைத் தேர்ந்தெடுத்ததற்கு நன்றி.
+அன்புள்ள பயனாளி,
+உங்கள் வினவலைத் தட்டச்சு செய்க அல்லது MIC பொத்தானைப் பயன்படுத்தி பேசுங்கள்.</value>
+  </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>இன்னும் பதிவு செய்யவில்லையா?</value>
   </data>
@@ -312,6 +317,9 @@
   <data name="message.resend_again" xml:space="preserve">
     <value>மீண்டும் அனுப்புக</value>
   </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value>மீண்டும் OTP அனுப்பு</value>
+  </data>
   <data name="message.retry" xml:space="preserve">
     <value>மீண்டும் முயற்சிக்கவும்.</value>
   </data>
@@ -338,6 +346,10 @@
   </data>
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>OTP மீண்டும் அனுப்புவதற்கு தயாராக இருக்கவும்</value>
+  </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>கிசான்-eமித்ராவுக்கு வருக! நான் உங்கள் தனிப்பட்ட உதவியாளர். நான் உங்களுக்கு எவ்வாறு உதவ முடியும் என்பதை எனக்குத் தெரியப்படுத்துங்கள்?
+நீங்கள் விரும்பும் மொழியைத் தேர்ந்தெடுக்கலாம்.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>பதிலை விருப்பத்தை அகற்றுகின்றீர்கள் என்பதை வெற்றிகரமாக அமைத்துக் கொண்டீர்கள்</value>

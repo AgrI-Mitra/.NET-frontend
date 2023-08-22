@@ -1,33 +1,55 @@
 ﻿using KisanEMitra.Models;
 using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using WebGrease.Activities;
 
 namespace KisanEMitra.Controllers
 {
     public class HomeController : LanguageController
     {
-        public IAgrimitraService agrimitraService { get; set; }
+        public IAgrimitraService AgrimitraService { get; set; }
+        private IBhashiniService BhashiniService { get; set; }
 
-        public HomeController(IAgrimitraService _agrimitraService)
+        public HomeController(IAgrimitraService _agrimitraService, IBhashiniService bhashiniService)
         {
-            this.agrimitraService = _agrimitraService;
+            AgrimitraService = _agrimitraService;
+            BhashiniService = bhashiniService;
         }
 
         public ActionResult Splash()
         {
             return View();
         }
+
+        [HttpPost]
+        public JsonResult Logout()
+        {
+            KillSession();
+
+            return Json(new AjaxActionResponse()
+            {
+                Message = "Session refreshed",
+                Success = true
+            });
+        }
+
+        private void KillSession()
+        {
+            HttpContext context = System.Web.HttpContext.Current;
+            System.Web.SessionState.SessionIDManager Manager = new System.Web.SessionState.SessionIDManager();
+
+            Manager.RemoveSessionID(context);
+
+            Session.RemoveAll();
+
+            var defaultLanguage = LanguageManager.GetDefaultLanguage();
+            new LanguageManager().SetLanguage(defaultLanguage);
+        }
         public async Task<ActionResult> Index()
         {
-
             HttpContext context = System.Web.HttpContext.Current;
             System.Web.SessionState.SessionIDManager Manager = new System.Web.SessionState.SessionIDManager();
 
@@ -43,7 +65,7 @@ namespace KisanEMitra.Controllers
                     return RedirectToAction("Index", "Error", errorMessage);
                 }
 
-                userSessionID = await this.agrimitraService.GetUserSessionIDAsync(fingerPrint);
+                userSessionID = await AgrimitraService.GetUserSessionIDAsync(fingerPrint);
                 if (userSessionID == null)
                 {
                     var errorMessage = "Session is not created. Please try again later.";
@@ -55,16 +77,39 @@ namespace KisanEMitra.Controllers
 
             var languageModel = GetSelectedLanguage();
             ViewBag.LanguageModel = languageModel;
+
+            await SetAudioBase64StringToViewBagAsync();
             return View();
         }
 
+        private async Task SetAudioBase64StringToViewBagAsync()
+        {
+            // Get current language audio for welcome note
+            List<string> strings = new List<string>
+            {
+                Resources.Resource.message_welcome_greeting.ToString(),
+                Resources.Resource.message_language_changed_greeting.ToString()
+            };
+
+            var greetingMessagesAudioStrings = await TextToSpeach(strings);
+
+            // Load audio base64 strings to view bag so we can play audio using it
+            List<string> audioBase64Strings = new List<string>();
+            foreach (var item in greetingMessagesAudioStrings)
+            {
+                audioBase64Strings.Add(item.audioContent);
+            }
+
+            ViewBag.AudioBase64Strings = audioBase64Strings;
+        }
         [HttpPost]
         public JsonResult ChangeLanguage(string lang)
         {
             new LanguageManager().SetLanguage(lang);
+
             return Json(new AjaxActionResponse()
             {
-                Message = "Language Changed.",
+                Message = Resources.Resource.message_language_changed_greeting.ToString(),
                 Success = true
             });
         }
@@ -87,24 +132,7 @@ namespace KisanEMitra.Controllers
                 inputLanguage = GetSelectedLanguage().SelectedLanguage
             };
 
-            var responseBody = await this.agrimitraService.IdentifyUser(userSessionID, userQueryBody);
-            if (responseBody == null)
-                return Json(null);
-
-            return Json(responseBody, JsonRequestBehavior.AllowGet);
-        }
-
-
-        [HttpPost]
-        public async Task<JsonResult> VerifyOTP(string otp)
-        {
-            var userSessionID = (string)Session["userSessionID"];
-            var userQueryBody = new UserQueryBody()
-            {
-                Text = otp,
-                inputLanguage = GetSelectedLanguage().SelectedLanguage
-            };
-            var responseBody = await this.agrimitraService.VerifyOTP(userSessionID, userQueryBody);
+            var responseBody = await AgrimitraService.IdentifyUser(userSessionID, userQueryBody);
             if (responseBody == null)
                 return Json(null);
 
@@ -120,11 +148,67 @@ namespace KisanEMitra.Controllers
                 Text = querstion,
                 inputLanguage = GetSelectedLanguage().SelectedLanguage
             };
-            var responseBody = await this.agrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
+            var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
             if (responseBody == null)
                 return Json(null);
 
             return Json(responseBody, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> LikeMessage(string messageId)
+        {
+            var userSessionID = (string)Session["userSessionID"];
+
+            var responseBody = await AgrimitraService.LikeDislikeUnlikeMessage(userSessionID, messageId, "like");
+            if (responseBody == null)
+                return Json(null);
+
+            return Json(responseBody, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DislikeMessage(string messageId)
+        {
+            var userSessionID = (string)Session["userSessionID"];
+
+            var responseBody = await AgrimitraService.LikeDislikeUnlikeMessage(userSessionID, messageId, "dislike");
+            if (responseBody == null)
+                return Json(null);
+
+            return Json(responseBody, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UnlikeMessage(string messageId)
+        {
+            var userSessionID = (string)Session["userSessionID"];
+
+            var responseBody = await AgrimitraService.LikeDislikeUnlikeMessage(userSessionID, messageId, "removelike");
+            if (responseBody == null)
+                return Json(null);
+
+            return Json(responseBody, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<List<BhashiniApiResponseAudioInfo>> TextToSpeach(List<string> texts)
+        {
+            var bhashiniApiInput = new List<BhashiniApiRequestBodyInput>();
+
+            foreach (var text in texts)
+            {
+                bhashiniApiInput.Add(new BhashiniApiRequestBodyInput
+                {
+                    source = text
+                });
+            }
+
+            var responseBody = await BhashiniService.GetTextToSpeech(GetSelectedLanguage().SelectedLanguage, bhashiniApiInput);
+
+            var languageModel = GetSelectedLanguage();
+            ViewBag.LanguageModel = languageModel;
+
+            return responseBody.audio;
         }
 
         [HttpPost]
@@ -137,7 +221,7 @@ namespace KisanEMitra.Controllers
                 Media = new MediaQuery() { Category = "base64audio", Text = base64Question },
                 inputLanguage = GetSelectedLanguage().SelectedLanguage
             };
-            var responseBody = await this.agrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
+            var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
             if (responseBody == null)
                 return Json(null);
 
@@ -146,17 +230,8 @@ namespace KisanEMitra.Controllers
 
         public ActionResult ChatHistory()
         {
-
             List<ChatHistory> chatHistories = new List<ChatHistory>();
 
-            //for (int i = 0; i < 20; i++)
-            //{
-            //    chatHistories.Add(new ChatHistory
-            //    {
-            //        Message = i.ToString(),
-            //        Alignment = i % 2 == 0 ? "left" : "right",
-            //    });
-            //}
             ViewBag.LanguageModel = GetSelectedLanguage();
             return View(chatHistories);
         }
@@ -206,13 +281,6 @@ namespace KisanEMitra.Controllers
             return File(fullName, "application/pdf", filename);
         }
 
-        public FileResult download(string filename)
-        {
-            string fullName = Server.MapPath("~" + "/Content/Files/" + filename);
-
-            return File(fullName, "application/pdf", filename);
-        }
-
         private LanguageModel GetSelectedLanguage()
         {
             string selectedLanguage;
@@ -237,7 +305,7 @@ namespace KisanEMitra.Controllers
 
             var languageModel = new LanguageModel
             {
-                Languages = new SelectList(LanguageManager.AvailableLanguages, "LanguageCultureName", "LanguageFullName"),
+                Languages = new SelectList(LanguageManager.GetLanguagesOrderedByPosition(), "LanguageCultureName", "LanguageLabel"),
                 SelectedLanguage = selectedLanguage
             };
             return languageModel;

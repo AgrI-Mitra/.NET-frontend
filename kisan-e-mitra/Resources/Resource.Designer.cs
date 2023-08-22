@@ -367,7 +367,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kisan e-Mitra.
+        ///   Looks up a localized string similar to Kisan-eMitra.
         /// </summary>
         public static string label_title {
             get {
@@ -520,6 +520,17 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Thank you for selecting the language.
+        ///Dear Beneficiary,
+        ///Type your query or speak using the mic button..
+        /// </summary>
+        public static string message_language_changed_greeting {
+            get {
+                return ResourceManager.GetString("message.language_changed_greeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your Chat History with AI will come here.
         /// </summary>
         public static string message_no_history {
@@ -646,6 +657,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resent OTP.
+        /// </summary>
+        public static string message_resend_otp {
+            get {
+                return ResourceManager.GetString("message.resend_otp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please retry..
         /// </summary>
         public static string message_retry {
@@ -723,6 +743,15 @@ namespace Resources {
         public static string message_wait_resending_otp {
             get {
                 return ResourceManager.GetString("message.wait_resending_otp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you?&lt;br&gt;You may select your preferred language..
+        /// </summary>
+        public static string message_welcome_greeting {
+            get {
+                return ResourceManager.GetString("message.welcome_greeting", resourceCulture);
             }
         }
         

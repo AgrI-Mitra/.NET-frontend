@@ -9,48 +9,35 @@
     @Scripts.Render("~/bundles/jquery")
     <script type="text/javascript" src="~/Content/js/recorder.js"></script>
 </head>
-<body class="body-content">
-
+<body class="body-content chat-container-bg-imgs">
     @{
-        IEnumerable<SelectListItem> languages = ViewBag.LanguageModel.Languages;
-        var selectedLanguage = ViewBag.LanguageModel.SelectedLanguage;
+        IEnumerable<SelectListItem> languages = ViewBag?.LanguageModel?.Languages;
+        var selectedLanguage = ViewBag?.LanguageModel?.SelectedLanguage;
     }
-    <div class="top-bar">
-        <div class="left-column">
-            <!-- Left dropdown content -->
-            @Html.DropDownList("@selectedLanguage", languages, new { @class = "form-control", id = "ddlLanguage" })
+    <div class="app-container">
+        <div class="d-flex justify-content-between align-items-center chat-container-top">
+        <div class="d-flex" style="max-height: 64px;">
+            <span class="d-flex justify-content-start p-2">
+                <img src="~/Content/images/emblem.png" alt="Logo 1" class="img-fluid" style="height: 48px; ">
+            </span>
         </div>
-        <div class="center-column" style="color: #219653; font-size: 3vh; font-weight: 700; font-family: Mulish-bold,sans-serif; ">
-            <!-- Application name -->
+        <div class="img-fluid" style="color: #219653; font-size: 4vmin; font-weight: 700; font-family: Montserrat,sans-serif; white-space: nowrap; " >
             @Resources.Resource.label_title
         </div>
-        <div class="right-column">
-            <!-- Right logo icons -->
-            <img src="~/Content/images/emblem.png" alt="Logo 1" class="logo" width="60" height="60">
-            <img src="~/Content/images/MOA_logo.png" alt="Logo 2" class="logo" width="60" height="60">
-            <img src="~/Content/images/phone.png" alt="Logo 3" class="logo" width="60" height="60">
+        <div style="min-width: fit-content;" class="px-4">
+            @Html.DropDownList("@selectedLanguage", languages, new { @class = "form-control text-center", id = "ddlLanguage" })
         </div>
     </div>
     @RenderBody()
-    <div class="bottom-section">
-        <div class="bottom-container">
-            <div class="tab-bar">
-                <a class="tab" href="@Url.Action("Index","Home")">
-                    <img src="~/Content/images/home.svg" width="32" height="32" />
-                </a>
-                <a href="@Url.Action("ChatHistory","Home")">
-                    <img src="~/Content/images/message-menu.svg" width="32" height="32" />
-                </a>
-                <a class="tab" href="@Url.Action("More","Home")">
-                    <img src="~/Content/images/menu.svg" width="32" height="32" />
-                </a>
-            </div>
-        </div>
     </div>
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
-    var changeLanguageApiUrl = '@Url.Action("ChangeLanguage", "Home")';
+
+        function showLanguageChangedMessage(message) {
+            var response = "<div class='message left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
+            $('#message-list').append(response.replace(/\n/g, "<br>"));
+        }
 
         $(document).ready(function () {
 
@@ -66,6 +53,7 @@
                     dataType: "json",
                     data: { lang: selValue },
                     success: function (data) {
+                        sessionStorage.setItem('languageChangedMessage', data.Message);
                         location.reload();
                     },
                     failure: function (data) {

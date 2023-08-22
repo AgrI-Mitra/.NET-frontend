@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="error.disconnected" xml:space="preserve">
+    <value>तुम्ही डिस्कनेक्ट आहात. कृपया रिफ्रेश करा किंवा पुन्हा लॉग इन करा.</value>
+  </data>
+  <data name="error.empty_msg" xml:space="preserve">
+    <value>कृपया पाठवण्यासाठी संदेश टाइप करा किंवा निवडा.</value>
+  </data>
+  <data name="error.fail_to_submit" xml:space="preserve">
+    <value>रेटिंग सबमिट करण्यात अयशस्वी.</value>
+  </data>
+  <data name="error.fail_to_submit_review" xml:space="preserve">
+    <value>पुनरावलोकन सबमिट करण्यात अयशस्वी.</value>
+  </data>
+  <data name="error.otp_not_sent" xml:space="preserve">
+    <value>OTP पाठवला नाही</value>
+  </data>
+  <data name="error.sending_otp" xml:space="preserve">
+    <value>OTP पाठवताना त्रुटी</value>
+  </data>
+  <data name="error.userid_not_registered" xml:space="preserve">
+    <value>UserID नोंदणीकृत नाही.</value>
+  </data>
+  <data name="error.wait_new_chat" xml:space="preserve">
+    <value>कृपया उत्तराची प्रतीक्षा करा.</value>
+  </data>
+  <data name="label.back" xml:space="preserve">
+    <value>मागे</value>
+  </data>
+  <data name="label.chats" xml:space="preserve">
+    <value>गप्पा</value>
+  </data>
+  <data name="label.click" xml:space="preserve">
+    <value>रीलोड करा</value>
+  </data>
+  <data name="label.close" xml:space="preserve">
+    <value>बंद</value>
+  </data>
+  <data name="label.confirm_delete" xml:space="preserve">
+    <value>तुमची खात्री आहे की तुम्ही हे संभाषण हटवू इच्छिता?</value>
+  </data>
+  <data name="label.continue" xml:space="preserve">
+    <value>सुरू</value>
+  </data>
+  <data name="label.dial" xml:space="preserve">
+    <value>डायल करा</value>
+  </data>
+  <data name="label.examples" xml:space="preserve">
+    <value>उदाहरणे</value>
+  </data>
+  <data name="label.extension_worker" xml:space="preserve">
+    <value>विस्तार कार्यकर्ता</value>
+  </data>
+  <data name="label.faqs" xml:space="preserve">
+    <value>वारंवार विचारले जाणारे प्रश्न</value>
+  </data>
+  <data name="label.farmer" xml:space="preserve">
+    <value>शेतकरी</value>
+  </data>
+  <data name="label.feedback" xml:space="preserve">
+    <value>अभिप्राय</value>
+  </data>
+  <data name="label.logout" xml:space="preserve">
+    <value>बाहेर पडणे</value>
+  </data>
+  <data name="label.mobile_number" xml:space="preserve">
+    <value>मोबाईल नंबर</value>
+  </data>
+  <data name="label.more" xml:space="preserve">
+    <value>अधिक</value>
+  </data>
+  <data name="label.new_chat" xml:space="preserve">
+    <value>नवीन गप्पा</value>
+  </data>
+  <data name="label.no_history" xml:space="preserve">
+    <value>गप्पा नाहीत</value>
+  </data>
+  <data name="label.popUpTitle" xml:space="preserve">
+    <value>प्रिय लाभार्थी, तुमच्या प्रश्नासह आमच्यापर्यंत पोहोचल्याबद्दल धन्यवाद. तुम्हाला योग्य रिझोल्यूशन प्रदान करण्यासाठी, आम्ही तुम्हाला तुमचा आधार क्रमांक / PM किसान आयडी / फोन नंबर प्रदान करण्याची विनंती करतो.</value>
+  </data>
+  <data name="label.popUpTitle2" xml:space="preserve">
+    <value>तुमचे आधारचे शेवटचे ४ अंक टाका</value>
+  </data>
+  <data name="label.popUpTitle3" xml:space="preserve">
+    <value>प्रिय लाभार्थी, आपणास प्राप्त झालेला OTP प्रविष्ट करण्याची विनंती.</value>
+  </data>
+  <data name="label.profile" xml:space="preserve">
+    <value>प्रोफाइल</value>
+  </data>
+  <data name="label.search" xml:space="preserve">
+    <value>शोधा</value>
+  </data>
+  <data name="label.send" xml:space="preserve">
+    <value>पाठवा</value>
+  </data>
+  <data name="label.splash_title" xml:space="preserve">
+    <value>किसान e-मित्र</value>
+  </data>
+  <data name="label.submit" xml:space="preserve">
+    <value>प्रस्तुत करणे</value>
+  </data>
+  <data name="label.submit_review" xml:space="preserve">
+    <value>पुनरावलोकन सबमिट करा</value>
+  </data>
+  <data name="label.title" xml:space="preserve">
+    <value>किसान-मित्र</value>
+  </data>
+  <data name="label.welcome" xml:space="preserve">
+    <value>स्वागत आहे</value>
+  </data>
+  <data name="message.ask_ur_question" xml:space="preserve">
+    <value>तुमचा प्रश्न विचारा</value>
+  </data>
+  <data name="message.cannot_answer_again" xml:space="preserve">
+    <value>पुन्हा उत्तर देऊ शकत नाही</value>
+  </data>
+  <data name="message.coming_soon" xml:space="preserve">
+    <value>लवकरच येत आहे!</value>
+  </data>
+  <data name="message.coming_soon_description" xml:space="preserve">
+    <value>आम्ही लवकरच हे फीचर लाँच करणार आहोत. संपर्कात रहा!</value>
+  </data>
+  <data name="message.dialer_popup" xml:space="preserve">
+    <value>समाधानकारक प्रतिसाद मिळावा यासाठी तुम्ही अमा कृषी तज्ञाशी बोलू शकता</value>
+  </data>
+  <data name="message.dial_description" xml:space="preserve">
+    <value>कॉल सेंटर शी कनेक्ट करण्‍यासाठी</value>
+  </data>
+  <data name="message.didnt_receive" xml:space="preserve">
+    <value>OTP प्राप्त झाला नाही?</value>
+  </data>
+  <data name="message.down_time_retry" xml:space="preserve">
+    <value>पुन्हा प्रयत्न करा</value>
+  </data>
+  <data name="message.enter_mobile" xml:space="preserve">
+    <value>मोबाईल नंबर टाका</value>
+  </data>
+  <data name="message.example_ques_one" xml:space="preserve">
+    <value>माझे पैसे कुठे आहेत?</value>
+  </data>
+  <data name="message.example_ques_three" xml:space="preserve">
+    <value>माझे पैसे मिळविण्यासाठी मला कोणाशी बोलणे आवश्यक आहे?</value>
+  </data>
+  <data name="message.example_ques_two" xml:space="preserve">
+    <value>माझ्या अर्जाची स्थिती काय आहे?</value>
+  </data>
+  <data name="message.helpful" xml:space="preserve">
+    <value>हे उपयुक्त होते का?</value>
+  </data>
+  <data name="message.invalid_mobile" xml:space="preserve">
+    <value>10 अंकी क्रमांक प्रविष्ट करा!</value>
+  </data>
+  <data name="message.invalid_otp" xml:space="preserve">
+    <value>अवैध Otp</value>
+  </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>भाषा निवडल्याबद्दल धन्यवाद.
+प्रिय लाभार्थी,
+आपली क्वेरी टाइप करा किंवा माइक बटण वापरुन बोला.</value>
+  </data>
+  <data name="message.not_register_yet" xml:space="preserve">
+    <value>अद्याप नोंदणी केली नाही?</value>
+  </data>
+  <data name="message.no_history" xml:space="preserve">
+    <value>तुमचा AI सह चॅट इतिहास येथे येईल</value>
+  </data>
+  <data name="message.otp_message" xml:space="preserve">
+    <value>यावर आम्ही तुम्हाला वन टाइम पासवर्ड पाठवू</value>
+  </data>
+  <data name="message.otp_not_sent" xml:space="preserve">
+    <value>Otp पाठवला नाही</value>
+  </data>
+  <data name="message.otp_sent_again" xml:space="preserve">
+    <value>OTP पुन्हा पाठवला</value>
+  </data>
+  <data name="message.otp_verification" xml:space="preserve">
+    <value>OTP पडताळणी</value>
+  </data>
+  <data name="message.rating" xml:space="preserve">
+    <value>तुम्हाला हे उपयुक्त वाटले?</value>
+  </data>
+  <data name="message.rating_description" xml:space="preserve">
+    <value>रेट करण्यासाठी तारेवर टॅप करा</value>
+  </data>
+  <data name="message.rating_submitted" xml:space="preserve">
+    <value>रेटिंग सबमिट केले!</value>
+  </data>
+  <data name="message.recorder_error" xml:space="preserve">
+    <value>क्षमस्व, याक्षणी आपल्या विनंतीवर प्रक्रिया करताना समस्या आहे. कृपया पुन्हा प्रयत्न करा.</value>
+  </data>
+  <data name="message.recorder_wait" xml:space="preserve">
+    <value>आम्ही तुमच्या विनंतीवर प्रक्रिया करेपर्यंत कृपया प्रतीक्षा करा...</value>
+  </data>
+  <data name="message.register_at_krushak" xml:space="preserve">
+    <value>Krushak Odisha येथे नोंदणी करा</value>
+  </data>
+  <data name="message.register_message" xml:space="preserve">
+    <value>तुम्ही आधीच नोंदणीकृत असाल तर लॉगिन करण्यासाठी तुमचा मोबाईल नंबर वापरा.</value>
+  </data>
+  <data name="message.resend_again" xml:space="preserve">
+    <value>पुन्हा पाठवा</value>
+  </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value>पुन्हा ओटीपी पाठवा</value>
+  </data>
+  <data name="message.retry" xml:space="preserve">
+    <value>कृपया पुन्हा प्रयत्न करा.</value>
+  </data>
+  <data name="message.review" xml:space="preserve">
+    <value>तुमचे पुनरावलोकन लिहा (पर्यायी)</value>
+  </data>
+  <data name="message.review_description" xml:space="preserve">
+    <value>कृपया तुमचा अनुभव अभिप्राय लिहा.</value>
+  </data>
+  <data name="message.review_submitted" xml:space="preserve">
+    <value>पुनरावलोकन सबमिट केले!</value>
+  </data>
+  <data name="message.socket_disconnect_msg" xml:space="preserve">
+    <value>पुन्हा कनेक्ट करण्यासाठी.</value>
+  </data>
+  <data name="message.taking_longer" xml:space="preserve">
+    <value>कृपया प्रतीक्षा करा, सर्व्हर नेहमीपेक्षा जास्त वेळ घेत आहेत.</value>
+  </data>
+  <data name="message.temporarily_down" xml:space="preserve">
+    <value>आम्ही तात्पुरते खाली आहोत</value>
+  </data>
+  <data name="message.temporarily_down_description" xml:space="preserve">
+    <value>आम्ही याक्षणी उच्च वापरकर्ता आवाज अनुभवत आहोत, कृपया काही वेळाने लॉग इन करण्याचा प्रयत्न करा</value>
+  </data>
+  <data name="message.wait_resending_otp" xml:space="preserve">
+    <value>OTP पुन्हा पाठवण्यापूर्वी कृपया प्रतीक्षा करा</value>
+  </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>किसान-eमित्रात आपले स्वागत आहे! मी तुमचा वैयक्तिक सहाय्यक आहे. कृपया मला कळवा मी तुम्हाला कशी मदत करू?
+आपण आपली पसंतीची भाषा निवडू शकता.</value>
+  </data>
+  <data name="toast.reaction_dislike" xml:space="preserve">
+    <value>प्रतिसाद यशस्वीरित्या नापसंत झाला</value>
+  </data>
+  <data name="toast.reaction_like" xml:space="preserve">
+    <value>प्रतिसाद आवडला यशस्वी</value>
+  </data>
+  <data name="toast.reaction_reset" xml:space="preserve">
+    <value>प्रतिसाद यशस्वीरित्या काढला</value>
+  </data>
+</root>

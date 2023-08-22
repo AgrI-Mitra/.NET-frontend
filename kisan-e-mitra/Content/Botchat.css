@@ -1,9 +1,7 @@
 ﻿.chat-container {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    background-color: #f2f2f2;
-    height: calc(100vh - 140px); /* excluding the height of the header */
+    height: calc(100vh - 146px); /* excluding the height of the header */
 }
 
 .record-voice {
@@ -22,76 +20,91 @@
 .message-list {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 10px;
 }
 
 .message {
     display: flex;
-    align-items: flex-start;
-    margin-bottom: 10px;
 }
+
 
 .left {
     justify-content: flex-start;
+    padding: 15px;
 }
 
-.right {
-    justify-content: flex-end;
+.user-msg-left {
+    border-bottom: 1px solid #d1d1d1;
+    padding: 2% 5%;
+}
+
+.system-msg-left {
+    background-color: #F7F7F8;
+    border-bottom: 1px solid #d1d1d1;
+    padding: 2% 5%;
 }
 
 .message-content {
-    background-color: #fff;
     padding: 10px;
     border-radius: 25px;
+    flex-grow: 1;
 }
 
 .input-container {
     display: flex;
     align-items: center;
-    margin-top: -10px;
+    z-index: 999999;
+    padding: 15px;
 }
 
 .message-input {
     flex-grow: 1;
-    padding: 10px;
+    padding-left: 5%;
     border: 1px solid #ccc;
     border-radius: 40px;
+    height: 60px;
+    font-weight: bolder;
 }
 
 .send-button {
     padding: 10px;
     margin-left: 10px;
-    background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 40px;
     cursor: pointer;
-    width: 26vw !important;
-    max-width: 100px;
+    max-width: 80px;
     font-weight: 700;
     font-size: 15px !important;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-    .send-button:hover {
-        background-color: #0069d9;
+    .send-button:disabled,
+    .send-button[disabled] {
+        color: gray;
     }
 
 .page-title {
     margin-top: 4vh;
     margin-left: 2vh;
-    font-family: Mulish-Bold;
+    font-family: Montserrat;
     font-size: 4.265vh;
     font-weight: 700;
     color: #219653;
 }
 
 .more-pages {
-    display: flex;
     background-color: #fff;
     padding: 1vh;
     margin: 1vh 0;
-    align-items: center;
     height: 50px;
+}
+
+div.more-page-label {
+    margin-left: 2vh;
+    font-size: 2.5vh;
 }
 
 .faq-connect-card {
@@ -106,7 +119,7 @@
     align-items: center;
     margin-top: 2vh;
     margin-left: 2vh;
-    font-family: Mulish-Bold;
+    font-family: Montserrat;
     font-size: 4.2vh;
     font-weight: 700;
     color: #219653 !important;
@@ -121,7 +134,7 @@
     color: #fff;
     margin: 4vh auto 0;
     text-align: center;
-    font-family: Mulish-regular;
+    font-family: Montserrat;
     padding: 2vh;
     border: none;
     background-color: #219653 !important;
@@ -140,4 +153,200 @@
 .faq-connect-card textarea {
     padding: 5px;
     border: 2px solid #219653;
+}
+/**
+ * ==============================================
+ * Dot Flashing
+ * ==============================================
+ */
+.dot-flashing {
+    position: relative;
+    margin-top: 30px;
+    margin-left: 0.5rem !important;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #219653;
+    color: #219653;
+    animation: dot-flashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+}
+
+    .dot-flashing::before, .dot-flashing::after {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 0;
+    }
+
+    .dot-flashing::before {
+        left: -15px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: #219653;
+        color: #219653;
+        animation: dot-flashing 1s infinite alternate;
+        animation-delay: 0s;
+    }
+
+    .dot-flashing::after {
+        left: 15px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: #219653;
+        color: #219653;
+        animation: dot-flashing 1s infinite alternate;
+        animation-delay: 1s;
+    }
+
+@keyframes dot-flashing {
+    0% {
+        background-color: #219653;
+    }
+
+    50%, 100% {
+        background-color: rgba(33, 150, 83, 0.2);
+    }
+}
+
+audio {
+    transform: scale(1.1);
+    filter: drop-shadow(1px 1px 1px #d1d1d1);
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+.right audio::-webkit-media-controls-panel {
+    background-color: rgba(33, 150, 83, 0.2);
+}
+
+.avatar-img {
+    width: 45px !important;
+    height: 100%;
+}
+
+.welcome-message-container {
+    padding: 0px 10px;
+}
+
+.language-buttons {
+    margin-top: 10px;
+    border-radius: 20px;
+}
+
+button[type="submit"] {
+    text-indent: -999px;
+    overflow: hidden;
+    width: 40px;
+    padding: 0;
+    margin: 0px 0px 0px -60px;
+    border: 1px solid transparent;
+    border-radius: inherit;
+    background: url('../Content/images/send-text-highlight.svg') no-repeat center;
+    cursor: pointer;
+    opacity: 0.4;
+    width: 60px;
+    height: 60px;
+}
+
+.sendtext {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    margin-left: 10px;
+    width: 30px;
+    border: 1px solid #219653;
+    border-radius: 4px;
+}
+
+.send-button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+}
+
+    .send-button[type="submit"]:hover {
+        opacity: 1;
+    }
+
+button[type="submit"]:focus,
+input[type="submit"]:focus {
+    box-shadow: 0 0 3px 0 #1183d6;
+    border-color: #1183d6;
+    outline: none;
+    fill: green;
+}
+
+table.aadhar-table {
+    margin-bottom: 0px;
+}
+
+.aadhar-table tbody tr td:first-child {
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.aadhar-table {
+    display: flex;
+}
+
+.user-avatar-img {
+    background-color: #219653;
+}
+
+.div-row div:nth-child(2) {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1%;
+}
+
+.chatbot-message-wrapper-column-one {
+    flex: 0 1 45px;
+}
+
+.chatbot-message-wrapper-column-two {
+    display: flex;
+    flex: 1 1 60%;
+    flex-wrap: wrap;
+    flex-flow: column wrap;
+}
+
+.chatbot-message-wrapper-column-three {
+    flex: 0 1 auto;
+}
+
+.feedback-animation {
+    animation: icon-animation cubic-bezier(0.165, 0.840, 0.440, 1.000) 0.8s;
+}
+
+.chatbot-message-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@keyframes icon-animation {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@media all and (max-width: 576px) {
+
+    .chatbot-message-wrapper-column-three {
+        flex: 1 1 100%;
+        height: 45px !important;
+    }
 }

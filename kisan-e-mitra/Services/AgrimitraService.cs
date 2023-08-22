@@ -1,23 +1,27 @@
 ﻿using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Web.Services.Description;
 
 namespace KisanEMitra.Services
 {
     public class AgrimitraService : IAgrimitraService
     {
         private readonly HttpClient httpClient;
-        private readonly string baseURL = "https://bff.agrimitra.samagra.io/";
+        private readonly string baseURL = "https://apichatbot.pmkisan.gov.in/";
+        private readonly string userApiBaseEndPoint = "user/";
 
         public static class APIPaths
         {
             public static string User = "user/generateUserId";
-            public static string Prompt = "prompt/2";
-            public static string TemoUserId = "benAudio-serI-4enA-dioU-erIdbenAudio"; //For Local Testing
+            public static string Prompt = "prompt";
+            public static string ChatHistory = "history";
+            public static string ApiVersion = "/3";
+            public static string Message = "user/message/";
         }
 
         public AgrimitraService(HttpClient httpClient)
@@ -72,13 +76,16 @@ namespace KisanEMitra.Services
             return siteUserBody;
         }
 
-        public async Task<SiteResponseBody> VerifyOTP(string UserID, UserQueryBody UserQuery)
+        public async Task<SiteResponseBody> AskQuestionAsync(string UserID, UserQueryBody UserQuery)
         {
             var siteUserBody = new SiteResponseBody();
             try
             {
-                this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
-                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
+                httpClient.DefaultRequestHeaders.Add("User-id", UserID);
+
+                var response = await httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}{APIPaths.ApiVersion}", UserQuery);
+
+
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
@@ -98,14 +105,15 @@ namespace KisanEMitra.Services
             return siteUserBody;
         }
 
-        public async Task<SiteResponseBody> AskQuestionAsync(string UserID, UserQueryBody UserQuery)
+        public async Task<SiteResponseBody> GetChatHistory(string UserID)
         {
             var siteUserBody = new SiteResponseBody();
             try
             {
+                // Set end point from actionType
                 this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
 
-                var response = await this.httpClient.PostAsJsonAsync<UserQueryBody>($"{APIPaths.Prompt}", UserQuery);
+                var response = await httpClient.GetAsync($"{userApiBaseEndPoint + APIPaths.ChatHistory + APIPaths.ApiVersion}");
 
 
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
@@ -122,6 +130,34 @@ namespace KisanEMitra.Services
             {
                 siteUserBody.Text = "Rest API call issue.";
                 siteUserBody.Error = ex.Message;
+            }
+
+            return siteUserBody;
+        }
+
+        public async Task<GenericApiResponse> LikeDislikeUnlikeMessage(string UserID, string messageId, string actionType)
+        {
+            var siteUserBody = new GenericApiResponse();
+            try
+            {
+                // Set end point from actionType
+                this.httpClient.DefaultRequestHeaders.Add("User-id", UserID);
+
+                var response = await httpClient.GetAsync($"/{APIPaths.Message}{actionType}/{messageId}");
+
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    siteUserBody.IsSuccess = true;
+                }
+                else
+                {
+                    siteUserBody.IsSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                siteUserBody.IsSuccess = false;
             }
 
             return siteUserBody;

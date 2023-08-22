@@ -7,7 +7,7 @@ namespace KisanEMitra.Services.Contracts
     {
         Task<string> GetUserSessionIDAsync(string VisitorID);
         Task<SiteResponseBody> IdentifyUser(string UserID, UserQueryBody UserQuery);
-        Task<SiteResponseBody> VerifyOTP(string UserID, UserQueryBody UserQuery);
         Task<SiteResponseBody> AskQuestionAsync(string UserID, UserQueryBody UserQuery);
+        Task<GenericApiResponse> LikeDislikeUnlikeMessage(string UserID, string messageId, string actionType);
     }
 }

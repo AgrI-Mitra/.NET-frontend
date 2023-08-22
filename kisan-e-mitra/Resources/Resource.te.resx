@@ -220,7 +220,7 @@
     <value>సమీక్షను సమర్పించు</value>
   </data>
   <data name="label.title" xml:space="preserve">
-    <value>Kisan e-Mitra</value>
+    <value>కిసాన్-eమిత్ర</value>
   </data>
   <data name="label.welcome" xml:space="preserve">
     <value>స్వాగతం</value>
@@ -270,6 +270,11 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>చెల్లని OTP</value>
   </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>భాషను ఎంచుకున్నందుకు ధన్యవాదాలు.
+ప్రియమైన లబ్ధిదారుడు,
+మీ ప్రశ్నను టైప్ చేయండి లేదా MIC బటన్ ఉపయోగించి మాట్లాడండి.</value>
+  </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>ఇంకా నమోదు చేయలేదునుందా?</value>
   </data>
@@ -312,6 +317,9 @@
   <data name="message.resend_again" xml:space="preserve">
     <value>మళ్ళీ పంపండి</value>
   </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value>OTP మళ్ళీ పంపండి</value>
+  </data>
   <data name="message.retry" xml:space="preserve">
     <value>దయచేసి మళ్ళీ ప్రయత్నించండి.</value>
   </data>
@@ -338,6 +346,10 @@
   </data>
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>OTP మళ్ళీ పంపుకోవడం కుండా దయచేసి వేచి ఉండండి</value>
+  </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>కిసాన్-eమిత్రాకు స్వాగతం! నేను మీ వ్యక్తిగత సహాయకుడిని. దయచేసి నేను మీకు ఎలా సహాయం చేయగలను అని నాకు తెలియజేయండి?
+మీరు ఇష్టపడే భాషను ఎంచుకోవచ్చు.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>సమాధానంని సరిగా ఇష్టపడండి</value>

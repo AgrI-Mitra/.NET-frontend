@@ -1,0 +1,11 @@
+<!--<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="12" y="12" width="14" height="14" rx="2" fill="#198754"/>
+<path d="M37 19C37 28.9411 28.9411 37 19 37C9.05887 37 1 28.9411 1 19C1 9.05887 9.05887 1 19 1C28.9411 1 37 9.05887 37 19Z" stroke="#198754"/>
+<rect x="12" y="12" width="14" height="14" rx="2" fill="#198754"/>
+<path d="M19 37C9.05887 37 1 28.9411 1 19C1 9.05887 9.05887 1 19 1" stroke="#198754"/>
+</svg>-->
+
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<rect x="11" y="11	" width="14" height="14" rx="2" fill="#198754"/>
+	<circle cx="18" cy="18" r="17.5" stroke="#198754"/>
+</svg>

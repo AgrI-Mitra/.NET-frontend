@@ -1,9 +1,9 @@
 ﻿using KisanEMitra.Services;
 using KisanEMitra.Services.Contracts;
+using System;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web.Services.Description;
 using Unity;
 using Unity.AspNet.Mvc;
 
@@ -13,6 +13,7 @@ namespace KisanEMitra
     {
         protected void Application_Start()
         {
+            MvcHandler.DisableMvcResponseHeader = true;
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -20,19 +21,11 @@ namespace KisanEMitra
             RegisterComponents();
         }
 
-        private static IUnityContainer BuildUnityContainer()
-        {
-            var container = new UnityContainer();
-
-            container.RegisterType<IAgrimitraService, AgrimitraService>();
-
-            return container;
-        }
-
         public static void RegisterComponents()
         {
             var container = new UnityContainer();
             container.RegisterType<IAgrimitraService, AgrimitraService>();
+            container.RegisterType<IBhashiniService, BhashiniService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

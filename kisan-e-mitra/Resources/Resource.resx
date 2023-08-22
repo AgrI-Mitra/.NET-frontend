@@ -220,7 +220,7 @@
     <value>Submit Review</value>
   </data>
   <data name="label.title" xml:space="preserve">
-    <value>Kisan e-Mitra</value>
+    <value>Kisan-eMitra</value>
   </data>
   <data name="label.welcome" xml:space="preserve">
     <value>Welcome</value>
@@ -270,6 +270,11 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>Invalid Otp</value>
   </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>Thank you for selecting the language.
+Dear Beneficiary,
+Type your query or speak using the mic button.</value>
+  </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>Not registered yet ?</value>
   </data>
@@ -312,6 +317,9 @@
   <data name="message.resend_again" xml:space="preserve">
     <value>Resend again</value>
   </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value>Resent OTP</value>
+  </data>
   <data name="message.retry" xml:space="preserve">
     <value>Please retry.</value>
   </data>
@@ -338,6 +346,9 @@
   </data>
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>Please wait before resending OTP</value>
+  </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you?&lt;br&gt;You may select your preferred language.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>Successfully disliked the response</value>
