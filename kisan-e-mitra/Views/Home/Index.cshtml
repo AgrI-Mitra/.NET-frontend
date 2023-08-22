@@ -44,7 +44,6 @@
         <div class="d-flex img-fluid" style="max-height: 80px;">
             <button id="inputBtn" type="submit" class="send-button img-fluid sendtext">
             </button>
-            <!--<button id="inputBtn" class="send-button bg-success img-fluid">@Resources.Resource.label_send</button>-->
             <button id="inputRecordBtn" class="send-button img-fluid bg-transparent">
                 <img id="recordingImage" src="~/Content/images/startIcon.svg" class="img-fluid" />
             </button>
@@ -118,11 +117,9 @@
                 loadAudioPlayer(blob, currentBase64String.id, "left");
             }
         }
-        /*GetTextToSpeech(textsToGetSpeech);*/
 
         var languageChangedGreeting = sessionStorage.getItem('languageChangedMessage');
         if (languageChangedGreeting) {
-            //showLanguageChangedMessage(languageChangedGreeting);
             var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + languageChangedGreeting + "</div><img id='playMessageImg-language-change-greeting-message-base64-audio' class='align-self-start' onclick='playAudio(\"language-change-greeting-message-base64-audio\");' src='../Content/images/start-audio.svg' alt='avatar 1' style='width: 36px; height: 100%;'></div>";
             $('#message-list').append(response.replace(/\n/g, "<br>"));
             sessionStorage.removeItem('languageChangedMessage');
@@ -264,30 +261,6 @@
     function showLanguageChangedMessage(message) {
         var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
         $('#message-list').append(response.replace(/\n/g, "<br>"));
-    }
-
-    function GetTextToSpeech(text) {
-        $.ajax({
-            type: "POST",
-            url: "/Home/TextToSpeach",
-            dataType: "json",
-            data: { texts: text },
-            async: false,
-            success: function (data) {
-
-                const contentType = 'audio/wav';
-
-                //if (data?.audio) {
-                //    for (var i = 0; i < data.audio; i++) {
-                //        var currentAudio = data.audio[i];
-                //        const blob = b64toBlob(currentAudio.audioContent, contentType);
-                //        loadAudioPlayer(blob, "welcome-note-audio" + i.toString(), "left");
-                //    }
-                //}
-            },
-            failure: function (data) {
-            }
-        });
     }
 
     function askQuestions(input) {
@@ -513,7 +486,6 @@
         reader.onloadend = function () {
             base64 = reader.result;
             base64 = base64.split(',')[1];
-            //loadAudioPlayer(blob);
             chatLoader();
             scrollToBottom();
             $.ajax({
@@ -626,7 +598,6 @@
             data: { lang: language },
             success: function (data) {
                 sessionStorage.setItem('languageChangedMessage', data.Message);
-                //showLanguageChangedMessage(data.Message);
 
                 location.reload();
             },
@@ -661,7 +632,6 @@
 
             if (previousPlayingMessageId != audioId) {
                 globalAudioElement.src = document.getElementById(audioId).src;
-                // globalAudioElement.load();
                 globalAudioElement.play();
                 previousPlayingMessageId = audioId;
 
@@ -689,7 +659,6 @@
             });
 
             globalAudioElement.src = document.getElementById(audioId).src;
-            // globalAudioElement.load();
             globalAudioElement.play();
             previousPlayingMessageId = audioId;
 

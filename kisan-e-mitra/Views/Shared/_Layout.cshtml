@@ -30,22 +30,6 @@
     </div>
     @RenderBody()
     </div>
-    
-    @*<div class="bottom-section">
-            <div class="bottom-container">
-                <div class="tab-bar">
-                    <a class="tab" href="@Url.Action("Index","Home")">
-                        <img src="~/Content/images/home.svg" width="32" height="32" />
-                    </a>
-                    <a href="@Url.Action("ChatHistory","Home")">
-                        <img src="~/Content/images/message-menu.svg" width="32" height="32" />
-                    </a>
-                    <a class="tab" href="@Url.Action("More","Home")">
-                        <img src="~/Content/images/menu.svg" width="32" height="32" />
-                    </a>
-                </div>
-            </div>
-        </div>*@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
@@ -70,7 +54,6 @@
                     data: { lang: selValue },
                     success: function (data) {
                         sessionStorage.setItem('languageChangedMessage', data.Message);
-                        //showLanguageChangedMessage(data.Message);
                         location.reload();
                     },
                     failure: function (data) {
