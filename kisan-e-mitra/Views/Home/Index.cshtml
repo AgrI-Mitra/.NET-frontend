@@ -220,6 +220,53 @@
         askQuestions('resend OTP');
     }
 
+    function formatChatbotResponse(response){
+        //response = '<table class="aadhar-table"><tbody><tr><td>Name :</td><td>Lal Chand</td></tr><tr><td>Father Name :</td><td></td></tr><tr><td>Date Of Birth :</td><td>01/01/1900</td></tr><tr><td>Address :</td><td>Jana (24/46),NAGGAR,Kullu,KULLU,HIMACHAL PRADESH</td></tr><tr><td>Registration Date :</td><td>19/02/2019</td></tr></tbody></table>Dear Lal Chand, I have checked your status and found that you have been marked as a *Landless farmer* by the State. If this information is not correct, I suggest you to kindly visit your nearest district/ block office and get your land details updated on the PM KISAN portal.'
+        // Check the chatbot response message, and see if any word is given between 2 starts *word*
+        // If there is any such word, we need to display it in bold font.
+        var myRegexp = /\*(.*?)\*/g;
+        var match = myRegexp.exec(response);
+        var matchedWords = [];
+        while (match != null) {
+
+          matchedWords.push(
+              {
+                  wordToFind: match[0],
+                  wordToReplace: match[1]
+              }
+          );
+
+          match = myRegexp.exec(response);
+        }
+
+        console.log('matchedWords: ', matchedWords);
+        // Replace matched words with <b></b> tags to display them in bold font
+        for(var i = 0; i < matchedWords.length; i++){
+
+            response = response.replace(matchedWords[i].wordToFind, "<b>" + matchedWords[i].wordToReplace + "</b>");
+        }
+
+        // AADHAR Info UI Format START
+        // If aadhar info is available in chat response then we need to display it in table format
+        // Add bootstrap table class and "table-responsive card" classes as wrapper to beautify the table
+
+        //Remove all the table related element and replace them with div to show adhar info in a new UI
+        if(response.indexOf("aadhar-table") >= 0){
+            response = response.replaceAll("<table", "<div");
+            response = response.replaceAll("<tbody", "<div");
+            response = response.replaceAll("<tr", '<div class="div-row"');
+            response = response.replaceAll("<td", "<div");
+            response = response.replaceAll("/table>", "/div> <div>"); // Adding <div> to show final reponse in div block to prevent breaking it into new line where we might have added <b></b> tags to show some words in bold letters
+            response = response.replaceAll("/tbody>", "/div>");
+            response = response.replaceAll("/tr>", "/div>");
+            response = response.replaceAll("/td>", "/div>");
+            response += "</div>"; // Closing the div which we added to prevent new line inside flex container after bold words<b></b>
+        }
+        // AADHAR Info UI Format END
+
+        return response;
+    }
+
     function chatResponseView(message, messageId, messageType) {
         if (message != "") {
             console.log("message Type: ", messageType);
@@ -238,21 +285,7 @@
                 + feedbackOptionHtml
                 + "</div>";
 
-            // AADHAR Info UI Format START
-            // If aadhar info is available in chat response then we need to display it in table format
-            // Add bootstrap table class and "table-responsive card" classes as wrapper to beautify the table
-
-            //Remove all the table related element and replace them with div to show adhar info in a new UI
-            response = response.replaceAll("<table", "<div");
-            response = response.replaceAll("<tbody", "<div");
-            response = response.replaceAll("<tr", '<div class="div-row"');
-            response = response.replaceAll("<td", "<div");
-
-            response = response.replaceAll("/table>", "/div>");
-            response = response.replaceAll("/tbody>", "/div>");
-            response = response.replaceAll("/tr>", "/div>");
-            response = response.replaceAll("/td>", "/div>");
-            // AADHAR Info UI Format END
+            response = formatChatbotResponse(response);
 
             $('#message-list').append(response.replace(/\n/g, "<br>"));
         }
