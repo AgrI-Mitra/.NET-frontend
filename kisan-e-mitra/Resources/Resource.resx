@@ -318,7 +318,7 @@ Type your question or speak using the mic button.</value>
     <value>Resend again</value>
   </data>
   <data name="message.resend_otp" xml:space="preserve">
-    <value>Resent OTP</value>
+    <value>Resend One Time Password</value>
   </data>
   <data name="message.retry" xml:space="preserve">
     <value>Please retry.</value>

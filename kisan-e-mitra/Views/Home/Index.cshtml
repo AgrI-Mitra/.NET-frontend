@@ -200,7 +200,7 @@
         if (String(textInEnglish).toLowerCase().indexOf("one time password is wrong") >= 0) {
 
             var resendOtpTranslation = $("#resend-otp-translation").val();
-            var resendOTPBtn = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><button class='send-button bg-success' onclick='resendOTP(this);'>" + resendOtpTranslation + "</button></div>";
+            var resendOTPBtn = "<div class='system-msg-left message left chatbot-message-wrapper'><img class='chatbot-message-wrapper-column-one' src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'> <div class='message-content ms-2 chatbot-message-wrapper-column-two'> <div> <button class='btn btn-success language-buttons' onclick='resendOTP(this);'>" + resendOtpTranslation + "</button></div></div></div>";
             $('#message-list').append(resendOTPBtn);
         }
         $("#userQuestionTextBox").val('');

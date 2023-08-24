@@ -657,7 +657,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resent OTP.
+        ///   Looks up a localized string similar to Resend One Time Password.
         /// </summary>
         public static string message_resend_otp {
             get {
