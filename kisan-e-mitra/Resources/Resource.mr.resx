@@ -318,7 +318,7 @@
     <value>पुन्हा पाठवा</value>
   </data>
   <data name="message.resend_otp" xml:space="preserve">
-    <value>पुन्हा ओटीपी पाठवा</value>
+    <value>पुन्हा पाठवा वन टाइम पासवर्ड</value>
   </data>
   <data name="message.retry" xml:space="preserve">
     <value>कृपया पुन्हा प्रयत्न करा.</value>

@@ -321,7 +321,7 @@
     <value>पुनः भेजें</value>
   </data>
   <data name="message.resend_otp" xml:space="preserve">
-    <value>OTP पुनः भेजें</value>
+    <value>पुन: भेजें वन टाइम पासवर्ड</value>
   </data>
   <data name="message.retry" xml:space="preserve">
     <value>कृपया पुनः प्रयास करें।</value>
