@@ -197,7 +197,7 @@
 
     function processChatBotResponse(message, messageId, messageType, textInEnglish) {
         chatResponseView(message, messageId, messageType);
-        if (String(textInEnglish).toLowerCase() == "invalid otp") {
+        if (String(textInEnglish).toLowerCase().indexOf("one time password is wrong") >= 0) {
 
             var resendOtpTranslation = $("#resend-otp-translation").val();
             var resendOTPBtn = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><button class='send-button bg-success' onclick='resendOTP(this);'>" + resendOtpTranslation + "</button></div>";
@@ -275,6 +275,7 @@
             dataType: "json",
             data: { querstion: input },
             success: function (data) {
+                console.log('ask question data: ', data);
                 hideChatLoader();
                 var message = "";
 
