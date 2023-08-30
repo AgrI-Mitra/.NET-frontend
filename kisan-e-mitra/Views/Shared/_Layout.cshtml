@@ -153,7 +153,7 @@
                     <ul class="dropdown-menu" aria-labelledby="languageDropDown">
                         @foreach (var availableLanguage in availableLanguages)
                         {
-                            <li onclick="changeLanguage('@availableLanguage.LanguageCultureCode')">
+                            <li onclick="changeLanguage('@availableLanguage.LanguageCultureCode', '@availableLanguage.LanguageEnglishLabel')">
                                 <a class="dropdown-item @((availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode) ? "fw-bold" : "")" href="javascript:void(0)">@availableLanguage.LanguageCultureLabel</a>
                             </li>
                         }
@@ -224,24 +224,24 @@
 
     });
 
-        function changeLanguage(languageCode) {
-            console.log('languageCode: ', languageCode);
-            var selValue = $('#languageDropDown').val();
+        //function changeLanguage(languageCode) {
+        //    console.log('languageCode: ', languageCode);
+        //    var selValue = $('#languageDropDown').val();
 
-            $.ajax({
-                type: "POST",
-                url: "/Home/ChangeLanguage",
-                dataType: "json",
-                data: { lang: languageCode },
-                success: function (data) {
-                    sessionStorage.setItem('languageChangedMessage', data.Message);
-                    location.reload();
-                },
-                failure: function (data) {
-                    alert('oops something went wrong');
-                }
-            });
-        }
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/Home/ChangeLanguage",
+        //        dataType: "json",
+        //        data: { lang: languageCode },
+        //        success: function (data) {
+        //            sessionStorage.setItem('languageChangedMessage', data.Message);
+        //            location.reload();
+        //        },
+        //        failure: function (data) {
+        //            alert('oops something went wrong');
+        //        }
+        //    });
+        //}
     </script>
 </body>
 </html>

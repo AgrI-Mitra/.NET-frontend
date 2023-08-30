@@ -167,11 +167,11 @@
                 {
                     if (language.LanguageCultureCode == selectedLanguage.LanguageCultureCode)
                     {
-                        <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.LanguageCultureCode')">@language.LanguageCultureLabel</button>
+                        <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.LanguageCultureCode', '@language.LanguageEnglishLabel')">@language.LanguageCultureLabel</button>
                     }
                     else
                     {
-                        <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.LanguageCultureCode')">@language.LanguageCultureLabel</button>
+                        <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.LanguageCultureCode', '@language.LanguageEnglishLabel')">@language.LanguageCultureLabel</button>
                     }
                 }
             </div>
@@ -199,7 +199,7 @@
     </div>
     <div class="d-flex flex-row w-100 align-items-center">
         <button class="send-button me-2 me-sm-3" onclick="restartSession();">
-            <img class="refresh-btn-style" src="~/Content/images/restart-session.svg"/> 
+            <img class="refresh-btn-style" src="~/Content/images/restart-session.svg" />
         </button>
         <div class="meg-input position-relative me-2 me-sm-3 flex-grow-1">
             <input id="userQuestionTextBox" type="text" class="message-input" onkeypress="onInputBoxKeyPressed(event)" placeholder="@Resources.Resource.message_ask_ur_question">
@@ -354,6 +354,7 @@
         $(document).ready(function () {
 
             createGlobalAudioElement();
+
 
             // Get welcoome note and language greeting text audio
             var textsToGetSpeech = [];
@@ -996,22 +997,26 @@
             return blob;
         }
 
-        function changeLanguage(language) {
+        function changeLanguage(language, LanguageEnglishLabel) {
 
-            $.ajax({
-                type: "POST",
-                url: "/Home/ChangeLanguage",
-                dataType: "json",
-                data: { lang: language },
-                success: function (data) {
-                    sessionStorage.setItem('languageChangedMessage', data.Message);
+            textToSpeech(LanguageEnglishLabel, changeLanguageApiCall);
 
-                    location.reload();
-                },
-                failure: function (data) {
-                    alert('oops something went wrong');
-                }
-            });
+            function changeLanguageApiCall() {
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/ChangeLanguage",
+                    dataType: "json",
+                    data: { lang: language },
+                    success: function (data) {
+                        sessionStorage.setItem('languageChangedMessage', data.Message);
+
+                        location.reload();
+                    },
+                    failure: function (data) {
+                        alert('oops something went wrong');
+                    }
+                });
+            }
         }
 
         async function playAudio(audioId) {
@@ -1137,9 +1142,15 @@
             div.appendChild(audio);
             div.style.display = "none"; // Hide audio player as we don't need to display it to the user. It will be played using a audio icon available next to text message
             $('#message-list').append(div);
-        }
+    }
 
-
-
+    function textToSpeech(textToSpeack, myCallBack) {
+        let speech = new SpeechSynthesisUtterance();
+        speech.lang = "en-IN";
+        speech.text = textToSpeack;
+        speech.rate = 0.7;
+        speech.onend = function (event) { myCallBack(); }
+        window.speechSynthesis.speak(speech);
+    }
 </script>
 
