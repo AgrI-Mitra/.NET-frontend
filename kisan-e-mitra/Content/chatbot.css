@@ -1,0 +1,216 @@
+:root {
+  --pmk-primary: #198754;
+}
+
+.welcome-message-container {
+  padding: 0px 10px;
+}
+
+.system-msg-left {
+  background-color: #f7f7f8;
+  border-bottom: 1px solid #d1d1d1;
+  padding: 2% 5%;
+}
+
+.left {
+  justify-content: flex-start;
+  padding: 15px;
+}
+
+.chatbot-message-wrapper-column-one {
+  flex: 0 1 48px;
+  height: 48px;
+}
+
+.chatbot-message-wrapper-column-two {
+  display: flex;
+  flex: 1 1 60%;
+  flex-wrap: wrap;
+  flex-flow: column wrap;
+  padding: 10px;
+}
+
+.chatbot-message-wrapper-column-three {
+  flex: 0 1 auto;
+}
+
+.feedback-animation {
+  animation: icon-animation cubic-bezier(0.165, 0.84, 0.44, 1) 0.8s;
+}
+
+.chatbot-message-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/**
+ * ==============================================
+ * Dot Flashing
+ * ==============================================
+ */
+.dot-flashing {
+  position: relative;
+  margin-top: 30px;
+  margin-left: 0.5rem !important;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #219653;
+  color: #219653;
+  animation: dot-flashing 1s infinite linear alternate;
+  animation-delay: 0.5s;
+}
+
+.dot-flashing::before,
+.dot-flashing::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+}
+
+.dot-flashing::before {
+  left: -15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #219653;
+  color: #219653;
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 0s;
+}
+
+.dot-flashing::after {
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #219653;
+  color: #219653;
+  animation: dot-flashing 1s infinite alternate;
+  animation-delay: 1s;
+}
+
+@keyframes dot-flashing {
+  0% {
+    background-color: #219653;
+  }
+
+  50%,
+  100% {
+    background-color: rgba(33, 150, 83, 0.2);
+  }
+}
+
+@keyframes icon-animation {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.language-buttons {
+  margin-top: 10px;
+  border-radius: 20px;
+}
+
+/*// X-Small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap*/
+
+/*// Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+}
+
+/*// Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+}
+
+/*// Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+}
+
+/*// X-Large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+}
+
+/*// XX-Large devices (larger desktops, 1400px and up)*/
+@media (min-width: 1400px) {
+}
+
+/*`sm` applies to x-small devices (portrait phones, less than 576px)*/
+@media (max-width: 575.98px) {
+  /* .kisan-e-mitra-content-padding {
+    margin-bottom: 100px;
+    padding-bottom: 100px;
+  } */
+}
+
+/*// `md` applies to small devices (landscape phones, less than 768px)*/
+@media (max-width: 767.98px) {
+  .chatbot-message-wrapper-column-three {
+    flex: 1 1 100%;
+    margin-left: 3rem !important;
+  }
+
+  /* .send-button {
+    margin: 0px 0px 0px 8px;
+  } */
+}
+
+/*// `lg` applies to medium devices (tablets, less than 992px)*/
+@media (max-width: 991.98px) {
+}
+
+/*// `xl` applies to large devices (desktops, less than 1200px)*/
+@media (max-width: 1199.98px) {
+}
+
+/*// `xxl` applies to x-large devices (large desktops, less than 1400px)*/
+@media (max-width: 1399.98px) {
+}
+
+.voice-stop-recording-border-color {
+  border-color: #fa5f5f;
+}
+
+.voice-start-recording-border-color {
+  border-color: #198754;
+}
+
+.query-msg {
+  cursor: pointer;
+}
+
+.user-avatar-img {
+  background-color: #219653;
+}
+
+/*Voice Recording Animation START*/
+.over {
+  -webkit-animation: rotator 1.5s ease-in-out infinite;
+  stroke-dasharray: 107, 38;
+}
+
+.bag {
+  position: absolute;
+}
+
+@-webkit-keyframes rotator {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*Voice Recording Animation Stop*/
+
+img.query-msg-send-icon {
+  height: 24px;
+  padding: 0px 10px;
+}

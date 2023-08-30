@@ -8,67 +8,65 @@ using System.Web.Mvc;
 
 namespace KisanEMitra.Models
 {
-    public class Languages
+    public class LanguageInfo
     {
-        public string LanguageFullName
-        {
-            get;
-            set;
-        }
+        public string LanguageEnglishLabel { get; set; }
 
-        public string LanguageLabel { get; set; }
-        public string LanguageCultureName
-        {
-            get;
-            set;
-        }
+        public string LanguageCultureLabel { get; set; }
+        public string LanguageCultureCode { get; set; }
         public int Position { get; set; }
+        public string LanguageFirstAlphabet { get; set; }
     }
 
     public class LanguageModel
     {
-        public SelectList Languages { get; set; }
-        public string SelectedLanguage { get; set; }
+        public LanguageInfo SelectedLanguage { get; set; }
+        public List<LanguageInfo> AvailableLanguages { get; set; }
     }
 
     public class LanguageManager
     {
-        public static List<Languages> AvailableLanguages = new List<Languages> {
-            new Languages {
-                LanguageFullName = "Hindi", LanguageLabel = "हिंदी", LanguageCultureName = "hi", Position = 1
+        public static List<LanguageInfo> AvailableLanguages = new List<LanguageInfo> {
+            new LanguageInfo {
+                LanguageEnglishLabel = "Hindi", LanguageCultureLabel = "हिंदी", LanguageCultureCode = "hi", Position = 1, LanguageFirstAlphabet = "क"
             },
-            new Languages {
-                LanguageFullName = "English", LanguageLabel = "English",  LanguageCultureName = "en", Position = 7
+            new LanguageInfo {
+                LanguageEnglishLabel = "English", LanguageCultureLabel = "English",  LanguageCultureCode = "en", Position = 7, LanguageFirstAlphabet = "A"
             },
-            new Languages {
-                LanguageFullName = "Marathi", LanguageLabel = "मराठी", LanguageCultureName = "mr", Position= 5
+            new LanguageInfo {
+                LanguageEnglishLabel = "Marathi", LanguageCultureLabel = "मराठी", LanguageCultureCode = "mr", Position= 5, LanguageFirstAlphabet = "क"
             },
-            new Languages {
-                LanguageFullName = "Bangla", LanguageLabel = "বাংলা",LanguageCultureName = "bn", Position = 6
+            new LanguageInfo {
+                LanguageEnglishLabel = "Bangla", LanguageCultureLabel = "বাংলা",LanguageCultureCode = "bn", Position = 6, LanguageFirstAlphabet = "ক"
             },
-            new Languages {
-                LanguageFullName = "Tamil", LanguageLabel = "தமிழ்", LanguageCultureName = "ta", Position= 2
+            new LanguageInfo {
+                LanguageEnglishLabel = "Tamil", LanguageCultureLabel = "தமிழ்", LanguageCultureCode = "ta", Position= 2, LanguageFirstAlphabet = "க்"
             },
-            new Languages {
-                LanguageFullName = "Telugu", LanguageLabel = "తెలుగు", LanguageCultureName = "te", Position = 4
+            new LanguageInfo {
+                LanguageEnglishLabel = "Telugu", LanguageCultureLabel = "తెలుగు", LanguageCultureCode = "te", Position = 4, LanguageFirstAlphabet = "అ"
             },
-            new Languages {
-                LanguageFullName = "Odia", LanguageLabel = "ଓଡ଼ିଆ", LanguageCultureName = "or", Position = 3
+            new LanguageInfo {
+                LanguageEnglishLabel = "Odia", LanguageCultureLabel = "ଓଡ଼ିଆ", LanguageCultureCode = "or", Position = 3, LanguageFirstAlphabet = "ଅ"
             },
         };
 
         public static bool IsLanguageAvailable(string lang)
         {
-            return AvailableLanguages.FirstOrDefault(a => a.LanguageCultureName.Equals(lang)) != null;
+            return AvailableLanguages.FirstOrDefault(a => a.LanguageCultureCode.Equals(lang)) != null;
         }
         public static string GetDefaultLanguage()
         {
-            return AvailableLanguages.Single(f => f.Position == 1).LanguageCultureName;
+            return AvailableLanguages.Single(f => f.Position == 1).LanguageCultureCode;
         }
 
-        public static List<Languages> GetLanguagesOrderedByPosition()
+        public static List<LanguageInfo> GetLanguagesOrderedByPosition()
         {
             return AvailableLanguages.OrderBy(o => o.Position).ToList();
+        }
+
+        public static LanguageInfo GetLanguageDetailsByCode(string languageCode)
+        {
+            return AvailableLanguages.Single(f => f.LanguageCultureCode == languageCode);
         }
 
         public void SetLanguage(string lang)

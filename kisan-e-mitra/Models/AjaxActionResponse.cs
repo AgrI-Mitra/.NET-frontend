@@ -11,4 +11,10 @@ namespace kishan_bot.Models
         public bool Success { get; set; }
         public object Data { get; set; }
     }
+
+    public class PopularQuestion
+    {
+        public string PopularQuestionKey { get; set; }
+        public string PopularQuestionValue { get; set; }
+    }
 }

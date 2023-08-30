@@ -3,277 +3,575 @@
     var welcomeNoteGreetingBase64 = ViewBag.AudioBase64Strings[0];
     var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
     var resendOtpTranslation = Resources.Resource.message_resend_otp;
+    List<KisanEMitra.Models.LanguageInfo> availableLanguages = ViewBag?.LanguageModel?.AvailableLanguages;
+    KisanEMitra.Models.LanguageInfo selectedLanguage = ViewBag?.LanguageModel?.SelectedLanguage;
+    List<kishan_bot.Models.PopularQuestion> popularQuestions = ViewBag.PopularQuestions;
 }
 
 @Html.Hidden("welcome-greeting-message-base64", (object)welcomeNoteGreetingBase64.ToString())
 @Html.Hidden("language-change-greeting-message-base64", (object)languageChangeGreetingBase64.ToString())
 @Html.Hidden("resend-otp-translation", (object)resendOtpTranslation.ToString())
-<div class="chat-container">
-    <div id="message-list" class="message-list">
-        <div id="welcome-message" class="system-msg-left message left chatbot-message-wrapper">
-            <img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;' class="chatbot-message-wrapper-column-one">
-            <div class="message-content chatbot-message-wrapper-column-two">
-                @(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))
-                <br />
-                <div>
-                    @foreach (var language in ViewBag.LanguageModel.Languages)
-                    {
-                        if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
+@*<div class="chat-container">
+        <div id="message-list" class="message-list">
+            <div id="welcome-message" class="system-msg-left message left chatbot-message-wrapper">
+                <img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;' class="chatbot-message-wrapper-column-one">
+                <div class="message-content chatbot-message-wrapper-column-two">
+                    @(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))
+                    <br />
+                    <div>
+                        @foreach (var language in ViewBag.LanguageModel.Languages)
                         {
-                            <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                            if (language.Value == ViewBag.LanguageModel.SelectedLanguage)
+                            {
+                                <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
+                            }
                         }
-                        else
-                        {
-                            <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.Value')">@language.Text</button>
-                        }
-                    }
+                    </div>
+
+                </div>
+                <div class="align-self-start chatbot-message-wrapper-column-three">
+                    <img id="playMessageImg-welcome-greeting-message-base64-audio" onclick="playAudio('welcome-greeting-message-base64-audio');" src="../Content/images/start-audio.svg" alt="avatar 1" style="width: 36px; height: 100%;">
                 </div>
 
             </div>
-            <div class="align-self-start chatbot-message-wrapper-column-three">
-                <img id="playMessageImg-welcome-greeting-message-base64-audio" onclick="playAudio('welcome-greeting-message-base64-audio');" src="../Content/images/start-audio.svg" alt="avatar 1" style="width: 36px; height: 100%;">
-            </div>
-
         </div>
-    </div>
-    <div class="input-container align-items-center justify-content-center p-3 p-md-4">
-        <div class="scroll-container d-flex flex-row">
-            <div class="query-messages-box">
-                <div class=" query-msg" onclick="showUserRecordedMessageInTextBox('I have not received my last instalment payment.')">
-                    <p>
-                        I have not received my last instalment payment.
-                        <a href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="query-msg-send-icon"
-                                 width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M12.8147 12.1969L5.28344 13.4521C5.10705 13.4815 4.95979 13.6029 4.89723 13.7704L2.29933 20.7278C2.05066 21.3673 2.72008 21.9773 3.33375 21.6705L21.3337 12.6705C21.8865 12.3941 21.8865 11.6052 21.3337 11.3288L3.33375 2.32885C2.72008 2.02201 2.05066 2.63206 2.29933 3.2715L4.89723 10.2289C4.95979 10.3964 5.10705 10.5178 5.28344 10.5472L12.8147 11.8024C12.9236 11.8205 12.9972 11.9236 12.9791 12.0325C12.965 12.1168 12.899 12.1829 12.8147 12.1969Z"
-                                      fill="#8E8E9E" />
-                            </svg>
-                        </a>
-                    </p>
-                </div>
-                <div class="query-msg" onclick="showUserRecordedMessageInTextBox('Tell me the status of my PM Kisan account')">
-                    <p>
-                        Tell me the status of my PM Kisan account
-                        <a href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="query-msg-send-icon"
-                                 width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M12.8147 12.1969L5.28344 13.4521C5.10705 13.4815 4.95979 13.6029 4.89723 13.7704L2.29933 20.7278C2.05066 21.3673 2.72008 21.9773 3.33375 21.6705L21.3337 12.6705C21.8865 12.3941 21.8865 11.6052 21.3337 11.3288L3.33375 2.32885C2.72008 2.02201 2.05066 2.63206 2.29933 3.2715L4.89723 10.2289C4.95979 10.3964 5.10705 10.5178 5.28344 10.5472L12.8147 11.8024C12.9236 11.8205 12.9972 11.9236 12.9791 12.0325C12.965 12.1168 12.899 12.1829 12.8147 12.1969Z"
-                                      fill="#8E8E9E" />
-                            </svg>
-                        </a>
-                    </p>
-                </div>
-                <div class="query-msg " onclick="showUserRecordedMessageInTextBox('How to link my bank account with my Aadhar')">
-                    <p>
-                        How to link my bank account with my Aadhar
-                        <a href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="query-msg-send-icon"
-                                 width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M12.8147 12.1969L5.28344 13.4521C5.10705 13.4815 4.95979 13.6029 4.89723 13.7704L2.29933 20.7278C2.05066 21.3673 2.72008 21.9773 3.33375 21.6705L21.3337 12.6705C21.8865 12.3941 21.8865 11.6052 21.3337 11.3288L3.33375 2.32885C2.72008 2.02201 2.05066 2.63206 2.29933 3.2715L4.89723 10.2289C4.95979 10.3964 5.10705 10.5178 5.28344 10.5472L12.8147 11.8024C12.9236 11.8205 12.9972 11.9236 12.9791 12.0325C12.965 12.1168 12.899 12.1829 12.8147 12.1969Z"
-                                      fill="#8E8E9E" />
-                            </svg>
-                        </a>
-                    </p>
-                </div>
-                <div class="query-msg" onclick="showUserRecordedMessageInTextBox('Why I am not an eligible beneficiary?')">
-                    <p>
-                        Why I am not an eligible beneficiary?
-                        <a href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="query-msg-send-icon"
-                                 width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M12.8147 12.1969L5.28344 13.4521C5.10705 13.4815 4.95979 13.6029 4.89723 13.7704L2.29933 20.7278C2.05066 21.3673 2.72008 21.9773 3.33375 21.6705L21.3337 12.6705C21.8865 12.3941 21.8865 11.6052 21.3337 11.3288L3.33375 2.32885C2.72008 2.02201 2.05066 2.63206 2.29933 3.2715L4.89723 10.2289C4.95979 10.3964 5.10705 10.5178 5.28344 10.5472L12.8147 11.8024C12.9236 11.8205 12.9972 11.9236 12.9791 12.0325C12.965 12.1168 12.899 12.1829 12.8147 12.1969Z"
-                                      fill="#8E8E9E" />
-                            </svg>
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex flex-row w-100">
+        <div class="input-container d-flex flex-row container-fluid">
             <button class="img-fluid bg-transparent send-button" style="padding-left:0px;" onclick="restartSession();">
                 <img src="~/Content/images/restart.svg" class="img-fluid" />
             </button>
             <input id="userQuestionTextBox" type="text" class="message-input img-fluid border-success flex-shrink-1" onkeypress="onInputBoxKeyPressed(event)" placeholder="@Resources.Resource.message_ask_ur_question">
             <div class="d-flex img-fluid" style="max-height: 80px;">
-                <button id="inputBtn" type="submit" class="send-button img-fluid sendtext">
+                <button id="sendTextButton" type="submit" class="send-button img-fluid sendtext">
                 </button>
-                <button id="inputRecordBtn" class="send-button img-fluid bg-transparent">
+                <button id="voiceRecordButtonId" class="send-button img-fluid bg-transparent">
                     <img id="recordingImage" src="~/Content/images/startIcon.svg" class="img-fluid" />
                 </button>
             </div>
         </div>
-        
+    </div>*@
+
+@*<div class="kisan-e-mitra-responsive-margin">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content-head-text-responsive">
+                    <h1>@ViewBag.Title</h1>
+                </div>
+            </div>
+        </div>
+        <div class="msg-scrollbar" id="message-list">
+            <div class="my-msg-content system-msg-bg chatbot-message-wrapper">
+                <img src="../Content/images/MOA_logo.png" class="chatbot-message-wrapper-column-one">
+                <div class="chatbot-message-wrapper-column-two">
+                    <span>@(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))</span>
+
+                    <div>
+                        @foreach (var language in availableLanguages)
+                        {
+                            if (language.LanguageCultureCode == selectedLanguage.LanguageCultureCode)
+                            {
+                                <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.LanguageCultureCode')">@language.LanguageCultureLabel</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.LanguageCultureCode')">@language.LanguageCultureLabel</button>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="d-flex align-self-start chatbot-message-wrapper-column-three me-md-2">
+                    <img id="playMessageImg-welcome-greeting-message-base64-audio" onclick="playAudio('welcome-greeting-message-base64-audio');" src="../Content/images/start-audio.svg" alt="avatar 1" style="width: 36px; height: 100%;">
+                </div>
+            </div>
+        </div>
+        <div class="scroll-container">
+            <div class="query-messages-box">
+                <div class=" query-msg">
+                    <p>
+                        What is PM Kisaan Yojana ?
+                        <a href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="query-msg-send-icon"
+                                 width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M12.8147 12.1969L5.28344 13.4521C5.10705 13.4815 4.95979 13.6029 4.89723 13.7704L2.29933 20.7278C2.05066 21.3673 2.72008 21.9773 3.33375 21.6705L21.3337 12.6705C21.8865 12.3941 21.8865 11.6052 21.3337 11.3288L3.33375 2.32885C2.72008 2.02201 2.05066 2.63206 2.29933 3.2715L4.89723 10.2289C4.95979 10.3964 5.10705 10.5178 5.28344 10.5472L12.8147 11.8024C12.9236 11.8205 12.9972 11.9236 12.9791 12.0325C12.965 12.1168 12.899 12.1829 12.8147 12.1969Z"
+                                      fill="#8E8E9E" />
+                            </svg>
+                        </a>
+                    </p>
+                </div>
+                <div class="query-msg" onclick="copyQuestionToTextBox('What are the benefits of PM Kisaan Yojana and how do i enroll ?')">
+                    <p>
+                        What are the benefits of PM Kisaan Yojana
+                        and how do i enroll ?
+                    </p>
+                </div>
+                <div class="query-msg " onclick="copyQuestionToTextBox('What are the benefits of PM Kisaan Yojana and how do i enroll ?')">
+                    <p>
+                        Who are eligible to get benefits under the
+                        Scheme?
+                    </p>
+                </div>
+                <div class="query-msg" onclick="copyQuestionToTextBox('What are the benefits of PM Kisaan Yojana and how do i enroll ?')">
+                    <p>
+                        What are the benefits of PM Kisaan Yojana
+                        and how do i enroll ?
+                    </p>
+                </div>
+                <div class="query-msg " onclick="copyQuestionToTextBox('What are the benefits of PM Kisaan Yojana and how do i enroll ?')">
+                    <p>
+                        Who are eligible to get benefits under the
+                        Scheme?
+                    </p>
+                </div>
+                <div class="query-msg" onclick="copyQuestionToTextBox('What are the benefits of PM Kisaan Yojana and how do i enroll ?')">
+                    <p>
+                        What are the benefits of PM Kisaan Yojana
+                        and how do i enroll ?
+                    </p>
+                </div>
+                <div class="query-msg " onclick="copyQuestionToTextBox('What are the benefits of PM Kisaan Yojana and how do i enroll ?')">
+                    <p>
+                        Who are eligible to get benefits under the
+                        Scheme?
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="input-container input-bg border-radius d-flex input-field-responsive flex-row container-fluid pt-3 pb-3">
+            <img src="~/Content/images/restart-session.svg" class="refresh-btn-style" onclick="restartSession();" />
+
+            <input id="userQuestionTextBox" type="text" class="message-input img-fluid flex-shrink-1"
+                   onkeypress="onInputBoxKeyPressed(event)" placeholder="@Resources.Resource.message_ask_ur_question">
+            <div class="d-flex responsive-content-end img-fluid align-items-center">
+                <button id="sendTextButton" type="submit" class="send-button img-fluid sendtext">
+                </button>
+                <button id="voiceRecordButtonId" class="send-button img-fluid bg-transparent position-relative">
+                    <div id="voiceRecordMicCircle" class="load"></div>
+                    <img id="recordingImage" src="~/Content/images/start-recording.svg" class="mic-style position-absolute voice-start-recording-border-color" />
+                </button>
+            </div>
+        </div>
+
+    </div>*@
+
+<div class="msg-scrollbar" id="message-list">
+    <div class="my-msg-content system-msg-bg chatbot-message-wrapper">
+        <img src="../Content/images/MOA_logo.png" class="chatbot-message-wrapper-column-one">
+        <div class="chatbot-message-wrapper-column-two">
+            <span>@(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))</span>
+
+            <div>
+                @foreach (var language in availableLanguages)
+                {
+                    if (language.LanguageCultureCode == selectedLanguage.LanguageCultureCode)
+                    {
+                        <button type="button" class="btn btn-success language-buttons" onclick="changeLanguage('@language.LanguageCultureCode')">@language.LanguageCultureLabel</button>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-secondary language-buttons" onclick="changeLanguage('@language.LanguageCultureCode')">@language.LanguageCultureLabel</button>
+                    }
+                }
+            </div>
+        </div>
+        <div class="d-flex align-self-start chatbot-message-wrapper-column-three me-md-2">
+            <img id="playMessageImg-welcome-greeting-message-base64-audio" onclick="playAudio('welcome-greeting-message-base64-audio');" src="../Content/images/start-audio.svg" alt="avatar 1" style="width: 36px; height: 100%;">
+        </div>
     </div>
 </div>
+<div class="input-container align-items-center justify-content-center p-3 p-md-4">
+    <div class="scroll-container d-flex flex-row">
+        <div class="query-messages-box">
+            @foreach (var popularQuestion in popularQuestions)
+            {
+                <div class="query-msg" onclick="showUserRecordedMessageInTextBox('@popularQuestion.PopularQuestionValue')">
+                    <p>
+                        @popularQuestion.PopularQuestionValue
+                        <a href="#">
+                            <img class="query-msg-send-icon" src="~/Content/images/send-text-highlight.svg" />
+                        </a>
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="d-flex flex-row w-100 align-items-center">
+        <button class="send-button me-2 me-sm-3" onclick="restartSession();">
+            <img class="refresh-btn-style" src="~/Content/images/restart-session.svg"/> 
+        </button>
+        <div class="meg-input position-relative me-2 me-sm-3 flex-grow-1">
+            <input id="userQuestionTextBox" type="text" class="message-input" onkeypress="onInputBoxKeyPressed(event)" placeholder="@Resources.Resource.message_ask_ur_question">
+            <button id="sendTextButton" type="submit" class="sendtext" disabled></button>
+        </div>
+        <button id="voiceRecordButtonId" class="send-button img-fluid bg-transparent position-relative">
+            <div id="voiceRecordMicCircle" class="load" style="display:none;"></div>
+            <img id="recordingImage" src="~/Content/images/start-recording.svg" class="mic-style position-absolute voice-start-recording-border-color" />
+        </button>
+    </div>
 
+</div>
 
 <script type="text/javascript">
-    var inputTextId = "";
-    let chunks = [];
+        var userQuestionTextBox = "#userQuestionTextBox";
+        var voiceRecordButtonId = "#voiceRecordButtonId";
+        var voiceRecordingImageId = "#recordingImage";
+        var stopVoiceRecordingImagePath = "../Content/images/stop-recording.svg";
+        var startVoiceRecordingImagePath = "../Content/images/start-recording.svg";
+        var startAudioImagePath = "../Content/images/start-audio.svg";
+        var stopAudioImagePath = "../Content/images/stop-audio.svg";
+        var thumbDislikeImagePath = "../Content/images/thumb_dislike.svg";
+        var thumbDislikeHighlightImagePath = "../Content/images/thumb_dislike_highlight.svg";
+        var thumbLikeImagePath = "../Content/images/thumb_like.svg";
+        var thumbLikeHighlightImagePath = "../Content/images/thumb_like_highlight.svg";
+        var chatbotLogoImagePath = "../Content/images/MOA_logo.png";
+        var voiceRecordMicCircleId = "#voiceRecordMicCircle";
+        var classesToShowVoiceRecordingAnimation = "voice-recording-animation"; //voice-stop-recording-border-color
+        var voiceRecordingStartBgColorClass = "voice-start-recording-border-color";
+        var voiceRecordingStopBgColorClass = "voice-stop-recording-border-color";
+        var sendTextButtonId = "#sendTextButton";
+        let chunks = [];
 
-    var querstionInput = "";
+        var querstionInput = "";
 
-    var gumStream; 						//stream from getUserMedia()
-    var rec; 							//Recorder.js object
-    var input; 							//MediaStreamAudioSourceNode we'll be recording
+        var gumStream; 						//stream from getUserMedia()
+        var rec; 							//Recorder.js object
+        var input; 							//MediaStreamAudioSourceNode we'll be recording
 
-    // shim for AudioContext when it's not avb.
-    var AudioContext = window.AudioContext || window.webkitAudioContext;
-    var audioContext //audio context to help us record
-    var isMessagePlaying = false; // To maintain state of message is being played or not
-    var previousPlayingMessageId = ""; // To maintain previous playing message id. So when user tries to play another message in middle of current playing message
-    var lastUserTypedMessageId = "";
-    // We need to stop current playing message.
+        // shim for AudioContext when it's not avb.
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
+        var audioContext //audio context to help us record
+        var isMessagePlaying = false; // To maintain state of message is being played or not
+        var previousPlayingMessageId = ""; // To maintain previous playing message id. So when user tries to play another message in middle of current playing message
+        var lastUserTypedMessageId = "";
+        // We need to stop current playing message.
 
-    function chatLoader() {
-        const responseLoader = "<div id='responseLoader' class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'> <div class='dot-flashing-container ms-3'><div class='ms-2 dot-flashing'></div></div></div>"
-        $('#message-list').append(responseLoader);
-    }
-
-    function hideChatLoader() {
-        $('#responseLoader').remove();
-    }
-
-    function enableDisableSendButton(textValue) {
-        if (textValue) {
-            $("#inputBtn").css({ opacity: 1 });
-            $('#inputBtn').prop('disabled', false);
-
-        } else {
-            $("#inputBtn").css({ opacity: 0.4 });
-            $('#inputBtn').prop('disabled', true);
-        }
-    }
-
-    $(document).ready(function () {
-
-        createGlobalAudioElement();
-
-        // Get welcoome note and language greeting text audio
-        var textsToGetSpeech = [];
-
-        textsToGetSpeech.push({
-            id: "welcome-greeting-message-base64-audio",
-            value: $("#welcome-greeting-message-base64").val()
-        });
-
-        textsToGetSpeech.push({
-            id: "language-change-greeting-message-base64-audio",
-            value: $("#language-change-greeting-message-base64").val()
-        });
-        const contentType = 'audio/wav';
-
-        if (textsToGetSpeech.length > 0) {
-
-            for (var i = 0; i < textsToGetSpeech.length; i++) {
-                var currentBase64String = textsToGetSpeech[i];
-                const blob = b64toBlob(currentBase64String.value, contentType);
-
-                loadAudioPlayer(blob, currentBase64String.id, "left");
-            }
+        function copyQuestionToTextBox(message){
+            $(userQuestionTextBox).val(message);
+            $(userQuestionTextBox).trigger('change');
         }
 
-        var languageChangedGreeting = sessionStorage.getItem('languageChangedMessage');
-        if (languageChangedGreeting) {
-            var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + languageChangedGreeting + "</div><img id='playMessageImg-language-change-greeting-message-base64-audio' class='align-self-start' onclick='playAudio(\"language-change-greeting-message-base64-audio\");' src='../Content/images/start-audio.svg' alt='avatar 1' style='width: 36px; height: 100%;'></div>";
-            $('#message-list').append(response.replace(/\n/g, "<br>"));
-            sessionStorage.removeItem('languageChangedMessage');
+        function chatLoader() {
+            let chatMessageWrapperStartingDivHtmlContent = getChatMessageWrapperStartingDivHtmlContent(true, 'responseLoader'); // Main chat message wrapper
+            let chatbotRespondingHtmlContent = getChatbotRespondingIndicatorHtmlContent();
+
+
+                @* let chatMessageAudioImageHtmlContent = getChatMessageAudioImageHtmlContent("language-change-greeting-message-base64-audio"); // Audio icon inside third column *@
+
+                const responseLoader =
+                chatMessageWrapperStartingDivHtmlContent
+                    + chatbotLogoHtmlContent
+                    + chatMessageWrapperColumnTwoStartingDivHtmlContent
+                        + chatbotRespondingHtmlContent
+                    + closingDivHtmlContent
+                    + chatMessageWrapperColumnThreeStartingDivHtmlContent
+                        @* + chatMessageAudioImageHtmlContent *@
+                    +  closingDivHtmlContent
+                + closingDivHtmlContent;
+
+            @* const responseLoader = "<div id='responseLoader' class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'> <div class='dot-flashing-container ms-3'><div class='ms-2 dot-flashing'></div></div></div>" *@
+            $('#message-list').append(responseLoader);
         }
 
-        enableDisableSendButton();
+        function hideChatLoader() {
+            $('#responseLoader').remove();
+        }
 
-        $('#userQuestionTextBox').on('change paste keyup input', function () {
-            var textValue = $(this).val();
+        function enableDisableSendButton(textValue) {
+            if (textValue) {
+                $(sendTextButtonId).css({ opacity: 1 });
+                $(sendTextButtonId).prop('disabled', false);
 
-            // If value is there then only keep the send button enabled else keep it disabled.
-            enableDisableSendButton(textValue);
-        });
-
-        var isRecording = false;
-        getLocalStream();
-
-        $("#inputRecordBtn").click(function () {
-            inputTextId = "#userQuestionTextBox";
-            var recordImageID = "#recordingImage";
-            recordAudio(recordImageID);
-        });
-
-        function recordAudio(recordImageID) {
-            isRecording = !isRecording;
-
-            if (isRecording) {
-                $(recordImageID).attr("src", "../Content/images/stop.gif");
-
-                $("#inputBtn").attr('disabled', 'disabled');
-                startRecording();
             } else {
-                $(recordImageID).attr("src", "../Content/images/startIcon.svg");
-                $("#inputBtn").removeAttr('disabled');
-                stopRecording();
+                $(sendTextButtonId).css({ opacity: 0.4 });
+                $(sendTextButtonId).prop('disabled', true);
             }
         }
 
-        $(function () {
-            $('body').on('click', '#inputBtn', function (e) {
-                e.preventDefault();
-                querstionInput = $('#userQuestionTextBox').val();
+        function getChatMessageWrapperStartingDivHtmlContent(isSystemMessage, customId){
+            var systemMessageBackgroundClass = isSystemMessage == true ? 'system-msg-bg' : '';
+            var customChatMessageWrapperId = customId != null || customId != undefined? "id='" + customId +"'" : "";
+            return "<div class='my-msg-content chatbot-message-wrapper "+systemMessageBackgroundClass +"'"
+            +customChatMessageWrapperId+">";
+        }
 
-                var querstionInput = $('<div />').text(querstionInput).html();
-                if (querstionInput) {
+        function getClosingDivHtmlContent(){
+            return "</div>";
+        }
 
-                    if (lastUserTypedMessageId != null && lastUserTypedMessageId != "") {
-                        var userQuery = "<div class='message left user-msg-left'>"
-                            + "<img src='../Content/images/user.svg' alt='avatar 1' class='avatar-img user-avatar-img rounded-circle'>"
-                            + "<div class='message-content'>" + querstionInput + "</div>"
-                            + "<img id='playMessageImg-" + lastUserTypedMessageId + "'"
-                            + "class='align-self-start' onclick = 'playAudio("
-                            + "\"" + lastUserTypedMessageId + "\""
-                            + ");' src='../Content/images/start-audio.svg' alt='avatar 1' style='width: 36px; height: 100%;'>"
-                            + "</div>";
-                    } else {
-                        var userQuery = "<div class='message left user-msg-left'>"
-                            + "<img src='../Content/images/user.svg' alt='avatar 1' class='avatar-img user-avatar-img rounded-circle'>"
-                            + "<div class='message-content'>" + querstionInput + "</div> </div>";
+        function getStartingSpanHtmlContent(){
+            return "<span>";
+        }
+
+        function getClosingSpanHtmlContent(){
+            return "</span>";
+        }
+
+        function getChatMessageWrapperColumnTwoStartingDivHtmlContent(){
+            return "<div class='chatbot-message-wrapper-column-two'>";
+        }
+
+        function getChatMessageWrapperColumnThreeStartingDivHtmlContent(){
+            return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three me-md-2'>";
+        }
+
+        function getChatbotLogoHtmlContent(){
+            return "<img src='../Content/images/MOA_logo.png' class='chatbot-message-wrapper-column-one'>"
+        }
+
+        function getUserLogoHtmlContent(){
+            return "<img src='../Content/images/user.svg' class='chat-dp-img-width user-avatar-img rounded-circle chatbot-message-wrapper-column-one'>";
+        }
+
+        function getChatMessageAudioImageHtmlContent(audioId){
+
+            return "<img id='playMessageImg-" + audioId + "'" +
+            "onclick = 'playAudio(" + "\"" + audioId + "\"" + ");' src='../Content/images/start-audio.svg' alt='avatar 1' style='width: 36px; height: 100%;'>"
+        }
+
+        function getFeedbackButtonsHtmlContent(messageId){
+            return "<img id='thumbLikeButton-" + messageId + "' src='../Content/images/thumb_like.svg' alt='avatar 1' style='width:36px; height:100%;' onclick='likeMessage(\"" + messageId + "\")'>"
+                + "<img id='thumbDisikeButton-" + messageId + "' src='../Content/images/thumb_dislike.svg' alt='avatar 1' style='width: 36px; height: 100%;' onclick='dislikeMessage(\"" + messageId + "\")'></div>";
+        }
+
+        function getChatbotRespondingIndicatorHtmlContent(){
+            return "<div class='ms-2 dot-flashing'></div>"
+        }
+
+        function getAudioProgressBarHtmlContent(audioId){
+            return "<div id='audioProgressBar-" + audioId + "'" + "class='circle_percent' data-percent='50'><div class='circle_inner'><div class='round_per'></div></div></div>"
+        }
+
+        let userLogoHtmlContent = getUserLogoHtmlContent();
+        let chatbotLogoHtmlContent = getChatbotLogoHtmlContent();
+        let chatMessageWrapperColumnTwoStartingDivHtmlContent = getChatMessageWrapperColumnTwoStartingDivHtmlContent(); // Second column inside chat message wrapper
+        let chatMessageWrapperColumnThreeStartingDivHtmlContent = getChatMessageWrapperColumnThreeStartingDivHtmlContent(); // Third column inside chat message wrapper
+        let spanStartingHtmlContent = getStartingSpanHtmlContent();
+        let spanClosingHtmlContent = getClosingSpanHtmlContent();
+        let closingDivHtmlContent = getClosingDivHtmlContent();
+
+        $(document).ready(function () {
+
+            createGlobalAudioElement();
+
+            // Get welcoome note and language greeting text audio
+            var textsToGetSpeech = [];
+
+            textsToGetSpeech.push({
+                id: "welcome-greeting-message-base64-audio",
+                value: $("#welcome-greeting-message-base64").val()
+            });
+
+            textsToGetSpeech.push({
+                id: "language-change-greeting-message-base64-audio",
+                value: $("#language-change-greeting-message-base64").val()
+            });
+            const contentType = 'audio/wav';
+
+            if (textsToGetSpeech.length > 0) {
+
+                for (var i = 0; i < textsToGetSpeech.length; i++) {
+                    var currentBase64String = textsToGetSpeech[i];
+                    const blob = b64toBlob(currentBase64String.value, contentType);
+
+                    loadAudioPlayer(blob, currentBase64String.id, "left");
+                }
+            }
+
+            // Check if language change message is available, if available we need to show it to the user on page load.
+            var languageChangedGreeting = sessionStorage.getItem('languageChangedMessage');
+            if (languageChangedGreeting) {
+
+                let chatMessageWrapperStartingDivHtmlContent = getChatMessageWrapperStartingDivHtmlContent(true); // Main chat message wrapper
+
+
+                let chatMessageAudioImageHtmlContent = getChatMessageAudioImageHtmlContent("language-change-greeting-message-base64-audio"); // Audio icon inside third column
+
+                var response =
+                chatMessageWrapperStartingDivHtmlContent
+                    + chatbotLogoHtmlContent
+                    + chatMessageWrapperColumnTwoStartingDivHtmlContent
+                        + spanStartingHtmlContent + languageChangedGreeting + spanClosingHtmlContent
+                    + closingDivHtmlContent
+                    + chatMessageWrapperColumnThreeStartingDivHtmlContent
+                        + chatMessageAudioImageHtmlContent
+                    + closingDivHtmlContent
+                + closingDivHtmlContent;
+
+                //+ chatbotMessageStartingDivHtmlContent +  spanStartingHtmlContent +  languageChangedGreeting + spanClosingHtmlContent + closingDivHtmlContent
+                //+ "<img id='playMessageImg-language-change-greeting-message-base64-audio' class='align-self-start' onclick='playAudio(\"language-change-greeting-message-base64-audio\");' src='../Content/images/start-audio.svg' alt='avatar 1' style='width: 36px; height: 100%;'></div>";
+                $('#message-list').append(response.replace(/\n/g, "<br>"));
+                sessionStorage.removeItem('languageChangedMessage');
+            }
+
+            enableDisableSendButton();
+
+            $(userQuestionTextBox).on('change paste keyup input', function () {
+                var textValue = $(this).val();
+
+                // If value is there then only keep the send button enabled else keep it disabled.
+                enableDisableSendButton(textValue);
+            });
+
+            var isRecording = false;
+            getLocalStream();
+
+            $(voiceRecordButtonId).click(function () {
+                recordAudio();
+            });
+
+            function recordAudio() {
+                isRecording = !isRecording;
+
+
+                if (isRecording) {
+                    $(voiceRecordingImageId).attr("src", stopVoiceRecordingImagePath);
+                    $(voiceRecordingImageId).addClass(voiceRecordingStopBgColorClass);
+                    $(voiceRecordingImageId).removeClass(voiceRecordingStartBgColorClass);
+                    $(voiceRecordMicCircleId).show();
+                    /*$(voiceRecordMicCircleId).addClass(classesToShowVoiceRecordingAnimation);*/
+                    /*$(voiceRecordMicCircleId).addClass(voiceRecordingStopBgColorClass);*/
+
+                    $(sendTextButtonId).attr('disabled', 'disabled');
+                    startRecording();
+                } else {
+                    $(voiceRecordingImageId).attr("src", startVoiceRecordingImagePath);
+                    $(voiceRecordingImageId).addClass(voiceRecordingStartBgColorClass);
+                    $(voiceRecordingImageId).removeClass(voiceRecordingStopBgColorClass);
+
+                    $(voiceRecordMicCircleId).hide();
+                    /*$(voiceRecordMicCircleId).removeClass(classesToShowVoiceRecordingAnimation);*/
+                    /*$(voiceRecordMicCircleId).removeClass(voiceRecordingStopBgColorClass);*/
+                    $(sendTextButtonId).removeAttr('disabled');
+                    stopRecording();
+                }
+            }
+
+            $(function () {
+                $('body').on('click', sendTextButtonId, function (e) {
+                    e.preventDefault();
+                    querstionInput = $(userQuestionTextBox).val();
+
+                    var querstionInput = $('<div />').text(querstionInput).html();
+                    if (querstionInput) {
+
+                        let chatMessageWrapperStartingDivHtmlContent = getChatMessageWrapperStartingDivHtmlContent(false); // Main chat message wrapper
+
+                        let chatMessageAudioImageHtmlContent = getChatMessageAudioImageHtmlContent(lastUserTypedMessageId); // Audio icon inside third column
+
+                        var userQuery = "";
+
+                        userQuery = chatMessageWrapperStartingDivHtmlContent
+                            + userLogoHtmlContent
+                            + chatMessageWrapperColumnTwoStartingDivHtmlContent
+                                + spanStartingHtmlContent
+                                    + querstionInput
+                                + spanClosingHtmlContent
+                            + closingDivHtmlContent
+                            + chatMessageWrapperColumnThreeStartingDivHtmlContent
+                                + (lastUserTypedMessageId != null && lastUserTypedMessageId != "" ? chatMessageAudioImageHtmlContent : "")
+                            + closingDivHtmlContent
+                        + closingDivHtmlContent;
+
+                        @* if (lastUserTypedMessageId != null && lastUserTypedMessageId != "") {
+
+                            let chatMessageAudioImageHtmlContent = getChatMessageAudioImageHtmlContent(lastUserTypedMessageId); // Audio icon inside third column
+
+                            userQuery = chatMessageWrapperStartingDivHtmlContent
+                                            + userLogoHtmlContent
+                                            + chatMessageWrapperColumnTwoStartingDivHtmlContent
+                                                + spanStartingHtmlContent
+                                                    + querstionInput
+                                                + spanClosingHtmlContent
+                                            + closingDivHtmlContent
+                                            + chatMessageWrapperColumnThreeStartingDivHtmlContent
+                                                + chatMessageAudioImageHtmlContent
+                                            + closingDivHtmlContent
+                                        + closingDivHtmlContent;
+
+                            var userQuery = "<div class='message left user-msg-left'>"
+                                + "<img src='../Content/images/user.svg' alt='avatar 1' class='avatar-img user-avatar-img rounded-circle'>"
+                                + "<div class='message-content'>" + querstionInput + "</div>"
+                                + "<img id='playMessageImg-" + lastUserTypedMessageId + "'"
+                                + "class='align-self-start' onclick = 'playAudio("
+                                + "\"" + lastUserTypedMessageId + "\""
+                                + ");' src='../Content/images/start-audio.svg' alt='avatar 1' style='width: 36px; height: 100%;'>"
+                                + "</div>";
+                        } else {
+
+                            userQuery = chatMessageWrapperStartingDivHtmlContent
+                                            + userLogoHtmlContent
+                                            + chatMessageWrapperColumnTwoStartingDivHtmlContent
+                                                + spanStartingHtmlContent
+                                                    + querstionInput
+                                                + spanClosingHtmlContent
+                                            + closingDivHtmlContent
+                                            + chatMessageWrapperColumnThreeStartingDivHtmlContent
+                                                + chatMessageAudioImageHtmlContent
+                                            + closingDivHtmlContent
+                                        + closingDivHtmlContent;
+                            userQuery = "<div class='message left user-msg-left'>"
+                                + "<img src='../Content/images/user.svg' alt='avatar 1' class='avatar-img user-avatar-img rounded-circle'>"
+                                + "<div class='message-content'>" + querstionInput + "</div> </div>";
+                        } *@
+
+                        $('#message-list').append(userQuery.replace(/\n/g, "<br>"));
+                        lastUserTypedMessageId = ""; // Clear last user typed messaged Id once it is sent
                     }
 
-                    $('#message-list').append(userQuery.replace(/\n/g, "<br>"));
-                    lastUserTypedMessageId = ""; // Clear last user typed messaged Id once it is sent
-                }
-
-                askQuestions(querstionInput);
+                    askQuestions(querstionInput);
+                });
             });
         });
-    });
 
-    function showUserRecordedMessageInTextBox(message) {
-        $("#userQuestionTextBox").val(message);
-        $("#userQuestionTextBox").trigger('change');
-    }
+        function showUserRecordedMessageInTextBox(message) {
+            $(userQuestionTextBox).val(message);
+            $(userQuestionTextBox).focus();
+            $(userQuestionTextBox).trigger('change');
+        }
 
     function processChatBotResponse(message, messageId, messageType, textInEnglish) {
         chatResponseView(message, messageId, messageType);
         if (String(textInEnglish).toLowerCase().indexOf("one time password is wrong") >= 0) {
 
             var resendOtpTranslation = $("#resend-otp-translation").val();
-            var resendOTPBtn = "<div class='system-msg-left message left chatbot-message-wrapper'><img class='chatbot-message-wrapper-column-one' src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'> <div class='message-content ms-2 chatbot-message-wrapper-column-two'> <div> <button class='btn btn-success language-buttons' onclick='resendOTP(this);'>" + resendOtpTranslation + "</button></div></div></div>";
-            $('#message-list').append(resendOTPBtn);
+
+            let chatMessageWrapperStartingDivHtmlContent = getChatMessageWrapperStartingDivHtmlContent(true); // Main chat message wrapper
+
+            //let chatMessageAudioImageHtmlContent = getChatMessageAudioImageHtmlContent(lastUserTypedMessageId); // Audio icon inside third column
+
+            var userQuery = "";
+
+            userQuery = chatMessageWrapperStartingDivHtmlContent
+                            + userLogoHtmlContent
+                            + chatMessageWrapperColumnTwoStartingDivHtmlContent
+                                +"<div> <button class='btn btn-success language-buttons' onclick='resendOTP(this);'>" + resendOtpTranslation + "</button></div>"
+                            + closingDivHtmlContent
+                            @* + chatMessageWrapperColumnThreeStartingDivHtmlContent
+                                + (lastUserTypedMessageId != null && lastUserTypedMessageId != "" ? chatMessageAudioImageHtmlContent : "")
+                            + closingDivHtmlContent *@
+                        + closingDivHtmlContent;
+
+            @* var resendOTPBtn = "<div class='system-msg-left message left chatbot-message-wrapper'><img class='chatbot-message-wrapper-column-one' src='../Content/images/MOA_logo.png' alt='avatar 1'> <div class='message-content ms-2 chatbot-message-wrapper-column-two'> <div> <button class='btn btn-success language-buttons' onclick='resendOTP(this);'>" + resendOtpTranslation + "</button></div></div></div>"; *@
+            $('#message-list').append(userQuery);
         }
-        $("#userQuestionTextBox").val('');
-        $("#userQuestionTextBox").trigger('change');
+        $(userQuestionTextBox).val('');
+        $(userQuestionTextBox).trigger('change');
 
-        hideChatLoader();
-    }
-
-    function onInputBoxKeyPressed(event) {
-        if (event.keyCode == 13 || event.key == "Enter") {
-            $("#inputBtn").click();
+            hideChatLoader();
         }
-    }
 
-    function resendOTP(element) {
-        $(element).remove();
-        askQuestions('resend OTP');
-    }
+        function onInputBoxKeyPressed(event) {
+            if (event.keyCode == 13 || event.key == "Enter") {
+                $(sendTextButtonId).click();
+            }
+        }
+
+        function resendOTP(element) {
+            $(element).remove();
+            askQuestions('resend OTP');
+        }
 
     function formatChatbotResponse(response){
         //response = '<table class="aadhar-table"><tbody><tr><td>Name :</td><td>Lal Chand</td></tr><tr><td>Father Name :</td><td></td></tr><tr><td>Date Of Birth :</td><td>01/01/1900</td></tr><tr><td>Address :</td><td>Jana (24/46),NAGGAR,Kullu,KULLU,HIMACHAL PRADESH</td></tr><tr><td>Registration Date :</td><td>19/02/2019</td></tr></tbody></table>Dear Lal Chand, I have checked your status and found that you have been marked as a *Landless farmer* by the State. If this information is not correct, I suggest you to kindly visit your nearest district/ block office and get your land details updated on the PM KISAN portal.'
@@ -294,7 +592,6 @@
           match = myRegexp.exec(response);
         }
 
-        console.log('matchedWords: ', matchedWords);
         // Replace matched words with <b></b> tags to display them in bold font
         for(var i = 0; i < matchedWords.length; i++){
 
@@ -311,11 +608,10 @@
             response = response.replaceAll("<tbody", "<div");
             response = response.replaceAll("<tr", '<div class="div-row"');
             response = response.replaceAll("<td", "<div");
-            response = response.replaceAll("/table>", "/div> <div>"); // Adding <div> to show final reponse in div block to prevent breaking it into new line where we might have added <b></b> tags to show some words in bold letters
+            response = response.replaceAll("/table>", "/div>");
             response = response.replaceAll("/tbody>", "/div>");
             response = response.replaceAll("/tr>", "/div>");
             response = response.replaceAll("/td>", "/div>");
-            response += "</div>"; // Closing the div which we added to prevent new line inside flex container after bold words<b></b>
         }
         // AADHAR Info UI Format END
 
@@ -324,21 +620,42 @@
 
     function chatResponseView(message, messageId, messageType) {
         if (message != "") {
-            console.log("message Type: ", messageType);
-            var feedbackOption = "<img id='thumbLikeButton-" + messageId + "' src='../Content/images/thumb_like.svg' alt='avatar 1' style='width:36px; height:100%;' onclick='likeMessage(\"" + messageId + "\")'>"
+
+                        let chatMessageWrapperStartingDivHtmlContent = getChatMessageWrapperStartingDivHtmlContent(true); // Main chat message wrapper
+
+                        let chatMessageAudioImageHtmlContent = getChatMessageAudioImageHtmlContent(messageId); // Audio icon inside third column
+
+                        let feedbackOptionHtmlContent = getFeedbackButtonsHtmlContent(messageId);
+
+                        var userQuery = "";
+
+                                        var response = chatMessageWrapperStartingDivHtmlContent
+                                                        + chatbotLogoHtmlContent
+                                                        + chatMessageWrapperColumnTwoStartingDivHtmlContent
+                                                            + spanStartingHtmlContent
+                                                                + message
+                                                            + spanClosingHtmlContent
+                                                        + closingDivHtmlContent
+                                                        + chatMessageWrapperColumnThreeStartingDivHtmlContent
+                                                            + (chatMessageAudioImageHtmlContent)
+                                                            + (messageType == "final_response" ? feedbackOptionHtmlContent : "")
+                                                        + closingDivHtmlContent
+                                                    + closingDivHtmlContent;
+
+            @* var feedbackOption = "<img id='thumbLikeButton-" + messageId + "' src='../Content/images/thumb_like.svg' alt='avatar 1' style='width:36px; height:100%;' onclick='likeMessage(\"" + messageId + "\")'>"
                 + "<img id='thumbDisikeButton-" + messageId + "' src='../Content/images/thumb_dislike.svg' alt='avatar 1' style='width: 36px; height: 100%;' onclick='dislikeMessage(\"" + messageId + "\")'></div>";
 
-            var feedbackOptionHtml = messageType == "final_response" ? feedbackOption : "";
+                var feedbackOptionHtml = messageType == "final_response" ? feedbackOption : "";
 
-            var response = "<div class='system-msg-left message left chatbot-message-wrapper'>"
-                + "<img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;' class='chatbot-message-wrapper-column-one'>"
-                + "<div class='message-content ms-2 chatbot-message-wrapper-column-two'>"
-                + message
-                + "</div>"
-                + "<div class='align-self-start chatbot-message-wrapper-column-three'>"
-                + "<img id='playMessageImg-" + messageId + "' src='../Content/images/start-audio.svg' alt='avatar 1' style='width:36px; height:100%;' onclick='playAudio(\"" + messageId + "\")'>"
-                + feedbackOptionHtml
-                + "</div>";
+                var response = "<div class='system-msg-left message left chatbot-message-wrapper'>"
+                    + "<img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;' class='chatbot-message-wrapper-column-one'>"
+                    + "<div class='message-content ms-2 chatbot-message-wrapper-column-two'>"
+                    + message
+                    + "</div>"
+                    + "<div class='d-flex align-self-start chatbot-message-wrapper-column-three'>"
+                    + "<img id='playMessageImg-" + messageId + "' src='../Content/images/start-audio.svg' alt='avatar 1' style='width:36px; height:100%;' onclick='playAudio(\"" + messageId + "\")'>"
+                    + feedbackOptionHtml
+                    + "</div>"; *@
 
             response = formatChatbotResponse(response);
 
@@ -346,15 +663,15 @@
         }
     }
 
-    function showLanguageChangedMessage(message) {
-        var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
-        $('#message-list').append(response.replace(/\n/g, "<br>"));
-    }
+        function showLanguageChangedMessage(message) {
+            var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
+            $('#message-list').append(response.replace(/\n/g, "<br>"));
+        }
 
-    function askQuestions(input) {
-        chatLoader();
-        $("#userQuestionTextBox").val('');
-        $("#userQuestionTextBox").trigger('change');
+        function askQuestions(input) {
+            chatLoader();
+            $(userQuestionTextBox).val('');
+            $(userQuestionTextBox).trigger('change');
 
         scrollToBottom();
         $.ajax({
@@ -363,446 +680,466 @@
             dataType: "json",
             data: { querstion: input },
             success: function (data) {
-                console.log('ask question data: ', data);
                 hideChatLoader();
                 var message = "";
 
-                const contentType = 'audio/wav';
+                    const contentType = 'audio/wav';
 
-                if (data?.audio?.text) {
-                    const blob = b64toBlob(data.audio.text, contentType);
-                    loadAudioPlayer(blob, data.messageId, "left");
-                }
-
-                if (data.Text !== null || data.Error !== null) {
-
-                    if (data.Text !== null) {
-                        message = data.Text;
-                        processChatBotResponse(data.Text, data.messageId, data.messageType, data.textInEnglish);
-                    } else if (data.Error !== null) {
-                        message = data.Error;
-                        processChatBotResponse(message, data.messageId, data.messageType);
+                    if (data?.audio?.text) {
+                        const blob = b64toBlob(data.audio.text, contentType);
+                        loadAudioPlayer(blob, data.messageId, "left");
                     }
 
-                } else {
-                    var response = "<div class='message left system-msg-left'> <img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
-                    $('#message-list').append(response.replace(/\n/g, "<br>"));
-                    $("#userQuestionTextBox").val('');
-                    $("#userQuestionTextBox").trigger('change');
-
-                }
-
-                scrollToBottom();
-            },
-            failure: function (data) {
-            }
-        });
-    }
-
-    function likeMessage(messageId) {
-        chatLoader();
-
-        // Check the current state of like button whether it is liked or unliked.
-        // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
-        var likeButtonSource = $("#thumbLikeButton-" + messageId)[0].src;
-
-        var likeMessageApiEndPoint = "LikeMessage";
-        var likeImageToReplace = "thumb_like_highlight.svg";
-
-        var isLikeHighlight = false;
-
-        if (likeButtonSource.indexOf('highlight') >= 0) {
-
-            isLikeHighlight = true;
-
-            likeMessageApiEndPoint = "UnlikeMessage";
-            likeImageToReplace = "thumb_like.svg"
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/Home/" + likeMessageApiEndPoint,
-            dataType: "json",
-            data: { messageId: messageId },
-            success: function (data) {
-                hideChatLoader();
-
-                if (data.IsSuccess == true) {
-
-                    // Highlight the like button
-                    $("#thumbLikeButton-" + messageId).attr("src", "../Content/images/" + likeImageToReplace);
-
-                    // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
-                    if (isLikeHighlight) {
-                        $("#thumbLikeButton-" + messageId).removeClass("feedback-animation");
-                    } else {
-                        $("#thumbLikeButton-" + messageId).addClass("feedback-animation");
-                    }
-
-                    $("#thumbDisikeButton-" + messageId).removeClass("feedback-animation");// Remove animation class from dislike button, to display animation when user hits the same button again
-
-                    $("#thumbDisikeButton-" + messageId).attr("src", "../Content/images/thumb_dislike.svg"); // Change image to color less icon for dislike button as user has clicked on like button now
-                }
-            },
-            failure: function (data) {
-                hideChatLoader();
-            }
-        });
-    }
-
-    function dislikeMessage(messageId) {
-        chatLoader();
-
-        // Check the current state of like button whether it is liked or unliked.
-        // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
-        var dislikeButtonSource = $("#thumbDisikeButton-" + messageId)[0].src;
-
-        var dislikeMessageApiEndPoint = "DislikeMessage";
-        var dislikeImageToReplace = "thumb_dislike_highlight.svg";
-        var isDislikeHighlight = false;
-        if (dislikeButtonSource.indexOf('highlight') >= 0) {
-
-            isDislikeHighlight = true;
-
-            dislikeMessageApiEndPoint = "UnlikeMessage";
-            dislikeImageToReplace = "thumb_dislike.svg";
-        }
-
-        $.ajax({
-            type: "POST",
-            url: "/Home/" + dislikeMessageApiEndPoint,
-            dataType: "json",
-            data: { messageId: messageId },
-            success: function (data) {
-                hideChatLoader();
-
-                if (data.IsSuccess == true) {
-
-                    // Highlight the like button
-                    $("#thumbDisikeButton-" + messageId).attr("src", "../Content/images/" + dislikeImageToReplace);
-
-                    // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
-                    if (isDislikeHighlight) {
-                        $("#thumbDisikeButton-" + messageId).removeClass("feedback-animation");
-                    } else {
-                        $("#thumbDisikeButton-" + messageId).addClass("feedback-animation");
-                    }
-
-                    $("#thumbLikeButton-" + messageId).removeClass("feedback-animation"); // Remove animation class from like button, to display animation when user hits the same button again
-
-                    $("#thumbLikeButton-" + messageId).attr("src", "../Content/images/thumb_like.svg");
-                }
-            },
-            failure: function (data) {
-                hideChatLoader();
-            }
-        });
-    }
-
-    function scrollToBottom() {
-        $("#message-list").animate({ scrollTop: $('#message-list').prop("scrollHeight") }, 500);
-    }
-
-    function getLocalStream() {
-        window.addEventListener('DOMContentLoaded', () => {
-            if ('MediaRecorder' in window) {
-                navigator.mediaDevices
-                    .getUserMedia({ video: false, audio: true })
-                    .then((stream) => {
-                        window.localStream = stream;
-                        window.localAudio.srcObject = stream;
-                        window.localAudio.autoplay = true;
-                    })
-                    .catch((err) => {
-                        console.error(`you got an error: ${err}`);
-                    });
-            }
-        });
-    }
-
-    function startRecording() {
-
-        var constraints = { audio: true, video: false }
-        /*
-            We're using the standard promise based getUserMedia()
-            https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-        */
-
-        navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
-
-            /*
-                create an audio context after getUserMedia is called
-                sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
-                the sampleRate defaults to the one set in your OS for your playback device
-
-            */
-            audioContext = new AudioContext();
-
-            /*  assign to gumStream for later use  */
-            gumStream = stream;
-
-            /* use the stream */
-            input = audioContext.createMediaStreamSource(stream);
-
-            /*
-                Create the Recorder object and configure to record mono sound (1 channel)
-                Recording 2 channels  will double the file size
-            */
-            rec = new Recorder(input, { numChannels: 1 })
-
-            //start the recording process
-            rec.record();
-
-        }).catch(function (err) { });
-    }
-
-    function stopRecording() {
-
-        //tell the recorder to stop the recording
-        rec.stop();
-
-        //stop microphone access
-        gumStream.getAudioTracks()[0].stop();
-
-        //create the wav blob and pass it on to createDownloadLink
-        rec.exportWAV(createDownloadLink);
-    }
-
-    function createDownloadLink(blob) {
-        var reader = new window.FileReader();
-        reader.readAsDataURL(blob);
-
-        reader.onloadend = function () {
-            base64 = reader.result;
-            base64 = base64.split(',')[1];
-            chatLoader();
-            scrollToBottom();
-            $.ajax({
-                type: "POST",
-                url: "/Home/AskAudioQuestions",
-                dataType: "json",
-                data: { base64Question: base64 },
-                success: function (data) {
-                    var message = "";
-                    hideChatLoader();
-
-                    loadAudioPlayer(blob, data.messageId);
-                    lastUserTypedMessageId = data.messageId;
-                    if (data.Text) {
-                        showUserRecordedMessageInTextBox(data.Text);
-                    }
-                    else if (data.Text !== null || data.Error !== null) {
+                    if (data.Text !== null || data.Error !== null) {
 
                         if (data.Text !== null) {
                             message = data.Text;
-                            $(inputTextId).val(message);
-                            processChatBotResponse(data.Text, data.messgaeId, data.messageType, data.textInEnglish);
+                            processChatBotResponse(data.Text, data.messageId, data.messageType, data.textInEnglish);
                         } else if (data.Error !== null) {
                             message = data.Error;
                             processChatBotResponse(message, data.messageId, data.messageType);
                         }
+
                     } else {
-                        var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
+                        var response = "<div class='message left system-msg-left'> <img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
                         $('#message-list').append(response.replace(/\n/g, "<br>"));
-                        $("#userQuestionTextBox").val('');
-                        $("#userQuestionTextBox").trigger('change');
+                        $(userQuestionTextBox).val('');
+                        $(userQuestionTextBox).trigger('change');
+
                     }
 
                     scrollToBottom();
+                },
+                failure: function (data) {
+                }
+            });
+        }
+
+        function likeMessage(messageId) {
+            chatLoader();
+
+            // Check the current state of like button whether it is liked or unliked.
+            // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
+            var likeButtonSource = $("#thumbLikeButton-" + messageId)[0].src;
+
+            var likeMessageApiEndPoint = "LikeMessage";
+            var likeImageToReplace = thumbLikeHighlightImagePath;
+
+            var isLikeHighlight = false;
+
+            if (likeButtonSource.indexOf('highlight') >= 0) {
+
+                isLikeHighlight = true;
+
+                likeMessageApiEndPoint = "UnlikeMessage";
+                likeImageToReplace = thumbLikeImagePath;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/" + likeMessageApiEndPoint,
+                dataType: "json",
+                data: { messageId: messageId },
+                success: function (data) {
+                    hideChatLoader();
+
+                    if (data.IsSuccess == true) {
+
+                        // Highlight the like button
+                        $("#thumbLikeButton-" + messageId).attr("src", likeImageToReplace);
+
+                        // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+                        if (isLikeHighlight) {
+                            $("#thumbLikeButton-" + messageId).removeClass("feedback-animation");
+                        } else {
+                            $("#thumbLikeButton-" + messageId).addClass("feedback-animation");
+                        }
+
+                        $("#thumbDisikeButton-" + messageId).removeClass("feedback-animation");// Remove animation class from dislike button, to display animation when user hits the same button again
+
+                        $("#thumbDisikeButton-" + messageId).attr("src", thumbDislikeImagePath); // Change image to color less icon for dislike button as user has clicked on like button now
+                    }
                 },
                 failure: function (data) {
                     hideChatLoader();
                 }
             });
         }
-    }
 
-    function loadAudioPlayer(blob, messageId, alignment = 'right') {
-        const blobUrl = URL.createObjectURL(blob);
-        const div = document.createElement('div');
-        div.className = "message " + alignment;
+        function dislikeMessage(messageId) {
+            chatLoader();
 
-        // Avatar image
-        if (alignment == 'left') {
-            div.className += " system-msg-left";
-            const avatarImg = document.createElement('img');
-            avatarImg.src = '../Content/images/MOA_logo.png';
-            avatarImg.alt = 'avatar 1';
-            avatarImg.className = 'avatar-img';
-            avatarImg.style.width = '45px';
-            avatarImg.style.width = '100%';
-            div.appendChild(avatarImg);
-        }
-        else {
-        }
+            // Check the current state of like button whether it is liked or unliked.
+            // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
+            var dislikeButtonSource = $("#thumbDisikeButton-" + messageId)[0].src;
 
-        const audio = document.createElement('audio');
-        audio.style.padding = '6px';
+            var dislikeMessageApiEndPoint = "DislikeMessage";
+            var dislikeImageToReplace = thumbDislikeHighlightImagePath;
+            var isDislikeHighlight = false;
+            if (dislikeButtonSource.indexOf('highlight') >= 0) {
 
-        const anchor = document.createElement('a');
-        anchor.setAttribute('href', blobUrl);
-        const now = new Date();
-        anchor.setAttribute(
-            'download',
-            `recording-${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDay().toString().padStart(2, '0')}--${now.getHours().toString().padStart(2, '0')}-${now.getMinutes().toString().padStart(2, '0')}-${now.getSeconds().toString().padStart(2, '0')}.webm`
-        );
-        audio.setAttribute('src', blobUrl);
-        audio.setAttribute('controls', 'controls');
-        audio.setAttribute('controlsList', 'nodownload');
-        audio.setAttribute('id', messageId);
+                isDislikeHighlight = true;
 
-        div.appendChild(audio);
-        div.appendChild(anchor);
-        div.style.display = "none"; // Hide audio player as we don't need to display it to the user. It will be played using a audio icon available next to text message
-        $('#message-list').append(div);
-
-    }
-
-    const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
-        const byteCharacters = atob(b64Data);
-        const byteArrays = [];
-
-        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-            const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-            const byteNumbers = new Array(slice.length);
-            for (let i = 0; i < slice.length; i++) {
-                byteNumbers[i] = slice.charCodeAt(i);
+                dislikeMessageApiEndPoint = "UnlikeMessage";
+                dislikeImageToReplace = thumbDislikeImagePath;
             }
 
-            const byteArray = new Uint8Array(byteNumbers);
-            byteArrays.push(byteArray);
-        }
+            $.ajax({
+                type: "POST",
+                url: "/Home/" + dislikeMessageApiEndPoint,
+                dataType: "json",
+                data: { messageId: messageId },
+                success: function (data) {
+                    hideChatLoader();
 
-        const blob = new Blob(byteArrays, { type: contentType });
-        return blob;
-    }
+                    if (data.IsSuccess == true) {
 
-    function changeLanguage(language) {
+                        // Highlight the like button
+                        $("#thumbDisikeButton-" + messageId).attr("src", dislikeImageToReplace);
 
-        $.ajax({
-            type: "POST",
-            url: "/Home/ChangeLanguage",
-            dataType: "json",
-            data: { lang: language },
-            success: function (data) {
-                sessionStorage.setItem('languageChangedMessage', data.Message);
+                        // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+                        if (isDislikeHighlight) {
+                            $("#thumbDisikeButton-" + messageId).removeClass("feedback-animation");
+                        } else {
+                            $("#thumbDisikeButton-" + messageId).addClass("feedback-animation");
+                        }
 
-                location.reload();
-            },
-            failure: function (data) {
-                alert('oops something went wrong');
-            }
-        });
-    }
+                        $("#thumbLikeButton-" + messageId).removeClass("feedback-animation"); // Remove animation class from like button, to display animation when user hits the same button again
 
-    async function playAudio(audioId) {
-
-        const globalAudioElement = document.getElementById("globalAudioElement");
-
-        if (globalAudioElement.paused == false) {
-            globalAudioElement.pause();
-            globalAudioElement.currentTime = 0;
-
-            $('#playMessageImg-' + audioId).attr("src", "../Content/images/start-audio.svg");
-
-            var allAudioEls = $('audio');
-
-            allAudioEls.each(function () {
-
-                var a = $(this).get(0);
-
-                if (a.id != "globalAudioElement") {
-                    a.pause();
-                    a.currentTime = 0;
-                    $('#playMessageImg-' + a.id).attr("src", "../Content/images/start-audio.svg");
+                        $("#thumbLikeButton-" + messageId).attr("src", thumbLikeImagePath);
+                    }
+                },
+                failure: function (data) {
+                    hideChatLoader();
                 }
             });
+        }
 
-            if (previousPlayingMessageId != audioId) {
+        function scrollToBottom() {
+            $("#message-list").animate({ scrollTop: $('#message-list').prop("scrollHeight") }, 500);
+        }
+
+        function getLocalStream() {
+            window.addEventListener('DOMContentLoaded', () => {
+                if ('MediaRecorder' in window) {
+                    navigator.mediaDevices
+                        .getUserMedia({ video: false, audio: true })
+                        .then((stream) => {
+                            window.localStream = stream;
+                            window.localAudio.srcObject = stream;
+                            window.localAudio.autoplay = true;
+                        })
+                        .catch((err) => {
+                            console.error(`you got an error: ${err}`);
+                        });
+                }
+            });
+        }
+
+        function startRecording() {
+
+            var constraints = { audio: true, video: false }
+            /*
+                We're using the standard promise based getUserMedia()
+                https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+            */
+
+            navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+
+                /*
+                    create an audio context after getUserMedia is called
+                    sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
+                    the sampleRate defaults to the one set in your OS for your playback device
+
+                */
+                audioContext = new AudioContext();
+
+                /*  assign to gumStream for later use  */
+                gumStream = stream;
+
+                /* use the stream */
+                input = audioContext.createMediaStreamSource(stream);
+
+                /*
+                    Create the Recorder object and configure to record mono sound (1 channel)
+                    Recording 2 channels  will double the file size
+                */
+                rec = new Recorder(input, { numChannels: 1 })
+
+                //start the recording process
+                rec.record();
+
+            }).catch(function (err) {
+                console.log('stream error: ', err);
+            });
+        }
+
+        function stopRecording() {
+
+            //tell the recorder to stop the recording
+            rec.stop();
+
+            //stop microphone access
+            gumStream.getAudioTracks()[0].stop();
+
+            //create the wav blob and pass it on to createDownloadLink
+            rec.exportWAV(createDownloadLink);
+        }
+
+        function createDownloadLink(blob) {
+            var reader = new window.FileReader();
+            reader.readAsDataURL(blob);
+
+            reader.onloadend = function () {
+                base64 = reader.result;
+                base64 = base64.split(',')[1];
+                chatLoader();
+                scrollToBottom();
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/AskAudioQuestions",
+                    dataType: "json",
+                    data: { base64Question: base64 },
+                    success: function (data) {
+                        var message = "";
+                        hideChatLoader();
+
+                        loadAudioPlayer(blob, data.messageId);
+                        lastUserTypedMessageId = data.messageId;
+                        if (data.Text) {
+                            showUserRecordedMessageInTextBox(data.Text);
+                        }
+                        else if (data.Text !== null || data.Error !== null) {
+
+                            if (data.Text !== null) {
+                                message = data.Text;
+                                $(userQuestionTextBox).val(message);
+                                processChatBotResponse(data.Text, data.messgaeId, data.messageType, data.textInEnglish);
+                            } else if (data.Error !== null) {
+                                message = data.Error;
+                                processChatBotResponse(message, data.messageId, data.messageType);
+                            }
+                        } else {
+                            var response = "<div class='message left system-msg-left'><img src='../Content/images/MOA_logo.png' alt='avatar 1' style='width: 45px; height: 100%;'><div class='message-content ms-2'>" + message + "</div></div>";
+                            $('#message-list').append(response.replace(/\n/g, "<br>"));
+                            $(userQuestionTextBox).val('');
+                            $(userQuestionTextBox).trigger('change');
+                        }
+
+                        scrollToBottom();
+                    },
+                    failure: function (data) {
+                        hideChatLoader();
+                    }
+                });
+            }
+        }
+
+        function loadAudioPlayer(blob, messageId, alignment = 'right') {
+            const blobUrl = URL.createObjectURL(blob);
+            const div = document.createElement('div');
+            div.className = "message " + alignment;
+
+            // Avatar image
+            if (alignment == 'left') {
+                div.className += " system-msg-left";
+                const avatarImg = document.createElement('img');
+                avatarImg.src = chatbotLogoImagePath;
+                avatarImg.alt = 'avatar 1';
+                avatarImg.className = 'avatar-img';
+                avatarImg.style.width = '45px';
+                avatarImg.style.width = '100%';
+                div.appendChild(avatarImg);
+            }
+            else {
+            }
+
+            const audio = document.createElement('audio');
+            audio.style.padding = '6px';
+
+            const anchor = document.createElement('a');
+            anchor.setAttribute('href', blobUrl);
+            const now = new Date();
+            anchor.setAttribute(
+                'download',
+                `recording-${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDay().toString().padStart(2, '0')}--${now.getHours().toString().padStart(2, '0')}-${now.getMinutes().toString().padStart(2, '0')}-${now.getSeconds().toString().padStart(2, '0')}.webm`
+            );
+            audio.setAttribute('src', blobUrl);
+            audio.setAttribute('controls', 'controls');
+            audio.setAttribute('controlsList', 'nodownload');
+            audio.setAttribute('id', messageId);
+
+            div.appendChild(audio);
+            div.appendChild(anchor);
+            div.style.display = "none"; // Hide audio player as we don't need to display it to the user. It will be played using a audio icon available next to text message
+            $('#message-list').append(div);
+
+        }
+
+        const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+            const byteCharacters = atob(b64Data);
+            const byteArrays = [];
+
+            for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                const byteNumbers = new Array(slice.length);
+                for (let i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+
+                const byteArray = new Uint8Array(byteNumbers);
+                byteArrays.push(byteArray);
+            }
+
+            const blob = new Blob(byteArrays, { type: contentType });
+            return blob;
+        }
+
+        function changeLanguage(language) {
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/ChangeLanguage",
+                dataType: "json",
+                data: { lang: language },
+                success: function (data) {
+                    sessionStorage.setItem('languageChangedMessage', data.Message);
+
+                    location.reload();
+                },
+                failure: function (data) {
+                    alert('oops something went wrong');
+                }
+            });
+        }
+
+        async function playAudio(audioId) {
+
+            const globalAudioElement = document.getElementById("globalAudioElement");
+
+            if (globalAudioElement.paused == false) {
+                globalAudioElement.pause();
+                globalAudioElement.currentTime = 0;
+
+                @* $('#audioProgressBar-' + audioId).hide();
+                $('#playMessageImg-' + audioId).show(); *@
+                $('#playMessageImg-' + audioId).attr("src", startAudioImagePath);
+
+                var allAudioEls = $('audio');
+
+                allAudioEls.each(function () {
+
+                    var a = $(this).get(0);
+
+                    if (a.id != "globalAudioElement") {
+                        a.pause();
+                        a.currentTime = 0;
+                        @* $('#audioProgressBar-' + audioId).hide();
+                        $('#playMessageImg-' + audioId).show(); *@
+                        $('#playMessageImg-' + a.id).attr("src", startAudioImagePath);
+                    }
+                });
+
+                if (previousPlayingMessageId != audioId) {
+                    globalAudioElement.src = document.getElementById(audioId).src;
+                    globalAudioElement.play();
+                    previousPlayingMessageId = audioId;
+
+                    $('#playMessageImg-' + audioId).attr("src", stopAudioImagePath);
+                    // Show audio progressbar when audio is playing
+                    @* $('#playMessageImg-' + audioId).hide();
+                    $('#audioProgressBar-' + audioId).show(); *@
+
+                    globalAudioElement.onended = function () {
+                        previousPlayingMessageId = "";
+                        @* $('#audioProgressBar-' + audioId).hide();
+                        $('#playMessageImg-' + audioId).show(); *@
+                        $('#playMessageImg-' + audioId).attr("src", startAudioImagePath);
+                    };
+                }
+
+            } else {
+
+                var allAudioEls = $('audio');
+
+                allAudioEls.each(function () {
+
+                    var a = $(this).get(0);
+
+                    if (a.id != "globalAudioElement") {
+                        a.pause();
+                        a.currentTime = 0;
+
+                        @* $('#audioProgressBar-' + audioId).hide();
+                        $('#playMessageImg-' + audioId).show(); *@
+                        $('#playMessageImg-' + a.id).attr("src", startAudioImagePath);
+                    }
+                });
+
                 globalAudioElement.src = document.getElementById(audioId).src;
                 globalAudioElement.play();
                 previousPlayingMessageId = audioId;
 
-                $('#playMessageImg-' + audioId).attr("src", "../Content/images/stop-audio.svg");
+                    @* $('#playMessageImg-' + audioId).hide();
+                    $('#audioProgressBar-' + audioId).show(); *@
+                $('#playMessageImg-' + audioId).attr("src", stopAudioImagePath);
 
                 globalAudioElement.onended = function () {
                     previousPlayingMessageId = "";
-                    $('#playMessageImg-' + audioId).attr("src", "../Content/images/start-audio.svg");
+
+                    @* $('#audioProgressBar-' + audioId).hide();
+                    $('#playMessageImg-' + audioId).show(); *@
+                    $('#playMessageImg-' + audioId).attr("src", startAudioImagePath);
                 };
             }
+        }
 
-        } else {
+        /**
+        This messgae is used to change icon of play/pause audio.
+         */
+        function changePlayPauseMessageImg(messageId, showPlayIcon) {
+            const messgaeElementId = '#' + messageId;
+            if (showPlayIcon) {
+                $(messgaeElementId).attr("src", startAudioImagePath);
+            } else {
+                $(messgaeElementId).attr("src", stopAudioImagePath);
+            }
+        }
 
-            var allAudioEls = $('audio');
+        function restartSession() {
 
-            allAudioEls.each(function () {
-
-                var a = $(this).get(0);
-
-                if (a.id != "globalAudioElement") {
-                    a.pause();
-                    a.currentTime = 0;
-                    $('#playMessageImg-' + a.id).attr("src", "../Content/images/start-audio.svg");
+            scrollToBottom();
+            $.ajax({
+                type: "POST",
+                url: "/Home/Logout",
+                dataType: "json",
+                data: null,
+                success: function (data) {
+                    location.reload();
+                },
+                failure: function (data) {
                 }
             });
-
-            globalAudioElement.src = document.getElementById(audioId).src;
-            globalAudioElement.play();
-            previousPlayingMessageId = audioId;
-
-            $('#playMessageImg-' + audioId).attr("src", "../Content/images/stop-audio.svg");
-
-            globalAudioElement.onended = function () {
-                previousPlayingMessageId = "";
-                $('#playMessageImg-' + audioId).attr("src", "../Content/images/start-audio.svg");
-            };
         }
-    }
 
-    /**
-    This messgae is used to change icon of play/pause audio.
-     */
-    function changePlayPauseMessageImg(messageId, showPlayIcon) {
-        const messgaeElementId = '#' + messageId;
-        if (showPlayIcon) {
-            $(messgaeElementId).attr("src", "../Content/images/start-audio.svg");
-        } else {
-            $(messgaeElementId).attr("src", "../Content/images/stop-audio.svg");
+        function createGlobalAudioElement() {
+            const div = document.createElement('div');
+            div.className = "message left";
+
+            const audio = document.createElement('audio');
+            audio.style.padding = '6px';
+
+            audio.setAttribute('controls', 'controls');
+            audio.setAttribute('controlsList', 'nodownload');
+            audio.setAttribute('id', "globalAudioElement");
+
+            div.appendChild(audio);
+            div.style.display = "none"; // Hide audio player as we don't need to display it to the user. It will be played using a audio icon available next to text message
+            $('#message-list').append(div);
         }
-    }
 
-    function restartSession() {
 
-        scrollToBottom();
-        $.ajax({
-            type: "POST",
-            url: "/Home/Logout",
-            dataType: "json",
-            data: null,
-            success: function (data) {
-                location.reload();
-            },
-            failure: function (data) {
-            }
-        });
-    }
-
-    function createGlobalAudioElement() {
-        const div = document.createElement('div');
-        div.className = "message left";
-
-        const audio = document.createElement('audio');
-        audio.style.padding = '6px';
-
-        audio.setAttribute('controls', 'controls');
-        audio.setAttribute('controlsList', 'nodownload');
-        audio.setAttribute('id', "globalAudioElement");
-
-        div.appendChild(audio);
-        div.style.display = "none"; // Hide audio player as we don't need to display it to the user. It will be played using a audio icon available next to text message
-        $('#message-list').append(div);
-    }
 
 </script>
 

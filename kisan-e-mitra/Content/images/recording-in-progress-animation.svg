@@ -1,0 +1,5 @@
+<svg class="over" width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="32" cy="32" r="21" fill="none" stroke="#E91E63" stroke-width="2">
+<animate attributeType="CSS" attributeName="stroke-dasharray" from="1,254" to="247,56" dur="5s" repeatCount="indefinite" />
+</circle>
+</svg>

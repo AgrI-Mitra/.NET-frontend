@@ -2,9 +2,11 @@
 using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace KisanEMitra.Controllers
 {
@@ -44,9 +46,6 @@ namespace KisanEMitra.Controllers
             Manager.RemoveSessionID(context);
 
             Session.RemoveAll();
-
-            var defaultLanguage = LanguageManager.GetDefaultLanguage();
-            new LanguageManager().SetLanguage(defaultLanguage);
         }
         public async Task<ActionResult> Index()
         {
@@ -77,6 +76,7 @@ namespace KisanEMitra.Controllers
 
             var languageModel = GetSelectedLanguage();
             ViewBag.LanguageModel = languageModel;
+            ViewBag.PopularQuestions = GetPopularQuestions();
 
             await SetAudioBase64StringToViewBagAsync();
             return View();
@@ -129,7 +129,7 @@ namespace KisanEMitra.Controllers
             var userQueryBody = new UserQueryBody()
             {
                 Text = identifyID,
-                inputLanguage = GetSelectedLanguage().SelectedLanguage
+                inputLanguage = GetSelectedLanguage().SelectedLanguage.LanguageCultureCode
             };
 
             var responseBody = await AgrimitraService.IdentifyUser(userSessionID, userQueryBody);
@@ -146,7 +146,7 @@ namespace KisanEMitra.Controllers
             var userQueryBody = new UserQueryBody()
             {
                 Text = querstion,
-                inputLanguage = GetSelectedLanguage().SelectedLanguage
+                inputLanguage = GetSelectedLanguage().SelectedLanguage.LanguageCultureCode
             };
             var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
             if (responseBody == null)
@@ -203,10 +203,11 @@ namespace KisanEMitra.Controllers
                 });
             }
 
-            var responseBody = await BhashiniService.GetTextToSpeech(GetSelectedLanguage().SelectedLanguage, bhashiniApiInput);
+            var responseBody = await BhashiniService.GetTextToSpeech(GetSelectedLanguage().SelectedLanguage.LanguageCultureCode, bhashiniApiInput);
 
             var languageModel = GetSelectedLanguage();
             ViewBag.LanguageModel = languageModel;
+            ViewBag.PopularQuestions = GetPopularQuestions();
 
             return responseBody.audio;
         }
@@ -219,7 +220,7 @@ namespace KisanEMitra.Controllers
             var userQueryBody = new UserQueryBody()
             {
                 Media = new MediaQuery() { Category = "base64audio", Text = base64Question },
-                inputLanguage = GetSelectedLanguage().SelectedLanguage
+                inputLanguage = GetSelectedLanguage().SelectedLanguage.LanguageCultureCode
             };
             var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
             if (responseBody == null)
@@ -283,11 +284,11 @@ namespace KisanEMitra.Controllers
 
         private LanguageModel GetSelectedLanguage()
         {
-            string selectedLanguage;
+            string selectedLanguageCode;
             HttpCookie langCookie = Request.Cookies["culture"];
             if (langCookie != null)
             {
-                selectedLanguage = langCookie.Value;
+                selectedLanguageCode = langCookie.Value;
             }
             else
             {
@@ -295,20 +296,40 @@ namespace KisanEMitra.Controllers
                 var userLang = userLanguage != null ? userLanguage[0] : "";
                 if (userLang != "")
                 {
-                    selectedLanguage = userLang;
+                    selectedLanguageCode = userLang;
                 }
                 else
                 {
-                    selectedLanguage = LanguageManager.GetDefaultLanguage();
+                    selectedLanguageCode = LanguageManager.GetDefaultLanguage();
                 }
             }
 
+            var languaggesOrderedByPosition = LanguageManager.GetLanguagesOrderedByPosition();
+
             var languageModel = new LanguageModel
             {
-                Languages = new SelectList(LanguageManager.GetLanguagesOrderedByPosition(), "LanguageCultureName", "LanguageLabel"),
-                SelectedLanguage = selectedLanguage
+                SelectedLanguage = LanguageManager.GetLanguageDetailsByCode(selectedLanguageCode),
+                AvailableLanguages = languaggesOrderedByPosition
+
             };
             return languageModel;
+        }
+
+        private List<PopularQuestion> GetPopularQuestions()
+        {
+            var popularQuestions = new List<PopularQuestion>();
+
+            for (int i = 1; i < 5; i++)
+            {
+
+                popularQuestions.Add(new PopularQuestion
+                {
+                    PopularQuestionKey = "message.popular_question_" + i.ToString(),
+                    PopularQuestionValue = Resources.Resource.ResourceManager.GetString("message.popular_question_" + i.ToString()),
+                });
+            }
+
+            return popularQuestions;
         }
     }
 }

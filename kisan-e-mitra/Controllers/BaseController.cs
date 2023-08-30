@@ -1,6 +1,5 @@
 ﻿using KisanEMitra.Models;
 using System;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -22,11 +21,11 @@ namespace KisanEMitra.Controllers
                 Session["userSessionID"] = userSessionID ?? throw new Exception("Session is not created. Please try again later.");
             }
 
-            string selectedLanguage;
+            string selectedLanguageCode;
             HttpCookie langCookie = Request.Cookies["culture"];
             if (langCookie != null)
             {
-                selectedLanguage = langCookie.Value;
+                selectedLanguageCode = langCookie.Value;
             }
             else
             {
@@ -34,19 +33,22 @@ namespace KisanEMitra.Controllers
                 var userLang = userLanguage != null ? userLanguage[0] : "";
                 if (userLang != "")
                 {
-                    selectedLanguage = userLang;
+                    selectedLanguageCode = userLang;
                 }
                 else
                 {
-                    selectedLanguage = LanguageManager.GetDefaultLanguage();
+                    selectedLanguageCode = LanguageManager.GetDefaultLanguage();
                 }
             }
 
+            var languaggesOrderedByPosition = LanguageManager.GetLanguagesOrderedByPosition();
+
             var languageModel = new LanguageModel
             {
-                Languages = new SelectList(LanguageManager.GetLanguagesOrderedByPosition(), "LanguageCultureName", "LanguageLabel"),
-                SelectedLanguage = selectedLanguage
+                SelectedLanguage = LanguageManager.GetLanguageDetailsByCode(selectedLanguageCode),
+                AvailableLanguages = languaggesOrderedByPosition
             };
+
             ViewBag.languageModel = languageModel;
         }
     }
