@@ -413,7 +413,7 @@ svg.footer-svg-hover:hover {
   border-radius: 8px;
   border: 1px solid #ececf1;
   background: #fff;
-  padding-left: 10px;
+  padding: 0px 10px;
   height: 60px;
   font-size: 14px;
   font-weight: 500;
@@ -422,6 +422,7 @@ svg.footer-svg-hover:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  white-space: initial;
 }
 
 .query-messages-box {
