@@ -123,6 +123,7 @@ body {
   border-top: 1px solid #eae9e9;
   border-bottom: 1px solid #eae9e9;
   background: #f7f7f8;
+  transition: all 0.5s ease-in;
 }
 
 .message-input {
@@ -499,7 +500,7 @@ svg.footer-svg-hover:hover {
 }
 
 .input-container {
-  background-color: #fff;
+  background-color: #f7f7f8;
   border-radius: 0 0 50px 50px;
 }
 
