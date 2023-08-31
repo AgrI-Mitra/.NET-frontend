@@ -165,6 +165,10 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chatbot.css" />
+    <Content Include="Content\images\hand-thumbs-down-fill.svg" />
+    <Content Include="Content\images\hand-thumbs-down.svg" />
+    <Content Include="Content\images\hand-thumbs-up-fill.svg" />
+    <Content Include="Content\images\hand-thumbs-up.svg" />
     <Content Include="Content\images\recording-in-progress-background.svg" />
     <Content Include="Content\images\recording-in-progress-animation.svg" />
     <Content Include="Content\images\voice-recording-animation.svg" />
@@ -291,10 +295,6 @@
     <Content Include="Content\images\stop.gif" />
     <Content Include="Content\images\sun.svg" />
     <Content Include="Content\images\thumbs-up.svg" />
-    <Content Include="Content\images\thumb_dislike_highlight.svg" />
-    <Content Include="Content\images\thumb_dislike.svg" />
-    <Content Include="Content\images\thumb_like_highlight.svg" />
-    <Content Include="Content\images\thumb_like.svg" />
     <Content Include="Content\images\user-alt.svg" />
     <Content Include="Content\images\user-circle.svg" />
     <Content Include="Content\images\user.svg" />
