@@ -38,11 +38,11 @@
     </div>
 </div>
 <div class="input-container align-items-center justify-content-center p-3 p-md-4">
-    <div class="scroll-container d-flex flex-row">
+    <div class="scroll-container d-flex flex-row" id="popularQuestionsWrapper">
         <div class="query-messages-box">
             @foreach (var popularQuestion in popularQuestions)
             {
-                <div class="query-msg" onclick="showUserRecordedMessageInTextBox('@popularQuestion.PopularQuestionValue')">
+                <div class="query-msg" onclick="copyPopularQuestionInTextBox('@popularQuestion.PopularQuestionValue')">
                     <p>
                         @popularQuestion.PopularQuestionValue
                     </p>
@@ -340,6 +340,15 @@
                 });
             });
         });
+
+        function copyPopularQuestionInTextBox(message) {
+
+            // Hide popular questions now
+            $("#popularQuestionsWrapper").removeClass("d-flex");
+            $("#popularQuestionsWrapper").hide();
+            $("#message-list").addClass("without-popular-questions");
+            showUserRecordedMessageInTextBox(message);
+        }
 
         function showUserRecordedMessageInTextBox(message) {
             $(userQuestionTextBox).val(message);

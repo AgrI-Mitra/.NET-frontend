@@ -226,6 +226,6 @@ img.query-msg-send-icon {
 }
 
 #message-list.without-popular-questions{
-  height: calc(100vh - 260px);
-
+  height: calc(100vh - 300px);
+  transition: all 0.5s ease-in;
 }
