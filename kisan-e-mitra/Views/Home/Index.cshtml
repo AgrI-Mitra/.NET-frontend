@@ -850,6 +850,7 @@
 
                 if (previousPlayingMessageId != audioId) {
                     globalAudioElement.src = document.getElementById(audioId).src;
+                    globalAudioElement.playbackRate = 1.1;
                     globalAudioElement.play();
                     previousPlayingMessageId = audioId;
 
@@ -887,6 +888,7 @@
                 });
 
                 globalAudioElement.src = document.getElementById(audioId).src;
+                globalAudioElement.playbackRate = 1.1;
                 globalAudioElement.play();
                 previousPlayingMessageId = audioId;
 
