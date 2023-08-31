@@ -14,6 +14,8 @@ namespace kishan_bot.Models
 
         public string messageId { get; set; }
         public string messageType { get; set; }
+
+        public string placeholder { get; set; }
     }
 
     public class GenericApiResponse

@@ -1,15 +1,15 @@
 @{
     ViewBag.Title = Resources.Resource.label_title;
-    var welcomeNoteGreetingBase64 = ViewBag.AudioBase64Strings[0];
-    var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
+    //var welcomeNoteGreetingBase64 = ViewBag.AudioBase64Strings[0];
+    //var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
     var resendOtpTranslation = Resources.Resource.message_resend_otp;
     List<KisanEMitra.Models.LanguageInfo> availableLanguages = ViewBag?.LanguageModel?.AvailableLanguages;
     KisanEMitra.Models.LanguageInfo selectedLanguage = ViewBag?.LanguageModel?.SelectedLanguage;
     List<kishan_bot.Models.PopularQuestion> popularQuestions = ViewBag.PopularQuestions;
 }
 
-@Html.Hidden("welcome-greeting-message-base64", (object)welcomeNoteGreetingBase64.ToString())
-@Html.Hidden("language-change-greeting-message-base64", (object)languageChangeGreetingBase64.ToString())
+@*@Html.Hidden("welcome-greeting-message-base64", (object)welcomeNoteGreetingBase64.ToString())
+    @Html.Hidden("language-change-greeting-message-base64", (object)languageChangeGreetingBase64.ToString())*@
 @Html.Hidden("resend-otp-translation", (object)resendOtpTranslation.ToString())
 
 <div class="msg-scrollbar" id="message-list">
@@ -204,11 +204,8 @@
         let spanClosingHtmlContent = getClosingSpanHtmlContent();
         let closingDivHtmlContent = getClosingDivHtmlContent();
 
-        $(document).ready(function () {
 
-            createGlobalAudioElement();
-
-
+        function initWelcomeGreetingAudioConfig() {
             // Get welcoome note and language greeting text audio
             var textsToGetSpeech = [];
 
@@ -232,6 +229,17 @@
                     loadAudioPlayer(blob, currentBase64String.id, "left");
                 }
             }
+
+        }
+
+        $(document).ready(function () {
+
+            createGlobalAudioElement();
+
+            getWelcomeGreetingsAudio();
+
+
+            //initWelcomeGreetingAudioConfig();
 
             // Check if language change message is available, if available we need to show it to the user on page load.
             var languageChangedGreeting = sessionStorage.getItem('languageChangedMessage');
@@ -480,6 +488,8 @@
 
                     if (data.Text !== null || data.Error !== null) {
 
+                        changeInputPlaceholderValue(data.placeholder);
+                        
                         if (data.Text !== null) {
                             message = data.Text;
                             processChatBotResponse(data.Text, data.messageId, data.messageType, data.textInEnglish);
@@ -806,6 +816,41 @@
             }
         }
 
+        function getWelcomeGreetingsAudio() {
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/GetWelcomeGreetingsTextToSpeech",
+                dataType: "json",
+                success: function (data) {
+
+                    let welcomeGreetingIdsList = [
+                        "welcome-greeting-message-base64",
+                        "language-change-greeting-message-base64"
+                    ];
+
+                    for (var i = 0; i < data.Data.length; i++) {
+
+                        let currentData = data.Data[i];
+                        let inputElement = document.createElement("input");
+
+                        inputElement.id = welcomeGreetingIdsList[i];
+                        inputElement.value = currentData;
+                        inputElement.style.display = "none";
+
+                        $('#message-list').append(inputElement);
+
+                    }
+
+                    initWelcomeGreetingAudioConfig();
+
+                },
+                failure: function (data) {
+                    alert('oops something went wrong');
+                }
+            });
+        }
+
         function setAutoPlayOn(audioId) {
 
             sessionStorage.setItem('isAutoPlayEnabled', true);
@@ -960,6 +1005,10 @@
                 speech.onend = function (event) { myCallBack(); }
                 window.speechSynthesis.speak(speech);
         }, 500);
+    }
+
+    function changeInputPlaceholderValue(valuetoChange) {
+        $(userQuestionTextBox).attr("placeholder", valuetoChange != undefined ? valuetoChange : "Ask your question");
     }
 </script>
 

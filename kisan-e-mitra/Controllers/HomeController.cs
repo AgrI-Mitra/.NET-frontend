@@ -78,8 +78,35 @@ namespace KisanEMitra.Controllers
             ViewBag.LanguageModel = languageModel;
             ViewBag.PopularQuestions = GetPopularQuestions();
 
-            await SetAudioBase64StringToViewBagAsync();
+            //await SetAudioBase64StringToViewBagAsync();
             return View();
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech()
+        {
+
+            List<string> strings = new List<string>
+            {
+                Resources.Resource.message_welcome_greeting.ToString(),
+                Resources.Resource.message_language_changed_greeting.ToString()
+            };
+
+            var greetingMessagesAudioStrings = await TextToSpeach(strings);
+
+            // Load audio base64 strings to view bag so we can play audio using it
+            List<string> audioBase64Strings = new List<string>();
+            foreach (var item in greetingMessagesAudioStrings)
+            {
+                audioBase64Strings.Add(item.audioContent);
+            }
+
+            return Json(new AjaxActionResponse()
+            {
+                Message = "Success",
+                Data = audioBase64Strings,
+                Success = true
+            });
         }
 
         private async Task SetAudioBase64StringToViewBagAsync()
