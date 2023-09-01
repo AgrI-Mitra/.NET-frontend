@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,79 +26,79 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -119,341 +119,257 @@
   </resheader>
   <data name="error.disconnected" xml:space="preserve">
     <value>இணைக்கப்படவில்லை. மீண்டும் சேமிக்கவும் அல்லது முதன்முதலில் உள்நுழைக.</value>
-    <comment/>
   </data>
   <data name="error.empty_msg" xml:space="preserve">
     <value>அனுப்ப ஒரு செய்தியை அல்லது தேர்ந்தெடுத்த செய்தியை தட்டவும்.</value>
-    <comment/>
   </data>
   <data name="error.fail_to_submit" xml:space="preserve">
     <value>மதிப்பை சமர்ப்பிக்க தோல்வி.</value>
-    <comment/>
   </data>
   <data name="error.fail_to_submit_review" xml:space="preserve">
     <value>மதிப்பீட்டை சமர்ப்பிக்க தோல்வி.</value>
-    <comment/>
   </data>
   <data name="error.otp_not_sent" xml:space="preserve">
     <value>OTP அனுப்பப்படவில்லை</value>
-    <comment/>
   </data>
   <data name="error.sending_otp" xml:space="preserve">
     <value>OTP அனுப்புவதில் பிழை</value>
-    <comment/>
   </data>
   <data name="error.userid_not_registered" xml:space="preserve">
     <value>பயனர் பதிவு செய்யப்படவில்லை</value>
-    <comment/>
   </data>
   <data name="error.wait_new_chat" xml:space="preserve">
     <value>பதிலைக் காத்திருக்க தயவுசெய்து காத்திருங்கள்.</value>
-    <comment/>
   </data>
   <data name="label.back" xml:space="preserve">
     <value>பின் செல்ல</value>
-    <comment/>
   </data>
   <data name="label.chats" xml:space="preserve">
     <value>உரைகள்</value>
-    <comment/>
   </data>
   <data name="label.click" xml:space="preserve">
     <value>மீள்செல்லுக</value>
-    <comment/>
   </data>
   <data name="label.close" xml:space="preserve">
     <value>நெருக்கமான</value>
-    <comment/>
   </data>
   <data name="label.confirm_delete" xml:space="preserve">
     <value>இந்த உரையாடலை நீக்க விரும்புகிறீர்களா?</value>
-    <comment/>
   </data>
   <data name="label.continue" xml:space="preserve">
     <value>தொடர்க</value>
-    <comment/>
   </data>
   <data name="label.dial" xml:space="preserve">
     <value>டயல்</value>
-    <comment/>
   </data>
   <data name="label.examples" xml:space="preserve">
     <value>எடுத்துக்காட்டுகள்</value>
-    <comment/>
   </data>
   <data name="label.extension_worker" xml:space="preserve">
     <value>நீக்குநிரப்பியாளர்</value>
-    <comment/>
   </data>
   <data name="label.faqs" xml:space="preserve">
     <value>கேள்விகள்</value>
-    <comment/>
   </data>
   <data name="label.farmer" xml:space="preserve">
     <value>விவசாயி</value>
-    <comment/>
   </data>
   <data name="label.feedback" xml:space="preserve">
     <value>பின்னூட்டம்</value>
-    <comment/>
   </data>
   <data name="label.logout" xml:space="preserve">
     <value>வெளியேறு</value>
-    <comment/>
   </data>
   <data name="label.mobile_number" xml:space="preserve">
     <value>மொபைல் எண்</value>
-    <comment/>
   </data>
   <data name="label.more" xml:space="preserve">
     <value>மேலும்</value>
-    <comment/>
   </data>
   <data name="label.new_chat" xml:space="preserve">
     <value>புதிய உரை</value>
-    <comment/>
   </data>
   <data name="label.no_history" xml:space="preserve">
     <value>உரைகள் இல்லை</value>
-    <comment/>
   </data>
   <data name="label.popUpTitle" xml:space="preserve">
     <value>உங்கள் ஆதார் எண் / பயனாளி ஐடி / தொலைபேசி எண்ணை உள்ளிடவும்.</value>
-    <comment/>
   </data>
   <data name="label.popUpTitle2" xml:space="preserve">
     <value>ஆதாரின் கடைசி 4 இலக்கங்களை உள்ளிடவும்</value>
-    <comment/>
   </data>
   <data name="label.popUpTitle3" xml:space="preserve">
     <value>OTP ஐ உள்ளிடவும்</value>
-    <comment/>
   </data>
   <data name="label.profile" xml:space="preserve">
     <value>சுயவிபரம்</value>
-    <comment/>
   </data>
   <data name="label.search" xml:space="preserve">
     <value>தேடு</value>
-    <comment/>
   </data>
   <data name="label.send" xml:space="preserve">
     <value>அனுப்பு</value>
-    <comment/>
   </data>
   <data name="label.splash_title" xml:space="preserve">
     <value>Kisan e-Mitra</value>
-    <comment/>
   </data>
   <data name="label.submit" xml:space="preserve">
     <value>சமர்ப்பிக்கவும்</value>
-    <comment/>
   </data>
   <data name="label.submit_review" xml:space="preserve">
     <value>மதிப்பீட்டை சமர்ப்பிக்கவும்</value>
-    <comment/>
   </data>
   <data name="label.title" xml:space="preserve">
     <value>கிசான்-eமித்ரா</value>
-    <comment/>
   </data>
   <data name="label.welcome" xml:space="preserve">
     <value>வரவேற்பு</value>
-    <comment/>
   </data>
   <data name="message.ask_ur_question" xml:space="preserve">
     <value>உங்கள் கேள்வியை கேட்கவும்</value>
-    <comment/>
   </data>
   <data name="message.cannot_answer_again" xml:space="preserve">
     <value>மீண்டும் பதில் கொடுக்க முடியாது</value>
-    <comment/>
   </data>
   <data name="message.coming_soon" xml:space="preserve">
     <value>விரைவில் வருகிறது!</value>
-    <comment/>
   </data>
   <data name="message.coming_soon_description" xml:space="preserve">
     <value>இந்த அம்சத்தை மிகுந்த நேரத்தில் துவக்கப்படுத்துவோம். காத்திருங்கள்!</value>
-    <comment/>
   </data>
   <data name="message.dialer_popup" xml:space="preserve">
     <value>நிகழ்வாக்கத்தைப் பெற அனைத்து ஒரு அமா கிருஷி நபருடனும் பேச முடியும்</value>
-    <comment/>
   </data>
   <data name="message.dial_description" xml:space="preserve">
     <value>கால் மையத்துடன் இணைக்க</value>
-    <comment/>
   </data>
   <data name="message.didnt_receive" xml:space="preserve">
     <value>OTP பெறவில்லையா?</value>
-    <comment/>
   </data>
   <data name="message.down_time_retry" xml:space="preserve">
     <value>முயலாமல் நேரமாக முயற்சிக்கவும்</value>
-    <comment/>
   </data>
   <data name="message.enter_mobile" xml:space="preserve">
     <value>மொபைல் எண் உள்ளிடவும்</value>
-    <comment/>
   </data>
   <data name="message.example_ques_one" xml:space="preserve">
     <value>என் பணம் எங்கே?</value>
-    <comment/>
   </data>
   <data name="message.example_ques_three" xml:space="preserve">
     <value>எனது பணத்தைப் பெற எவருடன் பேச வேண்டும்?</value>
-    <comment/>
   </data>
   <data name="message.example_ques_two" xml:space="preserve">
     <value>எனது விண்ணப்பத்தின் நிலை என்ன?</value>
-    <comment/>
   </data>
   <data name="message.helpful" xml:space="preserve">
     <value>இது பயனுள்ளதானா?</value>
-    <comment/>
   </data>
   <data name="message.invalid_mobile" xml:space="preserve">
     <value>10 இலக்க எண் உள்ளிடுக!</value>
-    <comment/>
   </data>
   <data name="message.invalid_otp" xml:space="preserve">
     <value>தவறான OTP</value>
-    <comment/>
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>மொழியைத் தேர்ந்தெடுத்ததற்கு நன்றி.&#xD;&#xD;&#xD;&#xD;
-அன்புள்ள பயனாளி,&#xD;&#xD;&#xD;&#xD;
+    <value>மொழியைத் தேர்ந்தெடுத்ததற்கு நன்றி.
+அன்புள்ள பயனாளி,
 உங்கள் கேள்வியைத் தட்டச்சு செய்க அல்லது MIC பொத்தானைப் பயன்படுத்தி பேசுங்கள்.</value>
-    <comment/>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>இன்னும் பதிவு செய்யவில்லையா?</value>
-    <comment/>
   </data>
   <data name="message.no_history" xml:space="preserve">
     <value>நீங்கள் உரையாடல் வரலாற்றை இங்கே பெறுவீர்கள்</value>
-    <comment/>
   </data>
   <data name="message.otp_message" xml:space="preserve">
     <value>ஒரு முதலீடு கோப்பை இப்போது இப்பொழுதுபோன்ற</value>
-    <comment/>
   </data>
   <data name="message.otp_not_sent" xml:space="preserve">
     <value>OTP அனுப்பப்படவில்லை</value>
-    <comment/>
   </data>
   <data name="message.otp_sent_again" xml:space="preserve">
     <value>OTP மீண்டும் அனுப்பப்பட்டது</value>
-    <comment/>
   </data>
   <data name="message.otp_verification" xml:space="preserve">
     <value>OTP சரிபார்ப்பு</value>
-    <comment/>
   </data>
   <data name="message.rating" xml:space="preserve">
     <value>இது பயனுள்ளதானா?</value>
-    <comment/>
   </data>
   <data name="message.rating_description" xml:space="preserve">
     <value>மதிப்பைப் பதிவு செய்ய ஒரு நடைபெயரை தட்டவும்</value>
-    <comment/>
   </data>
   <data name="message.rating_submitted" xml:space="preserve">
     <value>மதிப்பிடப்பட்டது!</value>
-    <comment/>
   </data>
   <data name="message.recorder_error" xml:space="preserve">
     <value>மன்னிக்கவும், தற்போது உங்கள் விண்ணப்பத்தை செயலாக்க ஒரு பிரச்சினை ஏற்படுகின்றது. தயவுசெய்து பின்னர் மீண்டும் முயற்சிக்கவும்.</value>
-    <comment/>
   </data>
   <data name="message.recorder_wait" xml:space="preserve">
     <value>தயவுசெய்து காத்திருங்கள், உங்கள் கேட்டுக்கொள்ளப்படுகின்ற விண்ணப்பத்தை செயலாக்குகிறோம்...</value>
-    <comment/>
   </data>
   <data name="message.register_at_krushak" xml:space="preserve">
     <value>கிருஷக் ஒரிச்சாவியில் பதிவு செய்யவும்</value>
-    <comment/>
   </data>
   <data name="message.register_message" xml:space="preserve">
     <value>ஏதாவது முன்னரே பதிவு செய்து கொள்ள வேண்டும் எனில் உங்கள் மொபைல் எண்ணைப் பயன்படுத்தவும்.</value>
-    <comment/>
   </data>
   <data name="message.resend_again" xml:space="preserve">
     <value>மீண்டும் அனுப்புக</value>
-    <comment/>
   </data>
   <data name="message.resend_otp" xml:space="preserve">
     <value>மீண்டும் ஒரு முறை கடவுச்சொல்</value>
-    <comment/>
   </data>
   <data name="message.retry" xml:space="preserve">
     <value>மீண்டும் முயற்சிக்கவும்.</value>
-    <comment/>
   </data>
   <data name="message.review" xml:space="preserve">
     <value>உங்கள் மதிப்பை எழுதவும் (விருப்பத்தைத் தவிர்க்கவும்)</value>
-    <comment/>
   </data>
   <data name="message.review_description" xml:space="preserve">
     <value>உங்கள் அனுபவத்தின் பின்னூட்டத்தை தயவுகூர்ந்து எழுதுங்கள்.</value>
-    <comment/>
   </data>
   <data name="message.review_submitted" xml:space="preserve">
     <value>மதிப்பீடு சமர்ப்பிக்கப்பட்டது!</value>
-    <comment/>
   </data>
   <data name="message.socket_disconnect_msg" xml:space="preserve">
     <value>மீண்டும் இணைக்க எப்போதும்.</value>
-    <comment/>
   </data>
   <data name="message.taking_longer" xml:space="preserve">
     <value>தயவு செய்து காத்திருங்கள், சர்வர்கள் மாதிரி நேரம் பெரிதாக எடுக்கின்றன.</value>
-    <comment/>
   </data>
   <data name="message.temporarily_down" xml:space="preserve">
     <value>எங்கள் தற்போது தற்போது கீழே இருக்கின்றீர்கள்</value>
-    <comment/>
   </data>
   <data name="message.temporarily_down_description" xml:space="preserve">
     <value>நாங்கள் தற்போது உயர்ந்த பயனர் மண்ணில் அனுப்பவும் பொறுப்பாக உள்ளீர்கள், சிறிய நேரத்திற்குப் பிறகு மீண்டும் உள்நுழைக.</value>
-    <comment/>
   </data>
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>OTP மீண்டும் அனுப்புவதற்கு தயாராக இருக்கவும்</value>
-    <comment/>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>கிசான்-eமித்ராவுக்கு வருக! நான் உங்கள் தனிப்பட்ட உதவியாளர். நான் உங்களுக்கு எவ்வாறு உதவ முடியும் என்பதை எனக்குத் தெரியப்படுத்துங்கள்?&#xD;&#xD;&#xD;&#xD;
+    <value>கிசான்-eமித்ராவுக்கு வருக! நான் உங்கள் தனிப்பட்ட உதவியாளர். நான் உங்களுக்கு எவ்வாறு உதவ முடியும் என்பதை எனக்குத் தெரியப்படுத்துங்கள்?
 &lt;br&gt;நீங்கள் விரும்பும் மொழியைத் தேர்ந்தெடுக்கலாம்.</value>
-    <comment/>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>பதிலை விருப்பத்தை அகற்றுகின்றீர்கள் என்பதை வெற்றிகரமாக அமைத்துக் கொண்டீர்கள்</value>
-    <comment/>
   </data>
   <data name="toast.reaction_like" xml:space="preserve">
     <value>பதிலை விரும்புகின்றீர்கள் என்பதை வெற்றிகரமாக அமைத்துக் கொண்டீர்கள்</value>
-    <comment/>
   </data>
   <data name="toast.reaction_reset" xml:space="preserve">
     <value>பதிலை நீக்கி வைத்துக் கொண்டீர்கள்</value>
-    <comment/>
   </data>
   <data name="message.popular_question_1" xml:space="preserve">
     <value>எனது கடைசித் தவணைத் தொகையை நான் பெறவில்லை.</value>
-    <comment> </comment>
   </data>
   <data name="message.popular_question_2" xml:space="preserve">
     <value>எனது PM கிசான் கணக்கின் நிலையைக் கூறுங்கள்</value>
-    <comment> </comment>
   </data>
   <data name="message.popular_question_3" xml:space="preserve">
-    <value>எனது வங்கி கணக்கை எனது ஆதாருடன் இணைப்பது எப்படி</value>
-    <comment> </comment>
+    <value>எனது வங்கிக் கணக்கை எனது ஆதார் எண்ணுடன் இணைப்பது எப்படி?</value>
   </data>
   <data name="message.popular_question_4" xml:space="preserve">
     <value>நான் ஏன் தகுதியான பயனாளியாக இல்லை?</value>
-    <comment> </comment>
   </data>
 </root>

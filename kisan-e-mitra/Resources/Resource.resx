@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!--
-    Microsoft ResX Schema
-
+  <!-- 
+    Microsoft ResX Schema 
+    
     Version 2.0
-
-    The primary goals of this format is to allow a simple XML format
-    that is mostly human readable. The generation and parsing of the
-    various data types are done through the TypeConverter classes
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
     associated with the data types.
-
+    
     Example:
-
+    
     ... ado.net/XML headers & schema ...
     <resheader name="resmimetype">text/microsoft-resx</resheader>
     <resheader name="version">2.0</resheader>
@@ -26,79 +26,79 @@
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
-
-    There are any number of "resheader" rows that contain simple
+                
+    There are any number of "resheader" rows that contain simple 
     name/value pairs.
-
-    Each data row contains a name, and value. The row also contains a
-    type or mimetype. Type corresponds to a .NET class that support
-    text/value conversion through the TypeConverter architecture.
-    Classes that don't support this are serialized and stored with the
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
     mimetype set.
-
-    The mimetype is used for serialized objects, and tells the
-    ResXResourceReader how to depersist the object. This is currently not
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
     extensible. For a given mimetype the value must be set accordingly:
-
-    Note - application/x-microsoft.net.object.binary.base64 is the format
-    that the ResXResourceWriter will generate, however the reader can
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
     read any of the formats listed below.
-
+    
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
-
+    
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with
+    value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array
+    value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -119,341 +119,257 @@
   </resheader>
   <data name="error.disconnected" xml:space="preserve">
     <value>You are disconnected. Please refresh or login again.</value>
-    <comment/>
   </data>
   <data name="error.empty_msg" xml:space="preserve">
     <value>Please type or select a message to send.</value>
-    <comment/>
   </data>
   <data name="error.fail_to_submit" xml:space="preserve">
     <value>Failed to submit rating.</value>
-    <comment/>
   </data>
   <data name="error.fail_to_submit_review" xml:space="preserve">
     <value>Failed to submit review.</value>
-    <comment/>
   </data>
   <data name="error.otp_not_sent" xml:space="preserve">
     <value>OTP not sent</value>
-    <comment/>
   </data>
   <data name="error.sending_otp" xml:space="preserve">
     <value>Error sending OTP</value>
-    <comment/>
   </data>
   <data name="error.userid_not_registered" xml:space="preserve">
     <value>UserID not registered.</value>
-    <comment/>
   </data>
   <data name="error.wait_new_chat" xml:space="preserve">
     <value>Please wait for reply.</value>
-    <comment/>
   </data>
   <data name="label.back" xml:space="preserve">
     <value>Back</value>
-    <comment/>
   </data>
   <data name="label.chats" xml:space="preserve">
     <value>Chats</value>
-    <comment/>
   </data>
   <data name="label.click" xml:space="preserve">
     <value>Reload</value>
-    <comment/>
   </data>
   <data name="label.close" xml:space="preserve">
     <value>Close</value>
-    <comment/>
   </data>
   <data name="label.confirm_delete" xml:space="preserve">
     <value>Are you sure you want to delete this conversation?</value>
-    <comment/>
   </data>
   <data name="label.continue" xml:space="preserve">
     <value>Continue</value>
-    <comment/>
   </data>
   <data name="label.dial" xml:space="preserve">
     <value>Dial</value>
-    <comment/>
   </data>
   <data name="label.examples" xml:space="preserve">
     <value>Examples</value>
-    <comment/>
   </data>
   <data name="label.extension_worker" xml:space="preserve">
     <value>Extension Worker</value>
-    <comment/>
   </data>
   <data name="label.faqs" xml:space="preserve">
     <value>FAQs</value>
-    <comment/>
   </data>
   <data name="label.farmer" xml:space="preserve">
     <value>Farmer</value>
-    <comment/>
   </data>
   <data name="label.feedback" xml:space="preserve">
     <value>Feedback</value>
-    <comment/>
   </data>
   <data name="label.logout" xml:space="preserve">
     <value>Logout</value>
-    <comment/>
   </data>
   <data name="label.mobile_number" xml:space="preserve">
     <value>Mobile Number</value>
-    <comment/>
   </data>
   <data name="label.more" xml:space="preserve">
     <value>More</value>
-    <comment/>
   </data>
   <data name="label.new_chat" xml:space="preserve">
     <value>New chat</value>
-    <comment/>
   </data>
   <data name="label.no_history" xml:space="preserve">
     <value>No Chats</value>
-    <comment/>
   </data>
   <data name="label.popUpTitle" xml:space="preserve">
     <value>Dear Beneficiary, Thank for reaching out to us with your query. In order to provide you with the correct resolution, we kindly request you to provide us with your Aadhaar Number / PM KISAN ID / Phone no.</value>
-    <comment/>
   </data>
   <data name="label.popUpTitle2" xml:space="preserve">
     <value>Enter your last 4 digits of Aadhaar</value>
-    <comment/>
   </data>
   <data name="label.popUpTitle3" xml:space="preserve">
     <value>Dear Beneficiary, request you to kindly enter the OTP that has been received by you.</value>
-    <comment/>
   </data>
   <data name="label.profile" xml:space="preserve">
     <value>Profile</value>
-    <comment/>
   </data>
   <data name="label.search" xml:space="preserve">
     <value>Search</value>
-    <comment/>
   </data>
   <data name="label.send" xml:space="preserve">
     <value>Send</value>
-    <comment/>
   </data>
   <data name="label.splash_title" xml:space="preserve">
     <value>Kisan e-Mitra</value>
-    <comment/>
   </data>
   <data name="label.submit" xml:space="preserve">
     <value>Submit</value>
-    <comment/>
   </data>
   <data name="label.submit_review" xml:space="preserve">
     <value>Submit Review</value>
-    <comment/>
   </data>
   <data name="label.title" xml:space="preserve">
     <value>Kisan-eMitra</value>
-    <comment/>
   </data>
   <data name="label.welcome" xml:space="preserve">
     <value>Welcome</value>
-    <comment/>
   </data>
   <data name="message.ask_ur_question" xml:space="preserve">
     <value>Ask Your Question</value>
-    <comment/>
   </data>
   <data name="message.cannot_answer_again" xml:space="preserve">
     <value>Cannot answer again</value>
-    <comment/>
   </data>
   <data name="message.coming_soon" xml:space="preserve">
     <value>Coming Soon!</value>
-    <comment/>
   </data>
   <data name="message.coming_soon_description" xml:space="preserve">
     <value>We are going to launch this feature very soon. Stay tuned!</value>
-    <comment/>
   </data>
   <data name="message.dialer_popup" xml:space="preserve">
     <value>You may speak to an Ama Krushi expert to get a satisfactory response</value>
-    <comment/>
   </data>
   <data name="message.dial_description" xml:space="preserve">
     <value>To connect with call centre</value>
-    <comment/>
   </data>
   <data name="message.didnt_receive" xml:space="preserve">
     <value>Didn't receive the OTP?</value>
-    <comment/>
   </data>
   <data name="message.down_time_retry" xml:space="preserve">
     <value>Retry</value>
-    <comment/>
   </data>
   <data name="message.enter_mobile" xml:space="preserve">
     <value>Enter Mobile Number</value>
-    <comment/>
   </data>
   <data name="message.example_ques_one" xml:space="preserve">
     <value>Where is my money?</value>
-    <comment/>
   </data>
   <data name="message.example_ques_three" xml:space="preserve">
     <value>Whom do I need to speak to in order to get my money?</value>
-    <comment/>
   </data>
   <data name="message.example_ques_two" xml:space="preserve">
     <value>What is the status of my application?</value>
-    <comment/>
   </data>
   <data name="message.helpful" xml:space="preserve">
     <value>Was this helpful?</value>
-    <comment/>
   </data>
   <data name="message.invalid_mobile" xml:space="preserve">
     <value>Enter a 10 digit number!</value>
-    <comment/>
   </data>
   <data name="message.invalid_otp" xml:space="preserve">
     <value>Invalid Otp</value>
-    <comment/>
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>Thank you for selecting the language.&#xD;&#xD;&#xD;&#xD;
-Dear Beneficiary,&#xD;&#xD;&#xD;&#xD;
+    <value>Thank you for selecting the language.
+Dear Beneficiary,
 Type your question or speak using the mic button.</value>
-    <comment/>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>Not registered yet ?</value>
-    <comment/>
   </data>
   <data name="message.no_history" xml:space="preserve">
     <value>Your Chat History with AI will come here</value>
-    <comment/>
   </data>
   <data name="message.otp_message" xml:space="preserve">
     <value>We will send you a one time password on this</value>
-    <comment/>
   </data>
   <data name="message.otp_not_sent" xml:space="preserve">
     <value>Otp not sent</value>
-    <comment/>
   </data>
   <data name="message.otp_sent_again" xml:space="preserve">
     <value>OTP sent again</value>
-    <comment/>
   </data>
   <data name="message.otp_verification" xml:space="preserve">
     <value> OTP Verification</value>
-    <comment/>
   </data>
   <data name="message.rating" xml:space="preserve">
     <value>Did you find this useful?</value>
-    <comment/>
   </data>
   <data name="message.rating_description" xml:space="preserve">
     <value>Tap a star to rate</value>
-    <comment/>
   </data>
   <data name="message.rating_submitted" xml:space="preserve">
     <value>Rating Submitted!</value>
-    <comment/>
   </data>
   <data name="message.recorder_error" xml:space="preserve">
     <value>Sorry, there is an issue processing your request at the moment. Please try again later.</value>
-    <comment/>
   </data>
   <data name="message.recorder_wait" xml:space="preserve">
     <value>Please wait while we process your request...</value>
-    <comment/>
   </data>
   <data name="message.register_at_krushak" xml:space="preserve">
     <value>Register at Krushak Odisha</value>
-    <comment/>
   </data>
   <data name="message.register_message" xml:space="preserve">
     <value>If you are already registered then use your mobile number to login.</value>
-    <comment/>
   </data>
   <data name="message.resend_again" xml:space="preserve">
     <value>Resend again</value>
-    <comment/>
   </data>
   <data name="message.resend_otp" xml:space="preserve">
     <value>Resend One Time Password</value>
-    <comment/>
   </data>
   <data name="message.retry" xml:space="preserve">
     <value>Please retry.</value>
-    <comment/>
   </data>
   <data name="message.review" xml:space="preserve">
     <value>Write your review (optional)</value>
-    <comment/>
   </data>
   <data name="message.review_description" xml:space="preserve">
     <value>Please write your experience's feedback.</value>
-    <comment/>
   </data>
   <data name="message.review_submitted" xml:space="preserve">
     <value>Review Submitted!</value>
-    <comment/>
   </data>
   <data name="message.socket_disconnect_msg" xml:space="preserve">
     <value>to connect again.</value>
-    <comment/>
   </data>
   <data name="message.taking_longer" xml:space="preserve">
     <value>Please wait, servers are taking longer than usual.</value>
-    <comment/>
   </data>
   <data name="message.temporarily_down" xml:space="preserve">
     <value>We're temporarily down</value>
-    <comment/>
   </data>
   <data name="message.temporarily_down_description" xml:space="preserve">
     <value>We are experiencing high user volume at the moment, please try logging in after some time</value>
-    <comment/>
   </data>
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>Please wait before resending OTP</value>
-    <comment/>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you? &#xD;&#xD;&#xD;&#xD;
+    <value>Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you? 
 &lt;br&gt;You may select your preferred language.</value>
-    <comment/>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>Successfully disliked the response</value>
-    <comment/>
   </data>
   <data name="toast.reaction_like" xml:space="preserve">
     <value>Successfully liked the response</value>
-    <comment/>
   </data>
   <data name="toast.reaction_reset" xml:space="preserve">
     <value>Successfully removed the response</value>
-    <comment/>
   </data>
   <data name="message.popular_question_1" xml:space="preserve">
     <value>I have not received my last instalment payment.</value>
-    <comment> </comment>
   </data>
   <data name="message.popular_question_2" xml:space="preserve">
     <value>Tell me the status of my PM Kisan account</value>
-    <comment> </comment>
   </data>
   <data name="message.popular_question_3" xml:space="preserve">
-    <value>How to link my bank account with my Aadhar</value>
-    <comment> </comment>
+    <value>How to link my bank account with my Aadhaar number?</value>
   </data>
   <data name="message.popular_question_4" xml:space="preserve">
-    <value>Why I am not an eligible beneficiary?</value>
-    <comment> </comment>
+    <value>Why am I not an eligible beneficiary?</value>
   </data>
 </root>

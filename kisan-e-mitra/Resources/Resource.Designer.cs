@@ -520,8 +520,8 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thank you for selecting the language.
-        ///Dear Beneficiary,
+        ///   Looks up a localized string similar to Thank you for selecting the language.        ///        ///        ///        ///
+        ///Dear Beneficiary,        ///        ///        ///        ///
         ///Type your question or speak using the mic button..
         /// </summary>
         public static string message_language_changed_greeting {
@@ -581,6 +581,42 @@ namespace Resources {
         public static string message_otp_verification {
             get {
                 return ResourceManager.GetString("message.otp_verification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to I have not received my last instalment payment..
+        /// </summary>
+        public static string message_popular_question_1 {
+            get {
+                return ResourceManager.GetString("message.popular_question_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell me the status of my PM Kisan account.
+        /// </summary>
+        public static string message_popular_question_2 {
+            get {
+                return ResourceManager.GetString("message.popular_question_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How to link my bank account with my Aadhaar number?.
+        /// </summary>
+        public static string message_popular_question_3 {
+            get {
+                return ResourceManager.GetString("message.popular_question_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Why am I not an eligible beneficiary?.
+        /// </summary>
+        public static string message_popular_question_4 {
+            get {
+                return ResourceManager.GetString("message.popular_question_4", resourceCulture);
             }
         }
         
@@ -747,7 +783,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you? 
+        ///   Looks up a localized string similar to Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you?         ///        ///        ///        ///
         ///&lt;br&gt;You may select your preferred language..
         /// </summary>
         public static string message_welcome_greeting {
