@@ -229,3 +229,12 @@ img.query-msg-send-icon {
   height: calc(100vh - 300px);
   transition: all 0.5s ease-in;
 }
+
+.chatbot-message-action-buttons {
+    width: 36px;
+    height: 100%;
+}
+
+.kisan-e-mitra-logo {
+    height: 48px;
+}

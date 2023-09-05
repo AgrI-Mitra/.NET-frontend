@@ -299,9 +299,12 @@
     <Content Include="Content\images\user-circle.svg" />
     <Content Include="Content\images\user.svg" />
     <Content Include="Content\js\chatbot.js" />
+    <Content Include="Content\js\feedback.js" />
     <Content Include="Content\js\languageDropDown.js" />
     <Content Include="Content\js\recorder.js" />
+    <Content Include="Content\js\splash.js" />
     <Content Include="Content\responsive.css" />
+    <Content Include="Content\splash.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

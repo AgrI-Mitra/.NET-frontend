@@ -82,6 +82,41 @@ namespace KisanEMitra.Controllers
             return View();
         }
 
+        private List<CommonKeyValue> GetTranslations()
+        {
+
+            List<CommonKeyValue> translations = new List<CommonKeyValue>
+            {
+                new CommonKeyValue {
+                    Key = "message_welcome_greeting",
+                    Value = Resources.Resource.message_welcome_greeting.ToString()
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_ask_ur_question",
+                    Value = Resources.Resource.message_ask_ur_question.ToString()
+                },
+                new CommonKeyValue
+                {
+                    Key = "label_title",
+                    Value = Resources.Resource.label_title.ToString()
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_language_changed_greeting",
+                    Value = Resources.Resource.message_language_changed_greeting.ToString()
+                }
+            };
+
+            return translations;
+            //return Json(new AjaxActionResponse()
+            //{
+            //    Message = "Success",
+            //    Data = translations,
+            //    Success = true
+            //});
+        }
+
         [HttpPost]
         public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech()
         {
@@ -95,11 +130,30 @@ namespace KisanEMitra.Controllers
             var greetingMessagesAudioStrings = await TextToSpeach(strings);
 
             // Load audio base64 strings to view bag so we can play audio using it
-            List<string> audioBase64Strings = new List<string>();
-            foreach (var item in greetingMessagesAudioStrings)
+            List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
+            //foreach (var item in greetingMessagesAudioStrings)
+            //{
+            //    audioBase64Strings.Add(new CommonKeyValue
+            //    {
+            //        Key = "message_welcome_greeting",
+            //        Value = item.audioContent.ToString()
+            //    });
+            //}
+
+
+            var selectedLanguage = GetSelectedLanguage().SelectedLanguage;
+
+            audioBase64Strings.Add(new CommonKeyValue
             {
-                audioBase64Strings.Add(item.audioContent);
-            }
+                Key = "welcome-greeting-message-base64-" + selectedLanguage.LanguageCultureCode,
+                Value = greetingMessagesAudioStrings[0].audioContent.ToString()
+            });
+
+            audioBase64Strings.Add(new CommonKeyValue
+            {
+                Key = "language-change-greeting-message-base64-" + selectedLanguage.LanguageCultureCode,
+                Value = greetingMessagesAudioStrings[1].audioContent.ToString()
+            });
 
             return Json(new AjaxActionResponse()
             {
@@ -134,9 +188,11 @@ namespace KisanEMitra.Controllers
         {
             new LanguageManager().SetLanguage(lang);
 
+            var translationsToUpdateInUI = GetTranslations();
             return Json(new AjaxActionResponse()
             {
                 Message = Resources.Resource.message_language_changed_greeting.ToString(),
+                Data = new { Translations = translationsToUpdateInUI, PopularQuestions = GetPopularQuestions() },
                 Success = true
             });
         }
@@ -176,6 +232,9 @@ namespace KisanEMitra.Controllers
                 inputLanguage = GetSelectedLanguage().SelectedLanguage.LanguageCultureCode
             };
             var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
+
+            // Check if response is the final answer by bot, then we need to set timeout expiring after 1 minute.
+
             if (responseBody == null)
                 return Json(null);
 

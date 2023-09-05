@@ -17,4 +17,10 @@ namespace kishan_bot.Models
         public string PopularQuestionKey { get; set; }
         public string PopularQuestionValue { get; set; }
     }
+
+    public class CommonKeyValue
+    {
+        public string Key { get; set; }
+        public string Value { get; set; }
+    }
 }

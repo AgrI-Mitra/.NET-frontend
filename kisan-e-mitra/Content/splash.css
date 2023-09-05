@@ -1,0 +1,12 @@
+﻿body.splash-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 98vh;
+    flex-direction: column;
+    background: #C6F6D5;
+}
+
+h1.splash-header {
+    color: #219653;
+}
