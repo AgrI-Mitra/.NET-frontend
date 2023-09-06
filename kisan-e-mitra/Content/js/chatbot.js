@@ -1291,7 +1291,6 @@
             dataType: "json",
             data: null,
             success: function (data) {
-                location.reload();
             },
             failure: function (data) { },
         });

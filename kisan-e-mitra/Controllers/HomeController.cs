@@ -2,11 +2,9 @@
 using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 
 namespace KisanEMitra.Controllers
 {
@@ -47,7 +45,8 @@ namespace KisanEMitra.Controllers
 
             Session.RemoveAll();
         }
-        public async Task<ActionResult> Index()
+
+        private async Task CreateSession()
         {
             HttpContext context = System.Web.HttpContext.Current;
             System.Web.SessionState.SessionIDManager Manager = new System.Web.SessionState.SessionIDManager();
@@ -61,18 +60,23 @@ namespace KisanEMitra.Controllers
                 if (fingerPrint == null)
                 {
                     var errorMessage = "API call error. Please try again later.";
-                    return RedirectToAction("Index", "Error", errorMessage);
+                    RedirectToAction("Index", "Error", errorMessage);
                 }
 
                 userSessionID = await AgrimitraService.GetUserSessionIDAsync(fingerPrint);
                 if (userSessionID == null)
                 {
                     var errorMessage = "Session is not created. Please try again later.";
-                    return RedirectToAction("Index", "Error", errorMessage);
+                    RedirectToAction("Index", "Error", errorMessage);
                 }
 
                 Session["userSessionID"] = userSessionID;
             }
+        }
+
+        public async Task<ActionResult> Index()
+        {
+            await CreateSession();
 
             var languageModel = GetSelectedLanguage();
             ViewBag.LanguageModel = languageModel;
@@ -233,7 +237,12 @@ namespace KisanEMitra.Controllers
             };
             var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
 
-            // Check if response is the final answer by bot, then we need to set timeout expiring after 1 minute.
+            // Check if response is the final answer by bot, then we need to refresh the session
+            if (responseBody.messageType == "final_response")
+            {
+                KillSession();
+                await CreateSession();
+            }
 
             if (responseBody == null)
                 return Json(null);
