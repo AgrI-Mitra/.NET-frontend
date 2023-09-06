@@ -58,7 +58,7 @@
     }
 
     function hideChatLoader() {
-        $("#responseLoader").remove();
+        $("#chatbotMessageWrapper-responseLoader").remove();
     }
 
     function enableDisableSendButton(textValue) {
@@ -360,6 +360,13 @@
         });
     }
 
+    function popularQuestionsOnClickListener() {
+        $(document).on("click", ".popularQuestions", function (ev) {
+            let popularQuestion = $(this).data("popular-question");
+            copyPopularQuestionInTextBox(popularQuestion);
+        });
+    }
+
     function initChatBotConfig() {
         languageChangeListener();
         popularQuestionClickListener();
@@ -367,6 +374,7 @@
         chatbotMessageActionButtonsOnClickListener();
         restartSessionButtonOnClickListener();
         resendOtpOnClickListener();
+        popularQuestionsOnClickListener();
     }
 
     function updateChatMessagesList(
