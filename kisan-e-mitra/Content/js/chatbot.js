@@ -180,7 +180,7 @@
 
     function getPopularQuestionHtmlContent(popularQuestion) {
         return (
-            "<div id='popularQuestion' class='query-msg'" +
+            "<div id='popularQuestion' class='query-msg popularQuestions'" +
             "data-popular-question='" +
             popularQuestion +
             "'>" +
@@ -416,6 +416,10 @@
 
             $("#message-list").append(response.replace(/\n/g, "<br>"));
 
+            if (messageType == "final_response") {
+                showPopularQuestions();
+            }
+
             scrollToBottom();
 
             if (isMessageFromBot == true) {
@@ -536,10 +540,20 @@
 
     function copyPopularQuestionInTextBox(message) {
         // Hide popular questions now
+        hidePopularQuestions();
+        showUserRecordedMessageInTextBox(message);
+    }
+
+    function hidePopularQuestions() {
         $("#popularQuestionsWrapper").removeClass("d-flex");
         $("#popularQuestionsWrapper").hide();
         $("#message-list").addClass("without-popular-questions");
-        showUserRecordedMessageInTextBox(message);
+    }
+
+    function showPopularQuestions() {
+        $("#popularQuestionsWrapper").addClass("d-flex");
+        $("#popularQuestionsWrapper").show();
+        $("#message-list").removeClass("without-popular-questions");
     }
 
     function showUserRecordedMessageInTextBox(message) {
@@ -1059,6 +1073,8 @@
                     updateTranslations(data.Data.Translations);
 
                     updatePopularQuestionsTranslations(data.Data.PopularQuestions);
+                    showUserRecordedMessageInTextBox("")
+                    
                 },
                 failure: function (data) {
                     alert("oops something went wrong");
@@ -1079,6 +1095,8 @@
 
             $(".query-messages-box").append(currentPopularQuestionHtmlContent);
         }
+
+        showPopularQuestions();
     }
 
     function updateSelectedLanguageInUI(
