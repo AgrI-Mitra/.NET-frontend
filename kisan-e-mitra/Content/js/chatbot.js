@@ -1223,7 +1223,88 @@
         }
     }
 
+    async function playAudioWithRememberingLastPause(audioId) {
+
+        const currentAudioIdElement = document.getElementById(audioId);
+        console.log('currentAudioIdElement: ', currentAudioIdElement);
+
+        //const globalAudioElement = document.getElementById("globalAudioElement");
+
+        if (currentAudioIdElement.paused == false) {
+            currentAudioIdElement.pause();
+            //globalAudioElement.currentTime = 0;
+
+            $("#playMessageImg-" + audioId).attr("src", startAudioImagePath);
+
+            var allAudioEls = $("audio");
+
+            allAudioEls.each(function () {
+                var a = $(this).get(0);
+
+                if (a.id != "globalAudioElement") {
+                    a.pause();
+                    //a.currentTime = 0;
+                    $("#playMessageImg-" + a.id).attr("src", startAudioImagePath);
+                }
+            });
+
+            if (previousPlayingMessageId != audioId) {
+
+                let currentAudio = document.getElementById(audioId);
+                currentAudio.playbackRate = 1.1;
+                currentAudio.play();
+
+                //globalAudioElement.src = document.getElementById(audioId).src;
+                //globalAudioElement.playbackRate = 1.1;
+                //globalAudioElement.play();
+                previousPlayingMessageId = audioId;
+
+                $("#playMessageImg-" + audioId).attr("src", stopAudioImagePath);
+                // Show audio progressbar when audio is playing
+
+                currentAudio.onended = function () {
+                    previousPlayingMessageId = "";
+                    $("#playMessageImg-" + audioId).attr("src", startAudioImagePath);
+                };
+            } else {
+                sessionStorage.removeItem("isAutoPlayEnabled");
+            }
+        } else {
+            var allAudioEls = $("audio");
+
+            allAudioEls.each(function () {
+                var a = $(this).get(0);
+
+                if (a.id != "globalAudioElement") {
+                    a.pause();
+                    //a.currentTime = 0;
+
+                    $("#playMessageImg-" + a.id).attr("src", startAudioImagePath);
+                }
+            });
+
+            let currentAudio = document.getElementById(audioId);
+            currentAudio.playbackRate = 1.1;
+            currentAudio.play();
+            previousPlayingMessageId = audioId;
+
+            $("#playMessageImg-" + audioId).attr("src", stopAudioImagePath);
+
+            currentAudio.onended = function () {
+                previousPlayingMessageId = "";
+
+                $("#playMessageImg-" + audioId).attr("src", startAudioImagePath);
+            };
+        }
+    }
+
     async function playAudio(audioId) {
+
+        const currentAudioIdElement = document.getElementById(audioId);
+        console.log('currentAudioIdElement: ', currentAudioIdElement);
+        playAudioWithRememberingLastPause(audioId);
+
+        return;
         const globalAudioElement = document.getElementById("globalAudioElement");
 
         if (globalAudioElement.paused == false) {
