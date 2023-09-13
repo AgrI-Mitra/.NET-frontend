@@ -232,8 +232,15 @@ namespace KisanEMitra.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> AskQuestions(string querstion)
+        public async Task<JsonResult> AskQuestions(string querstion, bool finalResponse)
         {
+            // Check if response is the final answer by bot, then we need to refresh the session
+            if (finalResponse)
+            {
+                KillSession();
+                await CreateSession();
+            }
+
             var userSessionID = (string)Session["userSessionID"];
             var userQueryBody = new UserQueryBody()
             {
@@ -242,12 +249,7 @@ namespace KisanEMitra.Controllers
             };
             var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
 
-            // Check if response is the final answer by bot, then we need to refresh the session
-            if (responseBody.messageType == "final_response")
-            {
-                KillSession();
-                await CreateSession();
-            }
+            
 
             if (responseBody == null)
                 return Json(null);

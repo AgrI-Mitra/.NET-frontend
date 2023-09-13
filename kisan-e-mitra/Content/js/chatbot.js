@@ -438,6 +438,7 @@
             $("#message-list").append(response.replace(/\n/g, "<br>"));
 
             if (messageType == "final_response") {
+                sessionStorage.setItem("final_response", true);
                 showPopularQuestions();
             }
 
@@ -713,6 +714,11 @@
     }
 
     function askQuestions(input) {
+        let finalResponse = sessionStorage.getItem("final_response");
+        let isFinalResponseReceived = finalResponse != undefined && finalResponse != null ? true : false;
+
+        sessionStorage.removeItem("final_response");
+
         chatLoader();
         $(userQuestionTextBox).val("");
         $(userQuestionTextBox).trigger("change");
@@ -722,7 +728,10 @@
             type: "POST",
             url: "/Home/AskQuestions",
             dataType: "json",
-            data: { querstion: input },
+            data: {
+                querstion: input,
+                finalResponse: isFinalResponseReceived
+            },
             success: function (data) {
                 hideChatLoader();
                 var message = "";
