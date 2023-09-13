@@ -298,6 +298,7 @@
     <Content Include="Content\images\user-alt.svg" />
     <Content Include="Content\images\user-circle.svg" />
     <Content Include="Content\images\user.svg" />
+    <Content Include="Content\js\autosize.js" />
     <Content Include="Content\js\chatbot.js" />
     <Content Include="Content\js\feedback.js" />
     <Content Include="Content\js\languageDropDown.js" />

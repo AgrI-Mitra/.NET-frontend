@@ -62,13 +62,20 @@
     }
 
     function enableDisableSendButton(textValue) {
-        if (textValue) {
+        let trimmedTextValue = textValue?.trim();
+
+        if (trimmedTextValue != undefined && trimmedTextValue != null && trimmedTextValue != "") {
             $(sendTextButtonId).css({ opacity: 1 });
             $(sendTextButtonId).prop("disabled", false);
+
         } else {
             $(sendTextButtonId).css({ opacity: 0.4 });
             $(sendTextButtonId).prop("disabled", true);
+
+            $(userQuestionTextBox)[0].value = null;
         }
+
+        autosize.update($(userQuestionTextBox));
     }
 
     function getChatMessageWrapperStartingDivHtmlContent(
@@ -375,6 +382,11 @@
         restartSessionButtonOnClickListener();
         resendOtpOnClickListener();
         popularQuestionsOnClickListener();
+        initAutoSizeInputBox();
+    }
+
+    function initAutoSizeInputBox() {
+        autosize($(userQuestionTextBox));
     }
 
     function updateChatMessagesList(
@@ -464,6 +476,7 @@
         enableDisableSendButton();
 
         $(userQuestionTextBox).on("change paste keyup input", function () {
+            autosize.update($(userQuestionTextBox));
             var textValue = $(this).val();
 
             // If value is there then only keep the send button enabled else keep it disabled.

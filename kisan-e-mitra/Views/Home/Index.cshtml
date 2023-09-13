@@ -56,7 +56,8 @@
             <img class="refresh-btn-style" src="~/Content/images/restart-session.svg" />
         </button>*@
         <div class="meg-input position-relative me-2 me-sm-3 flex-grow-1">
-            <input id="userQuestionTextBox" type="text" class="message-input messageAskUrQuestion" placeholder="@Resources.Resource.message_ask_ur_question">
+            @*<input id="userQuestionTextBox" type="text" class="message-input messageAskUrQuestion" placeholder="@Resources.Resource.message_ask_ur_question">*@
+            <textarea id="userQuestionTextBox" class="message-input messageAskUrQuestion message-input-textarea" placeholder="@Resources.Resource.message_ask_ur_question"></textarea>
             <button id="sendTextButton" type="submit" class="sendtext" disabled></button>
         </div>
         <button id="voiceRecordButtonId" class="send-button img-fluid bg-transparent position-relative">
