@@ -33,6 +33,9 @@
     var lastUserTypedMessageId = "";
     // We need to stop current playing message.
 
+    window.onbeforeunload = function () {
+        restartSession();
+    };
     function copyQuestionToTextBox(message) {
         $(userQuestionTextBox).val(message);
         $(userQuestionTextBox).trigger("change");
