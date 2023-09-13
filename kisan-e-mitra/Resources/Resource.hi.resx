@@ -271,8 +271,8 @@
     <value>अमान्य ओटीपी</value>
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>भाषा का चयन करने के लिए धन्यवाद।
-प्रिय लाभार्थी,
+    <value>हिंदी भाषा का चयन करने के लिए धन्यवाद।
+प्रिय लाभार्थी,
 अपना प्रश्न टाइप करें या माइक बटन का उपयोग करके बोलें।</value>
   </data>
   <data name="message.language_selection" xml:space="preserve">
@@ -351,8 +351,7 @@
     <value>ओटीपी फिर से भेजने से पहले कृपया प्रतीक्षा करें</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>किसान-eमित्र में आपका स्वागत है! मैं आपका निजी सहायक हूं। कृपया मुझे बताएं कि मैं आपकी कैसे मदद कर सकता हूं?
-&lt;br&gt;आप अपनी पसंदीदा भाषा का चयन कर सकते हैं।</value>
+    <value>किसान-eमित्र में आपका स्वागत है! मैं आपका निजी सहायक हूं। कृपया मुझे बताएं कि मैं आपकी कैसे मदद कर सकता हूं?&lt;br&gt;आप अपनी पसंदीदा भाषा मे जवाब के लिए भाषा का चयन कर सकते हैं।</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>सफलतापूर्वक प्रतिक्रिया नापसंद की गई</value>

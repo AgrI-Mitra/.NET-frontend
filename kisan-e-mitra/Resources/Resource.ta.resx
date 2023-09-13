@@ -271,8 +271,8 @@
     <value>தவறான OTP</value>
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>மொழியைத் தேர்ந்தெடுத்ததற்கு நன்றி.
-அன்புள்ள பயனாளி,
+    <value>தமிழ் மொழியைத் தேர்ந்தெடுத்ததற்கு நன்றி.
+அன்புள்ள பயனாளி,
 உங்கள் கேள்வியைத் தட்டச்சு செய்க அல்லது MIC பொத்தானைப் பயன்படுத்தி பேசுங்கள்.</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">

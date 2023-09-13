@@ -271,8 +271,8 @@
     <value>अवैध Otp</value>
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>भाषा निवडल्याबद्दल धन्यवाद.
-प्रिय लाभार्थी,
+    <value>मारती भाषा निवडल्याबद्दल धन्यवाद.
+प्रिय लाभार्थी,
 आपला प्रश्न टाइप करा किंवा माइक बटण वापरुन बोला.</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">

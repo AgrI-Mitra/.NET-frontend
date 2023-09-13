@@ -520,8 +520,8 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thank you for selecting the language.        ///        ///        ///        ///
-        ///Dear Beneficiary,        ///        ///        ///        ///
+        ///   Looks up a localized string similar to Thank you for selecting the English language.
+        ///Dear Beneficiary,
         ///Type your question or speak using the mic button..
         /// </summary>
         public static string message_language_changed_greeting {

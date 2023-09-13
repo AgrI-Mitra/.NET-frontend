@@ -271,9 +271,9 @@
     <value>చెల్లని OTP</value>
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>భాషను ఎంచుకున్నందుకు ధన్యవాదాలు.
-ప్రియమైన లబ్ధిదారుడు,
-మీ ప్రశ్నను టైప్ చేయండి లేదా MIC బటన్ ఉపయోగించి మాట్లాడండి.</value>
+    <value>తెలుగు భాషను ఎంచుకున్నందుకు ధన్యవాదాలు.
+ప్రియమైన లబ్ధిదారుడు,
+మీ ప్రశ్నను టైప్ చేయండి లేదా మైక్ బటన్ ఉపయోగించి మాట్లాడండి.</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>ఇంకా నమోదు చేయలేదునుందా?</value>

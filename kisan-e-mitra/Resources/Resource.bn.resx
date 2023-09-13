@@ -271,9 +271,9 @@
     <value>অবৈধ ওটিপি</value>
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>ভাষা নির্বাচন করার জন্য আপনাকে ধন্যবাদ।
-প্রিয় সুবিধাভোগী,
-আপনার প্রশ্নটি টাইপ করুন বা মাইক বোতামটি ব্যবহার করে কথা বলুন।</value>
+    <value>বাংলা ভাষা নির্বাচন করার জন্য আপনাকে ধন্যবাদ।
+প্রিয় সুবিধাভোগী,
+বহার করে কথা বলুন।</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>এখনো নিবন্ধিত হননি?</value>

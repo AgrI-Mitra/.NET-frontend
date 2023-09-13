@@ -271,8 +271,8 @@
     <value>Invalid Otp</value>
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>Thank you for selecting the language.
-Dear Beneficiary,
+    <value>Thank you for selecting the English language.
+Dear Beneficiary,
 Type your question or speak using the mic button.</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
