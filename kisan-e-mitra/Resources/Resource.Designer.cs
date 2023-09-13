@@ -603,7 +603,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to How to link my bank account with my Aadhaar number?.
+        ///   Looks up a localized string similar to What is the issue with my PM KISAN account?.
         /// </summary>
         public static string message_popular_question_3 {
             get {
