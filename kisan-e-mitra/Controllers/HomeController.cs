@@ -109,6 +109,11 @@ namespace KisanEMitra.Controllers
                 {
                     Key = "message_language_changed_greeting",
                     Value = Resources.Resource.message_language_changed_greeting.ToString()
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_resend_otp",
+                    Value = Resources.Resource.message_resend_otp.ToString()
                 }
             };
 
