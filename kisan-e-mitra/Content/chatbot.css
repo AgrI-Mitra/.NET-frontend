@@ -1,46 +1,46 @@
 :root {
-  --pmk-primary: #198754;
+    --pmk-primary: #198754;
 }
 
 .welcome-message-container {
-  padding: 0px 10px;
+    padding: 0px 10px;
 }
 
 .system-msg-left {
-  background-color: #f7f7f8;
-  border-bottom: 1px solid #d1d1d1;
-  padding: 2% 5%;
+    background-color: #f7f7f8;
+    border-bottom: 1px solid #d1d1d1;
+    padding: 2% 5%;
 }
 
 .left {
-  justify-content: flex-start;
-  padding: 15px;
+    justify-content: flex-start;
+    padding: 15px;
 }
 
 .chatbot-message-wrapper-column-one {
-  flex: 0 1 48px;
-  height: 48px;
+    flex: 0 1 48px;
+    height: 48px;
 }
 
 .chatbot-message-wrapper-column-two {
-  display: flex;
-  flex: 1 1 60%;
-  flex-wrap: wrap;
-  flex-flow: column wrap;
-  padding: 10px;
+    display: flex;
+    flex: 1 1 60%;
+    flex-wrap: wrap;
+    flex-flow: column wrap;
+    padding: 10px;
 }
 
 .chatbot-message-wrapper-column-three {
-  flex: 0 1 auto;
+    flex: 0 1 auto;
 }
 
 .feedback-animation {
-  animation: icon-animation cubic-bezier(0.165, 0.84, 0.44, 1) 0.8s;
+    animation: icon-animation cubic-bezier(0.165, 0.84, 0.44, 1) 0.8s;
 }
 
 .chatbot-message-wrapper {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 /**
@@ -49,72 +49,71 @@
  * ==============================================
  */
 .dot-flashing {
-  position: relative;
-  margin-top: 30px;
-  margin-left: 0.5rem !important;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: #219653;
-  color: #219653;
-  animation: dot-flashing 1s infinite linear alternate;
-  animation-delay: 0.5s;
+    position: relative;
+    margin-top: 30px;
+    margin-left: 0.5rem !important;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #219653;
+    color: #219653;
+    animation: dot-flashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
 }
 
-.dot-flashing::before,
-.dot-flashing::after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  top: 0;
-}
+    .dot-flashing::before,
+    .dot-flashing::after {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 0;
+    }
 
-.dot-flashing::before {
-  left: -15px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: #219653;
-  color: #219653;
-  animation: dot-flashing 1s infinite alternate;
-  animation-delay: 0s;
-}
+    .dot-flashing::before {
+        left: -15px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: #219653;
+        color: #219653;
+        animation: dot-flashing 1s infinite alternate;
+        animation-delay: 0s;
+    }
 
-.dot-flashing::after {
-  left: 15px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: #219653;
-  color: #219653;
-  animation: dot-flashing 1s infinite alternate;
-  animation-delay: 1s;
-}
+    .dot-flashing::after {
+        left: 15px;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        background-color: #219653;
+        color: #219653;
+        animation: dot-flashing 1s infinite alternate;
+        animation-delay: 1s;
+    }
 
 @keyframes dot-flashing {
-  0% {
-    background-color: #219653;
-  }
+    0% {
+        background-color: #219653;
+    }
 
-  50%,
-  100% {
-    background-color: rgba(33, 150, 83, 0.2);
-  }
+    50%, 100% {
+        background-color: rgba(33, 150, 83, 0.2);
+    }
 }
 
 @keyframes icon-animation {
-  0% {
-    transform: scale(0);
-  }
+    0% {
+        transform: scale(0);
+    }
 
-  100% {
-    transform: scale(1);
-  }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .language-buttons {
-  margin-top: 10px;
-  border-radius: 20px;
+    margin-top: 10px;
+    border-radius: 20px;
 }
 
 /*// X-Small devices (portrait phones, less than 576px)
@@ -122,16 +121,20 @@
 
 /*// Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px ) and (max-width: 767.98px) {
-  .query-msg{
-    min-width: 50%;
-  }
+    .query-msg {
+        min-width: 50%;
+    }
 }
 
 /*// Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
-  .query-msg{
-    min-width: max-content;
-  }
+    .query-msg {
+        min-width: max-content;
+    }
+
+    .message-input-textarea {
+        padding-top: 1.4em;
+    }
 }
 
 /*// Large devices (desktops, 992px and up)*/
@@ -148,24 +151,27 @@
 
 /*`sm` applies to x-small devices (portrait phones, less than 576px)*/
 @media (max-width: 575.98px) {
-  /* .kisan-e-mitra-content-padding {
+    /* .kisan-e-mitra-content-padding {
     margin-bottom: 100px;
     padding-bottom: 100px;
   } */
 
-  .query-msg{
-    min-width: 70%;
-  }
+    .query-msg {
+        min-width: 70%;
+    }
 }
 
 /*// `md` applies to small devices (landscape phones, less than 768px)*/
 @media (max-width: 767.98px) {
-  .chatbot-message-wrapper-column-three {
-    flex: 1 1 100%;
-    margin-left: 3rem !important;
-  }
+    .chatbot-message-wrapper-column-three {
+        flex: 1 1 100%;
+        margin-left: 3rem !important;
+    }
 
-  /* .send-button {
+    .message-input-textarea {
+        padding-top: 0.8em;
+    }
+    /* .send-button {
     margin: 0px 0px 0px 8px;
   } */
 }
@@ -183,51 +189,51 @@
 }
 
 .voice-stop-recording-border-color {
-  border-color: #fa5f5f;
+    border-color: #fa5f5f;
 }
 
 .voice-start-recording-border-color {
-  border-color: #198754;
+    border-color: #198754;
 }
 
 .query-msg {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .user-avatar-img {
-  background-color: #219653;
+    background-color: #219653;
 }
 
 /*Voice Recording Animation START*/
 .over {
-  -webkit-animation: rotator 1.5s ease-in-out infinite;
-  stroke-dasharray: 107, 38;
+    -webkit-animation: rotator 1.5s ease-in-out infinite;
+    stroke-dasharray: 107, 38;
 }
 
 .bag {
-  position: absolute;
+    position: absolute;
 }
 
 @-webkit-keyframes rotator {
-  0% {
-    transform: rotate(0deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
 
-  100% {
-    transform: rotate(360deg);
-  }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /*Voice Recording Animation Stop*/
 
 img.query-msg-send-icon {
-  height: 24px;
-  padding: 0px 10px;
+    height: 24px;
+    padding: 0px 10px;
 }
 
-#message-list.without-popular-questions{
-  height: calc(100vh - 300px);
-  transition: all 0.5s ease-in;
+#message-list.without-popular-questions {
+    height: calc(100vh - 300px);
+    transition: all 0.5s ease-in;
 }
 
 .chatbot-message-action-buttons {
@@ -238,3 +244,18 @@ img.query-msg-send-icon {
 .kisan-e-mitra-logo {
     height: 48px;
 }
+
+.message-input-textarea {
+    max-height: 90px;
+    display: flex;
+    resize: none;
+}
+
+    .message-input-textarea::-webkit-scrollbar {
+        height: 3px;
+        width: 3px;
+    }
+
+    .message-input-textarea::-webkit-scrollbar-thumb {
+        background-color: #888;
+    }
