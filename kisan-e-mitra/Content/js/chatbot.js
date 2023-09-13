@@ -246,6 +246,12 @@
                 htmlElementKeyAttributeType: ".",
                 htmlElementValueAttributeType: "text",
             },
+            {
+                translationKey: "message_resend_otp",
+                htmlElementKeyName: "resend-otp-translation",
+                htmlElementKeyAttributeType: "#",
+                htmlElementValueAttributeType: "value",
+            }
         ];
 
         for (var i = 0; i < translationsToUpdate.length; i++) {
@@ -1087,7 +1093,7 @@
 
                     updatePopularQuestionsTranslations(data.Data.PopularQuestions);
                     showUserRecordedMessageInTextBox("")
-                    
+
                 },
                 failure: function (data) {
                     alert("oops something went wrong");
@@ -1239,7 +1245,6 @@
     async function playAudioWithRememberingLastPause(audioId) {
 
         const currentAudioIdElement = document.getElementById(audioId);
-        console.log('currentAudioIdElement: ', currentAudioIdElement);
 
         //const globalAudioElement = document.getElementById("globalAudioElement");
 
@@ -1314,7 +1319,6 @@
     async function playAudio(audioId) {
 
         const currentAudioIdElement = document.getElementById(audioId);
-        console.log('currentAudioIdElement: ', currentAudioIdElement);
         playAudioWithRememberingLastPause(audioId);
 
         return;
