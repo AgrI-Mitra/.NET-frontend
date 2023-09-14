@@ -1,11 +1,10 @@
 ﻿using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using System.Web.Services.Description;
 
 namespace KisanEMitra.Services
 {
@@ -91,7 +90,22 @@ namespace KisanEMitra.Services
 
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
-                    siteUserBody = response.Content.ReadFromJsonAsync<SiteResponseBody>().Result;
+                    var apiResponseString = response.Content.ReadAsStringAsync().Result;
+
+                    var apiResponseObject = JsonConvert.DeserializeObject<dynamic>(apiResponseString);
+                    siteUserBody.textInEnglish = apiResponseObject.textInEnglish;
+                    siteUserBody.Text = apiResponseObject.text;
+                    siteUserBody.Error = apiResponseObject.error;
+
+                    siteUserBody.audio = new SiteResponseAudioBody
+                    {
+                        text = apiResponseObject.audio?.text,
+                        error = apiResponseObject.audio?.error
+                    };
+
+                    siteUserBody.messageId = apiResponseObject.messageId;
+                    siteUserBody.messageType = apiResponseObject.messageType;
+                    siteUserBody.placeholder = apiResponseObject.placeholder;
                 }
                 else
                 {
