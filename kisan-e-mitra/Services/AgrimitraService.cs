@@ -134,10 +134,7 @@ namespace KisanEMitra.Services
         {
             try
             {
-                var testHttpClient = new HttpClient();
-
-                var response = await testHttpClient.PostAsJsonAsync($"{"https://bff.agrimitra.samagra.io/"}{APIPaths.MatricsIncrement}", matricsType);
-
+                var response = await httpClient.PostAsJsonAsync($"{APIPaths.MatricsIncrement}", matricsType);
 
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
