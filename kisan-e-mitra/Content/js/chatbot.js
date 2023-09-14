@@ -32,6 +32,8 @@
     var previousPlayingMessageId = ""; // To maintain previous playing message id. So when user tries to play another message in middle of current playing message
     var lastUserTypedMessageId = "";
     // We need to stop current playing message.
+    var isUserTypedQuestion = false;
+    var isSampleQueryUsed = false;
 
     window.onbeforeunload = function () {
         restartSession();
@@ -304,9 +306,9 @@
     }
 
     function popularQuestionClickListener() {
-        $("#popularQuestion").click(function (e) {
+        $("#popularQuestion").click(function (event) {
+            event.stopPropagation()
             let popularQuestion = $(this).data("popular-question");
-
             copyPopularQuestionInTextBox(popularQuestion);
         });
     }
@@ -363,8 +365,9 @@
     }
 
     function userQuestionTextBoxOnKeyPressListener() {
-        $(userQuestionTextBox).keypress(function (e) {
-            if (e.keyCode == 13 || e.key == "Enter") {
+        $(userQuestionTextBox).keypress(function (event) {
+            if (event.keyCode == 13 || event.key == "Enter") {
+                event.stopPropagation();
                 $(sendTextButtonId).click();
             }
         });
@@ -485,7 +488,13 @@
 
         enableDisableSendButton();
 
-        $(userQuestionTextBox).on("change paste keyup input", function () {
+        $(userQuestionTextBox).on("change paste keyup", function (event) {
+
+            if (event.type == "keyup" && (isSampleQueryUsed == false && event?.originalEvent?.key != "Enter")) {
+                isUserTypedQuestion = true;
+            } else {
+                isUserTypedQuestion = false;
+            }
             autosize.update($(userQuestionTextBox));
             var textValue = $(this).val();
 
@@ -583,6 +592,7 @@
         $(userQuestionTextBox).val(message);
         $(userQuestionTextBox).focus();
         $(userQuestionTextBox).trigger("change");
+        isSampleQueryUsed = true;
     }
 
     function processChatBotResponse(
@@ -713,11 +723,33 @@
         }
     }
 
+    function addMatricsCount(matricsType) {
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/AddMatricsCount",
+            dataType: "json",
+            data: {
+                matricsType: matricsType
+            },
+            success: function (data) {
+            },
+            failure: function (data) { },
+        });
+    }
+
     function askQuestions(input) {
         let finalResponse = sessionStorage.getItem("final_response");
         let isFinalResponseReceived = finalResponse != undefined && finalResponse != null ? true : false;
 
         sessionStorage.removeItem("final_response");
+
+        if (isUserTypedQuestion == true) {
+            addMatricsCount("directMessageTypedCount");
+            isUserTypedQuestion = false;
+        } else if (isSampleQueryUsed == true) {
+            addMatricsCount("sampleQueryUsedCount");
+        }
 
         chatLoader();
         $(userQuestionTextBox).val("");
@@ -901,6 +933,10 @@
     }
 
     function startRecording() {
+
+        // Record matrics
+        addMatricsCount("micUsedCount");
+
         var constraints = { audio: true, video: false };
         /*
                     We're using the standard promise based getUserMedia()

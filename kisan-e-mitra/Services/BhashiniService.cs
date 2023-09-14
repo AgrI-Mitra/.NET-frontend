@@ -11,6 +11,7 @@ namespace KisanEMitra.Services
     public class BhashiniService : IBhashiniService
     {
         private readonly HttpClient httpClient;
+        private IAgrimitraService AgrimitraService { get; set; }
         private readonly string baseURL = "https://dhruva-api.bhashini.gov.in/";
         private readonly string bhashiniApiAuthorizationHeaderKey = "5UMLSGg_KyJTjoTG4nmJP3mXstSXLJHs27a-uG0F1qWUNx9hJeQlEA7QQtFCnnXa";
         private readonly List<BhashiniApiServiceId> bhashiniApiServiceIds = new List<BhashiniApiServiceId>() {
@@ -48,10 +49,11 @@ namespace KisanEMitra.Services
             public static string TextToSpeechService = "services/inference/pipeline";
         }
 
-        public BhashiniService(HttpClient httpClient)
+        public BhashiniService(HttpClient httpClient, IAgrimitraService _agrimitraService)
         {
             this.httpClient = httpClient;
             httpClient.BaseAddress = new Uri(baseURL);
+            AgrimitraService = _agrimitraService;
         }
 
         public async Task<BhashiniApiResponseBody> GetTextToSpeech(string currentLanguage, List<BhashiniApiRequestBodyInput> bhashiniApiInput)
@@ -102,6 +104,8 @@ namespace KisanEMitra.Services
 
             try
             {
+                _ = AgrimitraService.AddMatricsCount("bhashiniCount");
+
                 httpClient.DefaultRequestHeaders.Add("Authorization", bhashiniApiAuthorizationHeaderKey);
                 var response = await httpClient.PostAsJsonAsync($"{APIPaths.TextToSpeechService}", bhashiniApiRequestBody);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -115,17 +119,21 @@ namespace KisanEMitra.Services
                             audioList.Add(audioItem);
                         }
                     }
+
+                    _ = AgrimitraService.AddMatricsCount("bhashiniSuccessCount");
                 }
                 else
                 {
                     siteUserBody.Text = response.ReasonPhrase;
                     siteUserBody.Error = response.StatusCode.ToString();
+                    _ = AgrimitraService.AddMatricsCount("bhashiniFailureCount");
                 }
             }
             catch (Exception ex)
             {
                 siteUserBody.Text = "Rest API call issue.";
                 siteUserBody.Error = ex.Message;
+                _ = AgrimitraService.AddMatricsCount("internalServerError");
             }
 
             siteUserBody.audio = audioList;

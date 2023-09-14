@@ -249,7 +249,7 @@ namespace KisanEMitra.Controllers
             };
             var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
 
-            
+
 
             if (responseBody == null)
                 return Json(null);
@@ -267,6 +267,14 @@ namespace KisanEMitra.Controllers
                 return Json(null);
 
             return Json(responseBody, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddMatricsCount(string matricsType)
+        {
+            await AgrimitraService.AddMatricsCount(matricsType);
+
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

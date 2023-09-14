@@ -22,6 +22,7 @@ namespace KisanEMitra.Services
             public static string ChatHistory = "history";
             public static string ApiVersion = "/3";
             public static string Message = "user/message/";
+            public static string MatricsIncrement = "custom/metrics/increment";
         }
 
         public AgrimitraService(HttpClient httpClient)
@@ -45,6 +46,7 @@ namespace KisanEMitra.Services
             }
             catch (Exception ex)
             {
+                _ = AddMatricsCount("internalServerError");
                 var errorMessage = "Rest API call issue.";
                 throw new Exception(errorMessage, ex);
             }
@@ -69,6 +71,7 @@ namespace KisanEMitra.Services
             }
             catch (Exception ex)
             {
+                _ = AddMatricsCount("internalServerError");
                 siteUserBody.Text = "Rest API call issue.";
                 siteUserBody.Error = ex.Message;
             }
@@ -92,17 +95,63 @@ namespace KisanEMitra.Services
                 }
                 else
                 {
+                    if(response.StatusCode == System.Net.HttpStatusCode.BadGateway) {
+                        _ = AddMatricsCount("badGateway");
+                    } else if(response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                    {
+                        _ = AddMatricsCount("internalServerError");
+                    }
+
                     siteUserBody.Text = response.ReasonPhrase;
                     siteUserBody.Error = response.StatusCode.ToString();
                 }
             }
             catch (Exception ex)
             {
+                _ = AddMatricsCount("internalServerError");
                 siteUserBody.Text = "Rest API call issue.";
                 siteUserBody.Error = ex.Message;
             }
 
             return siteUserBody;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="matricsType">
+        ///bhashiniCount
+        ///bhashiniSuccessCount
+        ///bhashiniFailureCount
+        ///micUsedCount
+        ///directMessageTypedCount
+        ///internalServerError
+        ///badGateway
+        ///sampleQueryUsedCount
+        /// </param>
+        /// <returns></returns>
+        public async Task AddMatricsCount(string matricsType)
+        {
+            try
+            {
+                var testHttpClient = new HttpClient();
+
+                var response = await testHttpClient.PostAsJsonAsync($"{"https://bff.agrimitra.samagra.io/"}{APIPaths.MatricsIncrement}", matricsType);
+
+
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    var siteUserBody = response.Content.ReadAsStringAsync().Result;
+                }
+                else
+                {
+
+                }
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         public async Task<SiteResponseBody> GetChatHistory(string UserID)
@@ -128,6 +177,7 @@ namespace KisanEMitra.Services
             }
             catch (Exception ex)
             {
+                _ = AddMatricsCount("internalServerError");
                 siteUserBody.Text = "Rest API call issue.";
                 siteUserBody.Error = ex.Message;
             }
@@ -157,6 +207,7 @@ namespace KisanEMitra.Services
             }
             catch (Exception ex)
             {
+                _ = AddMatricsCount("internalServerError");
                 siteUserBody.IsSuccess = false;
             }
 
