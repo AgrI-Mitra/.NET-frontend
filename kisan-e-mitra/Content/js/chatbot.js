@@ -13,13 +13,9 @@
     var thumbLikeHighlightImagePath = "../Content/images/hand-thumbs-up-fill.svg";
     var chatbotLogoImagePath = "../Content/images/MOA_logo.png";
     var voiceRecordMicCircleId = "#voiceRecordMicCircle";
-    var classesToShowVoiceRecordingAnimation = "voice-recording-animation"; //voice-stop-recording-border-color
     var voiceRecordingStartBgColorClass = "voice-start-recording-border-color";
     var voiceRecordingStopBgColorClass = "voice-stop-recording-border-color";
     var sendTextButtonId = "#sendTextButton";
-    let chunks = [];
-
-    var querstionInput = "";
 
     var gumStream; //stream from getUserMedia()
     var rec; //Recorder.js object
@@ -38,10 +34,6 @@
     window.onbeforeunload = function () {
         restartSession();
     };
-    function copyQuestionToTextBox(message) {
-        $(userQuestionTextBox).val(message);
-        $(userQuestionTextBox).trigger("change");
-    }
 
     function chatLoader() {
         let chatMessageWrapperStartingDivHtmlContent =
@@ -142,22 +134,6 @@
     }
 
     function getFeedbackButtonsHtmlContent(messageId) {
-        //return (
-        //    "<img id='thumbLikeButton-" +
-        //    messageId +
-        //    "src='" +
-        //    thumbLikeImagePath +
-        //    "alt='avatar 1' class='chatbot-message-action-buttons' data-action-name='likeMessage' data-message-id='" +
-        //    messageId +
-        //    ">" +
-        //    "<img id='thumbDislikeButton-" +
-        //    messageId +
-        //    "src='" +
-        //    thumbDislikeImagePath +
-        //    "alt='avatar 1' class='chatbot-message-action-buttons' data-action-name='dislikeMessage' data-message-id='" +
-        //    messageId +
-        //    ">"
-        //);
         return (
             "<img id='thumbLikeButton-" +
             messageId +
@@ -179,15 +155,6 @@
 
     function getChatbotRespondingIndicatorHtmlContent() {
         return "<div class='ms-2 dot-flashing'></div>";
-    }
-
-    function getAudioProgressBarHtmlContent(audioId) {
-        return (
-            "<div id='audioProgressBar-" +
-            audioId +
-            "'" +
-            "class='circle_percent' data-percent='50'><div class='circle_inner'><div class='round_per'></div></div></div>"
-        );
     }
 
     function getPopularQuestionHtmlContent(popularQuestion) {
@@ -212,24 +179,6 @@
     let spanStartingHtmlContent = getStartingSpanHtmlContent();
     let spanClosingHtmlContent = getClosingSpanHtmlContent();
     let closingDivHtmlContent = getClosingDivHtmlContent();
-
-    // Wrap the native DOM audio element play function and handle any autoplay errors
-    //Audio.prototype.play = (function (play) {
-    //    return function () {
-    //        var audio = this,
-    //            args = arguments,
-    //            promise = play.apply(audio, args);
-    //        if (promise !== undefined) {
-    //            promise.catch(_ => {
-    //                // Autoplay was prevented. This is optional, but add a button to start playing.
-    //                var el = document.createElement("button");
-    //                el.innerHTML = "Play";
-    //                el.addEventListener("click", function () { play.apply(audio, args); });
-    //                this.parentNode.insertBefore(el, this.nextSibling);
-    //            });
-    //        }
-    //    };
-    //})(Audio.prototype.play);
 
     function updateTranslations(translationsToUpdate) {
         let translationsMappingIds = [
@@ -339,15 +288,6 @@
                 dislikeMessage(messageId);
             }
         });
-
-        //$(".chatbot-message-action-buttons").on('click', function (event) {
-        //    event.stopPropagation();
-        //    event.stopImmediatePropagation();
-        //    let actionName = $(this).data("action-name");
-
-        //    console.log("actionName: ", actionName);
-        //    $(this).off();
-        //});
     }
 
     function userFeedbackListener() {
@@ -462,30 +402,6 @@
 
         getWelcomeGreetingsAudio(false);
 
-        //initWelcomeGreetingAudioConfig();
-
-        // Check if language change message is available, if available we need to show it to the user on page load.
-        var languageChangedGreeting = sessionStorage.getItem(
-            "languageChangedMessage"
-        );
-        if (languageChangedGreeting) {
-            //let chatMessageWrapperStartingDivHtmlContent = getChatMessageWrapperStartingDivHtmlContent(true); // Main chat message wrapper
-            //let chatMessageAudioImageHtmlContent = getChatMessageAudioImageHtmlContent("language-change-greeting-message-base64-audio"); // Audio icon inside third column
-            //var response =
-            //    chatMessageWrapperStartingDivHtmlContent
-            //    + chatbotLogoHtmlContent
-            //    + chatMessageWrapperColumnTwoStartingDivHtmlContent
-            //    + spanStartingHtmlContent + languageChangedGreeting + spanClosingHtmlContent
-            //    + closingDivHtmlContent
-            //    + chatMessageWrapperColumnThreeStartingDivHtmlContent
-            //    + chatMessageAudioImageHtmlContent
-            //    + closingDivHtmlContent
-            //    + closingDivHtmlContent;
-            //$('#message-list').append(response.replace(/\n/g, "<br>"));
-            //sessionStorage.removeItem('languageChangedMessage');
-            //autoPlayAudio("language-change-greeting-message-base64-audio");
-        }
-
         enableDisableSendButton();
 
         $(userQuestionTextBox).on("change paste keyup", function (event) {
@@ -534,10 +450,10 @@
         $(function () {
             $("body").on("click", sendTextButtonId, function (e) {
                 e.preventDefault();
-                querstionInput = $(userQuestionTextBox).val();
+                let questionInput = $(userQuestionTextBox).val();
 
-                var querstionInput = $("<div />").text(querstionInput).html();
-                if (querstionInput) {
+                var questionInputContent = $("<div />").text(questionInput).html();
+                if (questionInputContent) {
                     let chatMessageWrapperStartingDivHtmlContent =
                         getChatMessageWrapperStartingDivHtmlContent(false); // Main chat message wrapper
 
@@ -551,7 +467,7 @@
                         userLogoHtmlContent +
                         chatMessageWrapperColumnTwoStartingDivHtmlContent +
                         spanStartingHtmlContent +
-                        querstionInput +
+                        questionInputContent +
                         spanClosingHtmlContent +
                         closingDivHtmlContent +
                         chatMessageWrapperColumnThreeStartingDivHtmlContent +
@@ -565,7 +481,7 @@
                     lastUserTypedMessageId = ""; // Clear last user typed messaged Id once it is sent
                 }
 
-                askQuestions(querstionInput);
+                askQuestions(questionInputContent);
             });
         });
     });
@@ -634,12 +550,6 @@
         hideChatLoader();
     }
 
-    function onInputBoxKeyPressed(event) {
-        if (event.keyCode == 13 || event.key == "Enter") {
-            $(sendTextButtonId).click();
-        }
-    }
-
     function resendOTP(element) {
         $("#chatbotMessageWrapper-resendOtp").remove();
         askQuestions("resend OTP");
@@ -693,33 +603,6 @@
         if (message != "") {
 
             updateChatMessagesList(message, messageId, messageType, true);
-            //let chatMessageWrapperStartingDivHtmlContent =
-            //    getChatMessageWrapperStartingDivHtmlContent(true); // Main chat message wrapper
-
-            //let chatMessageAudioImageHtmlContent =
-            //    getChatMessageAudioImageHtmlContent(messageId); // Audio icon inside third column
-
-            //let feedbackOptionHtmlContent = getFeedbackButtonsHtmlContent(messageId);
-
-            //var response =
-            //    chatMessageWrapperStartingDivHtmlContent +
-            //    chatbotLogoHtmlContent +
-            //    chatMessageWrapperColumnTwoStartingDivHtmlContent +
-            //    spanStartingHtmlContent +
-            //    message +
-            //    spanClosingHtmlContent +
-            //    closingDivHtmlContent +
-            //    chatMessageWrapperColumnThreeStartingDivHtmlContent +
-            //    chatMessageAudioImageHtmlContent +
-            //    (messageType == "final_response" ? feedbackOptionHtmlContent : "") +
-            //    closingDivHtmlContent +
-            //    closingDivHtmlContent;
-
-            //response = formatChatbotResponse(response);
-
-            //$("#message-list").append(response.replace(/\n/g, "<br>"));
-
-            //autoPlayAudio(messageId);
         }
     }
 
@@ -1198,39 +1081,6 @@
             url: "/Home/GetWelcomeGreetingsTextToSpeech",
             dataType: "json",
             success: function (data) {
-                let welcomeGreetingIdsList = [
-                    "welcome-greeting-message-base64",
-                    "language-change-greeting-message-base64",
-                ];
-
-                for (var i = 0; i < data.Data.length; i++) {
-                    let currentData = data.Data[i];
-
-                    //let hiddenInputElement = $("#" + welcomeGreetingIdsList[i]).val();
-                    //console.log("hiddenInputElement: ", hiddenInputElement);
-
-                    //if (hiddenInputElement) {
-                    //    $("#" + welcomeGreetingIdsList[i]).val(currentData);
-                    //} else {
-                    //    let inputElement = document.createElement("input");
-
-                    //    inputElement.id = welcomeGreetingIdsList[i];
-                    //    inputElement.value = currentData;
-                    //    inputElement.style.display = "none";
-
-                    //    $('#message-list').append(inputElement);
-                    //}
-
-                    //$("#" + currentData.Key).remove();
-
-                    //let inputElement = document.createElement("input");
-
-                    //inputElement.id = currentData.Key;
-                    //inputElement.value = currentData.Value;
-                    //inputElement.style.display = "none";
-
-                    //$('#message-list').append(inputElement);
-                }
 
                 initWelcomeGreetingAudioConfig(data.Data, isLanguageChanged);
             },
@@ -1252,15 +1102,7 @@
                 value: currentData.Value,
             });
         }
-        //textsToGetSpeech.push({
-        //    id: "welcome-greeting-message-base64-audio",
-        //    value: $("#welcome-greeting-message-base64").val()
-        //});
 
-        //textsToGetSpeech.push({
-        //    id: "language-change-greeting-message-base64-audio",
-        //    value: $("#language-change-greeting-message-base64").val()
-        //});
         const contentType = "audio/wav";
 
         if (textsToGetSpeech.length > 0) {
@@ -1294,11 +1136,8 @@
 
         const currentAudioIdElement = document.getElementById(audioId);
 
-        //const globalAudioElement = document.getElementById("globalAudioElement");
-
         if (currentAudioIdElement.paused == false) {
             currentAudioIdElement.pause();
-            //globalAudioElement.currentTime = 0;
 
             $("#playMessageImg-" + audioId).attr("src", startAudioImagePath);
 
@@ -1320,9 +1159,6 @@
                 currentAudio.playbackRate = 1.1;
                 currentAudio.play();
 
-                //globalAudioElement.src = document.getElementById(audioId).src;
-                //globalAudioElement.playbackRate = 1.1;
-                //globalAudioElement.play();
                 previousPlayingMessageId = audioId;
 
                 $("#playMessageImg-" + audioId).attr("src", stopAudioImagePath);
@@ -1343,7 +1179,6 @@
 
                 if (a.id != "globalAudioElement") {
                     a.pause();
-                    //a.currentTime = 0;
 
                     $("#playMessageImg-" + a.id).attr("src", startAudioImagePath);
                 }
@@ -1434,19 +1269,6 @@
             };
         }
     }
-
-    /**
-        This messgae is used to change icon of play/pause audio.
-         */
-    function changePlayPauseMessageImg(messageId, showPlayIcon) {
-        const messgaeElementId = "#" + messageId;
-        if (showPlayIcon) {
-            $(messgaeElementId).attr("src", startAudioImagePath);
-        } else {
-            $(messgaeElementId).attr("src", stopAudioImagePath);
-        }
-    }
-
     function restartSession() {
         scrollToBottom();
         $.ajax({
