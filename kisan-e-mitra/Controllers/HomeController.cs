@@ -17,6 +17,8 @@ namespace KisanEMitra.Controllers
         {
             AgrimitraService = _agrimitraService;
             BhashiniService = bhashiniService;
+
+
         }
 
         public ActionResult Splash()
@@ -79,8 +81,8 @@ namespace KisanEMitra.Controllers
             await CreateSession();
 
             var languageModel = GetSelectedLanguage();
-            ViewBag.LanguageModel = languageModel;
-            ViewBag.PopularQuestions = GetPopularQuestions();
+            TempData["LanguageModel"] = languageModel;
+            TempData["PopularQuestions"] = GetPopularQuestions();
 
             //await SetAudioBase64StringToViewBagAsync();
             return View();
@@ -127,6 +129,43 @@ namespace KisanEMitra.Controllers
         }
 
         [HttpPost]
+        public async Task<JsonResult> GetTextToSpeechFromBhashini()
+        {
+
+            List<string> strings = new List<string>();
+
+            var availableLanguages = LanguageManager.AvailableLanguages;
+
+            foreach (var availableLanguage in availableLanguages)
+            {
+                strings.Add(availableLanguage.LanguageEnglishLabel);
+            }
+
+            var greetingMessagesAudioStrings = await TextToSpeach("en", strings);
+
+            // Load audio base64 strings to view bag so we can play audio using it
+            List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
+
+            for (int i = 0; i < availableLanguages.Count; i++)
+            {
+                var availableLanguage = availableLanguages[i];
+
+                audioBase64Strings.Add(new CommonKeyValue
+                {
+                    Key = "language-labels-" + availableLanguage.LanguageEnglishLabel,
+                    Value = greetingMessagesAudioStrings[i].audioContent.ToString()
+                });
+            }
+
+            return Json(new AjaxActionResponse()
+            {
+                Message = "Success",
+                Data = audioBase64Strings,
+                Success = true
+            });
+        }
+
+        [HttpPost]
         public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech()
         {
 
@@ -136,7 +175,7 @@ namespace KisanEMitra.Controllers
                 Resources.Resource.message_language_changed_greeting.ToString()
             };
 
-            var greetingMessagesAudioStrings = await TextToSpeach(strings);
+            var greetingMessagesAudioStrings = await TextToSpeach(GetSelectedLanguage().SelectedLanguage.LanguageCultureCode, strings);
 
             // Load audio base64 strings to view bag so we can play audio using it
             List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
@@ -181,7 +220,7 @@ namespace KisanEMitra.Controllers
                 Resources.Resource.message_language_changed_greeting.ToString()
             };
 
-            var greetingMessagesAudioStrings = await TextToSpeach(strings);
+            var greetingMessagesAudioStrings = await TextToSpeach(GetSelectedLanguage().SelectedLanguage.LanguageCultureCode, strings);
 
             // Load audio base64 strings to view bag so we can play audio using it
             List<string> audioBase64Strings = new List<string>();
@@ -190,7 +229,7 @@ namespace KisanEMitra.Controllers
                 audioBase64Strings.Add(item.audioContent);
             }
 
-            ViewBag.AudioBase64Strings = audioBase64Strings;
+            TempData["AudioBase64Strings"] = audioBase64Strings;
         }
         [HttpPost]
         public JsonResult ChangeLanguage(string lang)
@@ -301,7 +340,7 @@ namespace KisanEMitra.Controllers
             return Json(responseBody, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<List<BhashiniApiResponseAudioInfo>> TextToSpeach(List<string> texts)
+        public async Task<List<BhashiniApiResponseAudioInfo>> TextToSpeach(string languageCode, List<string> texts)
         {
             var bhashiniApiInput = new List<BhashiniApiRequestBodyInput>();
 
@@ -313,11 +352,11 @@ namespace KisanEMitra.Controllers
                 });
             }
 
-            var responseBody = await BhashiniService.GetTextToSpeech(GetSelectedLanguage().SelectedLanguage.LanguageCultureCode, bhashiniApiInput);
+            var responseBody = await BhashiniService.GetTextToSpeech(languageCode, bhashiniApiInput);
 
             var languageModel = GetSelectedLanguage();
-            ViewBag.LanguageModel = languageModel;
-            ViewBag.PopularQuestions = GetPopularQuestions();
+            TempData["LanguageModel"] = languageModel;
+            TempData["PopularQuestions"] = GetPopularQuestions();
 
             return responseBody.audio;
         }

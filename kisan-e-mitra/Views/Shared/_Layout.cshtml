@@ -9,13 +9,18 @@
     @Scripts.Render("~/bundles/jquery")
     <script type="text/javascript" src="~/Content/js/recorder.js"></script>
     <script type="text/javascript" src="~/Content/js/languageDropDown.js"></script>
-    
+
 
 </head>
 <body class="">
     @{
-        var availableLanguages = ViewBag?.LanguageModel?.AvailableLanguages;
-        var selectedLanguage = ViewBag?.LanguageModel?.SelectedLanguage;
+        //var availableLanguages = ViewBag?.LanguageModel?.AvailableLanguages;
+        //var selectedLanguage = ViewBag?.LanguageModel?.SelectedLanguage;
+        var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
+        var availableLanguages = languageModel.AvailableLanguages;// as List<KisanEMitra.Models.LanguageInfo>;
+        var selectedLanguage = languageModel.SelectedLanguage; //TempData["LanguageModel.SelectedLanguage"] as KisanEMitra.Models.LanguageInfo;
+
+        TempData.Keep("LanguageModel");
     }
     <div class="container-fluid">
         <div class="kisan-e-mitra-content-text">

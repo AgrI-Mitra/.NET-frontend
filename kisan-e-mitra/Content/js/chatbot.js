@@ -1,9 +1,6 @@
 (function () {
-    var userQuestionTextBox = "#userQuestionTextBox";
-    var voiceRecordButtonId = "#voiceRecordButtonId";
-    var voiceRecordingImageId = "#recordingImage";
-    var stopVoiceRecordingImagePath = "../Content/images/stop-recording.svg";
-    var startVoiceRecordingImagePath = "../Content/images/start-recording.svg";
+    var userQuestionTextBox = "#userQuestionTextBox"; // This variable is used to listen any events on user question text box where user will type the question
+    
     var startAudioImagePath = "../Content/images/start-audio.svg";
     var stopAudioImagePath = "../Content/images/stop-audio.svg";
     var thumbDislikeImagePath = "../Content/images/hand-thumbs-down.svg";
@@ -12,9 +9,17 @@
     var thumbLikeImagePath = "../Content/images/hand-thumbs-up.svg";
     var thumbLikeHighlightImagePath = "../Content/images/hand-thumbs-up-fill.svg";
     var chatbotLogoImagePath = "../Content/images/MOA_logo.png";
+
+    // Voice Recording button related variables - To Apply animation, change icon images etc. - START
+    var voiceRecordButtonId = "#voiceRecordButtonId"; // This variable is used to listen events regarding voice recording button.
+    var voiceRecordingImageId = "#recordingImage";// This variable is used to update voice recording image
+    var stopVoiceRecordingImagePath = "../Content/images/stop-recording.svg";
+    var startVoiceRecordingImagePath = "../Content/images/start-recording.svg";
     var voiceRecordMicCircleId = "#voiceRecordMicCircle";
     var voiceRecordingStartBgColorClass = "voice-start-recording-border-color";
     var voiceRecordingStopBgColorClass = "voice-stop-recording-border-color";
+    // Voice Recording button related variables - To Apply animation, change icon images etc. - END
+
     var sendTextButtonId = "#sendTextButton";
 
     var gumStream; //stream from getUserMedia()
@@ -31,10 +36,12 @@
     var isUserTypedQuestion = false;
     var isSampleQueryUsed = false;
 
+    // When browser tab is about to close
     window.onbeforeunload = function () {
         restartSession();
     };
 
+    // This method is used to show an indicator that chatbot response is in progress
     function chatLoader() {
         let chatMessageWrapperStartingDivHtmlContent =
             getChatMessageWrapperStartingDivHtmlContent(true, "responseLoader"); // Main chat message wrapper
@@ -54,10 +61,16 @@
         $("#message-list").append(responseLoader);
     }
 
+    // This method is used to hide the chatbot response in progress indicator
     function hideChatLoader() {
         $("#chatbotMessageWrapper-responseLoader").remove();
     }
 
+    /**
+     * This method is used to enable/disable send button
+     * Button will be enabled if there is a value entered by user, else it will remain disabled.
+     * @param {any} textValue
+     */
     function enableDisableSendButton(textValue) {
         let trimmedTextValue = textValue?.trim();
 
@@ -75,6 +88,13 @@
         autosize.update($(userQuestionTextBox));
     }
 
+    //Reusable methods to set html content to show chat messages by user as well as chatbot - START
+    /**
+     * This method is used to get html content for chat message wrapper
+     * @param {any} isSystemMessage
+     * @param {any} customId
+     * @returns
+     */
     function getChatMessageWrapperStartingDivHtmlContent(
         isSystemMessage,
         customId
@@ -93,34 +113,69 @@
         );
     }
 
+    /**
+     * This method is used to get closing div html content
+     * @returns
+     */
     function getClosingDivHtmlContent() {
         return "</div>";
     }
 
+    /**
+     * This method is used to get starting span tag html content
+     * @returns
+     */
     function getStartingSpanHtmlContent() {
         return "<span>";
     }
 
+    /**
+     * This method is used to get closing span tag html content
+     * @returns
+     */
     function getClosingSpanHtmlContent() {
         return "</span>";
     }
 
+    /**
+     * This method is used to get chat message wrapper column 2 part html content.
+     * Message text will be showing inside this div in html
+     * @returns
+     */
     function getChatMessageWrapperColumnTwoStartingDivHtmlContent() {
         return "<div class='chatbot-message-wrapper-column-two'>";
     }
 
+    /**
+     * This method is used to get chat message wrapper column 3 html content
+     * which will be used to show action buttons such as message play as audio icon, like dislike buttons.
+     * @returns
+     */
     function getChatMessageWrapperColumnThreeStartingDivHtmlContent() {
         return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three me-md-2'>";
     }
 
+    /**
+     * This method is used to get html content for chatbot logo
+     * @returns
+     */
     function getChatbotLogoHtmlContent() {
         return "<img src='../Content/images/MOA_logo.png' class='chatbot-message-wrapper-column-one'>";
     }
 
+    /**
+     * This method is used to get html content for user logo
+     * @returns
+     */
     function getUserLogoHtmlContent() {
         return "<img src='../Content/images/user.svg' class='chat-dp-img-width user-avatar-img rounded-circle chatbot-message-wrapper-column-one'>";
     }
 
+    /**
+     * This method is used to get html content for audio message image icon
+     * @param {any} audioId
+     * @returns
+     */
     function getChatMessageAudioImageHtmlContent(audioId) {
         return (
             "<img id='playMessageImg-" +
@@ -133,6 +188,11 @@
         );
     }
 
+    /**
+     * This method is used to get html content for displaying feedback action buttons
+     * @param {any} messageId
+     * @returns
+     */
     function getFeedbackButtonsHtmlContent(messageId) {
         return (
             "<img id='thumbLikeButton-" +
@@ -153,10 +213,19 @@
         );
     }
 
+    /**
+     * This method is used to get html content to display chatbot typing indicator
+     * @returns
+     */
     function getChatbotRespondingIndicatorHtmlContent() {
         return "<div class='ms-2 dot-flashing'></div>";
     }
 
+    /**
+     * This method is used to get html content to display popular question
+     * @param {any} popularQuestion
+     * @returns
+     */
     function getPopularQuestionHtmlContent(popularQuestion) {
         return (
             "<div id='popularQuestion' class='query-msg popularQuestions'" +
@@ -180,6 +249,10 @@
     let spanClosingHtmlContent = getClosingSpanHtmlContent();
     let closingDivHtmlContent = getClosingDivHtmlContent();
 
+    /**
+     * This method is used to update the translation in ui whenever language is changed
+     * @param {any} translationsToUpdate
+     */
     function updateTranslations(translationsToUpdate) {
         let translationsMappingIds = [
             {
@@ -238,6 +311,9 @@
         }
     }
 
+    /**
+     * This method is used to listen langugage change event
+     */
     function languageChangeListener() {
         $(".languagesLabels").click(function (e) {
             let languageCultureCode = $(this).data("language-culture-code");
@@ -254,6 +330,10 @@
         });
     }
 
+    /**
+     * This method is used to listen popular question click event, 
+     * It will copy clicked question to user question text box
+     */
     function popularQuestionClickListener() {
         $("#popularQuestion").click(function (event) {
             event.stopPropagation()
@@ -262,12 +342,19 @@
         });
     }
 
+    /**
+     * This method is used to listen restart session button click event
+     */
     function restartSessionButtonOnClickListener() {
         $("#restartSessionButton").click(function (e) {
             restartSession();
         });
     }
 
+    /**
+     * This method is used to listen action button click events 
+     * Actions like, play message as audio, like, dislike or unlike chatbot response
+     */
     function chatbotMessageActionButtonsOnClickListener() {
 
         $(document).on("click", ".chatbot-message-action-buttons", function (ev) {
@@ -287,20 +374,6 @@
             } else if (actionName == "dislikeMessage") {
                 dislikeMessage(messageId);
             }
-        });
-    }
-
-    function userFeedbackListener() {
-        $(".feedbackLikeButtons").click(function (e) {
-            let messageId = $(this).data("message-id");
-
-            likeMessage(messageId);
-        });
-
-        $(".feedbackDislikeButtons").click(function (e) {
-            let messageId = $(this).data("message-id");
-
-            dislikeMessage(messageId);
         });
     }
 
@@ -402,6 +475,8 @@
 
         getWelcomeGreetingsAudio(false);
 
+        //getTextToSpeechFromBhashini();
+
         enableDisableSendButton();
 
         $(userQuestionTextBox).on("change paste keyup", function (event) {
@@ -447,6 +522,7 @@
             }
         }
 
+        // To listen click event on send user question button
         $(function () {
             $("body").on("click", sendTextButtonId, function (e) {
                 e.preventDefault();
@@ -511,6 +587,14 @@
         isSampleQueryUsed = true;
     }
 
+    /**
+     * This method is used to process the chat bot response, 
+     * We need to format it, show it in UI, Check whether it is invalid OTP related message or not then show it in different format
+     * @param {any} message
+     * @param {any} messageId
+     * @param {any} messageType
+     * @param {any} textInEnglish
+     */
     function processChatBotResponse(
         message,
         messageId,
@@ -555,6 +639,14 @@
         askQuestions("resend OTP");
     }
 
+    /**
+     * This method is used to foramt the chat bot response, 
+     * We need to display aadhar information in different format.
+     * If there are any texts with *anyword*, we need to display those words in bold letters.
+     * All such formatting will happen inside this method.
+     * @param {any} response
+     * @returns
+     */
     function formatChatbotResponse(response) {
         //response = '<table class="aadhar-table"><tbody><tr><td>Name :</td><td>Lal Chand</td></tr><tr><td>Father Name :</td><td></td></tr><tr><td>Date Of Birth :</td><td>01/01/1900</td></tr><tr><td>Address :</td><td>Jana (24/46),NAGGAR,Kullu,KULLU,HIMACHAL PRADESH</td></tr><tr><td>Registration Date :</td><td>19/02/2019</td></tr></tbody></table>Dear Lal Chand, I have checked your status and found that you have been marked as a *Landless farmer* by the State. If this information is not correct, I suggest you to kindly visit your nearest district/ block office and get your land details updated on the PM KISAN portal.'
         // Check the chatbot response message, and see if any word is given between 2 starts *word*
@@ -991,46 +1083,47 @@
         languageCultureLabel,
         currentLanguageCultureCode
     ) {
-        textToSpeech(LanguageEnglishLabel, changeLanguageApiCall);
-        function changeLanguageApiCall() {
-            $.ajax({
-                type: "POST",
-                url: "/Home/ChangeLanguage",
-                dataType: "json",
-                data: { lang: languageCultureCode },
-                success: function (data) {
-                    getWelcomeGreetingsAudio(true);
+        /*textToSpeech(LanguageEnglishLabel, changeLanguageApiCall);*/
 
-                    sessionStorage.setItem("languageChangedMessage", data.Message);
+        playAudio("language-labels-" + LanguageEnglishLabel + "-audio");
 
-                    // Remove previous language changed message
-                    let previousLanguageChangedMessageId = "#chatbotMessageWrapper-language-change-greeting-message-base64-" + currentLanguageCultureCode + "-audio";
-                    $(previousLanguageChangedMessageId).remove();
+        $.ajax({
+            type: "POST",
+            url: "/Home/ChangeLanguage",
+            dataType: "json",
+            data: { lang: languageCultureCode },
+            success: function (data) {
+                getWelcomeGreetingsAudio(true);
 
-                    // Add language change messgae to chat screen
-                    updateChatMessagesList(
-                        data.Message,
-                        "language-change-greeting-message-base64-" +
-                        languageCultureCode +
-                        "-audio",
-                        "",
-                        false
-                    );
+                sessionStorage.setItem("languageChangedMessage", data.Message);
 
-                    // Update selected language buttons and labels to update the selected language in UI.
-                    updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
+                // Remove previous language changed message
+                let previousLanguageChangedMessageId = "#chatbotMessageWrapper-language-change-greeting-message-base64-" + currentLanguageCultureCode + "-audio";
+                $(previousLanguageChangedMessageId).remove();
 
-                    updateTranslations(data.Data.Translations);
+                // Add language change messgae to chat screen
+                updateChatMessagesList(
+                    data.Message,
+                    "language-change-greeting-message-base64-" +
+                    languageCultureCode +
+                    "-audio",
+                    "",
+                    false
+                );
 
-                    updatePopularQuestionsTranslations(data.Data.PopularQuestions);
-                    showUserRecordedMessageInTextBox("")
+                // Update selected language buttons and labels to update the selected language in UI.
+                updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
 
-                },
-                failure: function (data) {
-                    alert("oops something went wrong");
-                },
-            });
-        }
+                updateTranslations(data.Data.Translations);
+
+                updatePopularQuestionsTranslations(data.Data.PopularQuestions);
+                showUserRecordedMessageInTextBox("")
+
+            },
+            failure: function (data) {
+                alert("oops something went wrong");
+            },
+        });
     }
 
     function updatePopularQuestionsTranslations(popularQuestions) {
@@ -1088,6 +1181,46 @@
                 alert("oops something went wrong");
             },
         });
+    }
+
+    function getTextToSpeechFromBhashini() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetTextToSpeechFromBhashini",
+            dataType: "json",
+            success: function (data) {
+
+                initGeneralAudioConfig(data.Data);
+            },
+            failure: function (data) {
+                alert("oops something went wrong");
+            },
+        });
+    }
+
+    function initGeneralAudioConfig(data) {
+        // Get welcoome note and language greeting text audio
+        var textsToGetSpeech = [];
+
+        for (var i = 0; i < data.length; i++) {
+            let currentData = data[i];
+
+            textsToGetSpeech.push({
+                id: currentData.Key + "-audio",
+                value: currentData.Value,
+            });
+        }
+
+        const contentType = "audio/wav";
+
+        if (textsToGetSpeech.length > 0) {
+            for (var i = 0; i < textsToGetSpeech.length; i++) {
+                var currentBase64String = textsToGetSpeech[i];
+                const blob = b64toBlob(currentBase64String.value, contentType);
+
+                loadAudioPlayer(blob, currentBase64String.id, "left");
+            }
+        }
     }
 
     function initWelcomeGreetingAudioConfig(data, isLanguageChanged) {

@@ -2,11 +2,15 @@
     ViewBag.Title = Resources.Resource.label_title;
     //var welcomeNoteGreetingBase64 = ViewBag.AudioBase64Strings[0];
     //var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
+    var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
     var resendOtpTranslation = Resources.Resource.message_resend_otp;
-    List<KisanEMitra.Models.LanguageInfo> availableLanguages = ViewBag?.LanguageModel?.AvailableLanguages;
-    KisanEMitra.Models.LanguageInfo selectedLanguage = ViewBag?.LanguageModel?.SelectedLanguage;
-    List<kishan_bot.Models.PopularQuestion> popularQuestions = ViewBag.PopularQuestions;
+    List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;//ViewBag?.LanguageModel?.AvailableLanguages;
+    KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;//ViewBag?.LanguageModel?.SelectedLanguage;
+    List<kishan_bot.Models.PopularQuestion> popularQuestions = TempData["PopularQuestions"] as List<kishan_bot.Models.PopularQuestion>;//ViewBag.PopularQuestions;
     var welcomeGreetingMessageBase64StringName = "welcome-greeting-message-base64-" + selectedLanguage.LanguageCultureCode + "-audio";
+
+    TempData.Keep("LanguageModel");
+    TempData.Keep("PopularQuestions");
 }
 
 @*@Html.Hidden("welcome-greeting-message-base64", (object)welcomeNoteGreetingBase64.ToString())
