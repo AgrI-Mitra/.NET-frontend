@@ -1431,19 +1431,6 @@
         $("#message-list").append(div);
     }
 
-    function textToSpeech(textToSpeack, myCallBack) {
-        setTimeout(() => {
-            let speech = new SpeechSynthesisUtterance();
-            speech.lang = "en-IN";
-            speech.text = textToSpeack;
-            speech.rate = 0.6;
-            speech.onend = function (event) {
-                myCallBack();
-            };
-            window.speechSynthesis.speak(speech);
-        }, 500);
-    }
-
     function changeInputPlaceholderValue(valuetoChange) {
         $(userQuestionTextBox).attr(
             "placeholder",
