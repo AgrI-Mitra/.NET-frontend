@@ -44,7 +44,7 @@
     // This method is used to show an indicator that chatbot response is in progress
     function chatLoader() {
         let chatMessageWrapperStartingDivHtmlContent =
-            getChatMessageWrapperStartingDivHtmlContent(true, "responseLoader"); // Main chat message wrapper
+            getChatMessageWrapperStartingDivHtmlContent(true, "responseLoader", "conversationsWrapper"); // Main chat message wrapper
         let chatbotRespondingHtmlContent =
             getChatbotRespondingIndicatorHtmlContent();
 
@@ -97,15 +97,18 @@
      */
     function getChatMessageWrapperStartingDivHtmlContent(
         isSystemMessage,
-        customId
+        customId,
+        customClass
     ) {
         var systemMessageBackgroundClass =
             isSystemMessage == true ? "system-msg-bg" : "";
         var customChatMessageWrapperId =
             customId != null || customId != undefined ? "id='" + "chatbotMessageWrapper-" + customId + "'" : "";
 
+        var customChatMessageWrapperClass = customClass != null || customClass != undefined ? (customClass + " "): " ";
+
         return (
-            "<div class='my-msg-content chatbot-message-wrapper " +
+            "<div class='my-msg-content chatbot-message-wrapper " + customChatMessageWrapperClass +
             systemMessageBackgroundClass +
             "'" +
             customChatMessageWrapperId +
@@ -422,7 +425,7 @@
     ) {
         if (message != "") {
             let chatMessageWrapperStartingDivHtmlContent =
-                getChatMessageWrapperStartingDivHtmlContent(isMessageFromBot, messageId); // Main chat message wrapper
+                getChatMessageWrapperStartingDivHtmlContent(isMessageFromBot, messageId, "conversationsWrapper"); // Main chat message wrapper
 
             let chatMessageAudioImageHtmlContent =
                 getChatMessageAudioImageHtmlContent(messageId); // Audio icon inside third column
@@ -475,7 +478,7 @@
 
         getWelcomeGreetingsAudio(false);
 
-        //getTextToSpeechFromBhashini();
+        getTextToSpeechFromBhashini();
 
         enableDisableSendButton();
 
@@ -531,7 +534,7 @@
                 var questionInputContent = $("<div />").text(questionInput).html();
                 if (questionInputContent) {
                     let chatMessageWrapperStartingDivHtmlContent =
-                        getChatMessageWrapperStartingDivHtmlContent(false); // Main chat message wrapper
+                        getChatMessageWrapperStartingDivHtmlContent(false, null, "conversationsWrapper"); // Main chat message wrapper
 
                     let chatMessageAudioImageHtmlContent =
                         getChatMessageAudioImageHtmlContent(lastUserTypedMessageId); // Audio icon inside third column
@@ -610,7 +613,7 @@
             var resendOtpTranslation = $("#resend-otp-translation").val();
 
             let chatMessageWrapperStartingDivHtmlContent =
-                getChatMessageWrapperStartingDivHtmlContent(true, "resendOtp"); // Main chat message wrapper
+                getChatMessageWrapperStartingDivHtmlContent(true, "resendOtp", "conversationsWrapper"); // Main chat message wrapper
 
             //let chatMessageAudioImageHtmlContent = getChatMessageAudioImageHtmlContent(lastUserTypedMessageId); // Audio icon inside third column
 
@@ -747,7 +750,7 @@
 
                 if (data?.audio?.text) {
                     const blob = b64toBlob(data.audio.text, contentType);
-                    loadAudioPlayer(blob, data.messageId, "left");
+                    loadAudioPlayer(blob, data.messageId, "left conversationsWrapper");
                 }
 
                 if (data.Text !== null || data.Error !== null) {
@@ -978,7 +981,7 @@
                     var message = "";
                     hideChatLoader();
 
-                    loadAudioPlayer(blob, data.messageId);
+                    loadAudioPlayer(blob, data.messageId, "right conversationsWrapper");
                     lastUserTypedMessageId = data.messageId;
                     if (data.Text) {
                         showUserRecordedMessageInTextBox(data.Text);
@@ -1410,9 +1413,15 @@
             dataType: "json",
             data: null,
             success: function (data) {
+                clearChatHistory();
             },
             failure: function (data) { },
         });
+    }
+
+    function clearChatHistory() {
+        $('.conversationsWrapper').remove();
+        showPopularQuestions();
     }
 
     function createGlobalAudioElement() {

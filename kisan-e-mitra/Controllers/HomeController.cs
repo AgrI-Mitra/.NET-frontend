@@ -27,9 +27,10 @@ namespace KisanEMitra.Controllers
         }
 
         [HttpPost]
-        public JsonResult Logout()
+        public async Task<JsonResult> Logout()
         {
             KillSession();
+            await CreateSession();
 
             return Json(new AjaxActionResponse()
             {
@@ -141,7 +142,7 @@ namespace KisanEMitra.Controllers
                 strings.Add(availableLanguage.LanguageEnglishLabel);
             }
 
-            var greetingMessagesAudioStrings = await TextToSpeach("en", strings);
+            var greetingMessagesAudioStrings = await TextToSpeach("hi", strings);
 
             // Load audio base64 strings to view bag so we can play audio using it
             List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();

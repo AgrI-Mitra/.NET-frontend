@@ -1,4 +1,4 @@
-﻿using KisanEMitra.Services.Contracts;
+using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using Newtonsoft.Json;
 using System;
@@ -97,11 +97,14 @@ namespace KisanEMitra.Services
                     siteUserBody.Text = apiResponseObject.text;
                     siteUserBody.Error = apiResponseObject.error;
 
-                    siteUserBody.audio = new SiteResponseAudioBody
+                    if(apiResponseObject.audio != null)
+                    {
+                        siteUserBody.audio = new SiteResponseAudioBody
                     {
                         text = apiResponseObject.audio?.text,
                         error = apiResponseObject.audio?.error
                     };
+                    }
 
                     siteUserBody.messageId = apiResponseObject.messageId;
                     siteUserBody.messageType = apiResponseObject.messageType;
