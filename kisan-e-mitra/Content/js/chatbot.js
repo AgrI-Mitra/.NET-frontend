@@ -1,6 +1,6 @@
 (function () {
     var userQuestionTextBox = "#userQuestionTextBox"; // This variable is used to listen any events on user question text box where user will type the question
-    
+
     var startAudioImagePath = "../Content/images/start-audio.svg";
     var stopAudioImagePath = "../Content/images/stop-audio.svg";
     var thumbDislikeImagePath = "../Content/images/hand-thumbs-down.svg";
@@ -105,7 +105,7 @@
         var customChatMessageWrapperId =
             customId != null || customId != undefined ? "id='" + "chatbotMessageWrapper-" + customId + "'" : "";
 
-        var customChatMessageWrapperClass = customClass != null || customClass != undefined ? (customClass + " "): " ";
+        var customChatMessageWrapperClass = customClass != null || customClass != undefined ? (customClass + " ") : " ";
 
         return (
             "<div class='my-msg-content chatbot-message-wrapper " + customChatMessageWrapperClass +
@@ -293,6 +293,12 @@
             );
 
             if (currentTranslationMappingDetails) {
+
+                // Update page title
+                if (currentTranslationMappingDetails.translationKey == "label_title") {
+                    document.title = currentTranslation.Value;
+                }
+
                 if (
                     currentTranslationMappingDetails.htmlElementValueAttributeType ==
                     "text"
@@ -1087,6 +1093,11 @@
         currentLanguageCultureCode
     ) {
         /*textToSpeech(LanguageEnglishLabel, changeLanguageApiCall);*/
+
+        // No need to do anything if user clicks on the current selected language
+        if (currentLanguageCultureCode == languageCultureCode) {
+            return;
+        }
 
         playAudio("language-labels-" + LanguageEnglishLabel + "-audio");
 
