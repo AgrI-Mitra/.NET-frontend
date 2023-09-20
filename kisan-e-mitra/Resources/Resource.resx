@@ -372,4 +372,7 @@ Type your question or speak using the mic button.</value>
   <data name="message.popular_question_4" xml:space="preserve">
     <value>Why am I not an eligible beneficiary?</value>
   </data>
+  <data name="error.default_message" xml:space="preserve">
+    <value>Sorry, there seems to be some issue. I request you to Check your internet connection, then Refresh the page or click on the refresh button at the bottom left corner, and then try again.</value>
+  </data>
 </root>

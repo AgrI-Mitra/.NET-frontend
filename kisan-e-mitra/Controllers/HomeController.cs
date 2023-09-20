@@ -117,6 +117,16 @@ namespace KisanEMitra.Controllers
                 {
                     Key = "message_resend_otp",
                     Value = Resources.Resource.message_resend_otp.ToString()
+                },
+                new CommonKeyValue
+                {
+                    Key = "error_default_message",
+                    Value = Resources.Resource.error_default_message.ToString()
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_ask_ur_question",
+                    Value = Resources.Resource.message_ask_ur_question.ToString()
                 }
             };
 

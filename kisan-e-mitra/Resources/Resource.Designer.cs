@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sorry, there seems to be some issue. I request you to Check your internet connection, then Refresh the page or click on the refresh button at the bottom left corner, and then try again..
+        /// </summary>
+        public static string error_default_message {
+            get {
+                return ResourceManager.GetString("error.default_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are disconnected. Please refresh or login again..
         /// </summary>
         public static string error_disconnected {

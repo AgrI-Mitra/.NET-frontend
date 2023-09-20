@@ -281,6 +281,18 @@
                 htmlElementKeyName: "resend-otp-translation",
                 htmlElementKeyAttributeType: "#",
                 htmlElementValueAttributeType: "value",
+            },
+            {
+                translationKey: "error_default_message",
+                htmlElementKeyName: "default-chatbot-error-message",
+                htmlElementKeyAttributeType: "#",
+                htmlElementValueAttributeType: "value",
+            },
+            {
+                translationKey: "message_ask_ur_question",
+                htmlElementKeyName: "default-placeholder-message",
+                htmlElementKeyAttributeType: "#",
+                htmlElementValueAttributeType: "value",
             }
         ];
 
@@ -427,14 +439,15 @@
         message,
         messageId,
         messageType,
-        isMessageFromBot
+        isMessageFromBot,
+        showAudioOption
     ) {
         if (message != "") {
             let chatMessageWrapperStartingDivHtmlContent =
                 getChatMessageWrapperStartingDivHtmlContent(isMessageFromBot, messageId, "conversationsWrapper"); // Main chat message wrapper
 
-            let chatMessageAudioImageHtmlContent =
-                getChatMessageAudioImageHtmlContent(messageId); // Audio icon inside third column
+            let chatMessageAudioImageHtmlContent = showAudioOption == true ?
+                getChatMessageAudioImageHtmlContent(messageId) : null; // Audio icon inside third column
 
             let feedbackOptionHtmlContent = getFeedbackButtonsHtmlContent(messageId);
 
@@ -446,12 +459,12 @@
                 message +
                 spanClosingHtmlContent +
                 closingDivHtmlContent +
-                chatMessageWrapperColumnThreeStartingDivHtmlContent +
-                chatMessageAudioImageHtmlContent +
-                (messageType == "final_response" && isMessageFromBot == true
-                    ? feedbackOptionHtmlContent
-                    : "") +
-                closingDivHtmlContent +
+                (showAudioOption == true ? (chatMessageWrapperColumnThreeStartingDivHtmlContent +
+                    chatMessageAudioImageHtmlContent +
+                    (messageType == "final_response" && isMessageFromBot == true
+                        ? feedbackOptionHtmlContent
+                        : "") +
+                    closingDivHtmlContent) : "") +
                 closingDivHtmlContent;
 
 
@@ -608,9 +621,14 @@
         message,
         messageId,
         messageType,
-        textInEnglish
+        textInEnglish,
+        showAudioOption
     ) {
-        chatResponseView(message, messageId, messageType);
+        //chatResponseView(message, messageId, messageType);
+        if (message != "") {
+            updateChatMessagesList(message, messageId, messageType, true, showAudioOption);
+        }
+
         if (
             String(textInEnglish)
                 .toLowerCase()
@@ -701,10 +719,7 @@
     }
 
     function chatResponseView(message, messageId, messageType) {
-        if (message != "") {
 
-            updateChatMessagesList(message, messageId, messageType, true);
-        }
     }
 
     function addMatricsCount(matricsType) {
@@ -768,11 +783,14 @@
                             data.Text,
                             data.messageId,
                             data.messageType,
-                            data.textInEnglish
+                            data.textInEnglish,
+                            true
                         );
                     } else if (data.Error !== null) {
-                        message = data.Error;
-                        processChatBotResponse(message, data.messageId, data.messageType);
+                        //message = data.Error;
+                        // Show default error message
+                        var defaultChatbotErrorMessage = $("#default-chatbot-error-message").val();
+                        processChatBotResponse(defaultChatbotErrorMessage, data.messageId, data.messageType);
                     }
                 }
 
@@ -999,11 +1017,13 @@
                                 data.Text,
                                 data.messgaeId,
                                 data.messageType,
-                                data.textInEnglish
+                                data.textInEnglish,
+                                true
                             );
                         } else if (data.Error !== null) {
-                            message = data.Error;
-                            processChatBotResponse(message, data.messageId, data.messageType);
+                            //message = data.Error;
+                            var defaultChatbotErrorMessage = $("#default-chatbot-error-message").val();
+                            processChatBotResponse(defaultChatbotErrorMessage, data.messageId, data.messageType);
                         }
                     }
 
@@ -1432,6 +1452,8 @@
 
     function clearChatHistory() {
         $('.conversationsWrapper').remove();
+        var defaultPlaceholderMessage = $("#default-placeholder-message").val();
+        changeInputPlaceholderValue(defaultPlaceholderMessage);
         showPopularQuestions();
     }
 

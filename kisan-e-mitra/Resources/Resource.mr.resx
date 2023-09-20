@@ -371,4 +371,7 @@
   <data name="message.popular_question_4" xml:space="preserve">
     <value>मी पात्र लाभार्थी का नाही?</value>
   </data>
+  <data name="error.default_message" xml:space="preserve">
+    <value>क्षमस्व, काही समस्या आहे असे दिसते. मी तुम्हाला तुमचे इंटरनेट कनेक्शन तपासण्याची विनंती करतो, नंतर पेज रिफ्रेश करा किंवा तळाशी डाव्या कोपर्‍यातील रिफ्रेश बटणावर क्लिक करा आणि नंतर पुन्हा प्रयत्न करा.</value>
+  </data>
 </root>

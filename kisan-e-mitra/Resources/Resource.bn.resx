@@ -371,4 +371,7 @@
   <data name="message.popular_question_4" xml:space="preserve">
     <value>কেন আমি একজন যোগ্য সুবিধাভোগী নই?</value>
   </data>
+  <data name="error.default_message" xml:space="preserve">
+    <value>দুঃখিত, কিছু সমস্যা আছে বলে মনে হচ্ছে। আমি আপনাকে আপনার ইন্টারনেট সংযোগ পরীক্ষা করার জন্য অনুরোধ করছি, তারপর পৃষ্ঠাটি রিফ্রেশ করুন বা নীচে বাম কোণে রিফ্রেশ বোতামে ক্লিক করুন এবং তারপরে আবার চেষ্টা করুন।</value>
+  </data>
 </root>

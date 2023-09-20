@@ -4,6 +4,9 @@
     //var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
     var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
     var resendOtpTranslation = Resources.Resource.message_resend_otp;
+    var defaultErrorMessage = Resources.Resource.error_default_message;
+    var defaultPlaceholder = Resources.Resource.message_ask_ur_question;
+
     List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;//ViewBag?.LanguageModel?.AvailableLanguages;
     KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;//ViewBag?.LanguageModel?.SelectedLanguage;
     List<kishan_bot.Models.PopularQuestion> popularQuestions = TempData["PopularQuestions"] as List<kishan_bot.Models.PopularQuestion>;//ViewBag.PopularQuestions;
@@ -16,6 +19,8 @@
 @*@Html.Hidden("welcome-greeting-message-base64", (object)welcomeNoteGreetingBase64.ToString())
     @Html.Hidden("language-change-greeting-message-base64", (object)languageChangeGreetingBase64.ToString())*@
 @Html.Hidden("resend-otp-translation", (object)resendOtpTranslation.ToString())
+@Html.Hidden("default-chatbot-error-message", (object)defaultErrorMessage.ToString())
+@Html.Hidden("default-placeholder-message", (object)defaultPlaceholder.ToString())
 
 <div class="msg-scrollbar" id="message-list">
     <div class="my-msg-content system-msg-bg chatbot-message-wrapper">
@@ -61,7 +66,7 @@
         </button>
         <div class="meg-input position-relative me-2 me-sm-3 flex-grow-1">
             @*<input id="userQuestionTextBox" type="text" class="message-input messageAskUrQuestion" placeholder="@Resources.Resource.message_ask_ur_question">*@
-            <textarea id="userQuestionTextBox" class="message-input messageAskUrQuestion message-input-textarea" placeholder="@Resources.Resource.message_ask_ur_question"></textarea>
+<textarea id="userQuestionTextBox" class="message-input messageAskUrQuestion message-input-textarea" placeholder="@Resources.Resource.message_ask_ur_question"></textarea>
             <button id="sendTextButton" type="submit" class="sendtext" disabled></button>
         </div>
         <button id="voiceRecordButtonId" class="send-button img-fluid bg-transparent position-relative">
