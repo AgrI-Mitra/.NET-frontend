@@ -531,7 +531,7 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Thank you for selecting the English language.
         ///Dear Beneficiary,
-        ///Type your question or speak using the mic button. Just touch the mic button and say your question. Touch the mic button again to stop recording..
+        ///Type your question or speak using the mic button..
         /// </summary>
         public static string message_language_changed_greeting {
             get {

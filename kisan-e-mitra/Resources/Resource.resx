@@ -273,7 +273,7 @@
   <data name="message.language_changed_greeting" xml:space="preserve">
     <value>Thank you for selecting the English language.
 Dear Beneficiary,
-Type your question or speak using the mic button. Just touch the mic button and say your question. Touch the mic button again to stop recording.</value>
+Type your question or speak using the mic button.</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>Not registered yet ?</value>
