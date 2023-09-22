@@ -273,7 +273,7 @@
   <data name="message.language_changed_greeting" xml:space="preserve">
     <value>मारती भाषा निवडल्याबद्दल धन्यवाद.
 प्रिय लाभार्थी,
-आपला प्रश्न टाइप करा किंवा माइक बटण वापरुन बोला.</value>
+आपला प्रश्न टाइप करा किंवा माइक बटण वापरुन बोला. फक्त माइक बटणावर स्पर्श करा आणि आपला प्रश्न सांगा. रेकॉर्डिंग थांबविण्यासाठी पुन्हा माइक बटणावर स्पर्श करा.</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>अद्याप नोंदणी केली नाही?</value>

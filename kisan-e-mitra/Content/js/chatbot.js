@@ -1114,11 +1114,6 @@
     ) {
         /*textToSpeech(LanguageEnglishLabel, changeLanguageApiCall);*/
 
-        // No need to do anything if user clicks on the current selected language
-        if (currentLanguageCultureCode == languageCultureCode) {
-            return;
-        }
-
         playAudio("language-labels-" + LanguageEnglishLabel + "-audio");
 
         $.ajax({
