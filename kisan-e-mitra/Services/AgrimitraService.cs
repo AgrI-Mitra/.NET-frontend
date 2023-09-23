@@ -64,6 +64,16 @@ namespace KisanEMitra.Services
                 }
                 else
                 {
+
+                    if (response.StatusCode == System.Net.HttpStatusCode.BadGateway)
+                    {
+                        _ = AddMatricsCount("badGateway");
+                    }
+                    else
+                    {
+                        _ = AddMatricsCount("internalServerError");
+                    }
+                    
                     siteUserBody.Text = response.ReasonPhrase;
                     siteUserBody.Error = response.StatusCode.ToString();
                 }
@@ -112,9 +122,11 @@ namespace KisanEMitra.Services
                 }
                 else
                 {
-                    if(response.StatusCode == System.Net.HttpStatusCode.BadGateway) {
+                    if (response.StatusCode == System.Net.HttpStatusCode.BadGateway)
+                    {
                         _ = AddMatricsCount("badGateway");
-                    } else if(response.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                    }
+                    else
                     {
                         _ = AddMatricsCount("internalServerError");
                     }
@@ -216,6 +228,14 @@ namespace KisanEMitra.Services
                 }
                 else
                 {
+                    if (response.StatusCode == System.Net.HttpStatusCode.BadGateway)
+                    {
+                        _ = AddMatricsCount("badGateway");
+                    }
+                    else
+                    {
+                        _ = AddMatricsCount("internalServerError");
+                    }
                     siteUserBody.IsSuccess = false;
                 }
             }
