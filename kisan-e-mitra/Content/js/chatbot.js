@@ -1,4 +1,24 @@
-(function () {
+(async function () {
+
+    var apiUrlConfig = {
+        chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/",
+        userApiBaseEndPoint: "user/",
+        generateUserId: "user/generateUserId",
+        Prompt: "prompt",
+        ChatHistory: "history",
+        ApiVersion: "/3",
+        Message: "user/message/",
+        MatricsIncrement: "custom/metrics/increment"
+    };
+
+    var isChangeLanguageRequestInProgress = null;
+
+    var isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
+
+    var isGetTextToSpeechFromBhashiniRequestInProgress = null;
+
+    var currentUserId = null;
+
     var userQuestionTextBox = "#userQuestionTextBox"; // This variable is used to listen any events on user question text box where user will type the question
 
     var startAudioImagePath = "../Content/images/start-audio.svg";
@@ -25,6 +45,7 @@
     var gumStream; //stream from getUserMedia()
     var rec; //Recorder.js object
     var input; //MediaStreamAudioSourceNode we'll be recording
+    var mediaRecorder;
 
     // shim for AudioContext when it's not avb.
     var AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -38,8 +59,152 @@
 
     // When browser tab is about to close
     window.onbeforeunload = function () {
+
+        // abort any on going request to server
+        // As it will block the restarting of the page
+        if (isChangeLanguageRequestInProgress) {
+            isChangeLanguageRequestInProgress.abort();
+        }
+
+        if (isGetTextToSpeechFromBhashiniRequestInProgress) {
+            isGetTextToSpeechFromBhashiniRequestInProgress.abort();
+        }
+
+        if (isGetWelcomeGreetingsTextToSpeechRequestInProgress) {
+            isGetWelcomeGreetingsTextToSpeechRequestInProgress.abort();
+        }
+
         restartSession();
     };
+
+    onstorage = (event) => {
+
+        onFingerPrintIdCreated();
+    };
+
+    function onFingerPrintIdCreated() {
+        let fingerPrintId = sessionStorage.getItem("fingerPrintId");
+
+        if (fingerPrintId != null || fingerPrintId != undefined) {
+
+            createSession(fingerPrintId);
+        }
+    }
+
+    function createSession(fingerPrintId) {
+
+        const currentDate = new Date();
+
+        fingerPrintId += currentDate.getTime().toString();
+
+        const apiUrl = apiUrlConfig.chatbotApiBaseUrl + apiUrlConfig.generateUserId + "/" + fingerPrintId;
+
+        return new Promise((resolve, reject) => {
+            makeRequestRetry("POST", apiUrl).then(apiResponse => {
+
+                currentUserId = apiResponse;
+                resolve();
+            }).catch(apiError => {
+                reject();
+            });
+        });
+    }
+
+    /**
+     * This method is used to make http api request with retry options
+     * @param {any} requestType
+     * @param {any} apiUrl
+     * @param {any} requestPayload
+     * @param {any} headers
+     * @param {any} maxRetry
+     * @param {any} retryDelay
+     * @returns
+     */
+    function makeRequestRetry(requestType, apiUrl, headers, requestPayload, maxRetry = 0, retryDelay = 3000) {
+        let retryCnt = 0;
+
+        function delay(t) {
+            return new Promise(resolve => {
+                setTimeout(resolve, t);
+            });
+        }
+
+        function run() {
+            return makeApiRequest(requestType, apiUrl, headers, requestPayload).catch(function (err) {
+                ++retryCnt;
+
+                if (retryCnt > maxRetry) {
+
+                    console.error('Max retries exceeded. There was an error!', err.statusText);
+                    return new Promise((err, err));
+                }
+                console.error('Retry #' + retryCnt + ' after error', err.statusText);
+
+                // call ourselves again after a short delay to do the retry
+                // add to the promise chain so still linked to the originally returned promise
+                return delay(retryDelay).then(run);
+            });
+        }
+        return run();
+    }
+
+    const makeApiRequest = async (requestType, apiUrl, headers, requestPayload) => {
+
+        return new Promise((resolve, reject) => {
+
+            let body = null;
+
+            if (requestPayload != null || requestPayload != undefined) {
+
+                // If headers are null, create new headres
+                // Else append content type headers
+                if (!headers) {
+                    headers = new Headers();
+                }
+
+                headers.append("Content-Type", "application/json");
+
+                body = typeof (requestPayload) == String ? requestPayload : JSON.stringify(requestPayload);
+            }
+
+            fetch(apiUrl, {
+                method: requestType,
+                body: body, // string or object
+                headers: headers,
+
+            }).then(result => {
+
+                if (result.status == 201 || result.status == 200) {
+                    result.text().then(textResult => {
+
+                        resolve(textResult);
+                    }).catch(textError => {
+
+                        addMatricsCount("internalServerError");
+                        reject(textError);
+                    });
+                } else {
+
+                    if (result.status == 502) {
+
+                        addMatricsCount("badGateway");
+                    } else if (result.status == 500) {
+
+                        addMatricsCount("internalServerError");
+                    } else if (result.status == 504) {
+
+                        addMatricsCount("gatewayTimeoutCount");
+                    }
+
+                    reject();
+                }
+            }).catch(err => {
+
+                addMatricsCount("internalServerError");
+                reject(err);
+            });
+        });
+    }
 
     // This method is used to show an indicator that chatbot response is in progress
     function chatLoader() {
@@ -421,6 +586,10 @@
     }
 
     function initChatBotConfig() {
+
+        const controller = new AbortController();
+        const signal = controller.signal;
+
         languageChangeListener();
         popularQuestionClickListener();
         userQuestionTextBoxOnKeyPressListener();
@@ -579,7 +748,7 @@
                     lastUserTypedMessageId = ""; // Clear last user typed messaged Id once it is sent
                 }
 
-                askQuestions(questionInputContent);
+                askQuestions(questionInputContent, "text");
             });
         });
     });
@@ -624,7 +793,6 @@
         textInEnglish,
         showAudioOption
     ) {
-        //chatResponseView(message, messageId, messageType);
         if (message != "") {
             updateChatMessagesList(message, messageId, messageType, true, showAudioOption);
         }
@@ -663,7 +831,7 @@
 
     function resendOTP(element) {
         $("#chatbotMessageWrapper-resendOtp").remove();
-        askQuestions("resend OTP");
+        askQuestions("resend OTP", "text");
     }
 
     /**
@@ -718,86 +886,143 @@
         return response;
     }
 
-    function chatResponseView(message, messageId, messageType) {
-
-    }
-
     function addMatricsCount(matricsType) {
 
-        $.ajax({
-            type: "POST",
-            url: "/Home/AddMatricsCount",
-            dataType: "json",
-            data: {
-                matricsType: matricsType
-            },
-            success: function (data) {
-            },
-            failure: function (data) { },
+        const apiUrl = apiUrlConfig.chatbotApiBaseUrl + apiUrlConfig.MatricsIncrement;
+        const headers = new Headers();
+        headers.append("User-id", currentUserId);
+
+        makeRequestRetry("POST", apiUrl, headers, matricsType).then(apiResponse => {
+
+        }).catch(apiError => {
         });
     }
 
-    function askQuestions(input) {
-        let finalResponse = sessionStorage.getItem("final_response");
-        let isFinalResponseReceived = finalResponse != undefined && finalResponse != null ? true : false;
+    function askQuestions(input, category, blob) {
 
-        sessionStorage.removeItem("final_response");
+        let isFinalResponseReceived = false;
 
-        if (isUserTypedQuestion == true) {
-            addMatricsCount("directMessageTypedCount");
-            isUserTypedQuestion = false;
-        } else if (isSampleQueryUsed == true) {
-            addMatricsCount("sampleQueryUsedCount");
+        if (category == "text") {
+            let finalResponse = sessionStorage.getItem("final_response");
+
+            if (finalResponse != undefined && finalResponse != null) {
+                isFinalResponseReceived = true;
+            }
+
+            sessionStorage.removeItem("final_response");
+
+            if (isUserTypedQuestion == true) {
+                addMatricsCount("directMessageTypedCount");
+                isUserTypedQuestion = false;
+            } else if (isSampleQueryUsed == true) {
+                addMatricsCount("sampleQueryUsedCount");
+            }
+
+            $(userQuestionTextBox).val("");
+            $(userQuestionTextBox).trigger("change");
         }
 
         chatLoader();
-        $(userQuestionTextBox).val("");
-        $(userQuestionTextBox).trigger("change");
 
         scrollToBottom();
-        $.ajax({
-            type: "POST",
-            url: "/Home/AskQuestions",
-            dataType: "json",
-            data: {
-                querstion: input,
-                finalResponse: isFinalResponseReceived
-            },
-            success: function (data) {
+
+        function prompt() {
+            const apiUrl = apiUrlConfig.chatbotApiBaseUrl + apiUrlConfig.Prompt + apiUrlConfig.ApiVersion;
+            const headers = new Headers();
+            headers.append("User-id", currentUserId);
+
+
+            let currentLanguageCultureCode = $('.language-buttons').data("current-language-culture-code");
+
+            const requestPayload = {
+                text: category == "text" ? input : null,
+                media: category == "base64audio" ? { category: "base64audio", text: input } : null,
+                location: null,
+                contactCard: null,
+                buttonChoices: null,
+                stylingTag: null,
+                flow: "",
+                mediaCaption: "",
+                inputLanguage: currentLanguageCultureCode
+            };
+
+            makeRequestRetry("POST", apiUrl, headers, requestPayload).then(apiResponse => {
+
                 hideChatLoader();
+
+                const data = JSON.parse(apiResponse);
+
                 var message = "";
 
-                const contentType = "audio/wav";
+                if (data.error !== null) {
 
-                if (data?.audio?.text) {
-                    const blob = b64toBlob(data.audio.text, contentType);
-                    loadAudioPlayer(blob, data.messageId, "left conversationsWrapper");
-                }
+                    // Show default error message
+                    var defaultChatbotErrorMessage = $("#default-chatbot-error-message").val();
+                    processChatBotResponse(defaultChatbotErrorMessage, data.messageId, data.messageType);
+                } else {
 
-                if (data.Text !== null || data.Error !== null) {
-                    changeInputPlaceholderValue(data.placeholder);
+                    if (category == "base64audio") {
 
-                    if (data.Text !== null) {
-                        message = data.Text;
-                        processChatBotResponse(
-                            data.Text,
-                            data.messageId,
-                            data.messageType,
-                            data.textInEnglish,
-                            true
-                        );
-                    } else if (data.Error !== null) {
-                        //message = data.Error;
-                        // Show default error message
-                        var defaultChatbotErrorMessage = $("#default-chatbot-error-message").val();
-                        processChatBotResponse(defaultChatbotErrorMessage, data.messageId, data.messageType);
+                        loadAudioPlayer(blob, data.messageId, "right conversationsWrapper");
+                        lastUserTypedMessageId = data.messageId;
+
+                        if (data.text) {
+
+                            message = data.text;
+                            $(userQuestionTextBox).val(message);
+                            $(userQuestionTextBox).focus();
+                            $(userQuestionTextBox).trigger("change");
+                        }
+
+                    } else {
+
+                        const contentType = "audio/wav";
+
+                        if (data?.audio?.text) {
+                            const blob = b64toBlob(data.audio.text, contentType);
+                            loadAudioPlayer(blob, data.messageId, "left conversationsWrapper");
+                        }
+
+                        if (data.text !== null) {
+
+                            changeInputPlaceholderValue(data.placeholder);
+
+                            if (data.text !== null) {
+                                message = data.text;
+                                processChatBotResponse(
+                                    data.text,
+                                    data.messageId,
+                                    data.messageType,
+                                    data.textInEnglish,
+                                    true
+                                );
+                            }
+                        }
                     }
                 }
 
                 scrollToBottom();
-            },
-            failure: function (data) { },
-        });
+
+            }).catch(apiError => {
+                hideChatLoader();
+            });
+        }
+
+        if (isFinalResponseReceived == true) {
+            const fingerPrintId = sessionStorage.getItem("fingerPrintId");
+
+            createSession(fingerPrintId).then((sessionResult) => {
+                prompt();
+            }).catch((sessionError) => {
+                var defaultChatbotErrorMessage = $("#default-chatbot-error-message").val();
+
+                const currentDateTime = new Date().getTime().toString();
+
+                processChatBotResponse(defaultChatbotErrorMessage, currentDateTime);
+            });
+        } else {
+            prompt();
+        }
     }
 
     function likeMessage(messageId) {
@@ -807,7 +1032,7 @@
         // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
         var likeButtonSource = $("#thumbLikeButton-" + messageId)[0].src;
 
-        var likeMessageApiEndPoint = "LikeMessage";
+        var likeMessageApiEndPoint = "like";
         var likeImageToReplace = thumbLikeHighlightImagePath;
 
         var isLikeHighlight = false;
@@ -815,44 +1040,41 @@
         if (likeButtonSource.indexOf("fill") >= 0) {
             isLikeHighlight = true;
 
-            likeMessageApiEndPoint = "UnlikeMessage";
+            likeMessageApiEndPoint = "removelike";
             likeImageToReplace = thumbLikeImagePath;
         }
 
-        $.ajax({
-            type: "POST",
-            url: "/Home/" + likeMessageApiEndPoint,
-            dataType: "json",
-            data: { messageId: messageId },
-            success: function (data) {
-                hideChatLoader();
+        const apiUrl = apiUrlConfig.chatbotApiBaseUrl + apiUrlConfig.Message + likeMessageApiEndPoint + "/" + messageId;
+        const headers = new Headers();
+        headers.append("User-id", currentUserId);
 
-                if (data.IsSuccess == true) {
-                    // Highlight the like button
-                    $("#thumbLikeButton-" + messageId).attr("src", likeImageToReplace);
+        makeRequestRetry("GET", apiUrl, headers).then(apiResponse => {
+            hideChatLoader();
+            const data = JSON.parse(apiResponse);
 
-                    // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
-                    if (isLikeHighlight) {
-                        $("#thumbLikeButton-" + messageId).removeClass(
-                            "feedback-animation"
-                        );
-                    } else {
-                        $("#thumbLikeButton-" + messageId).addClass("feedback-animation");
-                    }
+            // Highlight the like button
+            $("#thumbLikeButton-" + messageId).attr("src", likeImageToReplace);
 
-                    $("#thumbDislikeButton-" + messageId).removeClass(
-                        "feedback-animation"
-                    ); // Remove animation class from dislike button, to display animation when user hits the same button again
+            // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+            if (isLikeHighlight) {
+                $("#thumbLikeButton-" + messageId).removeClass(
+                    "feedback-animation"
+                );
+            } else {
+                $("#thumbLikeButton-" + messageId).addClass("feedback-animation");
+            }
 
-                    $("#thumbDislikeButton-" + messageId).attr(
-                        "src",
-                        thumbDislikeImagePath
-                    ); // Change image to color less icon for dislike button as user has clicked on like button now
-                }
-            },
-            failure: function (data) {
-                hideChatLoader();
-            },
+            $("#thumbDislikeButton-" + messageId).removeClass(
+                "feedback-animation"
+            ); // Remove animation class from dislike button, to display animation when user hits the same button again
+
+            $("#thumbDislikeButton-" + messageId).attr(
+                "src",
+                thumbDislikeImagePath
+            ); // Change image to color less icon for dislike button as user has clicked on like button now
+
+        }).catch(apiError => {
+            hideChatLoader();
         });
     }
 
@@ -863,50 +1085,50 @@
         // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
         var dislikeButtonSource = $("#thumbDislikeButton-" + messageId)[0].src;
 
-        var dislikeMessageApiEndPoint = "DislikeMessage";
+        var dislikeMessageApiEndPoint = "dislike";
         var dislikeImageToReplace = thumbDislikeHighlightImagePath;
         var isDislikeHighlight = false;
         if (dislikeButtonSource.indexOf("fill") >= 0) {
             isDislikeHighlight = true;
 
-            dislikeMessageApiEndPoint = "UnlikeMessage";
+            dislikeMessageApiEndPoint = "removelike";
             dislikeImageToReplace = thumbDislikeImagePath;
         }
 
-        $.ajax({
-            type: "POST",
-            url: "/Home/" + dislikeMessageApiEndPoint,
-            dataType: "json",
-            data: { messageId: messageId },
-            success: function (data) {
-                hideChatLoader();
+        const apiUrl = apiUrlConfig.chatbotApiBaseUrl + apiUrlConfig.Message + dislikeMessageApiEndPoint + "/" + messageId;
 
-                if (data.IsSuccess == true) {
-                    // Highlight the like button
-                    $("#thumbDislikeButton-" + messageId).attr(
-                        "src",
-                        dislikeImageToReplace
-                    );
+        const headers = new Headers();
+        headers.append("User-id", currentUserId);
 
-                    // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
-                    if (isDislikeHighlight) {
-                        $("#thumbDislikeButton-" + messageId).removeClass(
-                            "feedback-animation"
-                        );
-                    } else {
-                        $("#thumbDislikeButton-" + messageId).addClass(
-                            "feedback-animation"
-                        );
-                    }
+        makeRequestRetry("GET", apiUrl, headers).then(apiResponse => {
+            hideChatLoader();
 
-                    $("#thumbLikeButton-" + messageId).removeClass("feedback-animation"); // Remove animation class from like button, to display animation when user hits the same button again
+            const data = JSON.parse(apiResponse);
 
-                    $("#thumbLikeButton-" + messageId).attr("src", thumbLikeImagePath);
-                }
-            },
-            failure: function (data) {
-                hideChatLoader();
-            },
+            // Highlight the like button
+            $("#thumbDislikeButton-" + messageId).attr(
+                "src",
+                dislikeImageToReplace
+            );
+
+            // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+            if (isDislikeHighlight) {
+                $("#thumbDislikeButton-" + messageId).removeClass(
+                    "feedback-animation"
+                );
+            } else {
+                $("#thumbDislikeButton-" + messageId).addClass(
+                    "feedback-animation"
+                );
+            }
+
+            $("#thumbLikeButton-" + messageId).removeClass("feedback-animation"); // Remove animation class from like button, to display animation when user hits the same button again
+
+            $("#thumbLikeButton-" + messageId).attr("src", thumbLikeImagePath);
+
+        }).catch(apiError => {
+
+            hideChatLoader();
         });
     }
 
@@ -934,105 +1156,63 @@
         });
     }
 
-    function startRecording() {
+    async function startRecording() {
 
         // Record matrics
         addMatricsCount("micUsedCount");
 
-        var constraints = { audio: true, video: false };
-        /*
-                    We're using the standard promise based getUserMedia()
-                    https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-                */
+        var chunks = [];
+        var arrayBufferData;
 
-        navigator.mediaDevices
-            .getUserMedia(constraints)
-            .then(function (stream) {
-                /*
-                                create an audio context after getUserMedia is called
-                                sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
-                                the sampleRate defaults to the one set in your OS for your playback device
-                
-                            */
-                audioContext = new AudioContext();
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
-                /*  assign to gumStream for later use  */
-                gumStream = stream;
+            navigator.mediaDevices.getUserMedia({
+                audio: true
+            }).then(stream => {
+                mediaRecorder = new MediaRecorder(stream);
 
-                /* use the stream */
-                input = audioContext.createMediaStreamSource(stream);
+                mediaRecorder.start();
 
-                /*
-                                Create the Recorder object and configure to record mono sound (1 channel)
-                                Recording 2 channels  will double the file size
-                            */
-                rec = new Recorder(input, { numChannels: 1 });
+                mediaRecorder.ondataavailable = async (e) => {
 
-                //start the recording process
-                rec.record();
+                    arrayBufferData = await e.data.arrayBuffer();
+
+                    chunks.push(e.data);
+
+                    const blob = new Blob(chunks);
+
+                    const encodedBlob = await getWaveBlob(blob, false, arrayBufferData);
+
+                    createDownloadLink(encodedBlob);
+
+                    chunks = [];
+                }
+
+                mediaRecorder.onstop = async (e) => {
+                }
+            }).catch(error => {
+
             })
-            .catch(function (err) {
-                console.log("stream error: ", err);
-            });
+        }
     }
 
-    function stopRecording() {
-        //tell the recorder to stop the recording
-        rec.stop();
-
-        //stop microphone access
-        gumStream.getAudioTracks()[0].stop();
-
-        //create the wav blob and pass it on to createDownloadLink
-        rec.exportWAV(createDownloadLink);
+    async function stopRecording() {
+        mediaRecorder.stop();
     }
 
     function createDownloadLink(blob) {
         var reader = new window.FileReader();
+
         reader.readAsDataURL(blob);
 
-        reader.onloadend = function () {
+        reader.onloadend = async function () {
+
             base64 = reader.result;
+
             base64 = base64.split(",")[1];
-            chatLoader();
             scrollToBottom();
-            $.ajax({
-                type: "POST",
-                url: "/Home/AskAudioQuestions",
-                dataType: "json",
-                data: { base64Question: base64 },
-                success: function (data) {
-                    var message = "";
-                    hideChatLoader();
 
-                    loadAudioPlayer(blob, data.messageId, "right conversationsWrapper");
-                    lastUserTypedMessageId = data.messageId;
-                    if (data.Text) {
-                        showUserRecordedMessageInTextBox(data.Text);
-                    } else if (data.Text !== null || data.Error !== null) {
-                        if (data.Text !== null) {
-                            message = data.Text;
-                            $(userQuestionTextBox).val(message);
-                            processChatBotResponse(
-                                data.Text,
-                                data.messgaeId,
-                                data.messageType,
-                                data.textInEnglish,
-                                true
-                            );
-                        } else if (data.Error !== null) {
-                            //message = data.Error;
-                            var defaultChatbotErrorMessage = $("#default-chatbot-error-message").val();
-                            processChatBotResponse(defaultChatbotErrorMessage, data.messageId, data.messageType);
-                        }
-                    }
-
-                    scrollToBottom();
-                },
-                failure: function (data) {
-                    hideChatLoader();
-                },
-            });
+            askQuestions(base64, "base64audio", blob);
         };
     }
 
@@ -1112,16 +1292,17 @@
         languageCultureLabel,
         currentLanguageCultureCode
     ) {
-        /*textToSpeech(LanguageEnglishLabel, changeLanguageApiCall);*/
 
         playAudio("language-labels-" + LanguageEnglishLabel + "-audio");
 
-        $.ajax({
+        isChangeLanguageRequestInProgress = $.ajax({
             type: "POST",
             url: "/Home/ChangeLanguage",
             dataType: "json",
             data: { lang: languageCultureCode },
             success: function (data) {
+                isChangeLanguageRequestInProgress = null;
+
                 getWelcomeGreetingsAudio(true);
 
                 sessionStorage.setItem("languageChangedMessage", data.Message);
@@ -1137,7 +1318,8 @@
                     languageCultureCode +
                     "-audio",
                     "",
-                    false
+                    true,
+                    true
                 );
 
                 // Update selected language buttons and labels to update the selected language in UI.
@@ -1150,6 +1332,7 @@
 
             },
             failure: function (data) {
+                isChangeLanguageRequestInProgress = null;
                 alert("oops something went wrong");
             },
         });
@@ -1198,30 +1381,32 @@
     }
 
     function getWelcomeGreetingsAudio(isLanguageChanged) {
-        $.ajax({
+        isGetWelcomeGreetingsTextToSpeechRequestInProgress = $.ajax({
             type: "POST",
             url: "/Home/GetWelcomeGreetingsTextToSpeech",
             dataType: "json",
             success: function (data) {
-
+                isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
                 initWelcomeGreetingAudioConfig(data.Data, isLanguageChanged);
             },
             failure: function (data) {
+                isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
                 alert("oops something went wrong");
             },
         });
     }
 
     function getTextToSpeechFromBhashini() {
-        $.ajax({
+        isGetTextToSpeechFromBhashiniRequestInProgress = $.ajax({
             type: "POST",
             url: "/Home/GetTextToSpeechFromBhashini",
             dataType: "json",
             success: function (data) {
-
+                isGetTextToSpeechFromBhashiniRequestInProgress = null;
                 initGeneralAudioConfig(data.Data);
             },
             failure: function (data) {
+                isGetTextToSpeechFromBhashiniRequestInProgress = null;
                 alert("oops something went wrong");
             },
         });
@@ -1433,15 +1618,16 @@
     }
     function restartSession() {
         scrollToBottom();
-        $.ajax({
-            type: "POST",
-            url: "/Home/Logout",
-            dataType: "json",
-            data: null,
-            success: function (data) {
-                clearChatHistory();
-            },
-            failure: function (data) { },
+        clearChatHistory();
+        const fingerPrintId = sessionStorage.getItem("fingerPrintId");
+
+        createSession(fingerPrintId).then((sessionResult) => {
+        }).catch((sessionError) => {
+            var defaultChatbotErrorMessage = $("#default-chatbot-error-message").val();
+
+            const currentDateTime = new Date().getTime().toString();
+
+            processChatBotResponse(defaultChatbotErrorMessage, currentDateTime);
         });
     }
 

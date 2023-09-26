@@ -26,66 +26,12 @@ namespace KisanEMitra.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<JsonResult> Logout()
+        public ActionResult Index()
         {
-            KillSession();
-            await CreateSession();
-
-            return Json(new AjaxActionResponse()
-            {
-                Message = "Session refreshed",
-                Success = true
-            });
-        }
-
-        private void KillSession()
-        {
-            HttpContext context = System.Web.HttpContext.Current;
-            System.Web.SessionState.SessionIDManager Manager = new System.Web.SessionState.SessionIDManager();
-
-            Manager.RemoveSessionID(context);
-
-            Session.RemoveAll();
-        }
-
-        private async Task CreateSession()
-        {
-            HttpContext context = System.Web.HttpContext.Current;
-            System.Web.SessionState.SessionIDManager Manager = new System.Web.SessionState.SessionIDManager();
-
-            string fingerPrint = Manager.CreateSessionID(context);
-
-            var userSessionID = Session["userSessionID"];
-
-            if (userSessionID == null)
-            {
-                if (fingerPrint == null)
-                {
-                    var errorMessage = "API call error. Please try again later.";
-                    RedirectToAction("Index", "Error", errorMessage);
-                }
-
-                userSessionID = await AgrimitraService.GetUserSessionIDAsync(fingerPrint);
-                if (userSessionID == null)
-                {
-                    var errorMessage = "Session is not created. Please try again later.";
-                    RedirectToAction("Index", "Error", errorMessage);
-                }
-
-                Session["userSessionID"] = userSessionID;
-            }
-        }
-
-        public async Task<ActionResult> Index()
-        {
-            await CreateSession();
-
             var languageModel = GetSelectedLanguage();
             TempData["LanguageModel"] = languageModel;
             TempData["PopularQuestions"] = GetPopularQuestions();
 
-            //await SetAudioBase64StringToViewBagAsync();
             return View();
         }
 
@@ -131,12 +77,6 @@ namespace KisanEMitra.Controllers
             };
 
             return translations;
-            //return Json(new AjaxActionResponse()
-            //{
-            //    Message = "Success",
-            //    Data = translations,
-            //    Success = true
-            //});
         }
 
         [HttpPost]
@@ -190,29 +130,24 @@ namespace KisanEMitra.Controllers
 
             // Load audio base64 strings to view bag so we can play audio using it
             List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
-            //foreach (var item in greetingMessagesAudioStrings)
-            //{
-            //    audioBase64Strings.Add(new CommonKeyValue
-            //    {
-            //        Key = "message_welcome_greeting",
-            //        Value = item.audioContent.ToString()
-            //    });
-            //}
-
 
             var selectedLanguage = GetSelectedLanguage().SelectedLanguage;
 
-            audioBase64Strings.Add(new CommonKeyValue
+            if (greetingMessagesAudioStrings.Count > 0)
             {
-                Key = "welcome-greeting-message-base64-" + selectedLanguage.LanguageCultureCode,
-                Value = greetingMessagesAudioStrings[0].audioContent.ToString()
-            });
 
-            audioBase64Strings.Add(new CommonKeyValue
-            {
-                Key = "language-change-greeting-message-base64-" + selectedLanguage.LanguageCultureCode,
-                Value = greetingMessagesAudioStrings[1].audioContent.ToString()
-            });
+                audioBase64Strings.Add(new CommonKeyValue
+                {
+                    Key = "welcome-greeting-message-base64-" + selectedLanguage.LanguageCultureCode,
+                    Value = greetingMessagesAudioStrings[0].audioContent.ToString()
+                });
+
+                audioBase64Strings.Add(new CommonKeyValue
+                {
+                    Key = "language-change-greeting-message-base64-" + selectedLanguage.LanguageCultureCode,
+                    Value = greetingMessagesAudioStrings[1].audioContent.ToString()
+                });
+            }
 
             return Json(new AjaxActionResponse()
             {
@@ -222,26 +157,6 @@ namespace KisanEMitra.Controllers
             });
         }
 
-        private async Task SetAudioBase64StringToViewBagAsync()
-        {
-            // Get current language audio for welcome note
-            List<string> strings = new List<string>
-            {
-                Resources.Resource.message_welcome_greeting.ToString(),
-                Resources.Resource.message_language_changed_greeting.ToString()
-            };
-
-            var greetingMessagesAudioStrings = await TextToSpeach(GetSelectedLanguage().SelectedLanguage.LanguageCultureCode, strings);
-
-            // Load audio base64 strings to view bag so we can play audio using it
-            List<string> audioBase64Strings = new List<string>();
-            foreach (var item in greetingMessagesAudioStrings)
-            {
-                audioBase64Strings.Add(item.audioContent);
-            }
-
-            TempData["AudioBase64Strings"] = audioBase64Strings;
-        }
         [HttpPost]
         public JsonResult ChangeLanguage(string lang)
         {
@@ -257,98 +172,11 @@ namespace KisanEMitra.Controllers
         }
 
         [HttpPost]
-        public JsonResult CheckRecordingStatus(bool status)
-        {
-            // Return the new boolean value as JSON
-            return Json(new { isRecording = !status });
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> IdentifyUser(string identifyID)
-        {
-            var userSessionID = Session["userSessionID"].ToString();
-
-            var userQueryBody = new UserQueryBody()
-            {
-                Text = identifyID,
-                inputLanguage = GetSelectedLanguage().SelectedLanguage.LanguageCultureCode
-            };
-
-            var responseBody = await AgrimitraService.IdentifyUser(userSessionID, userQueryBody);
-            if (responseBody == null)
-                return Json(null);
-
-            return Json(responseBody, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> AskQuestions(string querstion, bool finalResponse)
-        {
-            // Check if response is the final answer by bot, then we need to refresh the session
-            if (finalResponse)
-            {
-                KillSession();
-                await CreateSession();
-            }
-
-            var userSessionID = (string)Session["userSessionID"];
-            var userQueryBody = new UserQueryBody()
-            {
-                Text = querstion,
-                inputLanguage = GetSelectedLanguage().SelectedLanguage.LanguageCultureCode
-            };
-            var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
-
-
-
-            if (responseBody == null)
-                return Json(null);
-
-            return Json(responseBody, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> LikeMessage(string messageId)
-        {
-            var userSessionID = (string)Session["userSessionID"];
-
-            var responseBody = await AgrimitraService.LikeDislikeUnlikeMessage(userSessionID, messageId, "like");
-            if (responseBody == null)
-                return Json(null);
-
-            return Json(responseBody, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
         public async Task<JsonResult> AddMatricsCount(string matricsType)
         {
             await AgrimitraService.AddMatricsCount(matricsType);
 
             return Json("", JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> DislikeMessage(string messageId)
-        {
-            var userSessionID = (string)Session["userSessionID"];
-
-            var responseBody = await AgrimitraService.LikeDislikeUnlikeMessage(userSessionID, messageId, "dislike");
-            if (responseBody == null)
-                return Json(null);
-
-            return Json(responseBody, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> UnlikeMessage(string messageId)
-        {
-            var userSessionID = (string)Session["userSessionID"];
-
-            var responseBody = await AgrimitraService.LikeDislikeUnlikeMessage(userSessionID, messageId, "removelike");
-            if (responseBody == null)
-                return Json(null);
-
-            return Json(responseBody, JsonRequestBehavior.AllowGet);
         }
 
         public async Task<List<BhashiniApiResponseAudioInfo>> TextToSpeach(string languageCode, List<string> texts)
@@ -370,23 +198,6 @@ namespace KisanEMitra.Controllers
             TempData["PopularQuestions"] = GetPopularQuestions();
 
             return responseBody.audio;
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> AskAudioQuestions(string base64Question)
-        {
-
-            var userSessionID = (string)Session["userSessionID"];
-            var userQueryBody = new UserQueryBody()
-            {
-                Media = new MediaQuery() { Category = "base64audio", Text = base64Question },
-                inputLanguage = GetSelectedLanguage().SelectedLanguage.LanguageCultureCode
-            };
-            var responseBody = await AgrimitraService.AskQuestionAsync(userSessionID, userQueryBody);
-            if (responseBody == null)
-                return Json(null);
-
-            return Json(responseBody, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ChatHistory()

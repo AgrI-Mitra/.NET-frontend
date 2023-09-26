@@ -301,9 +301,12 @@
     <Content Include="Content\js\autosize.js" />
     <Content Include="Content\js\chatbot.js" />
     <Content Include="Content\js\feedback.js" />
+    <Content Include="Content\js\fingerprint.js" />
     <Content Include="Content\js\languageDropDown.js" />
     <Content Include="Content\js\recorder.js" />
     <Content Include="Content\js\splash.js" />
+    <Content Include="Content\js\wavBlobUtil.js" />
+    <Content Include="Content\js\WavRecorder.js" />
     <Content Include="Content\responsive.css" />
     <Content Include="Content\splash.css" />
     <Content Include="Content\style.css" />
