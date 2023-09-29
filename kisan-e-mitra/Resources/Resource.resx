@@ -385,6 +385,8 @@ Type your question or speak using the mic button. Just touch the mic button and 
     <value>Confirmation!</value>
   </data>
   <data name="message.session_restart_confirmation_message" xml:space="preserve">
-    <value>Do you want to restart the session?</value>
+    <value>You are about to refresh this page and lose all your existing session history. 
+
+Do you want to continue and refresh the page?</value>
   </data>
 </root>

@@ -385,6 +385,8 @@
     <value>உறுதி!</value>
   </data>
   <data name="message.session_restart_confirmation_message" xml:space="preserve">
-    <value>அமர்வை மீண்டும் தொடங்க விரும்புகிறீர்களா?</value>
+    <value>இந்தப் பக்கத்தைப் புதுப்பித்து, ஏற்கனவே உள்ள அனைத்து அமர்வு வரலாற்றையும் இழக்க உள்ளீர்கள்.
+
+தொடர்ந்து பக்கத்தைப் புதுப்பிக்க விரும்புகிறீர்களா?</value>
   </data>
 </root>

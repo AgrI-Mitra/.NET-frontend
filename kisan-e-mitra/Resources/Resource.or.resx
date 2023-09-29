@@ -385,6 +385,8 @@
     <value>ନିଶ୍ଚିତକରଣ!</value>
   </data>
   <data name="message.session_restart_confirmation_message" xml:space="preserve">
-    <value>ଆପଣ ଅଧିବେଶନ ପୁନ rest ଆରମ୍ଭ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</value>
+    <value>ଆପଣ ଏହି ପୃଷ୍ଠାକୁ ସତେଜ କରିବାକୁ ଏବଂ ଆପଣଙ୍କର ସମସ୍ତ ବିଦ୍ୟମାନ ଅଧିବେଶନ ଇତିହାସ ହରାଇବାକୁ ଯାଉଛନ୍ତି |
+
+ଆପଣ ପୃଷ୍ଠା ଜାରି ଏବଂ ସତେଜ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</value>
   </data>
 </root>

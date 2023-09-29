@@ -774,7 +774,9 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Do you want to restart the session?.
+        ///   Looks up a localized string similar to You are about to refresh this page and lose all your existing session history. 
+        ///
+        ///Do you want to continue and refresh the page?.
         /// </summary>
         public static string message_session_restart_confirmation_message {
             get {

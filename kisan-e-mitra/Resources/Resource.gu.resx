@@ -343,7 +343,9 @@
     <value>સમીક્ષા સબમિટ!</value>
   </data>
   <data name="message.session_restart_confirmation_message" xml:space="preserve">
-    <value>શું તમે સત્ર ફરી શરૂ કરવા માંગો છો?</value>
+    <value>તમે આ પૃષ્ઠને તાજું કરવા જઈ રહ્યાં છો અને તમારો વર્તમાન સત્ર ઇતિહાસ ગુમાવશો.
+
+શું તમે ચાલુ રાખવા અને પેજને રિફ્રેશ કરવા માંગો છો?</value>
   </data>
   <data name="message.socket_disconnect_msg" xml:space="preserve">
     <value>ફરીથી કનેક્ટ કરવા માટે.</value>

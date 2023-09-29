@@ -384,6 +384,8 @@
     <value>নিশ্চিতকরণ !</value>
   </data>
   <data name="message.session_restart_confirmation_message" xml:space="preserve">
-    <value>আপনি কি সেশন পুনরায় আরম্ভ করতে চান?</value>
+    <value>আপনি এই পৃষ্ঠাটি রিফ্রেশ করতে চলেছেন এবং আপনার সমস্ত বিদ্যমান সেশন ইতিহাস হারাচ্ছেন৷
+
+আপনি কি চালিয়ে যেতে এবং পৃষ্ঠাটি রিফ্রেশ করতে চান?</value>
   </data>
 </root>

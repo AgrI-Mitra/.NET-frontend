@@ -384,6 +384,8 @@
     <value>உறுதி!</value>
   </data>
   <data name="message.session_restart_confirmation_message" xml:space="preserve">
-    <value>మీరు సెషన్‌ను పునఃప్రారంభించాలనుకుంటున్నారా?</value>
+    <value>మీరు ఈ పేజీని రిఫ్రెష్ చేయబోతున్నారు మరియు మీ ప్రస్తుత సెషన్ చరిత్ర మొత్తాన్ని కోల్పోతారు.
+
+మీరు పేజీని కొనసాగించి, రిఫ్రెష్ చేయాలనుకుంటున్నారా?</value>
   </data>
 </root>

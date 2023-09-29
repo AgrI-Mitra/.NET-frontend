@@ -384,6 +384,8 @@
     <value>पुष्टी!</value>
   </data>
   <data name="message.session_restart_confirmation_message" xml:space="preserve">
-    <value>तुम्हाला सत्र रीस्टार्ट करायचे आहे का?</value>
+    <value>तुम्ही हे पृष्ठ रीफ्रेश करणार आहात आणि तुमचा सर्व विद्यमान सत्र इतिहास गमावणार आहात.
+
+तुम्हाला सुरू ठेवायचे आहे आणि पेज रिफ्रेश करायचे आहे का?</value>
   </data>
 </root>
