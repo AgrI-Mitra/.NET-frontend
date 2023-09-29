@@ -1,8 +1,7 @@
 (async function () {
 
     var apiUrlConfig = {
-        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live
-        chatbotApiBaseUrl: "https://bff.agrimitra.samagra.io/", // Staging
+        chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live
         userApiBaseEndPoint: "user/",
         generateUserId: "user/generateUserId",
         Prompt: "prompt",
