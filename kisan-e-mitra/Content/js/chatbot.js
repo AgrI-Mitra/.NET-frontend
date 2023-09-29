@@ -33,7 +33,7 @@
         "../Content/images/hand-thumbs-down-fill.svg";
     var thumbLikeImagePath = "../Content/images/hand-thumbs-up.svg";
     var thumbLikeHighlightImagePath = "../Content/images/hand-thumbs-up-fill.svg";
-    var chatbotLogoImagePath = "../Content/images/MOA_logo.png";
+    var chatbotLogoImagePath = "../Content/images/chatbot.png";//"../Content/images/MOA_logo.png";
 
     // Voice Recording button related variables - To Apply animation, change icon images etc. - START
     var voiceRecordButtonId = "#voiceRecordButtonId"; // This variable is used to listen events regarding voice recording button.
@@ -341,7 +341,8 @@
      * @returns
      */
     function getChatbotLogoHtmlContent() {
-        return "<img src='../Content/images/MOA_logo.png' class='chatbot-message-wrapper-column-one'>";
+
+        return "<img src='" + chatbotLogoImagePath + "' class='chatbot-message-wrapper-column-one'>";
     }
 
     /**

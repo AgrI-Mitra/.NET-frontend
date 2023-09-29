@@ -165,6 +165,8 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chatbot.css" />
+    <Content Include="Content\images\chatbot.png" />
+    <Content Include="Content\images\chatc.png" />
     <Content Include="Content\images\hand-thumbs-down-fill.svg" />
     <Content Include="Content\images\hand-thumbs-down.svg" />
     <Content Include="Content\images\hand-thumbs-up-fill.svg" />
