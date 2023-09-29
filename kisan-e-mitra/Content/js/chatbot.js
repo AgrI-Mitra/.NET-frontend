@@ -1,7 +1,8 @@
 (async function () {
 
     var apiUrlConfig = {
-        chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/",
+        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live
+        chatbotApiBaseUrl: "https://bff.agrimitra.samagra.io/", // Staging
         userApiBaseEndPoint: "user/",
         generateUserId: "user/generateUserId",
         Prompt: "prompt",
@@ -20,6 +21,8 @@
     var translations = [];
 
     var currentUserId = null;
+
+    var chatbotConfirmationModalId = "chatbotConfirmationModal";
 
     var userQuestionTextBox = "#userQuestionTextBox"; // This variable is used to listen any events on user question text box where user will type the question
 
@@ -59,8 +62,23 @@
     var isUserTypedQuestion = false;
     var isSampleQueryUsed = false;
 
+
+    const chatbotConfirmationModalElement = document.getElementById(chatbotConfirmationModalId);
+
+    const modalOptions = {
+        backdrop: 'static',
+        keyboard: false
+    };
+
+
+    var chatbotConfirmationModal;
+
     // When browser tab is about to close
     window.onbeforeunload = function () {
+
+        if (chatbotConfirmationModal) {
+            chatbotConfirmationModal.hide();
+        }
 
         // abort any on going request to server
         // As it will block the restarting of the page
@@ -136,9 +154,7 @@
 
         function run() {
             return makeApiRequest(requestType, apiUrl, headers, requestPayload).catch(function (err) {
-                ++retryCnt;
 
-                if (retryCnt > maxRetry) {
 
                 if (retryCnt >= maxRetry) {
 
@@ -191,19 +207,13 @@
                         resolve(textResult);
                     }).catch(textError => {
 
-                        addMatricsCount("internalServerError");
                         reject(textError);
                     });
                 } else {
 
                     reject(result);
-                    }
-
-                    reject();
                 }
             }).catch(err => {
-
-                addMatricsCount("internalServerError");
                 reject(err);
             });
         });
@@ -464,7 +474,32 @@
                 htmlElementKeyName: "default-placeholder-message",
                 htmlElementKeyAttributeType: "#",
                 htmlElementValueAttributeType: "value",
+            },
+            {
+                translationKey: "message_confirmation",
+                htmlElementKeyName: "message-confirmation",
+                htmlElementKeyAttributeType: "#",
+                htmlElementValueAttributeType: "text",
+            },
+            {
+                translationKey: "message_session_restart_confirmation_message",
+                htmlElementKeyName: "chatbot-restart-session-confirmation-message",
+                htmlElementKeyAttributeType: "#",
+                htmlElementValueAttributeType: "text",
+            },
+            {
+                translationKey: "label_yes",
+                htmlElementKeyName: "yesLabel",
+                htmlElementKeyAttributeType: ".",
+                htmlElementValueAttributeType: "text",
+            },
+            {
+                translationKey: "label_no",
+                htmlElementKeyName: "noLabel",
+                htmlElementKeyAttributeType: ".",
+                htmlElementValueAttributeType: "text",
             }
+
         ];
 
         for (var i = 0; i < translationsToUpdate.length; i++) {
@@ -539,7 +574,7 @@
      */
     function restartSessionButtonOnClickListener() {
         $("#restartSessionButton").click(function (e) {
-            restartSession();
+            restartSession(true);
         });
     }
 
@@ -566,6 +601,19 @@
             } else if (actionName == "dislikeMessage") {
                 dislikeMessage(messageId);
             }
+        });
+    }
+
+    function chatbotConfirmationModalCloseEventListener() {
+        $(document).on("click", "#chatbotConfirmationModalSaveButton", function (ev) {
+            let modalType = $(this).data("modal-type");
+
+            //chatbotConfirmationModal.hide();
+
+            if (modalType == "restart-session") {
+                restartSession();
+            }
+
         });
     }
 
@@ -604,6 +652,7 @@
         resendOtpOnClickListener();
         popularQuestionsOnClickListener();
         initAutoSizeInputBox();
+        chatbotConfirmationModalCloseEventListener();
     }
 
     function initAutoSizeInputBox() {
@@ -1642,15 +1691,26 @@
             };
         }
     }
-    function restartSession() {
-        scrollToBottom();
-        clearChatHistory();
-        const fingerPrintId = sessionStorage.getItem("fingerPrintId");
+    function restartSession(showConfirmation) {
 
-        createSession(fingerPrintId).then((sessionResult) => {
-        }).catch((sessionError) => {
-            handleError(sessionError);
-        });
+        function proceedForSessionRestart() {
+            scrollToBottom();
+            clearChatHistory();
+            const fingerPrintId = sessionStorage.getItem("fingerPrintId");
+
+            createSession(fingerPrintId).then((sessionResult) => {
+            }).catch((sessionError) => {
+                handleError(sessionError);
+            });
+        }
+        if (showConfirmation == true) {
+            const confirmationMessage = $("#chatbot-restart-session-confirmation-message").val();
+            showChatbotConfirmationModal('restart-session', confirmationMessage, (data => {
+
+            }));
+        } else {
+            proceedForSessionRestart();
+        }
     }
 
     function clearChatHistory() {
@@ -1681,5 +1741,20 @@
             "placeholder",
             valuetoChange != undefined ? valuetoChange : "Ask your question"
         );
+    }
+
+    function showChatbotConfirmationModal(type, confirmationMessage, closeCallback) {
+
+        $('#chatbotConfirmationModalSaveButton').data("modal-type", type);
+
+        chatbotConfirmationModal = new bootstrap.Modal('#' + chatbotConfirmationModalId, modalOptions);
+
+        $("#chatbot-restart-session-confirmation-message").append(confirmationMessage);
+        chatbotConfirmationModal.show();
+
+        chatbotConfirmationModalElement.addEventListener('hidden.bs.modal', event => {
+            closeCallback(event);
+            // do something...
+        })
     }
 })();

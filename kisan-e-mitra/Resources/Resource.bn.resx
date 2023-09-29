@@ -374,4 +374,16 @@
   <data name="error.default_message" xml:space="preserve">
     <value>দুঃখিত, কিছু সমস্যা আছে বলে মনে হচ্ছে। আমি আপনাকে আপনার ইন্টারনেট সংযোগ পরীক্ষা করার জন্য অনুরোধ করছি, তারপর পৃষ্ঠাটি রিফ্রেশ করুন বা নীচে বাম কোণে রিফ্রেশ বোতামে ক্লিক করুন এবং তারপরে আবার চেষ্টা করুন।</value>
   </data>
+  <data name="label.no" xml:space="preserve">
+    <value>না</value>
+  </data>
+  <data name="label.yes" xml:space="preserve">
+    <value>হ্যাঁ</value>
+  </data>
+  <data name="message.confirmation" xml:space="preserve">
+    <value>নিশ্চিতকরণ !</value>
+  </data>
+  <data name="message.session_restart_confirmation_message" xml:space="preserve">
+    <value>আপনি কি সেশন পুনরায় আরম্ভ করতে চান?</value>
+  </data>
 </root>

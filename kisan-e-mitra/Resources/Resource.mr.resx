@@ -374,4 +374,16 @@
   <data name="error.default_message" xml:space="preserve">
     <value>क्षमस्व, काही समस्या आहे असे दिसते. मी तुम्हाला तुमचे इंटरनेट कनेक्शन तपासण्याची विनंती करतो, नंतर पेज रिफ्रेश करा किंवा तळाशी डाव्या कोपर्‍यातील रिफ्रेश बटणावर क्लिक करा आणि नंतर पुन्हा प्रयत्न करा.</value>
   </data>
+  <data name="label.no" xml:space="preserve">
+    <value>नाही</value>
+  </data>
+  <data name="label.yes" xml:space="preserve">
+    <value>होय</value>
+  </data>
+  <data name="message.confirmation" xml:space="preserve">
+    <value>पुष्टी!</value>
+  </data>
+  <data name="message.session_restart_confirmation_message" xml:space="preserve">
+    <value>तुम्हाला सत्र रीस्टार्ट करायचे आहे का?</value>
+  </data>
 </root>

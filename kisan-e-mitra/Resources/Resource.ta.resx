@@ -375,4 +375,16 @@
   <data name="error.default_message" xml:space="preserve">
     <value>மன்னிக்கவும், ஏதோ பிரச்சனை இருப்பது போல் தெரிகிறது. உங்கள் இணைய இணைப்பைச் சரிபார்த்து, பக்கத்தைப் புதுப்பிக்கவும் அல்லது கீழ் இடது மூலையில் உள்ள புதுப்பி பொத்தானைக் கிளிக் செய்யவும், பிறகு மீண்டும் முயற்சி செய்யவும்.</value>
   </data>
+  <data name="label.no" xml:space="preserve">
+    <value>இல்லை</value>
+  </data>
+  <data name="label.yes" xml:space="preserve">
+    <value>ஆம்</value>
+  </data>
+  <data name="message.confirmation" xml:space="preserve">
+    <value>உறுதி!</value>
+  </data>
+  <data name="message.session_restart_confirmation_message" xml:space="preserve">
+    <value>அமர்வை மீண்டும் தொடங்க விரும்புகிறீர்களா?</value>
+  </data>
 </root>

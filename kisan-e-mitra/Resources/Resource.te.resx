@@ -374,4 +374,16 @@
   <data name="error.default_message" xml:space="preserve">
     <value>క్షమించండి, ఏదో సమస్య ఉన్నట్లుంది. మీ ఇంటర్నెట్ కనెక్షన్‌ని తనిఖీ చేసి, ఆపై పేజీని రిఫ్రెష్ చేయమని లేదా దిగువ ఎడమ మూలలో ఉన్న రిఫ్రెష్ బటన్‌పై క్లిక్ చేసి, ఆపై మళ్లీ ప్రయత్నించమని నేను మిమ్మల్ని అభ్యర్థిస్తున్నాను.</value>
   </data>
+  <data name="label.no" xml:space="preserve">
+    <value>నం</value>
+  </data>
+  <data name="label.yes" xml:space="preserve">
+    <value>అవును</value>
+  </data>
+  <data name="message.confirmation" xml:space="preserve">
+    <value>உறுதி!</value>
+  </data>
+  <data name="message.session_restart_confirmation_message" xml:space="preserve">
+    <value>మీరు సెషన్‌ను పునఃప్రారంభించాలనుకుంటున్నారా?</value>
+  </data>
 </root>

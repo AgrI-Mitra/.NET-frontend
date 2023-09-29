@@ -189,6 +189,9 @@
   <data name="label.new_chat" xml:space="preserve">
     <value>નવી ચેટ</value>
   </data>
+  <data name="label.no" xml:space="preserve">
+    <value>ના</value>
+  </data>
   <data name="label.no_history" xml:space="preserve">
     <value>કોઈ ચેટ્સ નથી</value>
   </data>
@@ -225,6 +228,9 @@
   <data name="label.welcome" xml:space="preserve">
     <value>સ્વાગત છે</value>
   </data>
+  <data name="label.yes" xml:space="preserve">
+    <value>હા</value>
+  </data>
   <data name="message.ask_ur_question" xml:space="preserve">
     <value>તમારો પ્રશ્ન પૂછો</value>
   </data>
@@ -236,6 +242,9 @@
   </data>
   <data name="message.coming_soon_description" xml:space="preserve">
     <value>અમે આ ફીચર ખૂબ જ જલ્દી લોન્ચ કરવા જઈ રહ્યા છીએ. જોડાયેલા રહો!</value>
+  </data>
+  <data name="message.confirmation" xml:space="preserve">
+    <value>પુષ્ટિ!</value>
   </data>
   <data name="message.dialer_popup" xml:space="preserve">
     <value>સંતોષકારક પ્રતિસાદ મેળવવા માટે તમે અમા કૃષિ નિષ્ણાત સાથે વાત કરી શકો છો</value>
@@ -332,6 +341,9 @@
   </data>
   <data name="message.review_submitted" xml:space="preserve">
     <value>સમીક્ષા સબમિટ!</value>
+  </data>
+  <data name="message.session_restart_confirmation_message" xml:space="preserve">
+    <value>શું તમે સત્ર ફરી શરૂ કરવા માંગો છો?</value>
   </data>
   <data name="message.socket_disconnect_msg" xml:space="preserve">
     <value>ફરીથી કનેક્ટ કરવા માટે.</value>

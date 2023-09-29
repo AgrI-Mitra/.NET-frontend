@@ -286,6 +286,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string label_no {
+            get {
+                return ResourceManager.GetString("label.no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Chats.
         /// </summary>
         public static string label_no_history {
@@ -394,6 +403,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string label_yes {
+            get {
+                return ResourceManager.GetString("label.yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ask Your Question.
         /// </summary>
         public static string message_ask_ur_question {
@@ -426,6 +444,15 @@ namespace Resources {
         public static string message_coming_soon_description {
             get {
                 return ResourceManager.GetString("message.coming_soon_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation!.
+        /// </summary>
+        public static string message_confirmation {
+            get {
+                return ResourceManager.GetString("message.confirmation", resourceCulture);
             }
         }
         
@@ -743,6 +770,15 @@ namespace Resources {
         public static string message_review_submitted {
             get {
                 return ResourceManager.GetString("message.review_submitted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to restart the session?.
+        /// </summary>
+        public static string message_session_restart_confirmation_message {
+            get {
+                return ResourceManager.GetString("message.session_restart_confirmation_message", resourceCulture);
             }
         }
         

@@ -73,6 +73,25 @@ namespace KisanEMitra.Controllers
                 {
                     Key = "message_ask_ur_question",
                     Value = Resources.Resource.message_ask_ur_question.ToString()
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_confirmation",
+                    Value = Resources.Resource.message_confirmation.ToString()
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_session_restart_confirmation_message",
+                    Value = Resources.Resource.message_session_restart_confirmation_message.ToString()
+                },
+                new CommonKeyValue
+                {
+                    Key = "label_yes",
+                    Value = Resources.Resource.label_yes.ToString()
+                },new CommonKeyValue
+                {
+                    Key = "label_no",
+                    Value = Resources.Resource.label_no.ToString()
                 }
             };
 

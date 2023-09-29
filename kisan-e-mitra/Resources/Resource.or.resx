@@ -375,4 +375,16 @@
   <data name="error.default_message" xml:space="preserve">
     <value>ଦୁ Sorry ଖିତ, କିଛି ସମସ୍ୟା ଥିବା ପରି ମନେ ହେଉଛି | ମୁଁ ତୁମକୁ ଅନୁରୋଧ କରୁଛି ଯେ ତୁମର ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଯାଞ୍ଚ କର, ତାପରେ ପୃଷ୍ଠା ସତେଜ କର କିମ୍ବା ନିମ୍ନ ବାମ କୋଣରେ ଥିବା ସତେଜ ବଟନ୍ ଉପରେ କ୍ଲିକ୍ କର, ଏବଂ ତାପରେ ପୁନର୍ବାର ଚେଷ୍ଟା କର |</value>
   </data>
+  <data name="label.no" xml:space="preserve">
+    <value>ନା</value>
+  </data>
+  <data name="label.yes" xml:space="preserve">
+    <value>ହଁ</value>
+  </data>
+  <data name="message.confirmation" xml:space="preserve">
+    <value>ନିଶ୍ଚିତକରଣ!</value>
+  </data>
+  <data name="message.session_restart_confirmation_message" xml:space="preserve">
+    <value>ଆପଣ ଅଧିବେଶନ ପୁନ rest ଆରମ୍ଭ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</value>
+  </data>
 </root>

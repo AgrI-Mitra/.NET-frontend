@@ -375,4 +375,16 @@ Type your question or speak using the mic button. Just touch the mic button and 
   <data name="error.default_message" xml:space="preserve">
     <value>Sorry, there seems to be some issue. I request you to Check your internet connection, then Refresh the page or click on the refresh button at the bottom left corner, and then try again.</value>
   </data>
+  <data name="label.no" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="label.yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="message.confirmation" xml:space="preserve">
+    <value>Confirmation!</value>
+  </data>
+  <data name="message.session_restart_confirmation_message" xml:space="preserve">
+    <value>Do you want to restart the session?</value>
+  </data>
 </root>
