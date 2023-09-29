@@ -17,6 +17,8 @@
 
     var isGetTextToSpeechFromBhashiniRequestInProgress = null;
 
+    var translations = [];
+
     var currentUserId = null;
 
     var userQuestionTextBox = "#userQuestionTextBox"; // This variable is used to listen any events on user question text box where user will type the question
@@ -100,11 +102,14 @@
         const apiUrl = apiUrlConfig.chatbotApiBaseUrl + apiUrlConfig.generateUserId + "/" + fingerPrintId;
 
         return new Promise((resolve, reject) => {
+
             makeRequestRetry("POST", apiUrl).then(apiResponse => {
 
                 currentUserId = apiResponse;
                 resolve();
             }).catch(apiError => {
+                handleError(apiError);
+
                 reject();
             });
         });
@@ -135,10 +140,16 @@
 
                 if (retryCnt > maxRetry) {
 
+                if (retryCnt >= maxRetry) {
+
                     console.error('Max retries exceeded. There was an error!', err.statusText);
-                    return new Promise((err, err));
+                    return new Promise((_resolve, reject) => {
+                        reject(err);
+                    });
                 }
+
                 console.error('Retry #' + retryCnt + ' after error', err.statusText);
+                retryCnt++;
 
                 // call ourselves again after a short delay to do the retry
                 // add to the promise chain so still linked to the originally returned promise
@@ -185,15 +196,7 @@
                     });
                 } else {
 
-                    if (result.status == 502) {
-
-                        addMatricsCount("badGateway");
-                    } else if (result.status == 500) {
-
-                        addMatricsCount("internalServerError");
-                    } else if (result.status == 504) {
-
-                        addMatricsCount("gatewayTimeoutCount");
+                    reject(result);
                     }
 
                     reject();
@@ -422,6 +425,9 @@
      * @param {any} translationsToUpdate
      */
     function updateTranslations(translationsToUpdate) {
+
+        translations = translationsToUpdate;
+
         let translationsMappingIds = [
             {
                 translationKey: "message_welcome_greeting",
@@ -895,7 +901,30 @@
         makeRequestRetry("POST", apiUrl, headers, matricsType).then(apiResponse => {
 
         }).catch(apiError => {
+
         });
+    }
+
+    function handleError(error) {
+        hideChatLoader();
+
+        if (error?.status == 502) {
+
+            addMatricsCount("badGateway");
+        } else if (error?.status == 504) {
+
+            addMatricsCount("gatewayTimeoutCount");
+        } else {
+            addMatricsCount("internalServerError");
+        }
+
+        var defaultChatbotErrorMessage = $("#default-chatbot-error-message").val();
+
+        const currentDateTime = new Date().getTime().toString();
+
+        processChatBotResponse(defaultChatbotErrorMessage, currentDateTime);
+
+        scrollToBottom();
     }
 
     function askQuestions(input, category, blob) {
@@ -1004,7 +1033,7 @@
                 scrollToBottom();
 
             }).catch(apiError => {
-                hideChatLoader();
+                handleError(apiError);
             });
         }
 
@@ -1014,11 +1043,7 @@
             createSession(fingerPrintId).then((sessionResult) => {
                 prompt();
             }).catch((sessionError) => {
-                var defaultChatbotErrorMessage = $("#default-chatbot-error-message").val();
-
-                const currentDateTime = new Date().getTime().toString();
-
-                processChatBotResponse(defaultChatbotErrorMessage, currentDateTime);
+                handleError(sessionError);
             });
         } else {
             prompt();
@@ -1074,7 +1099,7 @@
             ); // Change image to color less icon for dislike button as user has clicked on like button now
 
         }).catch(apiError => {
-            hideChatLoader();
+            handleError(apiError);
         });
     }
 
@@ -1128,7 +1153,7 @@
 
         }).catch(apiError => {
 
-            hideChatLoader();
+            handleError(apiError);
         });
     }
 
@@ -1191,6 +1216,7 @@
                 mediaRecorder.onstop = async (e) => {
                 }
             }).catch(error => {
+                handleError(error);
 
             })
         }
@@ -1623,11 +1649,7 @@
 
         createSession(fingerPrintId).then((sessionResult) => {
         }).catch((sessionError) => {
-            var defaultChatbotErrorMessage = $("#default-chatbot-error-message").val();
-
-            const currentDateTime = new Date().getTime().toString();
-
-            processChatBotResponse(defaultChatbotErrorMessage, currentDateTime);
+            handleError(sessionError);
         });
     }
 
