@@ -3,6 +3,7 @@
     //var welcomeNoteGreetingBase64 = ViewBag.AudioBase64Strings[0];
     //var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
     var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
+    var isMaintenanceModeOn = TempData["isMaintenanceModeOn"];
     var resendOtpTranslation = Resources.Resource.message_resend_otp;
     var defaultErrorMessage = Resources.Resource.error_default_message;
     var defaultPlaceholder = Resources.Resource.message_ask_ur_question;
@@ -10,6 +11,8 @@
     var confirmationTitle = Resources.Resource.message_confirmation;
     var yesLabel = Resources.Resource.label_yes;
     var noLabel = Resources.Resource.label_no;
+    var maintenanceModeHeader = Resources.Resource.message_maintenance_mode_header;
+    var maintenanceModeBody = Resources.Resource.message_maintenance_mode_body;
 
     List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;//ViewBag?.LanguageModel?.AvailableLanguages;
     KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;//ViewBag?.LanguageModel?.SelectedLanguage;
@@ -18,6 +21,7 @@
 
     TempData.Keep("LanguageModel");
     TempData.Keep("PopularQuestions");
+    TempData.Keep("isMaintenanceModeOn");
 }
 
 @*@Html.Hidden("welcome-greeting-message-base64", (object)welcomeNoteGreetingBase64.ToString())
@@ -25,6 +29,7 @@
 @Html.Hidden("resend-otp-translation", (object)resendOtpTranslation.ToString())
 @Html.Hidden("default-chatbot-error-message", (object)defaultErrorMessage.ToString())
 @Html.Hidden("default-placeholder-message", (object)defaultPlaceholder.ToString())
+@Html.Hidden("isMaintenanceModeOn", (object)isMaintenanceModeOn.ToString())
 
 <div class="msg-scrollbar" id="message-list">
     <div class="my-msg-content system-msg-bg chatbot-message-wrapper">
@@ -80,12 +85,7 @@
     </div>
 </div>
 
-<!-- Button trigger modal -->
-@*<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#chatbotConfirmationModal">
-        Launch demo modal
-    </button>*@
 
-<!-- Modal -->
 <div class="modal fade" id="chatbotConfirmationModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -98,6 +98,20 @@
             <div class="modal-footer">
                 <button id="chatbotConfirmationModalCancelLabel" type="button" class="btn btn-secondary noLabel" data-bs-dismiss="modal">@noLabel</button>
                 <button id="chatbotConfirmationModalSaveButton" type="button" class="btn btn-success yesLabel" data-modal-type="confirmation" data-bs-dismiss="modal">@yesLabel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="maintenanceModeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="maintenance-mode-header">@maintenanceModeHeader</h1>
+            </div>
+            <div class="modal-body" id="maintenance-mode-message">
+                @maintenanceModeBody
             </div>
         </div>
     </div>

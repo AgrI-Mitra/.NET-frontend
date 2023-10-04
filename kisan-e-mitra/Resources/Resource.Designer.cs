@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sorry, there seems to be some issue. I request you to Check your internet connection, then Refresh the page or click on the refresh button at the bottom left corner, and then try again..
+        ///   Looks up a localized string similar to Sorry, there seems to be some issue. I request you to Check your internet connection, then Refresh the session by clicking the refresh button at the bottom left corner, and then try again..
         /// </summary>
         public static string error_default_message {
             get {
@@ -563,6 +563,24 @@ namespace Resources {
         public static string message_language_changed_greeting {
             get {
                 return ResourceManager.GetString("message.language_changed_greeting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry for any trouble. I&apos;m getting updated and fixing some issues to assist you better. I will be available again soon. Please come back and try again after some time..
+        /// </summary>
+        public static string message_maintenance_mode_body {
+            get {
+                return ResourceManager.GetString("message.maintenance_mode_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We&apos;ll be back soon!.
+        /// </summary>
+        public static string message_maintenance_mode_header {
+            get {
+                return ResourceManager.GetString("message.maintenance_mode_header", resourceCulture);
             }
         }
         

@@ -32,6 +32,9 @@ namespace KisanEMitra.Controllers
             TempData["LanguageModel"] = languageModel;
             TempData["PopularQuestions"] = GetPopularQuestions();
 
+            // Check if site is in maintenence mode or not
+            bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
+            TempData["isMaintenanceModeOn"] = isMaintenanceModeOn;
             return View();
         }
 

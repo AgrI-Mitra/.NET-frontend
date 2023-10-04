@@ -22,6 +22,7 @@
     var currentUserId = null;
 
     var chatbotConfirmationModalId = "chatbotConfirmationModal";
+    var maintenanceModeModalId = "maintenanceModeModal";
 
     var userQuestionTextBox = "#userQuestionTextBox"; // This variable is used to listen any events on user question text box where user will type the question
 
@@ -653,6 +654,21 @@
         popularQuestionsOnClickListener();
         initAutoSizeInputBox();
         chatbotConfirmationModalCloseEventListener();
+
+        // Check if maintenance mode is on or not
+        // If on, we need to show maintenance mode modal
+        // And disable all the functionalities
+        const isMaintenanceModeOn = $("#isMaintenanceModeOn").val();
+        if (isMaintenanceModeOn == "True") {
+            showMaintenanceModeModal();
+        }
+    }
+
+    function showMaintenanceModeModal() {
+        maintenanceModeModal = new bootstrap.Modal('#' + maintenanceModeModalId, modalOptions);
+
+        //$("#chatbot-restart-session-confirmation-message").append(confirmationMessage);
+        maintenanceModeModal.show();
     }
 
     function initAutoSizeInputBox() {

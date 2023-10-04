@@ -141,6 +141,9 @@
   <data name="error.wait_new_chat" xml:space="preserve">
     <value>કૃપા કરીને જવાબ માટે રાહ જુઓ.</value>
   </data>
+  <data name="error_default_message" xml:space="preserve">
+    <value>માફ કરશો, કંઈક સમસ્યા હોય તેવું લાગે છે. હું તમને વિનંતી કરું છું કે તમારું ઇન્ટરનેટ કનેક્શન તપાસો, પછી નીચેના ડાબા ખૂણે રિફ્રેશ બટનને ક્લિક કરીને સત્રને તાજું કરો અને પછી ફરી પ્રયાસ કરો.</value>
+  </data>
   <data name="label.back" xml:space="preserve">
     <value>પાછળ</value>
   </data>
@@ -284,6 +287,12 @@
 પ્રિય લાભાર્થી! 
 કૃપા કરીને મને જણાવો કે હું તમને કેવી રીતે મદદ કરી શકું?
 (કૃપા કરીને નીચેના બોક્સમાં તમારી ક્વેરી ટાઇપ કરો, અથવા નીચે જમણા ખૂણે આવેલા વૉઇસ બટનનો ઉપયોગ કરીને તમારી ક્વેરી જણાવો.)</value>
+  </data>
+  <data name="message.maintenance_mode_body" xml:space="preserve">
+    <value>કોઈપણ મુશ્કેલી માટે માફ કરશો. હું તમને વધુ સારી રીતે મદદ કરવા માટે અપડેટ કરી રહ્યો છું અને કેટલીક સમસ્યાઓ ઠીક કરી રહ્યો છું. હું ટૂંક સમયમાં ફરીથી ઉપલબ્ધ થઈશ. કૃપા કરીને પાછા આવો અને થોડીવાર પછી ફરી પ્રયાસ કરો.</value>
+  </data>
+  <data name="message.maintenance_mode_header" xml:space="preserve">
+    <value>અમે ટૂંક સમયમાં પાછા આવીશું!</value>
   </data>
   <data name="message.not_register_yet" xml:space="preserve">
     <value>હજુ સુધી નોંધાયેલ નથી?</value>
