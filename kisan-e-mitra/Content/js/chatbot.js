@@ -11,6 +11,8 @@
         MatricsIncrement: "custom/metrics/increment"
     };
 
+    var sessionAutoRestartTimeoutId;
+
     var isChangeLanguageRequestInProgress = null;
 
     var isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
@@ -997,6 +999,9 @@
         let isFinalResponseReceived = false;
 
         if (category == "text") {
+
+            clearSessionRestartAutoTimeout();
+
             let finalResponse = sessionStorage.getItem("final_response");
 
             if (finalResponse != undefined && finalResponse != null) {
@@ -1096,6 +1101,10 @@
                 }
 
                 scrollToBottom();
+
+                if (category == "text") {
+                    setSessionAutoRestartTimeout();
+                }
 
             }).catch(apiError => {
                 handleError(apiError);
@@ -1772,5 +1781,18 @@
             closeCallback(event);
             // do something...
         })
+    }
+
+    function setSessionAutoRestartTimeout() {
+        sessionAutoRestartTimeoutId = setTimeout(() => {
+            restartSession(false);
+        }, 10000 * 300);
+    }
+
+    function clearSessionRestartAutoTimeout() {
+        if (sessionAutoRestartTimeoutId) {
+            clearTimeout(sessionAutoRestartTimeoutId);
+            sessionAutoRestartTimeoutId = null;
+        }
     }
 })();
