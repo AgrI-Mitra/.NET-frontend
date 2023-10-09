@@ -22,6 +22,7 @@
     var translations = [];
 
     var currentUserId = null;
+    var previousUserId = null;
 
     var chatbotConfirmationModalId = "chatbotConfirmationModal";
     var maintenanceModeModalId = "maintenanceModeModal";
@@ -1401,6 +1402,14 @@
             dataType: "json",
             data: { lang: languageCultureCode },
             success: function (data) {
+
+                //If language is changed after session refresh was done,
+                //Add metric count for it
+
+                if (currentUserId != previousUserId) {
+                    addMatricsCount("stage2Count");
+                }
+                
                 isChangeLanguageRequestInProgress = null;
 
                 getWelcomeGreetingsAudio(true);
@@ -1428,7 +1437,9 @@
                 updateTranslations(data.Data.Translations);
 
                 updatePopularQuestionsTranslations(data.Data.PopularQuestions);
-                showUserRecordedMessageInTextBox("")
+                showUserRecordedMessageInTextBox("");
+
+                previousUserId = currentUserId;
 
             },
             failure: function (data) {
