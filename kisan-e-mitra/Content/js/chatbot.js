@@ -339,6 +339,10 @@
         return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three me-md-2'>";
     }
 
+    function getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent() {
+        return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three-part-two me-md-2'>";
+    }
+
     /**
      * This method is used to get html content for chatbot logo
      * @returns
@@ -430,6 +434,8 @@
         getChatMessageWrapperColumnTwoStartingDivHtmlContent(); // Second column inside chat message wrapper
     let chatMessageWrapperColumnThreeStartingDivHtmlContent =
         getChatMessageWrapperColumnThreeStartingDivHtmlContent(); // Third column inside chat message wrapper
+    let chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent =
+        getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(); // Third column inside chat message wrapper
     let spanStartingHtmlContent = getStartingSpanHtmlContent();
     let spanClosingHtmlContent = getClosingSpanHtmlContent();
     let closingDivHtmlContent = getClosingDivHtmlContent();
@@ -702,12 +708,16 @@
                 message +
                 spanClosingHtmlContent +
                 closingDivHtmlContent +
-                (showAudioOption == true ? (chatMessageWrapperColumnThreeStartingDivHtmlContent +
+                (showAudioOption == true ?
+                    (chatMessageWrapperColumnThreeStartingDivHtmlContent +
                     chatMessageAudioImageHtmlContent +
-                    (messageType == "final_response" && isMessageFromBot == true
-                        ? feedbackOptionHtmlContent
-                        : "") +
+                        closingDivHtmlContent) : "") +
+
+                (messageType == "final_response" && isMessageFromBot == true ?
+                    (chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent +
+                        feedbackOptionHtmlContent +
                     closingDivHtmlContent) : "") +
+
                 closingDivHtmlContent;
 
 

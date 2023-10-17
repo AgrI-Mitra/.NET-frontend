@@ -47,7 +47,7 @@ table.aadhar-table {
 
 .chatbot-message-wrapper-column-two {
     display: flex;
-    flex: 1 1 60%;
+    flex: 1 1 80%;
     flex-wrap: wrap;
     flex-flow: column wrap;
     padding: 10px;
@@ -55,6 +55,11 @@ table.aadhar-table {
 
 .chatbot-message-wrapper-column-three {
     flex: 0 1 auto;
+}
+
+.chatbot-message-wrapper-column-three-part-two {
+    flex: 1 0 20%;
+    margin-left: 3rem !important;
 }
 
 .feedback-animation {
@@ -186,9 +191,19 @@ table.aadhar-table {
 
 /*// `md` applies to small devices (landscape phones, less than 768px)*/
 @media (max-width: 767.98px) {
+
+    .chatbot-message-wrapper-column-two {
+        flex: 1 1 90%;
+    }
+
     .chatbot-message-wrapper-column-three {
-        flex: 1 1 100%;
+        /*flex: 1 1 100%;*/
+        flex: 0 1 5%;
         margin-left: 3rem !important;
+    }
+
+    .chatbot-message-wrapper-column-three-part-two {
+        margin-left: 0px !important;
     }
 
     .message-input-textarea {
