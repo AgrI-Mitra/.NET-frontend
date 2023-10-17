@@ -2,6 +2,29 @@
     --pmk-primary: #198754;
 }
 
+table.aadhar-table {
+    margin-bottom: 0px;
+}
+
+.aadhar-table tbody tr td:first-child {
+    font-weight: bold;
+    font-size: 0.8em;
+}
+
+.aadhar-table {
+    display: flex;
+}
+
+.user-avatar-img {
+    background-color: #219653;
+}
+
+.div-row div:nth-child(2) {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1%;
+}
+
 .welcome-message-container {
     padding: 0px 10px;
 }
