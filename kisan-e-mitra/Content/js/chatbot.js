@@ -752,43 +752,43 @@
                 id: 'app_tour_language_selection_description',
                 text: 'app_tour_language_selection_description',
                 showNextButton: true,
-                showPreviousButton: false
+                showPreviousButton: true
             },
             {
                 id: 'app_tour_alternate_language_selection_description',
                 text: 'app_tour_alternate_language_selection_description',
                 showNextButton: true,
-                showPreviousButton: false
+                showPreviousButton: true
             },
             {
                 id: 'app_tour_audio_button_description',
                 text: 'app_tour_audio_button_description',
                 showNextButton: true,
-                showPreviousButton: false
+                showPreviousButton: true
             },
             {
                 id: 'app_tour_sample_questions_description',
                 text: 'app_tour_sample_questions_description',
                 showNextButton: true,
-                showPreviousButton: false
+                showPreviousButton: true
             },
             {
                 id: 'app_tour_typebox_description',
                 text: 'app_tour_typebox_description',
                 showNextButton: true,
-                showPreviousButton: false
+                showPreviousButton: true
             },
             {
                 id: 'app_tour_mic_button_description',
                 text: 'app_tour_mic_button_description',
                 showNextButton: true,
-                showPreviousButton: false
+                showPreviousButton: true
             },
             {
                 id: 'app_tour_send_button_description',
                 text: 'app_tour_send_button_description',
                 showNextButton: true,
-                showPreviousButton: false
+                showPreviousButton: true
             },
             {
                 id: 'app_tour_refresh_button_description',
