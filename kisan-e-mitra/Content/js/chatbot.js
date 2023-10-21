@@ -1,7 +1,8 @@
 (async function () {
 
     var apiUrlConfig = {
-        chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live
+        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
+        chatbotApiBaseUrl: "https://bff.agrimitra.samagra.io/", // Stage //
         userApiBaseEndPoint: "user/",
         generateUserId: "user/generateUserId",
         Prompt: "prompt",
@@ -885,13 +886,13 @@
                 closingDivHtmlContent +
                 (showAudioOption == true ?
                     (chatMessageWrapperColumnThreeStartingDivHtmlContent +
-                    chatMessageAudioImageHtmlContent +
+                        chatMessageAudioImageHtmlContent +
                         closingDivHtmlContent) : "") +
 
                 (messageType == "final_response" && isMessageFromBot == true ?
                     (chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent +
                         feedbackOptionHtmlContent +
-                    closingDivHtmlContent) : "") +
+                        closingDivHtmlContent) : "") +
 
                 closingDivHtmlContent;
 
@@ -1617,7 +1618,7 @@
                 if (currentUserId != previousUserId) {
                     addMatricsCount("stage2Count");
                 }
-                
+
                 isChangeLanguageRequestInProgress = null;
 
                 getWelcomeGreetingsAudio(true);
