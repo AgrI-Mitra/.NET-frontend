@@ -397,4 +397,43 @@
   <data name="message.maintenance_mode_header" xml:space="preserve">
     <value>हम जल्द ही वापस होंगे!</value>
   </data>
+  <data name="label.next" xml:space="preserve">
+    <value>अगला</value>
+  </data>
+  <data name="label.previous" xml:space="preserve">
+    <value>पीछे</value>
+  </data>
+  <data name="message.app_tour_alternate_language_selection_description" xml:space="preserve">
+    <value>आप यहां से अपनी भाषा भी बदल सकते हैं।</value>
+  </data>
+  <data name="message.app_tour_audio_button_description" xml:space="preserve">
+    <value>जानकारी सुनने के लिए "ध्वनि" आइकन पर क्लिक करें।</value>
+  </data>
+  <data name="message.app_tour_exit" xml:space="preserve">
+    <value>ट्यूटोरियल से बाहर निकलें</value>
+  </data>
+  <data name="message.app_tour_language_selection_description" xml:space="preserve">
+    <value>मेनू से अपनी भाषा चुनें</value>
+  </data>
+  <data name="message.app_tour_mic_button_description" xml:space="preserve">
+    <value>अपना संदेश रिकॉर्ड करने के लिए "माइक" आइकन पर टैप करें और रोकने के लिए इसे फिर से टैप करें।</value>
+  </data>
+  <data name="message.app_tour_refresh_button_description" xml:space="preserve">
+    <value>पृष्ठ को पुनः लोड करने के लिए "ताज़ा करें" पर क्लिक करें</value>
+  </data>
+  <data name="message.app_tour_sample_questions_description" xml:space="preserve">
+    <value>सहायता के लिए इन उदाहरण प्रश्नों का उपयोग करें</value>
+  </data>
+  <data name="message.app_tour_send_button_description" xml:space="preserve">
+    <value>अपना संदेश भेजने के लिए इस एरो बटन को दबाएँ।</value>
+  </data>
+  <data name="message.app_tour_typebox_description" xml:space="preserve">
+    <value>अपने प्रश्न यहां टाइप करें.</value>
+  </data>
+  <data name="message.app_tour_welcome_description" xml:space="preserve">
+    <value>आगे बढ़ने के लिए नीचे अगला क्लिक करें या मैन्युअल ट्यूटोरियल छोड़ने के लिए ट्यूटोरियल से बाहर निकलें पर क्लिक करें</value>
+  </data>
+  <data name="message.app_tour_welcome_header" xml:space="preserve">
+    <value>किसान-ईमित्र यूजर मैनुअल में आपका स्वागत है</value>
+  </data>
 </root>

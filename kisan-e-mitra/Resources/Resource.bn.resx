@@ -394,4 +394,43 @@
   <data name="message.maintenance_mode_header" xml:space="preserve">
     <value>আমরা শীঘ্রই ফিরে আসব!</value>
   </data>
+  <data name="label.next" xml:space="preserve">
+    <value>পরবর্তী</value>
+  </data>
+  <data name="label.previous" xml:space="preserve">
+    <value>পেছনে</value>
+  </data>
+  <data name="message.app_tour_alternate_language_selection_description" xml:space="preserve">
+    <value>আপনি এখান থেকে আপনার ভাষা পরিবর্তন করতে পারেন।</value>
+  </data>
+  <data name="message.app_tour_audio_button_description" xml:space="preserve">
+    <value>তথ্য শুনতে "শব্দ" আইকনে ক্লিক করুন।</value>
+  </data>
+  <data name="message.app_tour_exit" xml:space="preserve">
+    <value>টিউটোরিয়াল থেকে প্রস্থান করুন</value>
+  </data>
+  <data name="message.app_tour_language_selection_description" xml:space="preserve">
+    <value>মেনু থেকে আপনার ভাষা চয়ন করুন</value>
+  </data>
+  <data name="message.app_tour_mic_button_description" xml:space="preserve">
+    <value>আপনার বার্তা রেকর্ড করতে "মাইক" আইকনে আলতো চাপুন এবং থামাতে আবার আলতো চাপুন।</value>
+  </data>
+  <data name="message.app_tour_refresh_button_description" xml:space="preserve">
+    <value>পৃষ্ঠাটি পুনরায় লোড করতে "রিফ্রেশ করুন" এ ক্লিক করুন</value>
+  </data>
+  <data name="message.app_tour_sample_questions_description" xml:space="preserve">
+    <value>সাহায্যের জন্য এই উদাহরণ প্রশ্ন ব্যবহার করুন</value>
+  </data>
+  <data name="message.app_tour_send_button_description" xml:space="preserve">
+    <value>আপনার বার্তা পাঠাতে এই তীর বোতাম টিপুন.</value>
+  </data>
+  <data name="message.app_tour_typebox_description" xml:space="preserve">
+    <value>এখানে আপনার প্রশ্ন টাইপ করুন.</value>
+  </data>
+  <data name="message.app_tour_welcome_description" xml:space="preserve">
+    <value>এগিয়ে যেতে নীচের ক্লিক করুন বা ম্যানুয়াল টিউটোরিয়াল এড়িয়ে যেতে টিউটোরিয়াল থেকে প্রস্থান করুন ক্লিক করুন</value>
+  </data>
+  <data name="message.app_tour_welcome_header" xml:space="preserve">
+    <value>Kisan-eMitra ব্যবহারকারী ম্যানুয়াল-এ স্বাগতম</value>
+  </data>
 </root>

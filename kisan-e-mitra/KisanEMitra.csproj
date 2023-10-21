@@ -171,6 +171,7 @@
     <Content Include="Content\images\hand-thumbs-down.svg" />
     <Content Include="Content\images\hand-thumbs-up-fill.svg" />
     <Content Include="Content\images\hand-thumbs-up.svg" />
+    <Content Include="Content\images\help.png" />
     <Content Include="Content\images\recording-in-progress-background.svg" />
     <Content Include="Content\images\recording-in-progress-animation.svg" />
     <Content Include="Content\images\voice-recording-animation.svg" />
@@ -306,10 +307,12 @@
     <Content Include="Content\js\fingerprint.js" />
     <Content Include="Content\js\languageDropDown.js" />
     <Content Include="Content\js\recorder.js" />
+    <Content Include="Content\js\shepherd.js" />
     <Content Include="Content\js\splash.js" />
     <Content Include="Content\js\wavBlobUtil.js" />
     <Content Include="Content\js\WavRecorder.js" />
     <Content Include="Content\responsive.css" />
+    <Content Include="Content\shepherd.css" />
     <Content Include="Content\splash.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />

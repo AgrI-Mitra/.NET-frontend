@@ -395,4 +395,43 @@
   <data name="message.maintenance_mode_header" xml:space="preserve">
     <value>ଆମେ ଶୀଘ୍ର ଫେରିଯିବା!</value>
   </data>
+  <data name="label.next" xml:space="preserve">
+    <value>ପରବର୍ତ୍ତୀ</value>
+  </data>
+  <data name="label.previous" xml:space="preserve">
+    <value>ପଛକୁ</value>
+  </data>
+  <data name="message.app_tour_alternate_language_selection_description" xml:space="preserve">
+    <value>ଆପଣ ମଧ୍ୟ ଏଠାରୁ ଆପଣଙ୍କର ଭାଷା ପରିବର୍ତ୍ତନ କରିପାରିବେ |</value>
+  </data>
+  <data name="message.app_tour_audio_button_description" xml:space="preserve">
+    <value>ସୂଚନା ଶୁଣିବା ପାଇଁ "ସାଉଣ୍ଡ" ଆଇକନ୍ କ୍ଲିକ୍ କରନ୍ତୁ |</value>
+  </data>
+  <data name="message.app_tour_exit" xml:space="preserve">
+    <value>ପ୍ରସ୍ଥାନ ଟ୍ୟୁଟୋରିଆଲ୍</value>
+  </data>
+  <data name="message.app_tour_language_selection_description" xml:space="preserve">
+    <value>ମେନୁରୁ ଆପଣଙ୍କର ଭାଷା ବାଛନ୍ତୁ |</value>
+  </data>
+  <data name="message.app_tour_mic_button_description" xml:space="preserve">
+    <value>ଆପଣଙ୍କର ବାର୍ତ୍ତା ରେକର୍ଡ କରିବାକୁ "ମାଇକ୍" ଆଇକନ୍ ଟ୍ୟାପ୍ କରନ୍ତୁ ଏବଂ ବନ୍ଦ କରିବାକୁ ପୁନର୍ବାର ଟ୍ୟାପ୍ କରନ୍ତୁ |</value>
+  </data>
+  <data name="message.app_tour_refresh_button_description" xml:space="preserve">
+    <value>ପୃଷ୍ଠା ପୁନ o ଲୋଡ୍ କରିବାକୁ "ସତେଜ" କ୍ଲିକ୍ କରନ୍ତୁ |</value>
+  </data>
+  <data name="message.app_tour_sample_questions_description" xml:space="preserve">
+    <value>ସାହାଯ୍ୟ ପାଇଁ ଏହି ଉଦାହରଣ ପ୍ରଶ୍ନଗୁଡିକ ବ୍ୟବହାର କରନ୍ତୁ |</value>
+  </data>
+  <data name="message.app_tour_send_button_description" xml:space="preserve">
+    <value>ଆପଣଙ୍କର ବାର୍ତ୍ତା ପଠାଇବାକୁ ଏହି ତୀର ବଟନ୍ ଦବାନ୍ତୁ |</value>
+  </data>
+  <data name="message.app_tour_typebox_description" xml:space="preserve">
+    <value>ଏଠାରେ ଆପଣଙ୍କର ପ୍ରଶ୍ନ ଟାଇପ୍ କରନ୍ତୁ |</value>
+  </data>
+  <data name="message.app_tour_welcome_description" xml:space="preserve">
+    <value>ଅଗ୍ରଗତି କରିବାକୁ ନିମ୍ନରେ କ୍ଲିକ୍ କରନ୍ତୁ କିମ୍ବା ମାନୁଆଲ୍ ଟ୍ୟୁଟୋରିଆଲ୍ କୁ ଏଡ଼ାଇବା ପାଇଁ Exit ଟ୍ୟୁଟୋରିଆଲ୍ କ୍ଲିକ୍ କରନ୍ତୁ |</value>
+  </data>
+  <data name="message.app_tour_welcome_header" xml:space="preserve">
+    <value>କିସାନ-ଇମିଟ୍ରା ୟୁଜର୍ ମାନୁଆଲକୁ ସ୍ୱାଗତ |</value>
+  </data>
 </root>

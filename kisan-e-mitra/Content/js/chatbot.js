@@ -11,6 +11,8 @@
         MatricsIncrement: "custom/metrics/increment"
     };
 
+    var tour;
+
     var sessionAutoRestartTimeoutId;
 
     var isChangeLanguageRequestInProgress = null;
@@ -95,6 +97,10 @@
 
         if (isGetWelcomeGreetingsTextToSpeechRequestInProgress) {
             isGetWelcomeGreetingsTextToSpeechRequestInProgress.abort();
+        }
+
+        if (isGetUITranslationsRequestInProgress) {
+            isGetUITranslationsRequestInProgress.abort();
         }
 
         restartSession();
@@ -546,6 +552,9 @@
                 }
             }
         }
+
+
+        initAppTour(translations);
     }
 
     /**
@@ -585,6 +594,12 @@
     function restartSessionButtonOnClickListener() {
         $("#restartSessionButton").click(function (e) {
             restartSession(true);
+        });
+    }
+
+    function startAppTourButtonOnClickListener() {
+        $("#startAppTourButton").click(function (e) {
+            startAppTour();
         });
     }
 
@@ -659,10 +674,15 @@
         userQuestionTextBoxOnKeyPressListener();
         chatbotMessageActionButtonsOnClickListener();
         restartSessionButtonOnClickListener();
+        startAppTourButtonOnClickListener();
         resendOtpOnClickListener();
         popularQuestionsOnClickListener();
         initAutoSizeInputBox();
         chatbotConfirmationModalCloseEventListener();
+
+        getUITranslations();
+
+        confiAppTour();
 
         // Check if maintenance mode is on or not
         // If on, we need to show maintenance mode modal
@@ -671,6 +691,161 @@
         if (isMaintenanceModeOn == "True") {
             showMaintenanceModeModal();
         }
+    }
+
+    function confiAppTour() {
+        tour = new Shepherd.Tour({
+            useModalOverlay: true,
+            defaultStepOptions: {
+                cancelIcon: {
+                    enabled: true
+                },
+                classes: 'shadow-md bg-purple-dark',
+                scrollTo: { behavior: 'smooth', block: 'center' }
+            }
+        });
+
+        tour.on('cancel', function () {
+            sessionStorage.setItem('isAppTourDisplayed', "true");
+        });
+    }
+
+    function initAppTour(translations) {
+
+        // First remove the old steps to update the translations when language is changed
+        confiAppTour();
+
+        let nextButtonTranslation = translations.find(f => f.Key == "next").Value;
+        let previousButtonTranslation = translations.find(f => f.Key == "previous").Value;
+        let exitButtonTranslation = translations.find(f => f.Key == "app_tour_exit").Value;
+
+        let nextButtonInfo = {
+            text: nextButtonTranslation,
+            action: tour.next,
+            classes: 'app-tour-next-button'
+        };
+
+        let previousButtonInfo = {
+            text: previousButtonTranslation,
+            action: tour.back,
+            classes: 'app-tour-next-button'
+        };
+
+        let exitButtonInfo = {
+            text: exitButtonTranslation,
+            action: tour.cancel,
+            classes: 'app-tour-next-button'
+        }
+
+        let appTourSteps = [];
+
+        let appTourTranslationMappingDetails = [
+            {
+                id: '',
+                title: 'app_tour_welcome_header',
+                text: 'app_tour_welcome_description',
+                showNextButton: true,
+                showPreviousButton: false
+            },
+            {
+                id: 'app_tour_language_selection_description',
+                text: 'app_tour_language_selection_description',
+                showNextButton: true,
+                showPreviousButton: false
+            },
+            {
+                id: 'app_tour_alternate_language_selection_description',
+                text: 'app_tour_alternate_language_selection_description',
+                showNextButton: true,
+                showPreviousButton: false
+            },
+            {
+                id: 'app_tour_audio_button_description',
+                text: 'app_tour_audio_button_description',
+                showNextButton: true,
+                showPreviousButton: false
+            },
+            {
+                id: 'app_tour_sample_questions_description',
+                text: 'app_tour_sample_questions_description',
+                showNextButton: true,
+                showPreviousButton: false
+            },
+            {
+                id: 'app_tour_typebox_description',
+                text: 'app_tour_typebox_description',
+                showNextButton: true,
+                showPreviousButton: false
+            },
+            {
+                id: 'app_tour_mic_button_description',
+                text: 'app_tour_mic_button_description',
+                showNextButton: true,
+                showPreviousButton: false
+            },
+            {
+                id: 'app_tour_send_button_description',
+                text: 'app_tour_send_button_description',
+                showNextButton: true,
+                showPreviousButton: false
+            },
+            {
+                id: 'app_tour_refresh_button_description',
+                text: 'app_tour_refresh_button_description',
+                showNextButton: false,
+                showPreviousButton: true,
+                showExitButton: true
+            }
+        ]
+
+        for (var i = 0; i < appTourTranslationMappingDetails.length; i++) {
+
+            let currentTranslationMappingDetails = appTourTranslationMappingDetails[i];
+
+            let appTourStep = {};
+            appTourStepButtons = [];
+
+            if (currentTranslationMappingDetails.showPreviousButton) {
+                appTourStepButtons.push(previousButtonInfo);
+            }
+
+            if (currentTranslationMappingDetails.showNextButton) {
+                appTourStepButtons.push(nextButtonInfo);
+            }
+
+            if (currentTranslationMappingDetails.showExitButton) {
+                appTourStepButtons.push(exitButtonInfo);
+            }
+
+            let titleTranslationInfo = translations.find(f => f.Key == currentTranslationMappingDetails.title);
+            let textTranslationInfo = translations.find(f => f.Key == currentTranslationMappingDetails.text);
+
+            let attachToInfo = {
+                element: '.' + currentTranslationMappingDetails.id,
+                on: 'bottom'
+            };
+
+            appTourStep = {
+                id: currentTranslationMappingDetails.id,
+                title: titleTranslationInfo ? titleTranslationInfo.Value : undefined,
+                text: textTranslationInfo.Value,
+                attachTo: currentTranslationMappingDetails.id ? attachToInfo : undefined,
+                classes: 'pm-kisan-chatbot-app-tour-modal-wrapper',
+                buttons: appTourStepButtons
+            };
+
+            appTourSteps.push(appTourStep);
+        }
+
+        
+
+        tour.addSteps(
+            appTourSteps
+        );
+    }
+
+    function startAppTour() {
+        tour.start();
     }
 
     function showMaintenanceModeModal() {
@@ -1396,6 +1571,29 @@
         const blob = new Blob(byteArrays, { type: contentType });
         return blob;
     };
+
+    function getUITranslations() {
+        isGetUITranslationsRequestInProgress = $.ajax({
+            type: "POST",
+            url: "/Home/GetUITranslations",
+            dataType: "json",
+            success: function (data) {
+                isGetUITranslationsRequestInProgress = null;
+                updateTranslations(data.Data.Translations);
+
+                // Check if app tour is already displayed or not
+                // If not then display it, because it means user is opening the app for the first time.
+                const isAppTourDisplayed = sessionStorage.getItem("isAppTourDisplayed");
+
+                if (!isAppTourDisplayed) {
+                    startAppTour();
+                }
+            },
+            failure: function (data) {
+                isGetUITranslationsRequestInProgress = null;
+            },
+        });
+    }
 
     function changeLanguage(
         languageCultureCode,
