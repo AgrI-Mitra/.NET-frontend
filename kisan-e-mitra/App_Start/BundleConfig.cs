@@ -26,8 +26,7 @@ namespace KisanEMitra
                       "~/Content/bootstrap.min.css",
                       "~/Content/style.css",
                       "~/Content/responsive.css",
-                      "~/Content/chatbot.css",
-                      "~/Content/shepherd.css"));
+                      "~/Content/chatbot.css"));
         }
     }
 }

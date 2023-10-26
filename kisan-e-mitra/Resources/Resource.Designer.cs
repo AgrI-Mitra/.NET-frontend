@@ -286,15 +286,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next.
-        /// </summary>
-        public static string label_next {
-            get {
-                return ResourceManager.GetString("label.next", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string label_no {
@@ -336,15 +327,6 @@ namespace Resources {
         public static string label_popUpTitle3 {
             get {
                 return ResourceManager.GetString("label.popUpTitle3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Back.
-        /// </summary>
-        public static string label_previous {
-            get {
-                return ResourceManager.GetString("label.previous", resourceCulture);
             }
         }
         
@@ -426,105 +408,6 @@ namespace Resources {
         public static string label_yes {
             get {
                 return ResourceManager.GetString("label.yes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You can also change your language from here..
-        /// </summary>
-        public static string message_app_tour_alternate_language_selection_description {
-            get {
-                return ResourceManager.GetString("message.app_tour_alternate_language_selection_description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Click the &quot;Sound&quot; icon to listen to information..
-        /// </summary>
-        public static string message_app_tour_audio_button_description {
-            get {
-                return ResourceManager.GetString("message.app_tour_audio_button_description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Exit Tutorial.
-        /// </summary>
-        public static string message_app_tour_exit {
-            get {
-                return ResourceManager.GetString("message.app_tour_exit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose your language from the menu.
-        /// </summary>
-        public static string message_app_tour_language_selection_description {
-            get {
-                return ResourceManager.GetString("message.app_tour_language_selection_description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tap the &quot;Mic&quot; icon to record your message and tap it again to stop..
-        /// </summary>
-        public static string message_app_tour_mic_button_description {
-            get {
-                return ResourceManager.GetString("message.app_tour_mic_button_description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Click &quot;Refresh&quot; to reload the page.
-        /// </summary>
-        public static string message_app_tour_refresh_button_description {
-            get {
-                return ResourceManager.GetString("message.app_tour_refresh_button_description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use these example questions for help.
-        /// </summary>
-        public static string message_app_tour_sample_questions_description {
-            get {
-                return ResourceManager.GetString("message.app_tour_sample_questions_description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Press this Arrow button to send your message..
-        /// </summary>
-        public static string message_app_tour_send_button_description {
-            get {
-                return ResourceManager.GetString("message.app_tour_send_button_description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type your questions here..
-        /// </summary>
-        public static string message_app_tour_typebox_description {
-            get {
-                return ResourceManager.GetString("message.app_tour_typebox_description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Click Next below to proceed or Click Exit Tutorial to skip the manual tutorial.
-        /// </summary>
-        public static string message_app_tour_welcome_description {
-            get {
-                return ResourceManager.GetString("message.app_tour_welcome_description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Welcome to Kisan-eMitra User Manual.
-        /// </summary>
-        public static string message_app_tour_welcome_header {
-            get {
-                return ResourceManager.GetString("message.app_tour_welcome_header", resourceCulture);
             }
         }
         

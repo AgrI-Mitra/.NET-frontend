@@ -192,9 +192,6 @@
   <data name="label.new_chat" xml:space="preserve">
     <value>નવી ચેટ</value>
   </data>
-  <data name="label.next" xml:space="preserve">
-    <value>આગળ</value>
-  </data>
   <data name="label.no" xml:space="preserve">
     <value>ના</value>
   </data>
@@ -209,9 +206,6 @@
   </data>
   <data name="label.popUpTitle3" xml:space="preserve">
     <value>પ્રિય લાભાર્થી, તમને વિનંતી છે કે તમને પ્રાપ્ત થયેલ OTP દાખલ કરો.</value>
-  </data>
-  <data name="label.previous" xml:space="preserve">
-    <value>પાછળ</value>
   </data>
   <data name="label.profile" xml:space="preserve">
     <value>પ્રોફાઇલ</value>
@@ -239,39 +233,6 @@
   </data>
   <data name="label.yes" xml:space="preserve">
     <value>હા</value>
-  </data>
-  <data name="message.app_tour_alternate_language_selection_description" xml:space="preserve">
-    <value>તમે અહીંથી તમારી ભાષા પણ બદલી શકો છો.</value>
-  </data>
-  <data name="message.app_tour_audio_button_description" xml:space="preserve">
-    <value>માહિતી સાંભળવા માટે "ધ્વનિ" આયકન પર ક્લિક કરો.</value>
-  </data>
-  <data name="message.app_tour_exit" xml:space="preserve">
-    <value>ટ્યુટોરીયલથી બહાર નીકળો</value>
-  </data>
-  <data name="message.app_tour_language_selection_description" xml:space="preserve">
-    <value>મેનુમાંથી તમારી ભાષા પસંદ કરો</value>
-  </data>
-  <data name="message.app_tour_mic_button_description" xml:space="preserve">
-    <value>તમારો સંદેશ રેકોર્ડ કરવા માટે "માઈક" આયકનને ટેપ કરો અને તેને રોકવા માટે ફરીથી ટેપ કરો.</value>
-  </data>
-  <data name="message.app_tour_refresh_button_description" xml:space="preserve">
-    <value>પૃષ્ઠને ફરીથી લોડ કરવા માટે "તાજું કરો" પર ક્લિક કરો</value>
-  </data>
-  <data name="message.app_tour_sample_questions_description" xml:space="preserve">
-    <value>મદદ માટે આ ઉદાહરણ પ્રશ્નોનો ઉપયોગ કરો</value>
-  </data>
-  <data name="message.app_tour_send_button_description" xml:space="preserve">
-    <value>તમારો સંદેશ મોકલવા માટે આ એરો બટન દબાવો.</value>
-  </data>
-  <data name="message.app_tour_typebox_description" xml:space="preserve">
-    <value>તમારા પ્રશ્નો અહીં લખો.</value>
-  </data>
-  <data name="message.app_tour_welcome_description" xml:space="preserve">
-    <value>આગળ વધવા માટે નીચે આગળ ક્લિક કરો અથવા મેન્યુઅલ ટ્યુટોરીયલ છોડવા માટે ટ્યુટોરીયલમાંથી બહાર નીકળો પર ક્લિક કરો</value>
-  </data>
-  <data name="message.app_tour_welcome_header" xml:space="preserve">
-    <value>કિસાન-મિત્ર વપરાશકર્તા માર્ગદર્શિકામાં આપનું સ્વાગત છે</value>
   </data>
   <data name="message.ask_ur_question" xml:space="preserve">
     <value>તમારો પ્રશ્ન પૂછો</value>

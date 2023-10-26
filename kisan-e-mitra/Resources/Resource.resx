@@ -395,43 +395,4 @@ Do you want to continue and refresh the page?</value>
   <data name="message.maintenance_mode_header" xml:space="preserve">
     <value>We'll be back soon!</value>
   </data>
-  <data name="label.next" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="label.previous" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="message.app_tour_alternate_language_selection_description" xml:space="preserve">
-    <value>You can also change your language from here.</value>
-  </data>
-  <data name="message.app_tour_audio_button_description" xml:space="preserve">
-    <value>Click the "Sound" icon to listen to information.</value>
-  </data>
-  <data name="message.app_tour_exit" xml:space="preserve">
-    <value>Exit Tutorial</value>
-  </data>
-  <data name="message.app_tour_language_selection_description" xml:space="preserve">
-    <value>Choose your language from the menu</value>
-  </data>
-  <data name="message.app_tour_mic_button_description" xml:space="preserve">
-    <value>Tap the "Mic" icon to record your message and tap it again to stop.</value>
-  </data>
-  <data name="message.app_tour_refresh_button_description" xml:space="preserve">
-    <value>Click "Refresh" to reload the page</value>
-  </data>
-  <data name="message.app_tour_sample_questions_description" xml:space="preserve">
-    <value>Use these example questions for help</value>
-  </data>
-  <data name="message.app_tour_send_button_description" xml:space="preserve">
-    <value>Press this Arrow button to send your message.</value>
-  </data>
-  <data name="message.app_tour_typebox_description" xml:space="preserve">
-    <value>Type your questions here.</value>
-  </data>
-  <data name="message.app_tour_welcome_description" xml:space="preserve">
-    <value>Click Next below to proceed or Click Exit Tutorial to skip the manual tutorial</value>
-  </data>
-  <data name="message.app_tour_welcome_header" xml:space="preserve">
-    <value>Welcome to Kisan-eMitra User Manual</value>
-  </data>
 </root>

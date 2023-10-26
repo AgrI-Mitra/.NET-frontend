@@ -37,7 +37,7 @@
         <div class="chatbot-message-wrapper-column-two">
             <span class="messageWelcomeGreeting">@(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))</span>
 
-            <div class="app_tour_language_selection_description">
+            <div>
                 @foreach (var availableLanguage in availableLanguages)
                 {
                     if (availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode)
@@ -51,13 +51,13 @@
                 }
             </div>
         </div>
-        <div class="d-flex align-self-start chatbot-message-wrapper-column-three me-md-2 first-audio-icon-wrapper app_tour_audio_button_description">
+        <div class="d-flex align-self-start chatbot-message-wrapper-column-three me-md-2">
             <img id="playMessageImg-@{@welcomeGreetingMessageBase64StringName}" data-audio-id="@{@welcomeGreetingMessageBase64StringName}" data-action-name="setAutoPlayAudioMessage" src="../Content/images/start-audio.svg" alt="avatar 1" class="chatbot-message-action-buttons setAutoPlayAudioMessage">
         </div>
     </div>
 </div>
 <div class="input-container align-items-center justify-content-center p-3 p-md-4">
-    <div class="scroll-container d-flex flex-row app_tour_sample_questions_description" id="popularQuestionsWrapper">
+    <div class="scroll-container d-flex flex-row" id="popularQuestionsWrapper">
         <div class="query-messages-box">
             @foreach (var popularQuestion in popularQuestions)
             {
@@ -70,15 +70,15 @@
         </div>
     </div>
     <div class="d-flex flex-row w-100 align-items-center">
-        <button id="restartSessionButton" class="send-button me-2 me-sm-3 app_tour_refresh_button_description">
+        <button id="restartSessionButton" class="send-button me-2 me-sm-3">
             <img class="refresh-btn-style" src="~/Content/images/restart-session.svg" />
         </button>
         <div class="meg-input position-relative me-2 me-sm-3 flex-grow-1">
             @*<input id="userQuestionTextBox" type="text" class="message-input messageAskUrQuestion" placeholder="@Resources.Resource.message_ask_ur_question">*@
-<textarea id="userQuestionTextBox" class="message-input messageAskUrQuestion message-input-textarea app_tour_typebox_description" placeholder="@Resources.Resource.message_ask_ur_question"></textarea>
-            <button id="sendTextButton" type="submit" class="sendtext app_tour_send_button_description" disabled></button>
+<textarea id="userQuestionTextBox" class="message-input messageAskUrQuestion message-input-textarea" placeholder="@Resources.Resource.message_ask_ur_question"></textarea>
+            <button id="sendTextButton" type="submit" class="sendtext" disabled></button>
         </div>
-        <button id="voiceRecordButtonId" class="send-button img-fluid bg-transparent position-relative app_tour_mic_button_description">
+        <button id="voiceRecordButtonId" class="send-button img-fluid bg-transparent position-relative">
             <div id="voiceRecordMicCircle" class="load"></div>
             <img id="recordingImage" src="~/Content/images/start-recording.svg" class="mic-style position-absolute voice-start-recording-border-color" />
         </button>

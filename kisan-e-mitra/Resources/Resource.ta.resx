@@ -395,43 +395,4 @@
   <data name="message.maintenance_mode_header" xml:space="preserve">
     <value>நாங்கள் விரைவில் வருவோம்!</value>
   </data>
-  <data name="label.next" xml:space="preserve">
-    <value>அடுத்தது</value>
-  </data>
-  <data name="label.previous" xml:space="preserve">
-    <value>மீண்டும்</value>
-  </data>
-  <data name="message.app_tour_alternate_language_selection_description" xml:space="preserve">
-    <value>இங்கிருந்து உங்கள் மொழியையும் மாற்றலாம்.</value>
-  </data>
-  <data name="message.app_tour_audio_button_description" xml:space="preserve">
-    <value>தகவலைக் கேட்க "ஒலி" ஐகானைக் கிளிக் செய்யவும்.</value>
-  </data>
-  <data name="message.app_tour_exit" xml:space="preserve">
-    <value>டுடோரியலில் இருந்து வெளியேறு</value>
-  </data>
-  <data name="message.app_tour_language_selection_description" xml:space="preserve">
-    <value>மெனுவிலிருந்து உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்</value>
-  </data>
-  <data name="message.app_tour_mic_button_description" xml:space="preserve">
-    <value>உங்கள் செய்தியைப் பதிவுசெய்ய "மைக்" ஐகானைத் தட்டி, நிறுத்த மீண்டும் தட்டவும்.</value>
-  </data>
-  <data name="message.app_tour_refresh_button_description" xml:space="preserve">
-    <value>பக்கத்தை மீண்டும் ஏற்றுவதற்கு "புதுப்பி" என்பதைக் கிளிக் செய்யவும்</value>
-  </data>
-  <data name="message.app_tour_sample_questions_description" xml:space="preserve">
-    <value>உதவிக்கு இந்த உதாரணக் கேள்விகளைப் பயன்படுத்தவும்</value>
-  </data>
-  <data name="message.app_tour_send_button_description" xml:space="preserve">
-    <value>உங்கள் செய்தியை அனுப்ப இந்த அம்புக்குறி பொத்தானை அழுத்தவும்.</value>
-  </data>
-  <data name="message.app_tour_typebox_description" xml:space="preserve">
-    <value>உங்கள் கேள்விகளை இங்கே தட்டச்சு செய்யவும்.</value>
-  </data>
-  <data name="message.app_tour_welcome_description" xml:space="preserve">
-    <value>தொடர கீழே உள்ள அடுத்து என்பதைக் கிளிக் செய்யவும் அல்லது கையேடு டுடோரியலைத் தவிர்க்க டுடோரியலில் இருந்து வெளியேறு என்பதைக் கிளிக் செய்யவும்</value>
-  </data>
-  <data name="message.app_tour_welcome_header" xml:space="preserve">
-    <value>Kisan-Emitra பயனர் கையேடுக்கு வரவேற்கிறோம்</value>
-  </data>
 </root>

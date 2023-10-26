@@ -394,44 +394,4 @@
   <data name="message.maintenance_mode_header" xml:space="preserve">
     <value>మేము త్వరలో తిరిగి వస్తాము!</value>
   </data>
-  <data name="label.next" xml:space="preserve">
-    <value>తరువాత</value>
-  </data>
-  <data name="label.previous" xml:space="preserve">
-    <value>వెనుకకు</value>
-  </data>
-  <data name="message.app_tour_alternate_language_selection_description" xml:space="preserve">
-    <value>మీరు ఇక్కడ నుండి మీ భాషను కూడా మార్చుకోవచ్చు.</value>
-  </data>
-  <data name="message.app_tour_audio_button_description" xml:space="preserve">
-    <value>సమాచారాన్ని వినడానికి "సౌండ్" చిహ్నాన్ని క్లిక్ చేయండి.</value>
-  </data>
-  <data name="message.app_tour_exit" xml:space="preserve">
-    <value>ట్యుటోరియల్ నుండి నిష్క్రమించండి</value>
-  </data>
-  <data name="message.app_tour_language_selection_description" xml:space="preserve">
-    <value>మెను నుండి మీ భాషను ఎంచుకోండి</value>
-  </data>
-  <data name="message.app_tour_mic_button_description" xml:space="preserve">
-    <value>మీ సందేశాన్ని రికార్డ్ చేయడానికి "మైక్" చిహ్నాన్ని నొక్కండి మరియు ఆపివేయడానికి దాన్ని మళ్లీ నొక్కండి.</value>
-  </data>
-  <data name="message.app_tour_refresh_button_description" xml:space="preserve">
-    <value>పేజీని రీలోడ్ చేయడానికి "రిఫ్రెష్" క్లిక్ చేయండి</value>
-  </data>
-  <data name="message.app_tour_sample_questions_description" xml:space="preserve">
-    <value>సహాయం కోసం ఈ ఉదాహరణ ప్రశ్నలను ఉపయోగించండి</value>
-  </data>
-  <data name="message.app_tour_send_button_description" xml:space="preserve">
-    <value>మీ సందేశాన్ని పంపడానికి ఈ బాణం బటన్‌ను నొక్కండి.</value>
-  </data>
-  <data name="message.app_tour_typebox_description" xml:space="preserve">
-    <value>మీ ప్రశ్నలను ఇక్కడ టైప్ చేయండి.</value>
-  </data>
-  <data name="message.app_tour_welcome_description" xml:space="preserve">
-    <value>కొనసాగించడానికి క్రింది తదుపరి క్లిక్ చేయండి లేదా
-మాన్యువల్ ట్యుటోరియల్‌ని దాటవేయడానికి నిష్క్రమించు ట్యుటోరియల్‌ని క్లిక్ చేయండి</value>
-  </data>
-  <data name="message.app_tour_welcome_header" xml:space="preserve">
-    <value>కిసాన్-eమిత్రకు స్వాగతం వాడుక సూచిక</value>
-  </data>
 </root>

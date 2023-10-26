@@ -96,64 +96,7 @@ namespace KisanEMitra.Controllers
                 {
                     Key = "label_no",
                     Value = Resources.Resource.label_no.ToString()
-                },
-                new CommonKeyValue
-                {
-                    Key = "app_tour_welcome_header",
-                    Value = Resources.Resource.message_app_tour_welcome_header
-                },
-                new CommonKeyValue
-                {
-                    Key = "app_tour_welcome_description",
-                    Value = Resources.Resource.message_app_tour_welcome_description
-                },
-                new CommonKeyValue
-                {
-                    Key = "app_tour_language_selection_description",
-                    Value = Resources.Resource.message_app_tour_language_selection_description
-                },
-                new CommonKeyValue
-                {
-                    Key = "app_tour_alternate_language_selection_description",
-                    Value = Resources.Resource.message_app_tour_alternate_language_selection_description
-                },
-                new CommonKeyValue
-                {
-                    Key = "app_tour_audio_button_description",
-                    Value = Resources.Resource.message_app_tour_audio_button_description
-                },new CommonKeyValue
-                {
-                    Key = "app_tour_sample_questions_description",
-                    Value = Resources.Resource.message_app_tour_sample_questions_description
-                },new CommonKeyValue
-                {
-                    Key = "app_tour_typebox_description",
-                    Value = Resources.Resource.message_app_tour_typebox_description
-                },new CommonKeyValue
-                {
-                    Key = "app_tour_mic_button_description",
-                    Value = Resources.Resource.message_app_tour_mic_button_description
-                },new CommonKeyValue
-                {
-                    Key = "app_tour_send_button_description",
-                    Value = Resources.Resource.message_app_tour_send_button_description
-                },new CommonKeyValue
-                {
-                    Key = "app_tour_refresh_button_description",
-                    Value = Resources.Resource.message_app_tour_refresh_button_description
-                },new CommonKeyValue
-                {
-                    Key = "previous",
-                    Value = Resources.Resource.label_previous
-                },new CommonKeyValue
-                {
-                    Key = "next",
-                    Value = Resources.Resource.label_next
-                },new CommonKeyValue
-                {
-                    Key = "app_tour_exit",
-                    Value = Resources.Resource.message_app_tour_exit
-                },
+                }
             };
 
             return translations;
@@ -248,17 +191,6 @@ namespace KisanEMitra.Controllers
                 Message = Resources.Resource.message_language_changed_greeting.ToString(),
                 Data = new { Translations = translationsToUpdateInUI, PopularQuestions = GetPopularQuestions() },
                 Success = true
-            });
-        }
-
-        [HttpPost]
-        public JsonResult GetUITranslations()
-        {
-            var translations = GetTranslations();
-            return Json(new AjaxActionResponse()
-            {
-                Success = true,
-                Data = new { Translations = translations }
             });
         }
 

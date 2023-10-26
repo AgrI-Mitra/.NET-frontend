@@ -297,23 +297,3 @@ img.query-msg-send-icon {
     .message-input-textarea::-webkit-scrollbar-thumb {
         background-color: #888;
     }
-
-
-.app-tour-next-button {
-    background-color: #198754 !important;
-    border-radius: 20px !important;
-    height: 40px;
-    width: auto;
-}
-
-.pm-kisan-chatbot-app-tour-modal-wrapper {
-    border-radius: 20px !important;
-}
-
-.help-button {
-    background: transparent;
-}
-
-#startAppTourButton{
-    cursor: pointer;
-}
