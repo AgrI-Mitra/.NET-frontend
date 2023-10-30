@@ -75,6 +75,8 @@
         backdrop: 'static',
         keyboard: false
     };
+    var selectedLanguageCultureCodeTemplateVarId = "{{selectedLanguageCultureCode}}";
+    var welcomeGreetingMessageBase64StringName = "welcome-greeting-message-base64-{{selectedLanguageCultureCode}}-audio";
 
 
     var chatbotConfirmationModal;
@@ -838,7 +840,7 @@
             appTourSteps.push(appTourStep);
         }
 
-        
+
 
         tour.addSteps(
             appTourSteps
@@ -1628,6 +1630,22 @@
                 // Remove previous language changed message
                 let previousLanguageChangedMessageId = "#chatbotMessageWrapper-language-change-greeting-message-base64-" + currentLanguageCultureCode + "-audio";
                 $(previousLanguageChangedMessageId).remove();
+
+                // Update Welcome greeting data id as per the new language
+                // So correct audio can be played when Welcome greeting audio icon is clicked after changing the language.
+                const currentWelcomeGreetingDataId = welcomeGreetingMessageBase64StringName.replace(selectedLanguageCultureCodeTemplateVarId, currentLanguageCultureCode);
+                const newWelcomeGreetingDataId = welcomeGreetingMessageBase64StringName.replace(selectedLanguageCultureCodeTemplateVarId, languageCultureCode);
+
+                $("#playMessageImg-" + currentWelcomeGreetingDataId).data("audio-id", newWelcomeGreetingDataId);
+
+                // We also need to update play icon image id
+                // To pass to correctly change the audio id whenever language is changed.
+                $(
+                    "#playMessageImg-" + currentWelcomeGreetingDataId
+                ).attr(
+                    "id",
+                    "playMessageImg-" + newWelcomeGreetingDataId
+                );
 
                 // Add language change messgae to chat screen
                 updateChatMessagesList(
