@@ -33,21 +33,30 @@ namespace KisanEMitra.Models
             new LanguageInfo {
                 LanguageEnglishLabel = "English", LanguageCultureLabel = "English",  LanguageCultureCode = "en", Position = 7, LanguageFirstAlphabet = "A"
             },
-            //new LanguageInfo {
-            //    LanguageEnglishLabel = "Marathi", LanguageCultureLabel = "मराठी", LanguageCultureCode = "mr", Position= 5, LanguageFirstAlphabet = "क"
-            //},
+            new LanguageInfo {
+                LanguageEnglishLabel = "Marathi", LanguageCultureLabel = "मराठी", LanguageCultureCode = "mr", Position= 5, LanguageFirstAlphabet = "क"
+            },
             new LanguageInfo {
                 LanguageEnglishLabel = "Bangla", LanguageCultureLabel = "বাংলা",LanguageCultureCode = "bn", Position = 6, LanguageFirstAlphabet = "ক"
             },
             new LanguageInfo {
                 LanguageEnglishLabel = "Tamil", LanguageCultureLabel = "தமிழ்", LanguageCultureCode = "ta", Position= 2, LanguageFirstAlphabet = "க்"
             },
-            //new LanguageInfo {
-            //    LanguageEnglishLabel = "Telugu", LanguageCultureLabel = "తెలుగు", LanguageCultureCode = "te", Position = 4, LanguageFirstAlphabet = "అ"
-            //},
+            new LanguageInfo {
+                LanguageEnglishLabel = "Telugu", LanguageCultureLabel = "తెలుగు", LanguageCultureCode = "te", Position = 4, LanguageFirstAlphabet = "అ"
+            },
             new LanguageInfo {
                 LanguageEnglishLabel = "Odia", LanguageCultureLabel = "ଓଡ଼ିଆ", LanguageCultureCode = "or", Position = 3, LanguageFirstAlphabet = "ଅ"
             },
+            new LanguageInfo {
+                LanguageEnglishLabel = "Kannada", LanguageCultureLabel = "ಕನ್ನಡ", LanguageCultureCode = "kn", Position = 10, LanguageFirstAlphabet = "ಕ"
+            },
+            //new LanguageInfo {
+            //    LanguageEnglishLabel = "Gujarati", LanguageCultureLabel = "ગુજરાતી", LanguageCultureCode = "gu", Position = 8, LanguageFirstAlphabet = "ગ"
+            //},
+            //new LanguageInfo {
+            //    LanguageEnglishLabel = "Punjabi", LanguageCultureLabel = "ਪੰਜਾਬੀ", LanguageCultureCode = "pa", Position = 9, LanguageFirstAlphabet = "ਪੰ"
+            //},
         };
 
         public static bool IsLanguageAvailable(string lang)
