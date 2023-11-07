@@ -717,11 +717,11 @@
 
             } else {
                 if (actionName == "likeMessage") {
-                likeMessage(messageId);
+                    likeMessage(messageId);
 
-            } else if (actionName == "dislikeMessage") {
-                dislikeMessage(messageId);
-            }
+                } else if (actionName == "dislikeMessage") {
+                    dislikeMessage(messageId);
+                }
             }
         });
     }
@@ -1106,20 +1106,20 @@
             let screenName = $(this).data("screen-name");
 
             if (screenName == "conversation") {
-            if (event.type == "keyup" && (isSampleQueryUsed == false && event?.originalEvent?.key != "Enter")) {
-                isUserTypedQuestion = true;
-            } else {
-                isUserTypedQuestion = false;
-            }
+                if (event.type == "keyup" && (isSampleQueryUsed == false && event?.originalEvent?.key != "Enter")) {
+                    isUserTypedQuestion = true;
+                } else {
+                    isUserTypedQuestion = false;
+                }
             }
 
             autosize.update($(userQuestionTextBoxClass));
 
             if (screenName == "conversation") {
-            var textValue = $(this).val();
+                var textValue = $(this).val();
 
-            // If value is there then only keep the send button enabled else keep it disabled.
-            enableDisableSendButton(textValue);
+                // If value is there then only keep the send button enabled else keep it disabled.
+                enableDisableSendButton(textValue);
             }
         });
 
@@ -1451,30 +1451,30 @@
                     } else {
 
                         if (screenName == "conversation") {
-                        const contentType = "audio/wav";
+                            const contentType = "audio/wav";
 
-                        if (data?.audio?.text) {
-                            const blob = b64toBlob(data.audio.text, contentType);
-                            loadAudioPlayer(blob, data.messageId, "left conversationsWrapper");
-                        }
-
-                        if (data.text !== null) {
-
-                            changeInputPlaceholderValue(data.placeholder);
+                            if (data?.audio?.text) {
+                                const blob = b64toBlob(data.audio.text, contentType);
+                                loadAudioPlayer(blob, data.messageId, "left conversationsWrapper");
+                            }
 
                             if (data.text !== null) {
-                                message = data.text;
-                                processChatBotResponse(
-                                    data.text,
-                                    data.messageId,
-                                    data.messageType,
-                                    data.textInEnglish,
-                                    true
-                                );
+
+                                changeInputPlaceholderValue(data.placeholder);
+
+                                if (data.text !== null) {
+                                    message = data.text;
+                                    processChatBotResponse(
+                                        data.text,
+                                        data.messageId,
+                                        data.messageType,
+                                        data.textInEnglish,
+                                        true
+                                    );
+                                }
                             }
                         }
                     }
-                }
                 }
 
                 scrollToBottom();
