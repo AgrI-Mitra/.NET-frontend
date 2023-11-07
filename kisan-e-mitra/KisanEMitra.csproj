@@ -167,6 +167,7 @@
     <Content Include="Content\chatbot.css" />
     <Content Include="Content\images\chatbot.png" />
     <Content Include="Content\images\chatc.png" />
+    <Content Include="Content\images\close.svg" />
     <Content Include="Content\images\hand-thumbs-down-fill.svg" />
     <Content Include="Content\images\hand-thumbs-down.svg" />
     <Content Include="Content\images\hand-thumbs-up-fill.svg" />
@@ -320,6 +321,7 @@
     <Content Include="Content\js\chatbot.js" />
     <Content Include="Content\js\feedback.js" />
     <Content Include="Content\js\fingerprint.js" />
+    <Content Include="Content\js\gtag.js" />
     <Content Include="Content\js\languageDropDown.js" />
     <Content Include="Content\js\recorder.js" />
     <Content Include="Content\js\shepherd.js" />

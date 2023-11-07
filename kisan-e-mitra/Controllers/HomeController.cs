@@ -154,6 +154,46 @@ namespace KisanEMitra.Controllers
                     Key = "app_tour_exit",
                     Value = Resources.Resource.message_app_tour_exit
                 },
+                new CommonKeyValue
+                {
+                    Key = "label_submit",
+                    Value = Resources.Resource.label_submit
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_feedback_description",
+                    Value = Resources.Resource.message_feedback_description
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_chatbot_functionality_feedback",
+                    Value = Resources.Resource.message_chatbot_functionality_feedback
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_information_feedback",
+                    Value = Resources.Resource.message_information_feedback
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_translation_feedback",
+                    Value = Resources.Resource.message_translation_feedback
+                },
+                new CommonKeyValue
+                {
+                    Key = "label_close",
+                    Value = Resources.Resource.label_close
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_feedback_title",
+                    Value = Resources.Resource.message_feedback_title
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_thank_you_for_feedback",
+                    Value = Resources.Resource.message_thank_you_for_feedback
+                }
             };
 
             return translations;

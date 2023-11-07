@@ -434,4 +434,22 @@
   <data name="message.app_tour_welcome_header" xml:space="preserve">
     <value>କିସାନ-ଇମିଟ୍ରା ୟୁଜର୍ ମାନୁଆଲକୁ ସ୍ୱାଗତ |</value>
   </data>
+  <data name="message.chatbot_functionality_feedback" xml:space="preserve">
+    <value>ଚାଟବଟ୍ କାର୍ଯ୍ୟକାରିତା |</value>
+  </data>
+  <data name="message.feedback_description" xml:space="preserve">
+    <value>ଦୟାକରି ମତାମତ ବର୍ଣ୍ଣନା ଲେଖନ୍ତୁ |</value>
+  </data>
+  <data name="message.feedback_title" xml:space="preserve">
+    <value>ମତାମତ</value>
+  </data>
+  <data name="message.information_feedback" xml:space="preserve">
+    <value>ସୂଚନା ମତାମତ</value>
+  </data>
+  <data name="message.thank_you_for_feedback" xml:space="preserve">
+    <value>ଆପଣଙ୍କ ମତାମତ ପାଇଁ ଧନ୍ୟବାଦ |</value>
+  </data>
+  <data name="message.translation_feedback" xml:space="preserve">
+    <value>ଅନୁବାଦ ମତାମତ |</value>
+  </data>
 </root>

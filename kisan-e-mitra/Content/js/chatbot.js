@@ -9,9 +9,11 @@
         ChatHistory: "history",
         ApiVersion: "/3",
         Message: "user/message/",
-        MatricsIncrement: "custom/metrics/increment"
+        MatricsIncrement: "custom/metrics/increment",
+        ConverstaionFeedback: "conversation/feedback"
     };
 
+    var isRecording = false;
     var tour;
 
     var sessionAutoRestartTimeoutId;
@@ -26,11 +28,20 @@
 
     var currentUserId = null;
     var previousUserId = null;
+    var currentConversationId = null;
 
     var chatbotConfirmationModalId = "chatbotConfirmationModal";
     var maintenanceModeModalId = "maintenanceModeModal";
+    var submitFeedbackModalId = "submitFeedbackModal";
+    var submitFeedbackModal;
+    const feedbackModalOptions = {
+        backdrop: true,
+        keyboard: false
+    }
+    submitFeedbackModal = new bootstrap.Modal("#" + submitFeedbackModalId, feedbackModalOptions);
 
     var userQuestionTextBox = "#userQuestionTextBox"; // This variable is used to listen any events on user question text box where user will type the question
+    var userQuestionTextBoxClass = ".userQuestionTextBoxClass";
 
     var startAudioImagePath = "../Content/images/start-audio.svg";
     var stopAudioImagePath = "../Content/images/stop-audio.svg";
@@ -43,10 +54,13 @@
 
     // Voice Recording button related variables - To Apply animation, change icon images etc. - START
     var voiceRecordButtonId = "#voiceRecordButtonId"; // This variable is used to listen events regarding voice recording button.
+    var voiceRecordButtonClass = ".voiceRecordButtonClass"
     var voiceRecordingImageId = "#recordingImage";// This variable is used to update voice recording image
+    var voiceRecordingImageClass = ".recordingImageClass";
     var stopVoiceRecordingImagePath = "../Content/images/stop-recording.svg";
     var startVoiceRecordingImagePath = "../Content/images/start-recording.svg";
     var voiceRecordMicCircleId = "#voiceRecordMicCircle";
+    var voiceRecordMicCircleClass = ".voiceRecordMicCircleClass";
     var voiceRecordingStartBgColorClass = "voice-start-recording-border-color";
     var voiceRecordingStopBgColorClass = "voice-stop-recording-border-color";
     // Voice Recording button related variables - To Apply animation, change icon images etc. - END
@@ -70,6 +84,7 @@
 
 
     const chatbotConfirmationModalElement = document.getElementById(chatbotConfirmationModalId);
+    const submitFeedbackModalElement = document.getElementById(submitFeedbackModalId);
 
     const modalOptions = {
         backdrop: 'static',
@@ -80,6 +95,10 @@
 
 
     var chatbotConfirmationModal;
+    var currentConversationId;
+    const pmKisanToast = document.getElementById('pmKisanToastNotification');
+    const pmKisanToastNotificationHeaderId = "#pmKisanToastNotificationHeader";
+    const pmKisanToastNotificationDescriptionId = "#pmKisanToastNotificationDescription";
 
     // When browser tab is about to close
     window.onbeforeunload = function () {
@@ -517,6 +536,48 @@
                 htmlElementKeyName: "noLabel",
                 htmlElementKeyAttributeType: ".",
                 htmlElementValueAttributeType: "text",
+            },
+            {
+                translationKey: 'label_submit',
+                htmlElementKeyName: 'submitLabelTranslation',
+                htmlElementKeyAttributeType: ".",
+                htmlElementValueAttributeType: "text"
+            },
+            {
+                translationKey: 'message_feedback_description',
+                htmlElementKeyName: 'feedbackTextArea',
+                htmlElementKeyAttributeType: "#",
+                htmlElementValueAttributeType: "value"
+            },
+            {
+                translationKey: 'message_chatbot_functionality_feedback',
+                htmlElementKeyName: 'chatbotFunctionalityFeedback',
+                htmlElementKeyAttributeType: "#",
+                htmlElementValueAttributeType: "text"
+            },
+            {
+                translationKey: 'message_information_feedback',
+                htmlElementKeyName: 'informationFeedback',
+                htmlElementKeyAttributeType: "#",
+                htmlElementValueAttributeType: "text"
+            }, ,
+            {
+                translationKey: 'message_translation_feedback',
+                htmlElementKeyName: 'translationsFeedback',
+                htmlElementKeyAttributeType: "#",
+                htmlElementValueAttributeType: "text"
+            },
+            {
+                translationKey: 'label_close',
+                htmlElementKeyName: 'closeLabelTranslation',
+                htmlElementKeyAttributeType: ".",
+                htmlElementValueAttributeType: "text"
+            },
+            {
+                translationKey: 'message_feedback_title',
+                htmlElementKeyName: 'submitFeedbackModalTitle',
+                htmlElementKeyAttributeType: "#",
+                htmlElementValueAttributeType: "text"
             }
 
         ];
@@ -526,7 +587,7 @@
             let currentTranslation = translationsToUpdate[i];
 
             let currentTranslationMappingDetails = translationsMappingIds.find(
-                (f) => f.translationKey == currentTranslation.Key
+                (f) => f?.translationKey == currentTranslation.Key
             );
 
             if (currentTranslationMappingDetails) {
@@ -579,6 +640,15 @@
         });
     }
 
+    function voiceRecorderListener() {
+
+        $(voiceRecordButtonClass).click(function (e) {
+
+            let currentScreenName = $(this).data("screen-name");
+            recordAudio(currentScreenName);
+        });
+    }
+
     /**
      * This method is used to listen popular question click event, 
      * It will copy clicked question to user question text box
@@ -606,6 +676,18 @@
         });
     }
 
+    function feedbackSubmitButtonOnClickListener() {
+        $(document).on("click", "#feedbackSubmitButton", function (ev) {
+            let translationFeedback = $(this).data("translation-feedback");
+            let informationFeedback = $(this).data("information-feedback");
+            let functionalityFeedback = $("#feedbackSubmitButton").data("functionality-feedback");
+
+            let feedbackDetails = $(userQuestionTextBoxClass + "[data-screen-name=" + 'feedback' + "]").val();
+
+            submitFeedback(translationFeedback, informationFeedback, functionalityFeedback, feedbackDetails);
+        })
+    }
+
     /**
      * This method is used to listen action button click events 
      * Actions like, play message as audio, like, dislike or unlike chatbot response
@@ -616,6 +698,7 @@
             let actionName = $(this).data("action-name");
             let audioId = $(this).data("audio-id");
             let messageId = $(this).data("message-id");
+            let actionType = $(this).data("action-type");
 
             if (actionName == "setAutoPlayAudioMessage") {
                 setAutoPlayOn(audioId);
@@ -623,11 +706,22 @@
             } else if (actionName == "playAudioMessage") {
                 playAudio(audioId);
 
-            } else if (actionName == "likeMessage") {
+            } else if (actionType == "fe") {
+
+                if (actionName == "likeMessage") {
+                    likeMessageFe(messageId);
+
+                } else if (actionName == "dislikeMessage") {
+                    dislikeMessageFe(messageId);
+                }
+
+            } else {
+                if (actionName == "likeMessage") {
                 likeMessage(messageId);
 
             } else if (actionName == "dislikeMessage") {
                 dislikeMessage(messageId);
+            }
             }
         });
     }
@@ -672,16 +766,19 @@
         const controller = new AbortController();
         const signal = controller.signal;
 
+        voiceRecorderListener();
         languageChangeListener();
         popularQuestionClickListener();
         userQuestionTextBoxOnKeyPressListener();
         chatbotMessageActionButtonsOnClickListener();
+        feedbackSubmitButtonOnClickListener();
         restartSessionButtonOnClickListener();
         startAppTourButtonOnClickListener();
         resendOtpOnClickListener();
         popularQuestionsOnClickListener();
         initAutoSizeInputBox();
         chatbotConfirmationModalCloseEventListener();
+        submitFeedbackModalCloseEventListener();
 
         getUITranslations();
 
@@ -858,8 +955,51 @@
         maintenanceModeModal.show();
     }
 
+    function submitFeedbackModalCloseEventListener() {
+
+        submitFeedbackModalElement.addEventListener('hidden.bs.modal', event => {
+
+            // Show toaster to show thank you message for the feedback
+            const toastMessage = translations.find(f => f.Key == "message_thank_you_for_feedback").Value;
+            /*showToastNotification(toastMessage);*/
+            const feedbackResponseMessageId = "message-thank-for-feedback-" + new Date().toLocaleString();
+
+            updateChatMessagesList(toastMessage, feedbackResponseMessageId, "", true)
+
+            $(this).data("translation-feedback", -1);
+            $(this).data("information-feedback", -1);
+            $("#feedbackSubmitButton").data("functionality-feedback", -1);
+
+            $(userQuestionTextBoxClass + "[data-screen-name=" + 'feedback' + "]").val("");
+
+            likeMessageFe("translation-feedback", true);
+            likeMessageFe("information-feedback", true);
+            likeMessageFe("functionality-feedback", true);
+            dislikeMessageFe("translation-feedback", true);
+            dislikeMessageFe("information-feedback", true);
+            dislikeMessageFe("functionality-feedback", true);
+        });
+    }
+
+    function showFeedbackModal() {
+
+        submitFeedbackModal = new bootstrap.Modal("#" + submitFeedbackModalId);
+        submitFeedbackModal.show();
+    }
+
+    function showToastNotification(message) {
+
+        const headerText = translations.find(f => f.Key == "label_title").Value;
+
+        $(pmKisanToastNotificationHeaderId).text(headerText);
+        $(pmKisanToastNotificationDescriptionId).text(message);
+
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(pmKisanToast)
+        toastBootstrap.show();
+    }
+
     function initAutoSizeInputBox() {
-        autosize($(userQuestionTextBox));
+        autosize($(userQuestionTextBoxClass));
     }
 
     function updateChatMessagesList(
@@ -908,6 +1048,7 @@
 
             if (messageType == "final_response") {
                 sessionStorage.setItem("final_response", true);
+
                 showPopularQuestions();
             }
 
@@ -919,10 +1060,38 @@
         }
     }
 
+    function recordAudio(screenName) {
+        isRecording = !isRecording;
+
+        if (isRecording) {
+
+            $(voiceRecordingImageClass + "[data-screen-name=" + screenName + "]").attr("src", stopVoiceRecordingImagePath);
+            $(voiceRecordingImageClass + "[data-screen-name=" + screenName + "]").addClass(voiceRecordingStopBgColorClass);
+            $(voiceRecordingImageClass + "[data-screen-name=" + screenName + "]").removeClass(voiceRecordingStartBgColorClass);
+            //$(voiceRecordMicCircleId).show();
+            $(voiceRecordMicCircleClass + "[data-screen-name=" + screenName + "]").show();
+            //$(voiceRecordMicCircleClass).show();
+
+            $(sendTextButtonId).attr("disabled", "disabled");
+            startRecording(screenName);
+        } else {
+            $(voiceRecordingImageClass + "[data-screen-name=" + screenName + "]").attr("src", startVoiceRecordingImagePath);
+            $(voiceRecordingImageClass + "[data-screen-name=" + screenName + "]").addClass(voiceRecordingStartBgColorClass);
+            $(voiceRecordingImageClass + "[data-screen-name=" + screenName + "]").removeClass(voiceRecordingStopBgColorClass);
+
+            /*$(voiceRecordMicCircleId).hide();*/
+            //$(voiceRecordMicCircleClass).hide();
+            $(voiceRecordMicCircleClass + "[data-screen-name=" + screenName + "]").hide();
+            $(sendTextButtonId).removeAttr("disabled");
+            stopRecording();
+        }
+    }
+
     $(document).ready(function () {
         initChatBotConfig();
 
-        $(voiceRecordMicCircleId).hide();
+        //$(voiceRecordMicCircleId).hide();
+        $(voiceRecordMicCircleClass).hide();
 
         createGlobalAudioElement();
 
@@ -932,48 +1101,36 @@
 
         enableDisableSendButton();
 
-        $(userQuestionTextBox).on("change paste keyup", function (event) {
+        $(userQuestionTextBoxClass).on("change paste keyup", function (event) {
 
+            let screenName = $(this).data("screen-name");
+
+            if (screenName == "conversation") {
             if (event.type == "keyup" && (isSampleQueryUsed == false && event?.originalEvent?.key != "Enter")) {
                 isUserTypedQuestion = true;
             } else {
                 isUserTypedQuestion = false;
             }
-            autosize.update($(userQuestionTextBox));
+            }
+
+            autosize.update($(userQuestionTextBoxClass));
+
+            if (screenName == "conversation") {
             var textValue = $(this).val();
 
             // If value is there then only keep the send button enabled else keep it disabled.
             enableDisableSendButton(textValue);
+            }
         });
 
-        var isRecording = false;
+
         getLocalStream();
 
-        $(voiceRecordButtonId).click(function () {
-            recordAudio();
-        });
+        //$(voiceRecordButtonId).click(function () {
+        //    //recordAudio();
+        //});
 
-        function recordAudio() {
-            isRecording = !isRecording;
 
-            if (isRecording) {
-                $(voiceRecordingImageId).attr("src", stopVoiceRecordingImagePath);
-                $(voiceRecordingImageId).addClass(voiceRecordingStopBgColorClass);
-                $(voiceRecordingImageId).removeClass(voiceRecordingStartBgColorClass);
-                $(voiceRecordMicCircleId).show();
-
-                $(sendTextButtonId).attr("disabled", "disabled");
-                startRecording();
-            } else {
-                $(voiceRecordingImageId).attr("src", startVoiceRecordingImagePath);
-                $(voiceRecordingImageId).addClass(voiceRecordingStartBgColorClass);
-                $(voiceRecordingImageId).removeClass(voiceRecordingStopBgColorClass);
-
-                $(voiceRecordMicCircleId).hide();
-                $(sendTextButtonId).removeAttr("disabled");
-                stopRecording();
-            }
-        }
 
         // To listen click event on send user question button
         $(function () {
@@ -1086,6 +1243,7 @@
             $("#message-list").append(userQuery);
         }
         $(userQuestionTextBox).val("");
+
         $(userQuestionTextBox).trigger("change");
 
         hideChatLoader();
@@ -1183,11 +1341,36 @@
         scrollToBottom();
     }
 
-    function askQuestions(input, category, blob) {
+    function submitFeedback(translation, information, chatbotFunctionality, feedbackDetails) {
+        const apiUrl = apiUrlConfig.chatbotApiBaseUrl + apiUrlConfig.ConverstaionFeedback;
+
+        const requestPayload = {
+            conversationId: currentConversationId,
+            translation: translation,
+            information: information,
+            chatbotFunctionality: chatbotFunctionality,
+            feedback: feedbackDetails
+        }
+
+        const headers = new Headers();
+        headers.append("User-id", currentUserId);
+
+        makeRequestRetry("POST", apiUrl, headers, requestPayload).then(apiResponse => {
+
+            const data = JSON.parse(apiResponse);
+            submitFeedbackModal.hide();
+
+        }).catch(apiError => {
+            handleError(apiError);
+        });
+
+    }
+
+    function askQuestions(input, category, blob, screenName = "conversation") {
 
         let isFinalResponseReceived = false;
 
-        if (category == "text") {
+        if (category == "text" && screenName == "conversation") {
 
             clearSessionRestartAutoTimeout();
 
@@ -1198,6 +1381,7 @@
             }
 
             sessionStorage.removeItem("final_response");
+            sessionStorage.removeItem("isFeedbackModalShown");
 
             if (isUserTypedQuestion == true) {
                 addMatricsCount("directMessageTypedCount");
@@ -1241,6 +1425,7 @@
                 const data = JSON.parse(apiResponse);
 
                 var message = "";
+                currentConversationId = data.conversationId;
 
                 if (data.error !== null) {
 
@@ -1257,13 +1442,15 @@
                         if (data.text) {
 
                             message = data.text;
-                            $(userQuestionTextBox).val(message);
-                            $(userQuestionTextBox).focus();
-                            $(userQuestionTextBox).trigger("change");
+
+                            $(userQuestionTextBoxClass + "[data-screen-name=" + screenName + "]").val(message);
+                            $(userQuestionTextBoxClass + "[data-screen-name=" + screenName + "]").focus();
+                            $(userQuestionTextBoxClass + "[data-screen-name=" + screenName + "]").trigger("change");
                         }
 
                     } else {
 
+                        if (screenName == "conversation") {
                         const contentType = "audio/wav";
 
                         if (data?.audio?.text) {
@@ -1288,6 +1475,7 @@
                         }
                     }
                 }
+                }
 
                 scrollToBottom();
 
@@ -1300,7 +1488,7 @@
             });
         }
 
-        if (isFinalResponseReceived == true) {
+        if (isFinalResponseReceived == true && screenName == "conversation") {
             const fingerPrintId = sessionStorage.getItem("fingerPrintId");
 
             createSession(fingerPrintId).then((sessionResult) => {
@@ -1313,8 +1501,110 @@
         }
     }
 
+    /**
+     * This methos is used to set like or unlike reaction on thumb icon for feedback purpose
+     * @param {any} messageId
+     */
+    function likeMessageFe(messageId, shouldReset) {
+
+        if (shouldReset) {
+            $("#thumbLikeButton-" + messageId).attr("src", thumbLikeImagePath);
+        } else {
+            // Check the current state of like button whether it is liked or unliked.
+            // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
+            var likeButtonSource = $("#thumbLikeButton-" + messageId)[0].src;
+
+            var likeImageToReplace = thumbLikeHighlightImagePath; // Highlight thumbLike button
+            let likeMessageValue = 1;
+            var isLikeHighlight = false;
+
+            if (likeButtonSource.indexOf("fill") >= 0) {
+                isLikeHighlight = true;
+
+                likeImageToReplace = thumbLikeImagePath; // Unlike thumbLike button
+                likeMessageValue = -1;
+            }
+
+            // Set the user selected reaction in data attribute, so later we can use it to send this info to api
+            $("#feedbackSubmitButton").data(messageId, likeMessageValue);
+
+            // Highlight the like button
+            $("#thumbLikeButton-" + messageId).attr("src", likeImageToReplace);
+
+            // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+            if (isLikeHighlight) {
+                $("#thumbLikeButton-" + messageId).removeClass(
+                    "feedback-animation"
+                );
+            } else {
+                $("#thumbLikeButton-" + messageId).addClass("feedback-animation");
+            }
+
+            $("#thumbDislikeButton-" + messageId).removeClass(
+                "feedback-animation"
+            ); // Remove animation class from dislike button, to display animation when user hits the same button again
+
+            $("#thumbDislikeButton-" + messageId).attr(
+                "src",
+                thumbDislikeImagePath
+            ); // Change image to color less icon for dislike button as user has clicked on like button now
+        }
+    }
+
+    /**
+     * This methos is used to set dislike or unlike reaction on thumb icon for feedback purpose
+     * @param {any} messageId
+     */
+    function dislikeMessageFe(messageId, shouldReset) {
+
+        if (shouldReset) {
+            $("#thumbDislikeButton-" + messageId).attr("src", thumbDislikeImagePath);
+        } else {
+            // Check the current state of like button whether it is liked or unliked.
+            // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
+            var dislikeButtonSource = $("#thumbDislikeButton-" + messageId)[0].src;
+
+            var dislikeImageToReplace = thumbDislikeHighlightImagePath;
+            var isDislikeHighlight = false;
+            let dislikeMessageValue = 0;
+            if (dislikeButtonSource.indexOf("fill") >= 0) {
+                isDislikeHighlight = true;
+
+                dislikeImageToReplace = thumbDislikeImagePath;
+                dislikeMessageValue = -1;
+            }
+
+            $("#feedbackSubmitButton").data(messageId, dislikeMessageValue);
+
+            // Set the user selected reaction in data attribute, so later we can use it to send this info to api
+
+            // Highlight the like button
+            $("#thumbDislikeButton-" + messageId).attr(
+                "src",
+                dislikeImageToReplace
+            );
+
+            // If earlier it was already hightlighed it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+            if (isDislikeHighlight) {
+                $("#thumbDislikeButton-" + messageId).removeClass(
+                    "feedback-animation"
+                );
+            } else {
+                $("#thumbDislikeButton-" + messageId).addClass(
+                    "feedback-animation"
+                );
+            }
+
+            $("#thumbLikeButton-" + messageId).removeClass("feedback-animation"); // Remove animation class from like button, to display animation when user hits the same button again
+
+            $("#thumbLikeButton-" + messageId).attr("src", thumbLikeImagePath);
+        }
+    }
+
     function likeMessage(messageId) {
         chatLoader();
+
+
 
         // Check the current state of like button whether it is liked or unliked.
         // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
@@ -1361,6 +1651,19 @@
                 thumbDislikeImagePath
             ); // Change image to color less icon for dislike button as user has clicked on like button now
 
+
+            // Check if feedback modal is already shown or not
+            // We need to show it only if it is not already shown
+
+            const isFeedbackModalShown = sessionStorage.getItem("isFeedbackModalShown");
+
+            if (isFeedbackModalShown) {
+
+            } else {
+                showFeedbackModal();
+                sessionStorage.setItem("isFeedbackModalShown", true);
+            }
+
         }).catch(apiError => {
             handleError(apiError);
         });
@@ -1368,6 +1671,7 @@
 
     function dislikeMessage(messageId) {
         chatLoader();
+
 
         // Check the current state of like button whether it is liked or unliked.
         // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
@@ -1414,6 +1718,15 @@
 
             $("#thumbLikeButton-" + messageId).attr("src", thumbLikeImagePath);
 
+            const isFeedbackModalShown = sessionStorage.getItem("isFeedbackModalShown");
+
+            if (isFeedbackModalShown) {
+
+            } else {
+                showFeedbackModal();
+                sessionStorage.setItem("isFeedbackModalShown", true);
+            }
+
         }).catch(apiError => {
 
             handleError(apiError);
@@ -1444,7 +1757,7 @@
         });
     }
 
-    async function startRecording() {
+    async function startRecording(screenName) {
 
         // Record matrics
         addMatricsCount("micUsedCount");
@@ -1471,7 +1784,7 @@
 
                     const encodedBlob = await getWaveBlob(blob, false, arrayBufferData);
 
-                    createDownloadLink(encodedBlob);
+                    createDownloadLink(encodedBlob, screenName);
 
                     chunks = [];
                 }
@@ -1489,7 +1802,7 @@
         mediaRecorder.stop();
     }
 
-    function createDownloadLink(blob) {
+    function createDownloadLink(blob, screenName) {
         var reader = new window.FileReader();
 
         reader.readAsDataURL(blob);
@@ -1501,7 +1814,7 @@
             base64 = base64.split(",")[1];
             scrollToBottom();
 
-            askQuestions(base64, "base64audio", blob);
+            askQuestions(base64, "base64audio", blob, screenName);
         };
     }
 

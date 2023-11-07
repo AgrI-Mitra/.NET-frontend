@@ -433,4 +433,22 @@
   <data name="message.app_tour_welcome_header" xml:space="preserve">
     <value>Kisan-eMitra ব্যবহারকারী ম্যানুয়াল-এ স্বাগতম</value>
   </data>
+  <data name="message.chatbot_functionality_feedback" xml:space="preserve">
+    <value>চ্যাটবট কার্যকারিতা</value>
+  </data>
+  <data name="message.feedback_description" xml:space="preserve">
+    <value>প্রতিক্রিয়া বিবরণ লিখুন দয়া করে</value>
+  </data>
+  <data name="message.feedback_title" xml:space="preserve">
+    <value>প্রতিক্রিয়া</value>
+  </data>
+  <data name="message.information_feedback" xml:space="preserve">
+    <value>তথ্য প্রতিক্রিয়া</value>
+  </data>
+  <data name="message.thank_you_for_feedback" xml:space="preserve">
+    <value>আপনার প্রতিক্রিয়ার জন্য ধন্যবাদ.</value>
+  </data>
+  <data name="message.translation_feedback" xml:space="preserve">
+    <value>অনুবাদ প্রতিক্রিয়া</value>
+  </data>
 </root>

@@ -547,6 +547,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chatbot Functionality.
+        /// </summary>
+        public static string message_chatbot_functionality_feedback {
+            get {
+                return ResourceManager.GetString("message.chatbot_functionality_feedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Coming Soon!.
         /// </summary>
         public static string message_coming_soon {
@@ -646,11 +655,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please write feedback description.
+        /// </summary>
+        public static string message_feedback_description {
+            get {
+                return ResourceManager.GetString("message.feedback_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feedback.
+        /// </summary>
+        public static string message_feedback_title {
+            get {
+                return ResourceManager.GetString("message.feedback_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Was this helpful?.
         /// </summary>
         public static string message_helpful {
             get {
                 return ResourceManager.GetString("message.helpful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information Feedback.
+        /// </summary>
+        public static string message_information_feedback {
+            get {
+                return ResourceManager.GetString("message.information_feedback", resourceCulture);
             }
         }
         
@@ -952,6 +988,24 @@ namespace Resources {
         public static string message_temporarily_down_description {
             get {
                 return ResourceManager.GetString("message.temporarily_down_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thanks for your feedback..
+        /// </summary>
+        public static string message_thank_you_for_feedback {
+            get {
+                return ResourceManager.GetString("message.thank_you_for_feedback", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translation Feedback.
+        /// </summary>
+        public static string message_translation_feedback {
+            get {
+                return ResourceManager.GetString("message.translation_feedback", resourceCulture);
             }
         }
         

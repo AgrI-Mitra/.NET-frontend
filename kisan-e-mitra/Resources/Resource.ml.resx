@@ -279,6 +279,9 @@
   <data name="message.cannot_answer_again" xml:space="preserve">
     <value>വീണ്ടും ഉത്തരം നൽകാൻ കഴിയില്ല</value>
   </data>
+  <data name="message.chatbot_functionality_feedback" xml:space="preserve">
+    <value>ചാറ്റ്ബോട്ട് പ്രവർത്തനം</value>
+  </data>
   <data name="message.coming_soon" xml:space="preserve">
     <value>ഉടൻ വരുന്നു!</value>
   </data>
@@ -312,8 +315,17 @@
   <data name="message.example_ques_two" xml:space="preserve">
     <value>എന്റെ അപേക്ഷയുടെ നില എന്താണ്?</value>
   </data>
+  <data name="message.feedback_description" xml:space="preserve">
+    <value>ദയവായി ഫീഡ്ബാക്ക് വിവരണം എഴുതുക</value>
+  </data>
+  <data name="message.feedback_title" xml:space="preserve">
+    <value>പ്രതികരണം</value>
+  </data>
   <data name="message.helpful" xml:space="preserve">
     <value>ഇത് സഹായകരമായിരുന്നോ?</value>
+  </data>
+  <data name="message.information_feedback" xml:space="preserve">
+    <value>വിവര ഫീഡ്ബാക്ക്</value>
   </data>
   <data name="message.invalid_mobile" xml:space="preserve">
     <value>10 അക്ക നമ്പർ നൽകുക!</value>
@@ -413,6 +425,12 @@
   </data>
   <data name="message.temporarily_down_description" xml:space="preserve">
     <value>ഞങ്ങൾ ഇപ്പോൾ ഉയർന്ന ഉപയോക്തൃ വോളിയം അനുഭവിക്കുന്നു, കുറച്ച് സമയത്തിന് ശേഷം ലോഗിൻ ചെയ്യാൻ ശ്രമിക്കുക</value>
+  </data>
+  <data name="message.thank_you_for_feedback" xml:space="preserve">
+    <value>താങ്കളുടെ പ്രതികരണത്തിന് നന്ദി.</value>
+  </data>
+  <data name="message.translation_feedback" xml:space="preserve">
+    <value>വിവർത്തന ഫീഡ്ബാക്ക്</value>
   </data>
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>OTP വീണ്ടും അയയ്ക്കുന്നതിന് മുമ്പ് ദയവായി കാത്തിരിക്കുക</value>

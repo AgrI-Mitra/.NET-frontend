@@ -279,6 +279,9 @@
   <data name="message.cannot_answer_again" xml:space="preserve">
     <value>ਦੁਬਾਰਾ ਜਵਾਬ ਨਹੀਂ ਦੇ ਸਕਦਾ</value>
   </data>
+  <data name="message.chatbot_functionality_feedback" xml:space="preserve">
+    <value>ਚੈਟਬੋਟ ਕਾਰਜਸ਼ੀਲਤਾ</value>
+  </data>
   <data name="message.coming_soon" xml:space="preserve">
     <value>ਆਨ ਵਾਲੀ!</value>
   </data>
@@ -312,8 +315,17 @@
   <data name="message.example_ques_two" xml:space="preserve">
     <value>ਮੇਰੀ ਅਰਜ਼ੀ ਦੀ ਸਥਿਤੀ ਕੀ ਹੈ?</value>
   </data>
+  <data name="message.feedback_description" xml:space="preserve">
+    <value>ਕਿਰਪਾ ਕਰਕੇ ਫੀਡਬੈਕ ਵੇਰਵਾ ਲਿਖੋ</value>
+  </data>
+  <data name="message.feedback_title" xml:space="preserve">
+    <value>ਸੁਝਾਅ</value>
+  </data>
   <data name="message.helpful" xml:space="preserve">
     <value>ਕੀ ਇਹ ਮਦਦਗਾਰ ਸੀ?</value>
+  </data>
+  <data name="message.information_feedback" xml:space="preserve">
+    <value>ਜਾਣਕਾਰੀ ਫੀਡਬੈਕ</value>
   </data>
   <data name="message.invalid_mobile" xml:space="preserve">
     <value>ਇੱਕ 10 ਅੰਕਾਂ ਦਾ ਨੰਬਰ ਦਾਖਲ ਕਰੋ!</value>
@@ -413,6 +425,12 @@
   </data>
   <data name="message.temporarily_down_description" xml:space="preserve">
     <value>ਅਸੀਂ ਇਸ ਸਮੇਂ ਉੱਚ ਉਪਭੋਗਤਾ ਵਾਲੀਅਮ ਦਾ ਅਨੁਭਵ ਕਰ ਰਹੇ ਹਾਂ, ਕਿਰਪਾ ਕਰਕੇ ਕੁਝ ਸਮੇਂ ਬਾਅਦ ਲੌਗਇਨ ਕਰਨ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ</value>
+  </data>
+  <data name="message.thank_you_for_feedback" xml:space="preserve">
+    <value>ਤੁਹਾਡੇ ਫੀਡਬੈਕ ਲਈ ਧੰਨਵਾਦ।</value>
+  </data>
+  <data name="message.translation_feedback" xml:space="preserve">
+    <value>ਅਨੁਵਾਦ ਫੀਡਬੈਕ</value>
   </data>
   <data name="message.wait_resending_otp" xml:space="preserve">
     <value>OTP ਮੁੜ ਭੇਜਣ ਤੋਂ ਪਹਿਲਾਂ ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ</value>

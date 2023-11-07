@@ -434,4 +434,22 @@
   <data name="message.app_tour_welcome_header" xml:space="preserve">
     <value>Kisan-Emitra பயனர் கையேடுக்கு வரவேற்கிறோம்</value>
   </data>
+  <data name="message.chatbot_functionality_feedback" xml:space="preserve">
+    <value>சாட்போட் செயல்பாடு</value>
+  </data>
+  <data name="message.feedback_description" xml:space="preserve">
+    <value>பின்னூட்ட விளக்கத்தை எழுதவும்</value>
+  </data>
+  <data name="message.feedback_title" xml:space="preserve">
+    <value>பின்னூட்டம்</value>
+  </data>
+  <data name="message.information_feedback" xml:space="preserve">
+    <value>தகவல் பின்னூட்டம்</value>
+  </data>
+  <data name="message.thank_you_for_feedback" xml:space="preserve">
+    <value>உங்கள் கருத்துக்கு நன்றி.</value>
+  </data>
+  <data name="message.translation_feedback" xml:space="preserve">
+    <value>மொழிபெயர்ப்பு கருத்து</value>
+  </data>
 </root>

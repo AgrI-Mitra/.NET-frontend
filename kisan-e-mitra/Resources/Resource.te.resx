@@ -434,4 +434,22 @@
   <data name="message.app_tour_welcome_header" xml:space="preserve">
     <value>కిసాన్-eమిత్రకు స్వాగతం వాడుక సూచిక</value>
   </data>
+  <data name="message.chatbot_functionality_feedback" xml:space="preserve">
+    <value>చాట్‌బాట్ ఫంక్షనాలిటీ</value>
+  </data>
+  <data name="message.feedback_description" xml:space="preserve">
+    <value>దయచేసి అభిప్రాయ వివరణను వ్రాయండి</value>
+  </data>
+  <data name="message.feedback_title" xml:space="preserve">
+    <value>అభిప్రాయం</value>
+  </data>
+  <data name="message.information_feedback" xml:space="preserve">
+    <value>సమాచార అభిప్రాయం</value>
+  </data>
+  <data name="message.thank_you_for_feedback" xml:space="preserve">
+    <value>మీ అభిప్రాయానికి ధన్యవాదాలు.</value>
+  </data>
+  <data name="message.translation_feedback" xml:space="preserve">
+    <value>అనువాద అభిప్రాయం</value>
+  </data>
 </root>
