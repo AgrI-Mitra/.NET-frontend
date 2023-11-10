@@ -49,8 +49,11 @@ namespace KisanEMitra.Models
                 LanguageEnglishLabel = "Odia", LanguageCultureLabel = "ଓଡ଼ିଆ", LanguageCultureCode = "or", Position = 3, LanguageFirstAlphabet = "ଅ"
             },
             new LanguageInfo {
-                LanguageEnglishLabel = "Kannada", LanguageCultureLabel = "ಕನ್ನಡ", LanguageCultureCode = "kn", Position = 10, LanguageFirstAlphabet = "ಕ"
+                LanguageEnglishLabel = "Malayalam", LanguageCultureLabel = "മലയാളം", LanguageCultureCode = "ml", Position = 8, LanguageFirstAlphabet = "അ"
             },
+            //new LanguageInfo {
+            //    LanguageEnglishLabel = "Kannada", LanguageCultureLabel = "ಕನ್ನಡ", LanguageCultureCode = "kn", Position = 10, LanguageFirstAlphabet = "ಕ"
+            //},
             //new LanguageInfo {
             //    LanguageEnglishLabel = "Gujarati", LanguageCultureLabel = "ગુજરાતી", LanguageCultureCode = "gu", Position = 8, LanguageFirstAlphabet = "ગ"
             //},
