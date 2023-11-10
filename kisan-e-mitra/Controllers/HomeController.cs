@@ -205,7 +205,7 @@ namespace KisanEMitra.Controllers
 
             List<string> strings = new List<string>();
 
-            var availableLanguages = LanguageManager.AvailableLanguages;
+            var availableLanguages = LanguageManager.GetLanguagesOrderedByPosition();
 
             foreach (var availableLanguage in availableLanguages)
             {
