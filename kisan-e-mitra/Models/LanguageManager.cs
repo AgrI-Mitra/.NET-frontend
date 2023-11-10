@@ -31,25 +31,25 @@ namespace KisanEMitra.Models
                 LanguageEnglishLabel = "Hindi", LanguageCultureLabel = "हिंदी", LanguageCultureCode = "hi", Position = 1, LanguageFirstAlphabet = "क"
             },
             new LanguageInfo {
-                LanguageEnglishLabel = "English", LanguageCultureLabel = "English",  LanguageCultureCode = "en", Position = 7, LanguageFirstAlphabet = "A"
+                LanguageEnglishLabel = "English", LanguageCultureLabel = "English",  LanguageCultureCode = "en", Position = 8, LanguageFirstAlphabet = "A"
+            },
+            //new LanguageInfo {
+            //    LanguageEnglishLabel = "Marathi", LanguageCultureLabel = "मराठी", LanguageCultureCode = "mr", Position= 5, LanguageFirstAlphabet = "क"
+            //},
+            new LanguageInfo {
+                LanguageEnglishLabel = "Bangla", LanguageCultureLabel = "বাংলা",LanguageCultureCode = "bn", Position = 2, LanguageFirstAlphabet = "ক"
             },
             new LanguageInfo {
-                LanguageEnglishLabel = "Marathi", LanguageCultureLabel = "मराठी", LanguageCultureCode = "mr", Position= 5, LanguageFirstAlphabet = "क"
+                LanguageEnglishLabel = "Tamil", LanguageCultureLabel = "தமிழ்", LanguageCultureCode = "ta", Position= 5, LanguageFirstAlphabet = "க்"
             },
             new LanguageInfo {
-                LanguageEnglishLabel = "Bangla", LanguageCultureLabel = "বাংলা",LanguageCultureCode = "bn", Position = 6, LanguageFirstAlphabet = "ক"
+                LanguageEnglishLabel = "Telugu", LanguageCultureLabel = "తెలుగు", LanguageCultureCode = "te", Position = 3, LanguageFirstAlphabet = "అ"
             },
             new LanguageInfo {
-                LanguageEnglishLabel = "Tamil", LanguageCultureLabel = "தமிழ்", LanguageCultureCode = "ta", Position= 2, LanguageFirstAlphabet = "க்"
+                LanguageEnglishLabel = "Odia", LanguageCultureLabel = "ଓଡ଼ିଆ", LanguageCultureCode = "or", Position = 4, LanguageFirstAlphabet = "ଅ"
             },
             new LanguageInfo {
-                LanguageEnglishLabel = "Telugu", LanguageCultureLabel = "తెలుగు", LanguageCultureCode = "te", Position = 4, LanguageFirstAlphabet = "అ"
-            },
-            new LanguageInfo {
-                LanguageEnglishLabel = "Odia", LanguageCultureLabel = "ଓଡ଼ିଆ", LanguageCultureCode = "or", Position = 3, LanguageFirstAlphabet = "ଅ"
-            },
-            new LanguageInfo {
-                LanguageEnglishLabel = "Malayalam", LanguageCultureLabel = "മലയാളം", LanguageCultureCode = "ml", Position = 8, LanguageFirstAlphabet = "അ"
+                LanguageEnglishLabel = "Malayalam", LanguageCultureLabel = "മലയാളം", LanguageCultureCode = "ml", Position = 7, LanguageFirstAlphabet = "അ"
             },
             //new LanguageInfo {
             //    LanguageEnglishLabel = "Kannada", LanguageCultureLabel = "ಕನ್ನಡ", LanguageCultureCode = "kn", Position = 10, LanguageFirstAlphabet = "ಕ"
