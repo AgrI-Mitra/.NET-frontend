@@ -133,10 +133,10 @@
     <value>સમીક્ષા સબમિટ કરવામાં નિષ્ફળ.</value>
   </data>
   <data name="error.otp_not_sent" xml:space="preserve">
-    <value>OTP મોકલ્યો નથી</value>
+    <value>ઓટીપી મોકલ્યો નથી</value>
   </data>
   <data name="error.sending_otp" xml:space="preserve">
-    <value>OTP મોકલવામાં ભૂલ</value>
+    <value>ઓટીપી મોકલવામાં ભૂલ</value>
   </data>
   <data name="error.userid_not_registered" xml:space="preserve">
     <value>UserID નોંધાયેલ નથી.</value>
@@ -208,7 +208,7 @@
     <value>તમારા આધારના છેલ્લા 4 અંકો દાખલ કરો</value>
   </data>
   <data name="label.popUpTitle3" xml:space="preserve">
-    <value>પ્રિય લાભાર્થી, તમને વિનંતી છે કે તમને પ્રાપ્ત થયેલ OTP દાખલ કરો.</value>
+    <value>પ્રિય લાભાર્થી, તમને વિનંતી છે કે તમને પ્રાપ્ત થયેલ ઓટીપી દાખલ કરો.</value>
   </data>
   <data name="label.previous" xml:space="preserve">
     <value>પાછળ</value>
@@ -298,7 +298,7 @@
     <value>કોલ સેન્ટર સાથે જોડાવા માટે</value>
   </data>
   <data name="message.didnt_receive" xml:space="preserve">
-    <value>OTP પ્રાપ્ત થયો નથી?</value>
+    <value>ઓટીપી પ્રાપ્ત થયો નથી?</value>
   </data>
   <data name="message.down_time_retry" xml:space="preserve">
     <value>ફરી પ્રયાસ કરો</value>
@@ -331,10 +331,10 @@
     <value>10 અંકનો નંબર દાખલ કરો!</value>
   </data>
   <data name="message.invalid_otp" xml:space="preserve">
-    <value>અમાન્ય Otp</value>
+    <value>અમાન્ય ઓટીપી</value>
   </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
-    <value>અંગ્રેજી ભાષા પસંદ કરવા બદલ આભાર. પ્રિય લાભાર્થી, તમારો પ્રશ્ન લખો અથવા માઈક બટનનો ઉપયોગ કરીને બોલો. ફક્ત માઈક બટનને ટચ કરો અને તમારો પ્રશ્ન કહો. રેકોર્ડિંગ બંધ કરવા માટે ફરીથી માઇક બટનને ટચ કરો.</value>
+    <value>ગુજરાતી ભાષા પસંદ કરવા બદલ આભાર. પ્રિય લાભાર્થી, તમારો પ્રશ્ન લખો અથવા માઈક બટનનો ઉપયોગ કરીને બોલો. ફક્ત માઈક બટનને ટચ કરો અને તમારો પ્રશ્ન કહો. રેકોર્ડિંગ બંધ કરવા માટે ફરીથી માઇક બટનને ટચ કરો.</value>
   </data>
   <data name="message.maintenance_mode_body" xml:space="preserve">
     <value>કોઈપણ મુશ્કેલી માટે માફ કરશો. હું તમને વધુ સારી રીતે મદદ કરવા માટે અપડેટ કરી રહ્યો છું અને કેટલીક સમસ્યાઓ ઠીક કરી રહ્યો છું. હું ટૂંક સમયમાં ફરીથી ઉપલબ્ધ થઈશ. કૃપા કરીને પાછા આવો અને થોડા સમય પછી ફરી પ્રયાસ કરો.</value>
@@ -352,13 +352,13 @@
     <value>આના પર અમે તમને વન ટાઇમ પાસવર્ડ મોકલીશું</value>
   </data>
   <data name="message.otp_not_sent" xml:space="preserve">
-    <value>Otp મોકલ્યો નથી</value>
+    <value>ઓટીપી મોકલ્યો નથી</value>
   </data>
   <data name="message.otp_sent_again" xml:space="preserve">
-    <value>OTP ફરી મોકલ્યો</value>
+    <value>ઓટીપી ફરી મોકલ્યો</value>
   </data>
   <data name="message.otp_verification" xml:space="preserve">
-    <value>OTP ચકાસણી</value>
+    <value>ઓટીપી ચકાસણી</value>
   </data>
   <data name="message.popular_question_1" xml:space="preserve">
     <value>મને મારા છેલ્લા હપ્તાની ચુકવણી મળી નથી.</value>
@@ -436,7 +436,7 @@
     <value>OTP ફરીથી મોકલતા પહેલા કૃપા કરીને રાહ જુઓ</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>કિસાન-મિત્રમાં આપનું સ્વાગત છે! હું તમારો અંગત મદદનીશ છું. કૃપા કરીને મને જણાવો કે હું તમને કેવી રીતે મદદ કરી શકું? &lt;br&gt;તમે તમારી પસંદગીની ભાષા પસંદ કરી શકો છો.</value>
+    <value>કિસાન-eમિત્રમાં આપનું સ્વાગત છે! હું તમારો અંગત મદદનીશ છું. કૃપા કરીને મને જણાવો કે હું તમને કેવી રીતે મદદ કરી શકું? &lt;br&gt;તમે તમારી પસંદગીની ભાષા પસંદ કરી શકો છો.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>પ્રતિભાવ સફળતાપૂર્વક નાપસંદ કર્યો</value>
