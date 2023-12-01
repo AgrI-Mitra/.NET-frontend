@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = @Resources.Resource.label_faqs;
+}
+
+<div class="page-title">@ViewBag.Title</div>
+
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="col-6">
+            <button class="faq-buttons">
+                @Html.ActionLink("User Manual -   English", "DownloadFile", "Home", new { filename = "my_eng_manual.pdf" }, null)
+            </button>
+        </div>
+        <div class="col-6">
+            <button class="faq-buttons">
+                @Html.ActionLink("ବ୍ୟବହାରକାରୀ ମାନୁଆଲ -   ଓଡିଆ", "DownloadFile", "Home", new { filename = "my_odia_manual.pdf" }, null)
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card faq-connect-card">
+                <div class="card-body">
+                    <div>
+                        @Resources.Resource.message_dial_description
+                    </div>
+                    <div>
+                        <a href="tel:1551" class="dial-info" style="text-decoration: none !important;">
+                            <img src="~/Content/images/call-icon.svg" width="36" height="36">
+                            @Resources.Resource.label_dial 1551
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+

@@ -10,16 +10,16 @@ using System.Web.Mvc;
 
 namespace KisanEMitra.Controllers
 {
-    public class HomeController : LanguageController
+    public class TestController : LanguageController
     {
         public IAgrimitraService AgrimitraService { get; set; }
         private IBhashiniService BhashiniService { get; set; }
 
         private IChatbotService ChatbotService { get; set; }
 
-        private string[] languageCodesToEnable = new string[] { "hi", "ta", "or", "bn", "en" };
+        private string[] languageCodesToEnable = new string[] { "hi", "ta", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
 
-        public HomeController(IAgrimitraService _agrimitraService, IBhashiniService bhashiniService, IChatbotService chatbotService)
+        public TestController(IAgrimitraService _agrimitraService, IBhashiniService bhashiniService, IChatbotService chatbotService)
         {
             AgrimitraService = _agrimitraService;
             BhashiniService = bhashiniService;
@@ -50,7 +50,7 @@ namespace KisanEMitra.Controllers
 
         public ActionResult Test()
         {
-            languageCodesToEnable = new string[] { "hi", "ta", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
+            //languageCodesToEnable = new string[] { "hi", "ta", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
 
             HttpCookie langCookie = Request.Cookies["culture"];
             var userLanguage = Request.UserLanguages;

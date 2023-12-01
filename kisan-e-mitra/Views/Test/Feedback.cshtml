@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = @Resources.Resource.label_feedback;
+}
+
+<div class="page-title">@ViewBag.Title</div>
+
+<div class="container-fluid">
+    <div class="row text-center">
+        <div class="col-12">
+            <div class="card faq-connect-card">
+                <div class="card-body">
+                    <h1 style="font-weight: bolder; font-size: 2.89vh;">
+                        @Resources.Resource.message_rating
+                    </h1>
+                    <div>
+                        <p>
+                            <img src="~/Content/Images/star-outline.svg" width="36" height="36" alt="Star Rating" align="middle" id="1" />
+                            <img src="~/Content/Images/star-outline.svg" width="36" height="36" alt="Star Rating" align="middle" id="2" />
+                            <img src="~/Content/Images/star-outline.svg" width="36" height="36" alt="Star Rating" align="middle" id="3" />
+                            <img src="~/Content/Images/star-outline.svg" width="36" height="36" alt="Star Rating" align="middle" id="4" />
+                            <img src="~/Content/Images/star-outline.svg" width="36" height="36" alt="Star Rating" align="middle" id="5" />
+                        </p>
+                    </div>
+
+                    <div>
+                        <p>@Resources.Resource.message_rating_description</p>
+                    </div>
+                    <div>
+                        <button class="send-button bg-success" onclick="submitRating();" style=" max-width: 130px !important; margin-left: 0;">
+                            @Resources.Resource.label_submit_review
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-12">
+            <div class="card faq-connect-card">
+                <div class="card-body">
+                    <h1 style="font-weight: bolder; font-size: 2.89vh;">
+                        @Resources.Resource.message_review
+                    </h1>
+                    <div>
+                        <textarea name="experience-feedback" id="experience-feedback" cols="35" rows="5" placeholder="Please write your experience's feedback." style="height: 118px; width: 100%;"></textarea>
+                    </div>
+                    <div>
+                        <button class="send-button bg-success" onclick="submitReview();" style=" max-width: 130px !important; margin-left: 0;">
+                            @Resources.Resource.label_submit_review
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Message</strong>
+            <small></small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            <p id="toastBody">@Resources.Resource.error_empty_msg</p>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Content/js/feedback.js"></script>
+

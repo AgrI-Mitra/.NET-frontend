@@ -12,7 +12,7 @@
         ConversationFeedback: 'conversation/feedback',
     };
 
-    var currentParentRoute = "/Home/";
+    var currentParentRoute = "/Test/";
 
     var isRecording = false;
     var tour;

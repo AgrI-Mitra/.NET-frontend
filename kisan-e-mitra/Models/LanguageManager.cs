@@ -71,9 +71,10 @@ namespace KisanEMitra.Models
             return AvailableLanguages.Single(f => f.Position == 1).LanguageCultureCode;
         }
 
-        public static List<LanguageInfo> GetLanguagesOrderedByPosition()
+        public static List<LanguageInfo> GetLanguagesOrderedByPosition(string[] languageCodesToEnable)
         {
-            return AvailableLanguages.OrderBy(o => o.Position).ToList();
+            // return only languages which are enabled in languageCodesToEnable
+            return AvailableLanguages.Where(l => languageCodesToEnable.Contains(l.LanguageCultureCode)).OrderBy(o => o.Position).ToList();
         }
 
         public static LanguageInfo GetLanguageDetailsByCode(string languageCode)

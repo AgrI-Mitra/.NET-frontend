@@ -30,7 +30,6 @@
 @Html.Hidden("default-chatbot-error-message", (object)defaultErrorMessage.ToString())
 @Html.Hidden("default-placeholder-message", (object)defaultPlaceholder.ToString())
 @Html.Hidden("isMaintenanceModeOn", (object)isMaintenanceModeOn.ToString())
-@Html.Hidden("currentParentRoute", "/Home/")
 
 <div class="msg-scrollbar" id="message-list">
     <div class="my-msg-content system-msg-bg chatbot-message-wrapper">
@@ -199,9 +198,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body" id="pmKisanToastNotificationDescription">
-
+            
         </div>
     </div>
 </div>
-
-<script type="text/javascript" src="~/Content/js/chatbot.js"></script>

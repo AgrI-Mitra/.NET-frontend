@@ -1,6 +1,6 @@
 (function () {
     var rating = 0;
-
+    var currentParentRoute = "/Home/";
     $(document).ready(function () {
         rating = 0;
     });
