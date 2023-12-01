@@ -394,4 +394,61 @@
   <data name="message.maintenance_mode_header" xml:space="preserve">
     <value>आम्ही लवकरच परत येऊ!</value>
   </data>
+  <data name="label.next" xml:space="preserve">
+    <value>पुढे</value>
+  </data>
+  <data name="label.previous" xml:space="preserve">
+    <value>मागे</value>
+  </data>
+  <data name="message.app_tour_alternate_language_selection_description" xml:space="preserve">
+    <value>तुम्ही इथून तुमची भाषा देखील बदलू शकता.</value>
+  </data>
+  <data name="message.app_tour_audio_button_description" xml:space="preserve">
+    <value>माहिती ऐकण्यासाठी "ध्वनी" चिन्हावर क्लिक करा.</value>
+  </data>
+  <data name="message.app_tour_exit" xml:space="preserve">
+    <value>ट्युटोरियलमधून बाहेर पडा</value>
+  </data>
+  <data name="message.app_tour_language_selection_description" xml:space="preserve">
+    <value>मेनूमधून तुमची भाषा निवडा</value>
+  </data>
+  <data name="message.app_tour_mic_button_description" xml:space="preserve">
+    <value>तुमचा संदेश रेकॉर्ड करण्यासाठी "माइक" चिन्हावर टॅप करा आणि थांबवण्यासाठी पुन्हा टॅप करा.</value>
+  </data>
+  <data name="message.app_tour_refresh_button_description" xml:space="preserve">
+    <value>पृष्ठ रीलोड करण्यासाठी "रीफ्रेश" क्लिक करा</value>
+  </data>
+  <data name="message.app_tour_sample_questions_description" xml:space="preserve">
+    <value>मदतीसाठी हे उदाहरण प्रश्न वापरा</value>
+  </data>
+  <data name="message.app_tour_send_button_description" xml:space="preserve">
+    <value>तुमचा संदेश पाठवण्यासाठी हे बाण बटण दाबा.</value>
+  </data>
+  <data name="message.app_tour_typebox_description" xml:space="preserve">
+    <value>तुमचे प्रश्न येथे टाइप करा.</value>
+  </data>
+  <data name="message.app_tour_welcome_description" xml:space="preserve">
+    <value>पुढे जाण्यासाठी पुढील क्लिक करा किंवा मॅन्युअल ट्यूटोरियल वगळण्यासाठी ट्युटोरियलमधून बाहेर पडा क्लिक करा</value>
+  </data>
+  <data name="message.app_tour_welcome_header" xml:space="preserve">
+    <value>किसान-ईमित्र वापरकर्ता पुस्तिका मध्ये आपले स्वागत आहे</value>
+  </data>
+  <data name="message.chatbot_functionality_feedback" xml:space="preserve">
+    <value>चॅटबॉट कार्यक्षमता</value>
+  </data>
+  <data name="message.feedback_description" xml:space="preserve">
+    <value>कृपया अभिप्राय वर्णन लिहा</value>
+  </data>
+  <data name="message.feedback_title" xml:space="preserve">
+    <value>अभिप्राय</value>
+  </data>
+  <data name="message.information_feedback" xml:space="preserve">
+    <value>माहिती अभिप्राय</value>
+  </data>
+  <data name="message.thank_you_for_feedback" xml:space="preserve">
+    <value>तुमच्या अभिप्रायाबद्दल धन्यवाद.</value>
+  </data>
+  <data name="message.translation_feedback" xml:space="preserve">
+    <value>भाषांतर अभिप्राय</value>
+  </data>
 </root>

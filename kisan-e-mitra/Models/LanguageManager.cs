@@ -31,22 +31,34 @@ namespace KisanEMitra.Models
                 LanguageEnglishLabel = "Hindi", LanguageCultureLabel = "हिंदी", LanguageCultureCode = "hi", Position = 1, LanguageFirstAlphabet = "क"
             },
             new LanguageInfo {
-                LanguageEnglishLabel = "English", LanguageCultureLabel = "English",  LanguageCultureCode = "en", Position = 7, LanguageFirstAlphabet = "A"
+                LanguageEnglishLabel = "English", LanguageCultureLabel = "English",  LanguageCultureCode = "en", Position = 10, LanguageFirstAlphabet = "A"
+            },
+            new LanguageInfo {
+                LanguageEnglishLabel = "Marathi", LanguageCultureLabel = "मराठी", LanguageCultureCode = "mr", Position= 4, LanguageFirstAlphabet = "क"
+            },
+            new LanguageInfo {
+                LanguageEnglishLabel = "Bangla", LanguageCultureLabel = "বাংলা",LanguageCultureCode = "bn", Position = 2, LanguageFirstAlphabet = "ক"
+            },
+            new LanguageInfo {
+                LanguageEnglishLabel = "Tamil", LanguageCultureLabel = "தமிழ்", LanguageCultureCode = "ta", Position= 5, LanguageFirstAlphabet = "க்"
+            },
+            new LanguageInfo {
+                LanguageEnglishLabel = "Telugu", LanguageCultureLabel = "తెలుగు", LanguageCultureCode = "te", Position = 3, LanguageFirstAlphabet = "అ"
+            },
+            new LanguageInfo {
+                LanguageEnglishLabel = "Odia", LanguageCultureLabel = "ଓଡ଼ିଆ", LanguageCultureCode = "or", Position = 6, LanguageFirstAlphabet = "ଅ"
+            },
+            new LanguageInfo {
+                LanguageEnglishLabel = "Malayalam", LanguageCultureLabel = "മലയാളം", LanguageCultureCode = "ml", Position = 7, LanguageFirstAlphabet = "അ"
             },
             //new LanguageInfo {
-            //    LanguageEnglishLabel = "Marathi", LanguageCultureLabel = "मराठी", LanguageCultureCode = "mr", Position= 5, LanguageFirstAlphabet = "क"
+            //    LanguageEnglishLabel = "Kannada", LanguageCultureLabel = "ಕನ್ನಡ", LanguageCultureCode = "kn", Position = 10, LanguageFirstAlphabet = "ಕ"
             //},
             new LanguageInfo {
-                LanguageEnglishLabel = "Bangla", LanguageCultureLabel = "বাংলা",LanguageCultureCode = "bn", Position = 6, LanguageFirstAlphabet = "ক"
+                LanguageEnglishLabel = "Gujarati", LanguageCultureLabel = "ગુજરાતી", LanguageCultureCode = "gu", Position = 8, LanguageFirstAlphabet = "ગ"
             },
             new LanguageInfo {
-                LanguageEnglishLabel = "Tamil", LanguageCultureLabel = "தமிழ்", LanguageCultureCode = "ta", Position= 2, LanguageFirstAlphabet = "க்"
-            },
-            //new LanguageInfo {
-            //    LanguageEnglishLabel = "Telugu", LanguageCultureLabel = "తెలుగు", LanguageCultureCode = "te", Position = 4, LanguageFirstAlphabet = "అ"
-            //},
-            new LanguageInfo {
-                LanguageEnglishLabel = "Odia", LanguageCultureLabel = "ଓଡ଼ିଆ", LanguageCultureCode = "or", Position = 3, LanguageFirstAlphabet = "ଅ"
+                LanguageEnglishLabel = "Punjabi", LanguageCultureLabel = "ਪੰਜਾਬੀ", LanguageCultureCode = "pa", Position = 9, LanguageFirstAlphabet = "ਪੰ"
             },
         };
 
@@ -59,9 +71,10 @@ namespace KisanEMitra.Models
             return AvailableLanguages.Single(f => f.Position == 1).LanguageCultureCode;
         }
 
-        public static List<LanguageInfo> GetLanguagesOrderedByPosition()
+        public static List<LanguageInfo> GetLanguagesOrderedByPosition(string[] languageCodesToEnable)
         {
-            return AvailableLanguages.OrderBy(o => o.Position).ToList();
+            // return only languages which are enabled in languageCodesToEnable
+            return AvailableLanguages.Where(l => languageCodesToEnable.Contains(l.LanguageCultureCode)).OrderBy(o => o.Position).ToList();
         }
 
         public static LanguageInfo GetLanguageDetailsByCode(string languageCode)

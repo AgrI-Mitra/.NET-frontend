@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="error.default_message" xml:space="preserve">
+    <value>ക്ഷമിക്കണം, എന്തോ പ്രശ്നമുണ്ടെന്ന് തോന്നുന്നു. നിങ്ങളുടെ ഇന്റർനെറ്റ് കണക്ഷൻ പരിശോധിക്കാൻ ഞാൻ നിങ്ങളോട് അഭ്യർത്ഥിക്കുന്നു, തുടർന്ന് താഴെ ഇടത് കോണിലുള്ള പുതുക്കൽ ബട്ടണിൽ ക്ലിക്കുചെയ്ത് സെഷൻ പുതുക്കുക, തുടർന്ന് വീണ്ടും ശ്രമിക്കുക.</value>
+  </data>
+  <data name="error.disconnected" xml:space="preserve">
+    <value>നിങ്ങൾ വിച്ഛേദിക്കപ്പെട്ടിരിക്കുന്നു. ദയവായി പുതുക്കുക അല്ലെങ്കിൽ വീണ്ടും ലോഗിൻ ചെയ്യുക.</value>
+  </data>
+  <data name="error.empty_msg" xml:space="preserve">
+    <value>അയയ്ക്കാൻ ഒരു സന്ദേശം ടൈപ്പ് ചെയ്യുക അല്ലെങ്കിൽ തിരഞ്ഞെടുക്കുക.</value>
+  </data>
+  <data name="error.fail_to_submit" xml:space="preserve">
+    <value>റേറ്റിംഗ് സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു.</value>
+  </data>
+  <data name="error.fail_to_submit_review" xml:space="preserve">
+    <value>അവലോകനം സമർപ്പിക്കുന്നതിൽ പരാജയപ്പെട്ടു.</value>
+  </data>
+  <data name="error.otp_not_sent" xml:space="preserve">
+    <value>OTP അയച്ചില്ല</value>
+  </data>
+  <data name="error.sending_otp" xml:space="preserve">
+    <value>OTP അയയ്ക്കുന്നതിൽ പിശക്</value>
+  </data>
+  <data name="error.userid_not_registered" xml:space="preserve">
+    <value>യൂസർ ഐഡി രജിസ്റ്റർ ചെയ്തിട്ടില്ല.</value>
+  </data>
+  <data name="error.wait_new_chat" xml:space="preserve">
+    <value>മറുപടിക്കായി കാത്തിരിക്കുക.</value>
+  </data>
+  <data name="label.back" xml:space="preserve">
+    <value>തിരികെ</value>
+  </data>
+  <data name="label.chats" xml:space="preserve">
+    <value>ചാറ്റുകൾ</value>
+  </data>
+  <data name="label.click" xml:space="preserve">
+    <value>വീണ്ടും ലോഡുചെയ്യുക</value>
+  </data>
+  <data name="label.close" xml:space="preserve">
+    <value>അടയ്ക്കുക</value>
+  </data>
+  <data name="label.confirm_delete" xml:space="preserve">
+    <value>ഈ സംഭാഷണം ഇല്ലാതാക്കണമെന്ന് തീർച്ചയാണോ?</value>
+  </data>
+  <data name="label.continue" xml:space="preserve">
+    <value>തുടരുക</value>
+  </data>
+  <data name="label.dial" xml:space="preserve">
+    <value>ഡയൽ ചെയ്യുക</value>
+  </data>
+  <data name="label.examples" xml:space="preserve">
+    <value>ഉദാഹരണങ്ങൾ</value>
+  </data>
+  <data name="label.extension_worker" xml:space="preserve">
+    <value>വിപുലീകരണ തൊഴിലാളി</value>
+  </data>
+  <data name="label.faqs" xml:space="preserve">
+    <value>പതിവുചോദ്യങ്ങൾ</value>
+  </data>
+  <data name="label.farmer" xml:space="preserve">
+    <value>കർഷകൻ</value>
+  </data>
+  <data name="label.feedback" xml:space="preserve">
+    <value>പ്രതികരണം</value>
+  </data>
+  <data name="label.logout" xml:space="preserve">
+    <value>പുറത്തുകടക്കുക</value>
+  </data>
+  <data name="label.mobile_number" xml:space="preserve">
+    <value>മൊബൈൽ നമ്പർ</value>
+  </data>
+  <data name="label.more" xml:space="preserve">
+    <value>കൂടുതൽ</value>
+  </data>
+  <data name="label.new_chat" xml:space="preserve">
+    <value>പുതിയ ചാറ്റ്</value>
+  </data>
+  <data name="label.next" xml:space="preserve">
+    <value>അടുത്തത്</value>
+  </data>
+  <data name="label.no" xml:space="preserve">
+    <value>ഇല്ല</value>
+  </data>
+  <data name="label.no_history" xml:space="preserve">
+    <value>ചാറ്റുകൾ ഇല്ല</value>
+  </data>
+  <data name="label.popUpTitle" xml:space="preserve">
+    <value>പ്രിയ ഗുണഭോക്താവേ, നിങ്ങളുടെ അന്വേഷണവുമായി ഞങ്ങളെ സമീപിച്ചതിന് നന്ദി. നിങ്ങൾക്ക് ശരിയായ റെസല്യൂഷൻ നൽകുന്നതിന്, നിങ്ങളുടെ ആധാർ നമ്പർ / PM കിസാൻ ഐഡി / ഫോൺ നമ്പർ ഞങ്ങൾക്ക് നൽകാൻ ഞങ്ങൾ നിങ്ങളോട് അഭ്യർത്ഥിക്കുന്നു.</value>
+  </data>
+  <data name="label.popUpTitle2" xml:space="preserve">
+    <value>നിങ്ങളുടെ ആധാറിന്റെ അവസാന 4 അക്കങ്ങൾ നൽകുക</value>
+  </data>
+  <data name="label.popUpTitle3" xml:space="preserve">
+    <value>പ്രിയ ഗുണഭോക്താവേ, നിങ്ങൾക്ക് ലഭിച്ച OTP ദയവായി രേഖപ്പെടുത്താൻ അഭ്യർത്ഥിക്കുന്നു.</value>
+  </data>
+  <data name="label.previous" xml:space="preserve">
+    <value>തിരികെ</value>
+  </data>
+  <data name="label.profile" xml:space="preserve">
+    <value>പ്രൊഫൈൽ</value>
+  </data>
+  <data name="label.search" xml:space="preserve">
+    <value>തിരയുക</value>
+  </data>
+  <data name="label.send" xml:space="preserve">
+    <value>അയക്കുക</value>
+  </data>
+  <data name="label.splash_title" xml:space="preserve">
+    <value>കിസാൻ ഇ-മിത്ര</value>
+  </data>
+  <data name="label.submit" xml:space="preserve">
+    <value>സമർപ്പിക്കുക</value>
+  </data>
+  <data name="label.submit_review" xml:space="preserve">
+    <value>അവലോകനം സമർപ്പിക്കുക</value>
+  </data>
+  <data name="label.title" xml:space="preserve">
+    <value>കിസാൻ-ഇമിത്ര</value>
+  </data>
+  <data name="label.welcome" xml:space="preserve">
+    <value>സ്വാഗതം</value>
+  </data>
+  <data name="label.yes" xml:space="preserve">
+    <value>അതെ</value>
+  </data>
+  <data name="message.app_tour_alternate_language_selection_description" xml:space="preserve">
+    <value>നിങ്ങൾക്ക് ഇവിടെ നിന്ന് നിങ്ങളുടെ ഭാഷ മാറ്റാനും കഴിയും.</value>
+  </data>
+  <data name="message.app_tour_audio_button_description" xml:space="preserve">
+    <value>വിവരങ്ങൾ കേൾക്കാൻ "ശബ്ദം" ഐക്കണിൽ ക്ലിക്ക് ചെയ്യുക.</value>
+  </data>
+  <data name="message.app_tour_exit" xml:space="preserve">
+    <value>ട്യൂട്ടോറിയലിൽ നിന്ന് പുറത്തുകടക്കുക</value>
+  </data>
+  <data name="message.app_tour_language_selection_description" xml:space="preserve">
+    <value>മെനുവിൽ നിന്ന് നിങ്ങളുടെ ഭാഷ തിരഞ്ഞെടുക്കുക</value>
+  </data>
+  <data name="message.app_tour_mic_button_description" xml:space="preserve">
+    <value>നിങ്ങളുടെ സന്ദേശം റെക്കോർഡ് ചെയ്യാൻ "മൈക്ക്" ഐക്കണിൽ ടാപ്പ് ചെയ്യുക, നിർത്താൻ അത് വീണ്ടും ടാപ്പ് ചെയ്യുക.</value>
+  </data>
+  <data name="message.app_tour_refresh_button_description" xml:space="preserve">
+    <value>പേജ് വീണ്ടും ലോഡുചെയ്യാൻ "പുതുക്കുക" ക്ലിക്ക് ചെയ്യുക</value>
+  </data>
+  <data name="message.app_tour_sample_questions_description" xml:space="preserve">
+    <value>സഹായത്തിനായി ഈ ഉദാഹരണ ചോദ്യങ്ങൾ ഉപയോഗിക്കുക</value>
+  </data>
+  <data name="message.app_tour_send_button_description" xml:space="preserve">
+    <value>നിങ്ങളുടെ സന്ദേശം അയയ്‌ക്കാൻ ഈ ആരോ ബട്ടൺ അമർത്തുക.</value>
+  </data>
+  <data name="message.app_tour_typebox_description" xml:space="preserve">
+    <value>നിങ്ങളുടെ ചോദ്യങ്ങൾ ഇവിടെ ടൈപ്പ് ചെയ്യുക.</value>
+  </data>
+  <data name="message.app_tour_welcome_description" xml:space="preserve">
+    <value>മുന്നോട്ട് പോകാൻ ചുവടെയുള്ള അടുത്തത് ക്ലിക്കുചെയ്യുക അല്ലെങ്കിൽ മാനുവൽ ട്യൂട്ടോറിയൽ ഒഴിവാക്കുന്നതിന് എക്സിറ്റ് ട്യൂട്ടോറിയലിൽ ക്ലിക്കുചെയ്യുക</value>
+  </data>
+  <data name="message.app_tour_welcome_header" xml:space="preserve">
+    <value>കിസാൻ-ഇമിത്ര ഉപയോക്തൃ മാനുവലിലേക്ക് സ്വാഗതം</value>
+  </data>
+  <data name="message.ask_ur_question" xml:space="preserve">
+    <value>നിങ്ങളുടെ ചോദ്യം ചോദിക്കുക</value>
+  </data>
+  <data name="message.cannot_answer_again" xml:space="preserve">
+    <value>വീണ്ടും ഉത്തരം നൽകാൻ കഴിയില്ല</value>
+  </data>
+  <data name="message.chatbot_functionality_feedback" xml:space="preserve">
+    <value>ചാറ്റ്ബോട്ട് പ്രവർത്തനം</value>
+  </data>
+  <data name="message.coming_soon" xml:space="preserve">
+    <value>ഉടൻ വരുന്നു!</value>
+  </data>
+  <data name="message.coming_soon_description" xml:space="preserve">
+    <value>ഞങ്ങൾ ഈ ഫീച്ചർ ഉടൻ ലോഞ്ച് ചെയ്യാൻ പോകുന്നു. ഇവിടെത്തന്നെ നിൽക്കുക!</value>
+  </data>
+  <data name="message.confirmation" xml:space="preserve">
+    <value>സ്ഥിരീകരണം!</value>
+  </data>
+  <data name="message.dialer_popup" xml:space="preserve">
+    <value>തൃപ്തികരമായ പ്രതികരണം ലഭിക്കുന്നതിന് നിങ്ങൾക്ക് ഒരു അമാ ക്രുഷി വിദഗ്ദ്ധനോട് സംസാരിക്കാവുന്നതാണ്</value>
+  </data>
+  <data name="message.dial_description" xml:space="preserve">
+    <value>കോൾ സെന്ററുമായി ബന്ധിപ്പിക്കാൻ</value>
+  </data>
+  <data name="message.didnt_receive" xml:space="preserve">
+    <value>OTP ലഭിച്ചില്ലേ?</value>
+  </data>
+  <data name="message.down_time_retry" xml:space="preserve">
+    <value>വീണ്ടും ശ്രമിക്കുക</value>
+  </data>
+  <data name="message.enter_mobile" xml:space="preserve">
+    <value>മൊബൈൽ നമ്പർ നൽകുക</value>
+  </data>
+  <data name="message.example_ques_one" xml:space="preserve">
+    <value>എന്റെ പണം എവിടെ?</value>
+  </data>
+  <data name="message.example_ques_three" xml:space="preserve">
+    <value>എന്റെ പണം ലഭിക്കാൻ ഞാൻ ആരോട് സംസാരിക്കണം?</value>
+  </data>
+  <data name="message.example_ques_two" xml:space="preserve">
+    <value>എന്റെ അപേക്ഷയുടെ നില എന്താണ്?</value>
+  </data>
+  <data name="message.feedback_description" xml:space="preserve">
+    <value>ദയവായി ഫീഡ്ബാക്ക് വിവരണം എഴുതുക</value>
+  </data>
+  <data name="message.feedback_title" xml:space="preserve">
+    <value>പ്രതികരണം</value>
+  </data>
+  <data name="message.helpful" xml:space="preserve">
+    <value>ഇത് സഹായകരമായിരുന്നോ?</value>
+  </data>
+  <data name="message.information_feedback" xml:space="preserve">
+    <value>വിവര ഫീഡ്ബാക്ക്</value>
+  </data>
+  <data name="message.invalid_mobile" xml:space="preserve">
+    <value>10 അക്ക നമ്പർ നൽകുക!</value>
+  </data>
+  <data name="message.invalid_otp" xml:space="preserve">
+    <value>Otp അസാധുവാണ്</value>
+  </data>
+  <data name="message.language_changed_greeting" xml:space="preserve">
+    <value>മലയാളം തിരഞ്ഞെടുത്തതിന് നന്ദി. പ്രിയ ഗുണഭോക്താവേ, നിങ്ങളുടെ ചോദ്യം ടൈപ്പ് ചെയ്യുക അല്ലെങ്കിൽ മൈക്ക് ബട്ടൺ ഉപയോഗിച്ച് സംസാരിക്കുക. മൈക്ക് ബട്ടണിൽ സ്പർശിച്ച് നിങ്ങളുടെ ചോദ്യം പറയുക. റെക്കോർഡിംഗ് നിർത്താൻ മൈക്ക് ബട്ടൺ വീണ്ടും സ്‌പർശിക്കുക.</value>
+  </data>
+  <data name="message.maintenance_mode_body" xml:space="preserve">
+    <value>എന്തെങ്കിലും ബുദ്ധിമുട്ടുണ്ടായാൽ ക്ഷമിക്കണം. നിങ്ങളെ നന്നായി സഹായിക്കുന്നതിന് ഞാൻ അപ്‌ഡേറ്റ് ചെയ്യുകയും ചില പ്രശ്‌നങ്ങൾ പരിഹരിക്കുകയും ചെയ്യുന്നു. ഞാൻ ഉടൻ തന്നെ വീണ്ടും ലഭ്യമാകും. ദയവായി തിരികെ വന്ന് കുറച്ച് സമയത്തിന് ശേഷം വീണ്ടും ശ്രമിക്കുക.</value>
+  </data>
+  <data name="message.maintenance_mode_header" xml:space="preserve">
+    <value>ഞങ്ങൾ ഉടൻ മടങ്ങിവരും!</value>
+  </data>
+  <data name="message.not_register_yet" xml:space="preserve">
+    <value>ഇതുവരെ രജിസ്റ്റർ ചെയ്തിട്ടില്ലേ?</value>
+  </data>
+  <data name="message.no_history" xml:space="preserve">
+    <value>AI-യുമായുള്ള നിങ്ങളുടെ ചാറ്റ് ചരിത്രം ഇവിടെ വരും</value>
+  </data>
+  <data name="message.otp_message" xml:space="preserve">
+    <value>ഇതിനായി ഞങ്ങൾ നിങ്ങൾക്ക് ഒരു ഒറ്റത്തവണ പാസ്‌വേഡ് അയയ്ക്കും</value>
+  </data>
+  <data name="message.otp_not_sent" xml:space="preserve">
+    <value>Otp അയച്ചില്ല</value>
+  </data>
+  <data name="message.otp_sent_again" xml:space="preserve">
+    <value>OTP വീണ്ടും അയച്ചു</value>
+  </data>
+  <data name="message.otp_verification" xml:space="preserve">
+    <value>OTP പരിശോധന</value>
+  </data>
+  <data name="message.popular_question_1" xml:space="preserve">
+    <value>എന്റെ അവസാന ഗഡു പേയ്‌മെന്റ് എനിക്ക് ലഭിച്ചിട്ടില്ല.</value>
+  </data>
+  <data name="message.popular_question_2" xml:space="preserve">
+    <value>എന്റെ പിഎം കിസാൻ അക്കൗണ്ടിന്റെ നില പറയൂ</value>
+  </data>
+  <data name="message.popular_question_3" xml:space="preserve">
+    <value>എന്റെ പിഎം കിസാൻ അക്കൗണ്ടിന് എന്താണ് പ്രശ്നം?</value>
+  </data>
+  <data name="message.popular_question_4" xml:space="preserve">
+    <value>എന്തുകൊണ്ടാണ് ഞാൻ യോഗ്യനായ ഒരു ഗുണഭോക്താവാകാത്തത്?</value>
+  </data>
+  <data name="message.rating" xml:space="preserve">
+    <value>നിങ്ങൾക്ക് ഇത് ഉപയോഗപ്രദമാണെന്ന് തോന്നിയോ?</value>
+  </data>
+  <data name="message.rating_description" xml:space="preserve">
+    <value>റേറ്റ് ചെയ്യാൻ ഒരു നക്ഷത്രം ടാപ്പ് ചെയ്യുക</value>
+  </data>
+  <data name="message.rating_submitted" xml:space="preserve">
+    <value>റേറ്റിംഗ് സമർപ്പിച്ചു!</value>
+  </data>
+  <data name="message.recorder_error" xml:space="preserve">
+    <value>ക്ഷമിക്കണം, ഇപ്പോൾ നിങ്ങളുടെ അഭ്യർത്ഥന പ്രോസസ്സ് ചെയ്യുന്നതിൽ ഒരു പ്രശ്നമുണ്ട്. ദയവായി പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</value>
+  </data>
+  <data name="message.recorder_wait" xml:space="preserve">
+    <value>ഞങ്ങൾ നിങ്ങളുടെ അഭ്യർത്ഥന പ്രോസസ്സ് ചെയ്യുമ്പോൾ ദയവായി കാത്തിരിക്കുക...</value>
+  </data>
+  <data name="message.register_at_krushak" xml:space="preserve">
+    <value>ക്രുഷാക്ക് ഒഡീഷയിൽ രജിസ്റ്റർ ചെയ്യുക</value>
+  </data>
+  <data name="message.register_message" xml:space="preserve">
+    <value>നിങ്ങൾ ഇതിനകം രജിസ്റ്റർ ചെയ്തിട്ടുണ്ടെങ്കിൽ ലോഗിൻ ചെയ്യാൻ നിങ്ങളുടെ മൊബൈൽ നമ്പർ ഉപയോഗിക്കുക.</value>
+  </data>
+  <data name="message.resend_again" xml:space="preserve">
+    <value>വീണ്ടും അയയ്ക്കുക</value>
+  </data>
+  <data name="message.resend_otp" xml:space="preserve">
+    <value>ഒറ്റത്തവണ പാസ്‌വേഡ് വീണ്ടും അയയ്ക്കുക</value>
+  </data>
+  <data name="message.retry" xml:space="preserve">
+    <value>ദയവായി വീണ്ടും ശ്രമിക്കുക.</value>
+  </data>
+  <data name="message.review" xml:space="preserve">
+    <value>നിങ്ങളുടെ അവലോകനം എഴുതുക (ഓപ്ഷണൽ)</value>
+  </data>
+  <data name="message.review_description" xml:space="preserve">
+    <value>നിങ്ങളുടെ അനുഭവത്തിന്റെ ഫീഡ്‌ബാക്ക് എഴുതുക.</value>
+  </data>
+  <data name="message.review_submitted" xml:space="preserve">
+    <value>അവലോകനം സമർപ്പിച്ചു!</value>
+  </data>
+  <data name="message.session_restart_confirmation_message" xml:space="preserve">
+    <value>നിങ്ങൾ ഈ പേജ് പുതുക്കാനും നിങ്ങളുടെ നിലവിലുള്ള സെഷൻ ചരിത്രമെല്ലാം നഷ്‌ടപ്പെടുത്താനും പോകുകയാണ്. നിങ്ങൾക്ക് തുടരാനും പേജ് പുതുക്കാനും താൽപ്പര്യമുണ്ടോ?</value>
+  </data>
+  <data name="message.socket_disconnect_msg" xml:space="preserve">
+    <value>വീണ്ടും ബന്ധിപ്പിക്കാൻ.</value>
+  </data>
+  <data name="message.taking_longer" xml:space="preserve">
+    <value>ദയവായി കാത്തിരിക്കൂ, സെർവറുകൾ സാധാരണയേക്കാൾ കൂടുതൽ സമയമെടുക്കുന്നു.</value>
+  </data>
+  <data name="message.temporarily_down" xml:space="preserve">
+    <value>ഞങ്ങൾ താൽക്കാലികമായി താഴെയാണ്</value>
+  </data>
+  <data name="message.temporarily_down_description" xml:space="preserve">
+    <value>ഞങ്ങൾ ഇപ്പോൾ ഉയർന്ന ഉപയോക്തൃ വോളിയം അനുഭവിക്കുന്നു, കുറച്ച് സമയത്തിന് ശേഷം ലോഗിൻ ചെയ്യാൻ ശ്രമിക്കുക</value>
+  </data>
+  <data name="message.thank_you_for_feedback" xml:space="preserve">
+    <value>താങ്കളുടെ പ്രതികരണത്തിന് നന്ദി.</value>
+  </data>
+  <data name="message.translation_feedback" xml:space="preserve">
+    <value>വിവർത്തന ഫീഡ്ബാക്ക്</value>
+  </data>
+  <data name="message.wait_resending_otp" xml:space="preserve">
+    <value>OTP വീണ്ടും അയയ്ക്കുന്നതിന് മുമ്പ് ദയവായി കാത്തിരിക്കുക</value>
+  </data>
+  <data name="message.welcome_greeting" xml:space="preserve">
+    <value>കിസാൻ-ഇമിത്രയിലേക്ക് സ്വാഗതം! ഞാൻ നിങ്ങളുടെ സ്വകാര്യ സഹായിയാണ്. എനിക്ക് നിങ്ങളെ എങ്ങനെ സഹായിക്കാനാകുമെന്ന് ദയവായി എന്നെ അറിയിക്കൂ? &lt;br&gt;നിങ്ങൾക്ക് ഇഷ്ടപ്പെട്ട ഭാഷ തിരഞ്ഞെടുക്കാം.</value>
+  </data>
+  <data name="toast.reaction_dislike" xml:space="preserve">
+    <value>പ്രതികരണം ഡിസ്‌ലൈക്ക് ചെയ്‌തു</value>
+  </data>
+  <data name="toast.reaction_like" xml:space="preserve">
+    <value>പ്രതികരണം ഇഷ്ടപ്പെട്ടു</value>
+  </data>
+  <data name="toast.reaction_reset" xml:space="preserve">
+    <value>പ്രതികരണം നീക്കം ചെയ്തു</value>
+  </data>
+</root>

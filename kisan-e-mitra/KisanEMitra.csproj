@@ -163,6 +163,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Services\ChatbotService.cs" />
+    <Compile Include="Services\Contracts\IChatbotService.cs" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chatbot.css" />
     <Content Include="Content\images\chatbot.png" />
@@ -186,7 +189,6 @@
     <Content Include="Content\images\pause-circle.svg" />
     <Content Include="Content\images\play-circle.svg" />
     <Content Include="Content\images\send-text-highlight.svg" />
-    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatHistoryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -301,6 +303,7 @@
     <Content Include="Content\images\user-circle.svg" />
     <Content Include="Content\images\user.svg" />
     <Content Include="Content\js\autosize.js" />
+    <Content Include="Content\js\chatbot-staging.js" />
     <Content Include="Content\js\chatbot.js" />
     <Content Include="Content\js\feedback.js" />
     <Content Include="Content\js\fingerprint.js" />
@@ -366,6 +369,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Test\ChatHistory.cshtml" />
+    <Content Include="Views\Test\FAQs.cshtml" />
+    <Content Include="Views\Test\Feedback.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\More.cshtml" />
+    <Content Include="Views\Test\ProfileView.cshtml" />
+    <Content Include="Views\Test\Splash.cshtml" />
+    <Content Include="Views\Test\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resource.mr.resx">

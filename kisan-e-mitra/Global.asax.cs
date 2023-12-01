@@ -1,5 +1,6 @@
 ﻿using KisanEMitra.Services;
 using KisanEMitra.Services.Contracts;
+using kishan_bot.Services.Contracts;
 using System;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -26,6 +27,7 @@ namespace KisanEMitra
             var container = new UnityContainer();
             container.RegisterType<IAgrimitraService, AgrimitraService>();
             container.RegisterType<IBhashiniService, BhashiniService>();
+            container.RegisterType<IChatbotService, ChatbotService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

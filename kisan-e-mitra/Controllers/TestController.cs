@@ -10,16 +10,16 @@ using System.Web.Mvc;
 
 namespace KisanEMitra.Controllers
 {
-    public class HomeController : LanguageController
+    public class TestController : LanguageController
     {
         public IAgrimitraService AgrimitraService { get; set; }
         private IBhashiniService BhashiniService { get; set; }
 
         private IChatbotService ChatbotService { get; set; }
 
-        private string[] languageCodesToEnable = new string[] { "hi", "ta", "or", "bn", "en" };
+        private readonly string[] languageCodesToEnable = new string[] { "hi", "ta", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
 
-        public HomeController(IAgrimitraService _agrimitraService, IBhashiniService bhashiniService, IChatbotService chatbotService)
+        public TestController(IAgrimitraService _agrimitraService, IBhashiniService bhashiniService, IChatbotService chatbotService)
         {
             AgrimitraService = _agrimitraService;
             BhashiniService = bhashiniService;
@@ -48,96 +48,13 @@ namespace KisanEMitra.Controllers
             return View();
         }
 
-        public ActionResult Test()
-        {
-            languageCodesToEnable = new string[] { "hi", "ta", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
-
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
-            //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
-            var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
-
-            TempData["LanguageModel"] = languageModel;
-            TempData["PopularQuestions"] = ChatbotService.GetPopularQuestions();
-
-            // Check if site is in maintenence mode or not
-            bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
-            TempData["isMaintenanceModeOn"] = isMaintenanceModeOn;
-
-            return View();
-        }
-
-        private List<CommonKeyValue> GetTranslations()
-        {
-
-            List<CommonKeyValue> translations = new List<CommonKeyValue>
-            {
-                new CommonKeyValue {
-                    Key = "message_welcome_greeting",
-                    Value = Resources.Resource.message_welcome_greeting.ToString()
-                },
-                new CommonKeyValue
-                {
-                    Key = "message_ask_ur_question",
-                    Value = Resources.Resource.message_ask_ur_question.ToString()
-                },
-                new CommonKeyValue
-                {
-                    Key = "label_title",
-                    Value = Resources.Resource.label_title.ToString()
-                },
-                new CommonKeyValue
-                {
-                    Key = "message_language_changed_greeting",
-                    Value = Resources.Resource.message_language_changed_greeting.ToString()
-                },
-                new CommonKeyValue
-                {
-                    Key = "message_resend_otp",
-                    Value = Resources.Resource.message_resend_otp.ToString()
-                },
-                new CommonKeyValue
-                {
-                    Key = "error_default_message",
-                    Value = Resources.Resource.error_default_message.ToString()
-                },
-                new CommonKeyValue
-                {
-                    Key = "message_ask_ur_question",
-                    Value = Resources.Resource.message_ask_ur_question.ToString()
-                },
-                new CommonKeyValue
-                {
-                    Key = "message_confirmation",
-                    Value = Resources.Resource.message_confirmation.ToString()
-                },
-                new CommonKeyValue
-                {
-                    Key = "message_session_restart_confirmation_message",
-                    Value = Resources.Resource.message_session_restart_confirmation_message.ToString()
-                },
-                new CommonKeyValue
-                {
-                    Key = "label_yes",
-                    Value = Resources.Resource.label_yes.ToString()
-                },new CommonKeyValue
-                {
-                    Key = "label_no",
-                    Value = Resources.Resource.label_no.ToString()
-                }
-            };
-
-            return translations;
-        }
-
         [HttpPost]
         public async Task<JsonResult> GetTextToSpeechFromBhashini()
         {
 
             List<string> strings = new List<string>();
 
-            var availableLanguages = LanguageManager.AvailableLanguages;
+            var availableLanguages = LanguageManager.GetLanguagesOrderedByPosition(languageCodesToEnable);
 
             foreach (var availableLanguage in availableLanguages)
             {
@@ -230,6 +147,17 @@ namespace KisanEMitra.Controllers
                     PopularQuestions = ChatbotService.GetPopularQuestions()
                 },
                 Success = true
+            });
+        }
+
+        [HttpPost]
+        public JsonResult GetUITranslations()
+        {
+            var translations = ChatbotService.GetTranslations();
+            return Json(new AjaxActionResponse()
+            {
+                Success = true,
+                Data = new { Translations = translations }
             });
         }
 
