@@ -2,6 +2,7 @@
 using kishan_bot.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -16,31 +17,15 @@ namespace KisanEMitra.Services
         private readonly string bhashiniApiAuthorizationHeaderKey = "5UMLSGg_KyJTjoTG4nmJP3mXstSXLJHs27a-uG0F1qWUNx9hJeQlEA7QQtFCnnXa";
         private readonly List<BhashiniApiServiceId> bhashiniApiServiceIds = new List<BhashiniApiServiceId>() {
             new BhashiniApiServiceId {
-                ServiceId = "ai4bharat/indic-tts-coqui-misc-gpu--t4", LanguageCode = "en"
+                ServiceId = "ai4bharat/indic-tts-coqui-misc-gpu--t4", LanguageCode = new string[] { "en" }
             },
             new BhashiniApiServiceId
             {
-                ServiceId = "ai4bharat/indic-tts-coqui-indo_aryan-gpu--t4", LanguageCode = "hi"
+                ServiceId = "ai4bharat/indic-tts-coqui-indo_aryan-gpu--t4", LanguageCode = new string[] { "hi", "bn", "mr", "or", "te", "gu", "pa" }
             },
             new BhashiniApiServiceId
             {
-                ServiceId = "ai4bharat/indic-tts-coqui-indo_aryan-gpu--t4", LanguageCode = "bn"
-            },
-            new BhashiniApiServiceId
-            {
-                ServiceId = "ai4bharat/indic-tts-coqui-dravidian-gpu--t4", LanguageCode = "ta"
-            },
-            new BhashiniApiServiceId
-            {
-                ServiceId = "ai4bharat/indic-tts-coqui-dravidian-gpu--t4", LanguageCode = "te"
-            },
-            new BhashiniApiServiceId
-            {
-                ServiceId = "ai4bharat/indic-tts-coqui-indo_aryan-gpu--t4", LanguageCode = "mr"
-            },
-            new BhashiniApiServiceId
-            {
-                ServiceId = "ai4bharat/indic-tts-coqui-indo_aryan-gpu--t4", LanguageCode = "or"
+                ServiceId = "ai4bharat/indic-tts-coqui-dravidian-gpu--t4", LanguageCode = new string[] { "ta", "ml" }
             }
         };
 
@@ -66,7 +51,7 @@ namespace KisanEMitra.Services
             };
 
             // Find service id based on current language
-            var serviceId = bhashiniApiServiceIds.Find(f => f.LanguageCode == currentLanguage).ServiceId;
+            var serviceId = bhashiniApiServiceIds.Find(f => f.LanguageCode.Contains(currentLanguage)).ServiceId;
 
             var bhashiniApiRequestBodyPipelineTaskConfig = new BhashiniApiRequestBodyPipelineTaskConfig
             {

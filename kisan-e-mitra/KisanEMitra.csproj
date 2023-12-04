@@ -164,6 +164,9 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Resources\Resource.kn.Designer.cs" />
+    <Compile Include="Resources\Resource.ml.Designer.cs" />
+    <Compile Include="Resources\Resource.pa.Designer.cs" />
     <Compile Include="Services\ChatbotService.cs" />
     <Compile Include="Services\Contracts\IChatbotService.cs" />
     <Content Include="Content\bootstrap.min.css" />
@@ -367,6 +370,8 @@
     <Content Include="Views\Test\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource.kn.resx" />
+    <EmbeddedResource Include="Resources\Resource.ml.resx" />
     <EmbeddedResource Include="Resources\Resource.mr.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.mr.Designer.cs</LastGenOutput>
@@ -390,6 +395,7 @@
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.pa.resx" />
     <EmbeddedResource Include="Resources\Resource.ta.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.ta.Designer.cs</LastGenOutput>
