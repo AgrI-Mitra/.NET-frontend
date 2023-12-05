@@ -357,7 +357,7 @@
     <Content Include="Content\fonts\montserrat-thin-webfont.woff" />
     <Content Include="Content\fonts\montserrat-thin-webfont.woff2" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\chatbot.js" />
+    <Content Include="Scripts\format-string.helper.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
