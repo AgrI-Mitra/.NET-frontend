@@ -1127,12 +1127,15 @@
                     : '') +
                 closingDivHtmlContent;
 
+
             // Format message if it is from chatbot
             if (isMessageFromBot == true) {
                 response = formatChatbotResponse(response);
             }
 
-            $('#message-list').append(response.replace(/\n/g, '<br>'));
+            const formattedResponse = response.replaceAll("\\n", "<br>");
+
+            $('#message-list').append(formattedResponse);
 
             if (messageType == 'final_response') {
                 sessionStorage.setItem('final_response', true);
@@ -1371,6 +1374,29 @@
         askQuestions('resend OTP', 'text');
     }
 
+
+    /**
+     * This function is used to genearte hyperlink from the inputString
+     * @param {any} inputString
+     * @returns
+     */
+    function generateHyperlink(inputString) {
+        // Regular expression to match the pattern [some text] (link)
+        var regex = /\[(.*?)\]\s*\((.*?)\)/g;
+        var match = regex.exec(inputString);
+
+        if (match) {
+            var linkText = match[1];
+            var url = match[2];
+
+            // Construct the HTML hyperlink string
+            var hyperlink = '<a href="' + url + '" target="_blank">' + linkText + '</a>';
+            return hyperlink;
+        } else {
+            return inputString;//"Invalid format. Please provide input in the format [some text] (link)";
+        }
+    }
+
     /**
      * This method is used to format the chat bot response,
      * We need to display aadhar information in different format.
@@ -1380,6 +1406,7 @@
      * @returns
      */
     function formatChatbotResponse(response) {
+
         //response = '<table class="aadhar-table"><tbody><tr><td>Name :</td><td>Lal Chand</td></tr><tr><td>Father Name :</td><td></td></tr><tr><td>Date Of Birth :</td><td>01/01/1900</td></tr><tr><td>Address :</td><td>Jana (24/46),NAGGAR,Kullu,KULLU,HIMACHAL PRADESH</td></tr><tr><td>Registration Date :</td><td>19/02/2019</td></tr></tbody></table>Dear Lal Chand, I have checked your status and found that you have been marked as a *Landless farmer* by the State. If this information is not correct, I suggest you to kindly visit your nearest district/ block office and get your land details updated on the PM KISAN portal.'
         // Check the chatbot response message, and see if any word is given between 2 starts *word*
         // If there is any such word, we need to display it in bold font.
@@ -1408,7 +1435,8 @@
         // Add bootstrap table class and "table-responsive card" classes as wrapper to beautify the table
 
         //Remove all the table related element and replace them with div to show aadhar info in a new UI
-        if (response.indexOf('aadhar-table') >= 0) {
+        if (response.indexOf('"aadhar-table"') >= 0) {
+            response = response.replaceAll('"aadhar-table"', "'aadhar-table'");
             response = response.replaceAll('<table', '<div');
             response = response.replaceAll('<tbody', '<div');
             response = response.replaceAll('<tr', '<div class="div-row"');
@@ -2183,7 +2211,7 @@
     function getWelcomeGreetingsAudio(isLanguageChanged) {
         isGetWelcomeGreetingsTextToSpeechRequestInProgress = $.ajax({
             type: 'POST',
-            url: currentParentRoute +  'GetWelcomeGreetingsTextToSpeech',
+            url: currentParentRoute + 'GetWelcomeGreetingsTextToSpeech',
             dataType: 'json',
             success: function (data) {
                 isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
