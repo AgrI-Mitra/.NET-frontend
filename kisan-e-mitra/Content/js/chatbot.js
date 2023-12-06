@@ -1133,7 +1133,7 @@
                 response = formatChatbotResponse(response);
             }
 
-            let formattedResponse = response.replaceAll("\\n\\t", "<br>").replaceAll("\\n", "<br>");
+            let formattedResponse = response.replaceAll("\\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0");
 
             // Check if hyperlinks needs to be generated
             const hyperlinkFormat = generateHyperlink(formattedResponse);
@@ -1162,7 +1162,7 @@
     }
 
     function convertToClickableLinks(text) {
-        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        var urlRegex = /(https?:\/\/[^\s<>"{}|\\^`[\]]+)/g;
         return text.replace(urlRegex, function (url) {
             // Check if the URL is already within <a> tags
             var precedingText = text.slice(0, text.indexOf(url));
