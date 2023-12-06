@@ -1133,7 +1133,17 @@
                 response = formatChatbotResponse(response);
             }
 
-            const formattedResponse = response.replaceAll("\\n", "<br>");
+            let formattedResponse = response.replaceAll("\\n\\t", "<br>").replaceAll("\\n", "<br>");
+
+            // Check if hyperlinks needs to be generated
+            const hyperlinkFormat = generateHyperlink(formattedResponse);
+
+            if (hyperlinkFormat.isHyperlinkGenerated) {
+                formattedResponse = hyperlinkFormat.inputString;
+            } else {
+                //Convert link to clickable links if found in response
+                formattedResponse = convertToClickableLinks(formattedResponse);
+            }
 
             $('#message-list').append(formattedResponse);
 
@@ -1150,6 +1160,23 @@
             }
         }
     }
+
+    function convertToClickableLinks(text) {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function (url) {
+
+            let hasTrailingZero = false;
+            // Remove trailing dot, if it exists
+            if (url.endsWith('.')) {
+                url = url.slice(0, -1);
+
+                hasTrailingZero = true;
+            }
+
+            return '<a href="' + url + '" target="_blank" class="pm-kisan-hyperlink">' + url + '</a>' + (hasTrailingZero ? '.' : '');
+        });
+    }
+
 
     function recordAudio(screenName) {
         isRecording = !isRecording;
@@ -1390,10 +1417,14 @@
             var url = match[2];
 
             // Construct the HTML hyperlink string
-            var hyperlink = '<a href="' + url + '" target="_blank">' + linkText + '</a>';
-            return hyperlink;
+            var hyperlink = '<a href="' + url + '" target="_blank" class="pm-kisan-hyperlink">' + linkText + '</a>';
+
+            // Replace hyperlink in existing inputString
+            inputString = inputString.replace(regex, hyperlink);
+
+            return { isHyperlinkGenerated: true, inputString: inputString };
         } else {
-            return inputString;//"Invalid format. Please provide input in the format [some text] (link)";
+            return { isHyperlinkGenerated: false, inputString: inputString };//"Invalid format. Please provide input in the format [some text] (link)";
         }
     }
 

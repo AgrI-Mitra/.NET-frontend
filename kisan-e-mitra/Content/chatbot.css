@@ -341,3 +341,7 @@ img.query-msg-send-icon {
     position: absolute;
     bottom: 36px;
 }
+
+.pm-kisan-hyperlink {
+    color: var(--pmk-primary);
+}
