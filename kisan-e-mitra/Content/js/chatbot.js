@@ -1140,10 +1140,10 @@
 
             if (hyperlinkFormat.isHyperlinkGenerated) {
                 formattedResponse = hyperlinkFormat.inputString;
-            } else {
+            }
+
                 //Convert link to clickable links if found in response
                 formattedResponse = convertToClickableLinks(formattedResponse);
-            }
 
             $('#message-list').append(formattedResponse);
 
@@ -1164,16 +1164,24 @@
     function convertToClickableLinks(text) {
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         return text.replace(urlRegex, function (url) {
+            // Check if the URL is already within <a> tags
+            var precedingText = text.slice(0, text.indexOf(url));
+            var followingText = text.slice(text.indexOf(url));
+            if (precedingText.includes('<a') && followingText.includes('</a>')) {
+                // The URL is already within <a> tags, so return it as is
+                return url;
+            } else {
+                // The URL is not within <a> tags, so convert it into a clickable link
+                // Remove trailing dot, if it exists
 
             let hasTrailingZero = false;
-            // Remove trailing dot, if it exists
             if (url.endsWith('.')) {
                 url = url.slice(0, -1);
 
                 hasTrailingZero = true;
             }
-
             return '<a href="' + url + '" target="_blank" class="pm-kisan-hyperlink">' + url + '</a>' + (hasTrailingZero ? '.' : '');
+            }
         });
     }
 
