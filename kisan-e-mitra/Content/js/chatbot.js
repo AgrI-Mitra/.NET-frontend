@@ -871,7 +871,7 @@
         });
 
         tour.on('cancel', function () {
-            sessionStorage.setItem('isAppTourDisplayed', 'true');
+            localStorage.setItem('isAppTourDisplayed', 'true');
         });
     }
 
@@ -2089,7 +2089,7 @@
 
                 // Check if app tour is already displayed or not
                 // If not then display it, because it means user is opening the app for the first time.
-                const isAppTourDisplayed = sessionStorage.getItem('isAppTourDisplayed');
+                const isAppTourDisplayed = localStorage.getItem('isAppTourDisplayed');
 
                 if (!isAppTourDisplayed) {
                     startAppTour();
