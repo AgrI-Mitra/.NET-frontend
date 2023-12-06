@@ -1142,8 +1142,8 @@
                 formattedResponse = hyperlinkFormat.inputString;
             }
 
-                //Convert link to clickable links if found in response
-                formattedResponse = convertToClickableLinks(formattedResponse);
+            //Convert link to clickable links if found in response
+            formattedResponse = convertToClickableLinks(formattedResponse);
 
             $('#message-list').append(formattedResponse);
 
@@ -1174,13 +1174,13 @@
                 // The URL is not within <a> tags, so convert it into a clickable link
                 // Remove trailing dot, if it exists
 
-            let hasTrailingZero = false;
-            if (url.endsWith('.')) {
-                url = url.slice(0, -1);
+                let hasTrailingZero = false;
+                if (url.endsWith('.')) {
+                    url = url.slice(0, -1);
 
-                hasTrailingZero = true;
-            }
-            return '<a href="' + url + '" target="_blank" class="pm-kisan-hyperlink">' + url + '</a>' + (hasTrailingZero ? '.' : '');
+                    hasTrailingZero = true;
+                }
+                return '<a href="' + url + '" target="_blank" class="pm-kisan-hyperlink">' + url + '</a>' + (hasTrailingZero ? '.' : '');
             }
         });
     }
