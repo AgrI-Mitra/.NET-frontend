@@ -823,6 +823,17 @@
         });
     }
 
+    function initPopovers() {
+        // Instantiate all popovers in docs or StackBlitz
+        document.querySelectorAll('[data-bs-toggle="popover"]')
+            .forEach(popover => {
+                new bootstrap.Popover(popover, {
+                    customClass: 'popover-custom',
+                    trigger: 'hover'
+                })
+            })
+    }
+
     function initChatBotConfig() {
 
         // Set parent route
@@ -848,6 +859,7 @@
         getUITranslations();
 
         configAppTour();
+        initPopovers();
 
         // Check if maintenance mode is on or not
         // If on, we need to show maintenance mode modal

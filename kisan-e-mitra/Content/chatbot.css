@@ -314,7 +314,7 @@ img.query-msg-send-icon {
     background: transparent;
 }
 
-#startAppTourButton{
+#startAppTourButton {
     cursor: pointer;
 }
 
@@ -337,7 +337,7 @@ img.query-msg-send-icon {
     width: 20%;
 }
 
-.pm-kistan-toast-container{
+.pm-kistan-toast-container {
     position: absolute;
     bottom: 36px;
 }
@@ -345,3 +345,18 @@ img.query-msg-send-icon {
 .pm-kisan-hyperlink {
     color: var(--pmk-primary);
 }
+
+    .pm-kisan-hyperlink:hover {
+        color: var(--pmk-primary);
+    }
+
+.popover-custom {
+    max-height: 50px;
+    font-size: medium;
+    text-align: center;
+}
+
+    .popover-custom div.popover-body {
+        padding: 5px 5px;
+        color: #105b38;
+    }

@@ -42,13 +42,13 @@
                 @foreach (var availableLanguage in availableLanguages)
                 {
                     if (availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode)
-                    {
-                        <button type="button" class="btn btn-success language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
-                    }
-                    else
-                    {
-                        <button type="button" class="btn btn-secondary language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
-                    }
+                        {
+                            <button data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn btn-success language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
+                        }
+                        else
+                        {
+                            <button data-type="secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn btn-secondary language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
+                        }
                 }
             </div>
         </div>
