@@ -684,6 +684,9 @@
                     'current-language-culture-code'
                 );
 
+                // Hide language buttons
+                $(".app_tour_language_selection_description").hide();
+                hideAllThePopovers();
                 changeLanguage(
                     languageCultureCode,
                     languageEnglishLabel,
@@ -731,6 +734,7 @@
             'click',
             '#restartSessionButton',
             function (ev) {
+                
                 restartSession(true);
             }
         );
@@ -809,6 +813,7 @@
                 //chatbotConfirmationModal.hide();
 
                 if (modalType == 'restart-session') {
+                    $(".app_tour_language_selection_description").show();
                     restartSession();
                 }
             }
@@ -852,6 +857,10 @@
                     trigger: 'hover'
                 })
             })
+    }
+
+    function hideAllThePopovers() {
+        $('[data-bs-toggle="popover"]').popover('hide');
     }
 
     function initChatBotConfig() {

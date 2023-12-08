@@ -8,6 +8,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script type="module" src="~/Content/js/fingerprint.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/@("@")fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
     <script type="text/javascript" src="~/Content/js/recorder.js"></script>
     <script type="text/javascript" src="~/Content/js/languageDropDown.js"></script>
 
@@ -22,7 +24,7 @@
 
         TempData.Keep("LanguageModel");
     }
-    <div class="container-fluid">
+    <div class="container-fluid chatbot-container">
         <div class="kisan-e-mitra-content-text">
             <div class="header-flex justify-content-between align-items-center kisan-e-mitra-texts-padding">
                 <div class="logo-flex responsive-logo"><span class="d-flex justify-content-start p-2"><img src="~/Content/images/kisan-e-mitra-logo.png" class="kisan-e-mitra-logo"></span></div>
@@ -77,12 +79,12 @@
     <div class="footer">
         <p>Powered by Sunbird UCI | BHASHINI</p>
     </div>
-    
+
     <script type="text/javascript" src="~/Content/js/autosize.js"></script>
-    <script type="text/javascript" src="~/Content/js/fingerprint.js"></script>
+
     <script type="text/javascript" src="~/Content/js/wavBlobUtil.js"></script>
     <script type="text/javascript" src="~/Content/js/WavRecorder.js"></script>
-    
+
     <script type="text/javascript" src="~/Content/js/shepherd.js"></script>
 </body>
 </html>
