@@ -7,10 +7,10 @@
 	.kisan-e-mitra-content-text{margin-top: 0px;}
 	body{ background-size: unset; }
 	.content-head-text{ display: none; }
-	.content-head-text-responsive{ text-align: center; background-color: #F7F7F8; padding: 1rem 2rem; border-radius: 26px 26px 0 0; }
+	.content-head-text-responsive{ text-align: center; background-color: #F7F7F8; padding: .5rem 2rem; border-radius: 26px 26px 0 0; }
 	.content-head-text-responsive h1{ color: #198754; font-size: 24px; line-height: normal; margin: 0; }
 	.message-input{ height: 48px; padding: 0 2.5rem 0 1rem; }
-	.input-container{ border-radius: 0 0 26px 26px; padding-bottom: 1.3rem!important; }
+	.input-container{ border-radius: 0 0 26px 26px; /*padding-bottom: 1.3rem!important;*/ }
 	.send-button{ width: 48px; height: 48px; }
 	button[type="submit"]{ width: 28px; height: 28px; background-size: contain; bottom: 0; margin: auto; right: 6px; }
 	.refresh-btn-style, .mic-style{ width: 48px; height: 48px; padding: 6px; }
@@ -18,7 +18,7 @@
 	.meg-input{ width: calc(100% - 128px); }
 	.navigation-icon{ margin-top: -36px; padding: 8px; }
 	.kisan-e-mitra-texts-padding{ padding: 0px 11px; }
-	.msg-scrollbar{ height: calc(100vh - 380px); }
+	/*.msg-scrollbar{ height: calc(100vh - 380px); }*/
 	.custom-select{ position: relative; }
 	.custom-select__trigger{ width: 48px; height: 48px; border-radius: 50%; box-shadow: 3px 3px 5px rgb(0 0 0 / 15%); background: linear-gradient(180deg, #198754 0%, #316F52 100%); z-index: 99; }
 

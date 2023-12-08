@@ -13,6 +13,7 @@ html,
 body {
   height: 100%;
   font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
 }
 body {
   margin: 0;
@@ -33,6 +34,9 @@ body {
 
 .kisan-e-mitra-content-text {
   margin-top: 18px;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
 }
 
 .content-head-text h1 {
@@ -73,7 +77,7 @@ body {
   background: #fff;
   display: flex;
   justify-content: space-between;
-  padding: 2% 5%;
+  padding: 1% 2%;
 }
 .my-msg-content:first-child {
   border-top: 0;
@@ -119,7 +123,8 @@ body {
 
 .msg-scrollbar {
   overflow-y: auto;
-  height: calc(100vh - 370px);
+  height:100%;
+  /*height: calc(100vh - 370px);*/
   border-top: 1px solid #eae9e9;
   border-bottom: 1px solid #eae9e9;
   background: #f7f7f8;
@@ -502,6 +507,8 @@ svg.footer-svg-hover:hover {
 .input-container {
   background-color: #fff;
   border-radius: 0 0 50px 50px;
+  padding-top: 2% !important;
+  padding-bottom: 2% !important;
 }
 
 .custom-select-wrapper {

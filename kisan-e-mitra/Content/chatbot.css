@@ -50,11 +50,13 @@ table.aadhar-table {
     flex: 1 1 80%;
     flex-wrap: wrap;
     flex-flow: column wrap;
-    padding: 10px;
+    padding: 5px 10px;
+
 }
 
 .chatbot-message-wrapper-column-three {
     flex: 0 1 auto;
+    
 }
 
 .chatbot-message-wrapper-column-three-part-two {
@@ -140,8 +142,10 @@ table.aadhar-table {
 }
 
 .language-buttons {
-    margin-top: 10px;
+    margin-top: 5px;
     border-radius: 20px;
+    font-size: .9rem;
+    height: 30px;
 }
 
 /*// X-Small devices (portrait phones, less than 576px)
@@ -193,17 +197,19 @@ table.aadhar-table {
 @media (max-width: 767.98px) {
 
     .chatbot-message-wrapper-column-two {
-        flex: 1 1 90%;
+        flex: 1 1 95%;
     }
 
     .chatbot-message-wrapper-column-three {
         /*flex: 1 1 100%;*/
         flex: 0 1 5%;
-        margin-left: 3rem !important;
+        margin-left: .7rem !important;
+        padding-top: 5px;
     }
 
     .chatbot-message-wrapper-column-three-part-two {
         margin-left: 0px !important;
+        padding-top: 5px;
     }
 
     .message-input-textarea {
@@ -270,7 +276,7 @@ img.query-msg-send-icon {
 }
 
 #message-list.without-popular-questions {
-    height: calc(100vh - 300px);
+    /*height: calc(100vh - 300px);*/
     transition: all 0.5s ease-in;
 }
 
@@ -360,3 +366,10 @@ img.query-msg-send-icon {
         padding: 5px 5px;
         color: #105b38;
     }
+
+.chatbot-container {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    max-height: 94%;
+}
