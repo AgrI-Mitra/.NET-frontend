@@ -684,8 +684,7 @@
                     'current-language-culture-code'
                 );
 
-                // Hide language buttons
-                $(".app_tour_language_selection_description").hide();
+                
                 hideAllThePopovers();
                 changeLanguage(
                     languageCultureCode,
@@ -2154,6 +2153,10 @@
             dataType: 'json',
             data: { lang: languageCultureCode },
             success: function (data) {
+
+                // Hide language buttons
+                $(".app_tour_language_selection_description").hide();
+
                 //If language is changed after session refresh was done,
                 //Add metric count for it
 
