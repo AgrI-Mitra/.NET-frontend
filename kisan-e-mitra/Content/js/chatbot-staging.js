@@ -104,10 +104,6 @@
 
     var chatbotConfirmationModal;
     var currentConversationId;
-    const pmKisanToast = document.getElementById('pmKisanToastNotification');
-    const pmKisanToastNotificationHeaderId = '#pmKisanToastNotificationHeader';
-    const pmKisanToastNotificationDescriptionId =
-        '#pmKisanToastNotificationDescription';
 
     // When browser tab is about to close
     window.onbeforeunload = function () {
@@ -1060,16 +1056,6 @@
     function showFeedbackModal() {
         submitFeedbackModal = new bootstrap.Modal('#' + submitFeedbackModalId);
         submitFeedbackModal.show();
-    }
-
-    function showToastNotification(message) {
-        const headerText = translations.find((f) => f.Key == 'label_title').Value;
-
-        $(pmKisanToastNotificationHeaderId).text(headerText);
-        $(pmKisanToastNotificationDescriptionId).text(message);
-
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(pmKisanToast);
-        toastBootstrap.show();
     }
 
     function initAutoSizeInputBox() {

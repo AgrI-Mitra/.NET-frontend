@@ -104,10 +104,6 @@
 
     var chatbotConfirmationModal;
     var currentConversationId;
-    const pmKisanToast = document.getElementById('pmKisanToastNotification');
-    const pmKisanToastNotificationHeaderId = '#pmKisanToastNotificationHeader';
-    const pmKisanToastNotificationDescriptionId =
-        '#pmKisanToastNotificationDescription';
 
     // When browser tab is about to close
     window.onbeforeunload = function () {
@@ -676,28 +672,38 @@
      * This method is used to listen language change event
      */
     function languageChangeListener() {
-        $('.languagesLabels').click(function (e) {
-            let languageCultureCode = $(this).data('language-culture-code');
-            let languageEnglishLabel = $(this).data('language-english-label');
-            let languageCultureLabel = $(this).data('language-culture-label');
-            let currentLanguageCultureCode = $(this).data(
-                'current-language-culture-code'
-            );
 
-            changeLanguage(
-                languageCultureCode,
-                languageEnglishLabel,
-                languageCultureLabel,
-                currentLanguageCultureCode
-            );
-        });
+        $(document).on(
+            'click',
+            '.languagesLabels',
+            function (ev) {
+                let languageCultureCode = $(this).data('language-culture-code');
+                let languageEnglishLabel = $(this).data('language-english-label');
+                let languageCultureLabel = $(this).data('language-culture-label');
+                let currentLanguageCultureCode = $(this).data(
+                    'current-language-culture-code'
+                );
+
+                changeLanguage(
+                    languageCultureCode,
+                    languageEnglishLabel,
+                    languageCultureLabel,
+                    currentLanguageCultureCode
+                );
+            }
+        );
     }
 
     function voiceRecorderListener() {
-        $(voiceRecordButtonClass).click(function (e) {
-            let currentScreenName = $(this).data('screen-name');
-            recordAudio(currentScreenName);
-        });
+
+        $(document).on(
+            'click',
+            voiceRecordButtonClass,
+            function (ev) {
+                let currentScreenName = $(this).data('screen-name');
+                recordAudio(currentScreenName);
+            }
+        );
     }
 
     /**
@@ -705,26 +711,40 @@
      * It will copy clicked question to user question text box
      */
     function popularQuestionClickListener() {
-        $('#popularQuestion').click(function (event) {
-            event.stopPropagation();
-            let popularQuestion = $(this).data('popular-question');
-            copyPopularQuestionInTextBox(popularQuestion);
-        });
+        $(document).on(
+            'click',
+            '#popularQuestion',
+            function (event) {
+                event.stopPropagation();
+                let popularQuestion = $(this).data('popular-question');
+                copyPopularQuestionInTextBox(popularQuestion);
+            }
+        );
     }
 
     /**
      * This method is used to listen restart session button click event
      */
     function restartSessionButtonOnClickListener() {
-        $('#restartSessionButton').click(function (e) {
-            restartSession(true);
-        });
+
+        $(document).on(
+            'click',
+            '#restartSessionButton',
+            function (ev) {
+                restartSession(true);
+            }
+        );
     }
 
     function startAppTourButtonOnClickListener() {
-        $('#startAppTourButton').click(function (e) {
-            startAppTour();
-        });
+
+        $(document).on(
+            'click',
+            '#startAppTourButton',
+            function (ev) {
+                startAppTour();
+            }
+        );
     }
 
     function feedbackSubmitButtonOnClickListener() {
@@ -1072,16 +1092,6 @@
     function showFeedbackModal() {
         submitFeedbackModal = new bootstrap.Modal('#' + submitFeedbackModalId);
         submitFeedbackModal.show();
-    }
-
-    function showToastNotification(message) {
-        const headerText = translations.find((f) => f.Key == 'label_title').Value;
-
-        $(pmKisanToastNotificationHeaderId).text(headerText);
-        $(pmKisanToastNotificationDescriptionId).text(message);
-
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(pmKisanToast);
-        toastBootstrap.show();
     }
 
     function initAutoSizeInputBox() {
@@ -2504,7 +2514,9 @@
                     handleError(sessionError);
                 });
         }
+
         if (showConfirmation == true) {
+
             const confirmationMessage = $(
                 '#chatbot-restart-session-confirmation-message'
             ).val();
