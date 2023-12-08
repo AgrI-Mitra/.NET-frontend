@@ -366,13 +366,13 @@
     <value>मुझे मेरी अंतिम किश्त का भुगतान नहीं मिला है।</value>
   </data>
   <data name="message.popular_question_2" xml:space="preserve">
-    <value>मुझे मेरे पीएम किसान खाते की स्थिति बताएं</value>
+    <value>मेरे पीएम किसान खाते की स्थिति कैसे जानें?</value>
   </data>
   <data name="message.popular_question_3" xml:space="preserve">
-    <value>मेरे पीएम किसान खाते में क्या समस्या है?</value>
+    <value>योजना के क्या लाभ हैं?</value>
   </data>
   <data name="message.popular_question_4" xml:space="preserve">
-    <value>मैं पात्र लाभार्थी क्यों नहीं हूं?</value>
+    <value>मैं पीएम किसान मोबाइल ऐप के माध्यम से स्व-पंजीकरण कैसे कर सकता हूं?</value>
   </data>
   <data name="error.default_message" xml:space="preserve">
     <value>क्षमा करें, कुछ समस्या प्रतीत होती है। मैं आपसे अनुरोध करता हूं कि आप अपना इंटरनेट कनेक्शन जांचें, फिर निचले बाएं कोने पर रीफ्रेश बटन पर क्लिक करके सत्र को रीफ्रेश करें, और फिर पुनः प्रयास करें।</value>

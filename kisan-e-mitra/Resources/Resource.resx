@@ -364,13 +364,13 @@ Type your question or speak using the mic button. Just touch the mic button and 
     <value>I have not received my last instalment payment.</value>
   </data>
   <data name="message.popular_question_2" xml:space="preserve">
-    <value>Tell me the status of my PM Kisan account</value>
+    <value>How to know the status of my PM Kisan account?</value>
   </data>
   <data name="message.popular_question_3" xml:space="preserve">
-    <value>What is the issue with my PM KISAN account?</value>
+    <value>What are the benefits of the scheme?</value>
   </data>
   <data name="message.popular_question_4" xml:space="preserve">
-    <value>Why am I not an eligible beneficiary?</value>
+    <value>How can I self-register through the PM Kisan mobile app?</value>
   </data>
   <data name="error.default_message" xml:space="preserve">
     <value>Sorry, there seems to be some issue. I request you to Check your internet connection, then Refresh the session by clicking the refresh button at the bottom left corner, and then try again.</value>
