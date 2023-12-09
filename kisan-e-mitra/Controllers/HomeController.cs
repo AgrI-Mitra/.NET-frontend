@@ -50,7 +50,7 @@ namespace KisanEMitra.Controllers
 
         public ActionResult Test()
         {
-            languageCodesToEnable = new string[] { "hi", "ta", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
+            languageCodesToEnable = new string[] { "hi", "te", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
 
             HttpCookie langCookie = Request.Cookies["culture"];
             var userLanguage = Request.UserLanguages;
