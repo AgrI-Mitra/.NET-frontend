@@ -11,6 +11,8 @@
         MetricsIncrement: 'custom/metrics/increment',
         ConversationFeedback: 'conversation/feedback',
     };
+    let latitude;
+    let longitude;
 
     var currentParentRoute = "/Home/";
 
@@ -888,6 +890,7 @@
 
         configAppTour();
         initPopovers();
+        setLocationInfo();
 
         // Check if maintenance mode is on or not
         // If on, we need to show maintenance mode modal
@@ -1629,7 +1632,7 @@
                     category == 'base64audio'
                         ? { category: 'base64audio', text: input }
                         : null,
-                location: null,
+                location: latitude && longitude ? { lat: latitude, long: longitude } : null,
                 contactCard: null,
                 buttonChoices: null,
                 stylingTag: null,
@@ -2610,4 +2613,40 @@
             sessionAutoRestartTimeoutId = null;
         }
     }
+
+    function setLocationInfo() {
+
+        function getLocation() {
+            navigator.geolocation.getCurrentPosition((position) => {
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+
+            }, (errorCallback) => {
+
+                console.log('errorCallback: ', errorCallback);
+            });
+        }
+
+        if (navigator.geolocation) {
+
+            navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
+                if (result.state == 'granted') {
+
+                    getLocation();
+
+                } else if (result.state == 'prompt') {
+                    getLocation();
+
+                } else if (result.state == 'denied') {
+                    // Display instructions to reactivate location sharing in browser settings
+                    console.log('User denied the permission');
+                }
+            });
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+
+
+    }
+
 })();
