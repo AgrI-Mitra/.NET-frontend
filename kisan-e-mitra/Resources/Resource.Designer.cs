@@ -1019,8 +1019,8 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you?         ///        ///        ///        ///
-        ///&lt;br&gt;You may select your preferred language..
+        ///   Looks up a localized string similar to Welcome to Kisan-eMitra! I am your digital assistant. Please let me know how can I help you? 
+        ///You may select your preferred language..
         /// </summary>
         public static string message_welcome_greeting {
             get {

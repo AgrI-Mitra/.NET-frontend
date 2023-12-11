@@ -348,8 +348,8 @@ Type your question or speak using the mic button. Just touch the mic button and 
     <value>Please wait before resending OTP</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you? 
-&lt;br&gt;You may select your preferred language.</value>
+    <value>Welcome to Kisan-eMitra! I am your digital assistant. Please let me know how can I help you? 
+You may select your preferred language.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>Successfully disliked the response</value>
