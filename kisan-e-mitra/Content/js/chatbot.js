@@ -11,6 +11,12 @@
         MetricsIncrement: 'custom/metrics/increment',
         ConversationFeedback: 'conversation/feedback',
     };
+
+    marked.use({
+        breaks: true,
+        gfm: true,
+    });
+
     let latitude;
     let longitude;
 
@@ -686,7 +692,7 @@
                     'current-language-culture-code'
                 );
 
-                
+
                 hideAllThePopovers();
                 changeLanguage(
                     languageCultureCode,
@@ -735,7 +741,7 @@
             'click',
             '#restartSessionButton',
             function (ev) {
-                
+
                 restartSession(true);
             }
         );
@@ -1126,6 +1132,12 @@
         showAudioOption
     ) {
         if (message != '') {
+
+            if (isMessageFromBot == true) {
+                message = formatChatbotResponse(message);
+                message = marked.parse(message);
+            }
+
             let chatMessageWrapperStartingDivHtmlContent =
                 getChatMessageWrapperStartingDivHtmlContent(
                     isMessageFromBot,
@@ -1161,22 +1173,7 @@
                 closingDivHtmlContent;
 
 
-            // Format message if it is from chatbot
-            if (isMessageFromBot == true) {
-                response = formatChatbotResponse(response);
-            }
-
             let formattedResponse = response.replaceAll("\\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0");
-
-            // Check if hyperlinks needs to be generated
-            const hyperlinkFormat = generateHyperlink(formattedResponse);
-
-            if (hyperlinkFormat.isHyperlinkGenerated) {
-                formattedResponse = hyperlinkFormat.inputString;
-            }
-
-            //Convert link to clickable links if found in response
-            formattedResponse = convertToClickableLinks(formattedResponse);
 
             $('#message-list').append(formattedResponse);
 
