@@ -17,7 +17,7 @@ namespace KisanEMitra.Controllers
 
         private IChatbotService ChatbotService { get; set; }
 
-        private readonly string[] languageCodesToEnable = new string[] { "hi", "ta", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
+        private readonly string[] languageCodesToEnable = new string[] { "hi", "te", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
 
         public TestController(IAgrimitraService _agrimitraService, IBhashiniService bhashiniService, IChatbotService chatbotService)
         {
