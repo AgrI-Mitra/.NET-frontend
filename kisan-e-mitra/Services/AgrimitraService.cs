@@ -11,7 +11,7 @@ namespace KisanEMitra.Services
     public class AgrimitraService : IAgrimitraService
     {
         private readonly HttpClient httpClient;
-        private readonly string baseURL = "https://apichatbot.pmkisan.gov.in/";
+        private readonly string baseURL = "https://pmkisan-dev-bff.chatwithpdf.aitools.samagra.io/";
         private readonly string userApiBaseEndPoint = "user/";
 
         public static class APIPaths
