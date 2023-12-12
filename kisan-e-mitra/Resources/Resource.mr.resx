@@ -348,7 +348,8 @@
     <value>OTP पुन्हा पाठवण्यापूर्वी कृपया प्रतीक्षा करा</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>किसान-eमित्रात आपले स्वागत आहे! मी तुमचा वैयक्तिक सहाय्यक आहे. कृपया मला कळवा मी तुम्हाला कशी मदत करू?&lt;br&gt;आपण आपली पसंतीची भाषा निवडू शकता.</value>
+    <value>किसान-eमित्रात आपले स्वागत आहे! मी तुमचा डिजिटल सहाय्यक आहे. कृपया मला सांगा की मी तुम्हाला कशी मदत करू शकतो?
+आपण आपल्या आवडत्या भाषेतील उत्तरांसाठी भाषा निवडू शकता.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>प्रतिसाद यशस्वीरित्या नापसंत झाला</value>
@@ -363,13 +364,13 @@
     <value>मला माझे शेवटचे हप्ते पेमेंट मिळालेले नाही.</value>
   </data>
   <data name="message.popular_question_2" xml:space="preserve">
-    <value>माझ्या पीएम किसान खात्याची स्थिती मला सांगा</value>
+    <value>माझ्या पंतप्रधान किसन खात्याची स्थिती कशी जाणून घ्यावी?</value>
   </data>
   <data name="message.popular_question_3" xml:space="preserve">
-    <value>माझ्या पीएम किसान खात्यात काय समस्या आहे?</value>
+    <value>योजनेचे फायदे काय आहेत?</value>
   </data>
   <data name="message.popular_question_4" xml:space="preserve">
-    <value>मी पात्र लाभार्थी का नाही?</value>
+    <value>पंतप्रधान किसन मोबाइल अॅपद्वारे मी स्वत: ची नोंदणी कशी करू शकतो?</value>
   </data>
   <data name="error.default_message" xml:space="preserve">
     <value>क्षमस्व, काही समस्या आहे असे दिसते. मी तुम्हाला तुमचे इंटरनेट कनेक्शन तपासण्याची विनंती करतो, नंतर तळाशी डाव्या कोपर्‍यातील रिफ्रेश बटणावर क्लिक करून सत्र रिफ्रेश करा आणि नंतर पुन्हा प्रयत्न करा.</value>

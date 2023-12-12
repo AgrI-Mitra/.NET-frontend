@@ -364,13 +364,13 @@
     <value>എന്റെ അവസാന ഗഡു പേയ്‌മെന്റ് എനിക്ക് ലഭിച്ചിട്ടില്ല.</value>
   </data>
   <data name="message.popular_question_2" xml:space="preserve">
-    <value>എന്റെ പിഎം കിസാൻ അക്കൗണ്ടിന്റെ നില പറയൂ</value>
+    <value>എന്റെ പ്രധാനമന്ത്രിയുടെ നില എങ്ങനെ അറിയാം കിസാൻ അക്ക?</value>
   </data>
   <data name="message.popular_question_3" xml:space="preserve">
-    <value>എന്റെ പിഎം കിസാൻ അക്കൗണ്ടിന് എന്താണ് പ്രശ്നം?</value>
+    <value>സ്കീമിന്റെ പ്രയോജനങ്ങൾ എന്തൊക്കെയാണ്?</value>
   </data>
   <data name="message.popular_question_4" xml:space="preserve">
-    <value>എന്തുകൊണ്ടാണ് ഞാൻ യോഗ്യനായ ഒരു ഗുണഭോക്താവാകാത്തത്?</value>
+    <value>കിസാൻ മൊബൈൽ അപ്ലിക്കേഷനിലൂടെ എനിക്ക് എങ്ങനെ സ്വയം രജിസ്റ്റർ ചെയ്യാനാകും?</value>
   </data>
   <data name="message.rating" xml:space="preserve">
     <value>നിങ്ങൾക്ക് ഇത് ഉപയോഗപ്രദമാണെന്ന് തോന്നിയോ?</value>
@@ -436,7 +436,8 @@
     <value>OTP വീണ്ടും അയയ്ക്കുന്നതിന് മുമ്പ് ദയവായി കാത്തിരിക്കുക</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>കിസാൻ-ഇമിത്രയിലേക്ക് സ്വാഗതം! ഞാൻ നിങ്ങളുടെ സ്വകാര്യ സഹായിയാണ്. എനിക്ക് നിങ്ങളെ എങ്ങനെ സഹായിക്കാനാകുമെന്ന് ദയവായി എന്നെ അറിയിക്കൂ? &lt;br&gt;നിങ്ങൾക്ക് ഇഷ്ടപ്പെട്ട ഭാഷ തിരഞ്ഞെടുക്കാം.</value>
+    <value>കിസാൻ-ഇമിത്രയിലേക്ക് സ്വാഗതം! ഞാൻ നിങ്ങളുടെ ഡിജിറ്റൽ അസിസ്റ്റന്റാണ്. എനിക്ക് നിങ്ങളെ എങ്ങനെ സഹായിക്കുമെന്ന് ദയവായി എന്നോട് പറയുക?
+നിങ്ങളുടെ പ്രിയപ്പെട്ട ഭാഷയിലെ ഉത്തരങ്ങൾക്കായി നിങ്ങൾക്ക് ഭാഷ തിരഞ്ഞെടുക്കാം.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>പ്രതികരണം ഡിസ്‌ലൈക്ക് ചെയ്‌തു</value>

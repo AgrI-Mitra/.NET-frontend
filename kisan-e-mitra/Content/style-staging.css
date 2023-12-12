@@ -1,0 +1,636 @@
+@font-face {
+    font-family: "Montserrat", sans-serif;
+    src: url("../Font/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Montserrat", sans-serif;
+    src: url("../Font/Montserrat-Bold.ttf");
+    font-weight: 700;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: Montserrat, sans-serif;
+    font-size: 0.9em;
+}
+
+body {
+    margin: 0;
+    background-image: url(../Content/images/land_of_grass-bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.logo-flex {
+    display: flex;
+}
+
+.header-flex {
+    display: flex;
+}
+
+.kisan-e-mitra-content-text {
+    margin-top: 18px;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.content-head-text h1 {
+    color: #198754;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.kisan-e-mitra-texts-padding {
+    padding: 10px 16px 32px 25px;
+}
+
+.dropdown-style .dropdown-menu {
+    min-width: 5.8rem !important;
+}
+
+.dropdown-style .btn-check:focus + .btn,
+.btn:focus {
+    box-shadow: none !important;
+}
+
+.dropdown-style .btn-style {
+    color: #8e8e9e;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+}
+
+    .dropdown-style .btn-style:hover {
+        color: #8e8e9e;
+    }
+
+.my-msg-content {
+    border-top: 1px solid #eae9e9;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 1% 2%;
+}
+
+    .my-msg-content:first-child {
+        border-top: 0;
+    }
+
+.my-messages {
+    gap: 1rem;
+}
+
+.system-dp-img-width {
+    width: 48px;
+    height: 48px;
+}
+
+.font-style h4 {
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.font-style p {
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.add-width {
+    max-width: 450px !important;
+}
+
+.system-msg-bg {
+    background: #f7f7f8;
+}
+
+.my-msg-icons {
+    display: flex;
+    justify-content: unset;
+    align-items: center;
+    gap: 30px;
+}
+
+.msg-scrollbar {
+    overflow-y: auto;
+    height: 100%;
+    /*height: calc(100vh - 370px);*/
+    border-top: 1px solid #eae9e9;
+    border-bottom: 1px solid #eae9e9;
+    background: #f7f7f8;
+}
+
+.message-input {
+    width: 100%;
+    padding: 0 4rem 0 1.5rem;
+    border: 0;
+    border-radius: 40px;
+    height: 60px;
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+}
+
+button[type="submit"] {
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    border-color: transparent;
+    background: url("../Content/images/send-text-highlight.svg") no-repeat center;
+    cursor: pointer;
+    opacity: 0.4;
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.send-button {
+    padding: 0;
+    border: none;
+    border-radius: 40px;
+    width: 60px;
+    font-weight: 700;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-icons {
+    padding-top: 18px;
+}
+
+.navigation-icon {
+    border-radius: 50px;
+    background: #eab64f;
+    padding: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0 80px;
+    margin-top: 18px;
+}
+
+svg.footer-svg-hover {
+    fill: #3e3117;
+}
+
+    svg.footer-svg-hover:hover {
+        fill: white !important;
+    }
+
+.footer {
+    background: #333;
+    height: 36px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-top: 18px;
+    text-align: center;
+}
+
+    .footer p {
+        color: white;
+        margin-bottom: 0;
+        line-height: 36px;
+        font-size: 14px;
+    }
+
+.message-input:focus {
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.message-input::placeholder {
+    color: #8e8e9e;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.my-messages span {
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.mic-style {
+    border: 2px solid;
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    padding: 10px;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes rotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.load {
+    width: 44px;
+    height: 44px;
+    margin: 0px auto 0;
+    border: solid 2px #fa5f5f;
+    border-radius: 50%;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    -webkit-transition: all 0.5s ease-in;
+    -webkit-animation-name: rotate;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    transition: all 0.5s ease-in;
+    animation-name: rotate;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.progress {
+    background: none !important;
+    width: 40px;
+    height: 40px !important;
+    margin: 4px 0;
+    position: relative;
+}
+
+    .progress:after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 12px solid #fff;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .progress > span {
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+    }
+
+    .progress .progress-bar {
+        width: 100%;
+        height: 100%;
+        background: none;
+        border-width: 2px;
+        border-style: solid;
+        position: absolute;
+        top: 0;
+    }
+
+    .progress .progress-left .progress-bar {
+        left: 100%;
+        border-top-right-radius: 80px;
+        border-bottom-right-radius: 80px;
+        border-left: 0;
+        -webkit-transform-origin: center left;
+        transform-origin: center left;
+    }
+
+    .progress .progress-right {
+        right: 0;
+    }
+
+        .progress .progress-right .progress-bar {
+            left: -100%;
+            border-top-left-radius: 80px;
+            border-bottom-left-radius: 80px;
+            border-right: 0;
+            -webkit-transform-origin: center right;
+            animation: loading-1 1.8s linear forwards;
+        }
+
+    .progress.blue .progress-bar {
+        border-color: #198754;
+    }
+
+    .progress.blue .progress-left .progress-bar {
+        animation: loading-2 1.5s linear forwards 1.8s;
+    }
+
+    .progress.yellow .progress-bar {
+        border-color: #fdba04;
+    }
+
+    .progress.yellow .progress-right .progress-bar {
+        animation: loading-3 1.8s linear forwards;
+    }
+
+    .progress.yellow .progress-left .progress-bar {
+        animation: none;
+    }
+
+@keyframes loading-1 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes loading-2 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(144deg);
+        transform: rotate(144deg);
+    }
+}
+
+@keyframes loading-3 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(135deg);
+        transform: rotate(135deg);
+    }
+}
+
+.refresh-btn-style {
+    background: white;
+    width: 60px;
+    height: 60px;
+    padding: 15px;
+    border-radius: 100%;
+    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+}
+
+.icon-decoration-modal {
+    text-decoration: none;
+}
+
+.select-language-text-style p {
+    color: #333;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    margin: 0;
+    max-width: 650px;
+}
+
+.query-messages-box .query-msg p {
+    border-radius: 8px;
+    border: 1px solid #ececf1;
+    background: #fff;
+    padding: 0px 10px;
+    height: 60px;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: initial;
+}
+
+.query-messages-box {
+    max-width: 700px;
+    padding-bottom: 10px;
+}
+
+
+
+.query-msg.padding {
+    padding-top: 8px;
+}
+
+.query-messages-box.margin {
+    margin: 0 150px;
+}
+
+.popup-thumb-icon {
+    background: rgba(25, 135, 84, 0.3);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    padding: 7px;
+    margin-right: 10px;
+}
+
+.popup-thumb-icon-2 {
+    background: rgba(250, 95, 95, 0.2);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    padding: 7px;
+    margin-right: 10px;
+}
+
+.form-control.text-area-size {
+    resize: none;
+    height: 100px;
+    border-radius: 8px;
+    border: 1px solid #cacaca;
+}
+
+.modal-body textarea.form-control {
+    padding: 1rem 1rem !important;
+}
+
+.modal-body textarea::placeholder {
+    color: #8e8e9e;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.modal-footer .popup-btn {
+    color: #8e8e9e;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    border: 1px solid #8e8e9e;
+    padding: 7px 42px;
+}
+
+.modal .modal-content {
+    border-radius: 24px;
+}
+
+.responsive-msg-content-space {
+    font-weight: 400 !important;
+}
+
+/*Select Language*/
+.meg-input {
+    width: calc(100% - 152px);
+}
+
+.input-container {
+    background-color: #fff;
+    border-radius: 0 0 50px 50px;
+    padding-top: 2% !important;
+    padding-bottom: 2% !important;
+}
+
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+    display: flex;
+    align-items: center;
+}
+
+.choose__select {
+    display: flex;
+    align-items: center;
+    min-width: 78px;
+    color: #8e8e9e;
+    font-weight: 500;
+    margin-right: 1.25rem;
+}
+
+.caret {
+    margin-left: auto;
+    border-width: 0.45rem;
+    border-style: solid;
+    border-color: #8e8e9e transparent transparent transparent;
+    border-radius: 4px;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+.custom-select {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-select__trigger {
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    line-height: 48px;
+    cursor: pointer;
+}
+
+.custom-options {
+    display: inline-flex;
+    background-color: rgb(0 0 0 / 10%);
+    border-radius: 50px;
+    padding: 8px;
+    transition: all 0.5s;
+    max-width: 300px;
+    overflow-x: auto;
+}
+
+.custom-option {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 48px;
+    text-align: center;
+    margin-left: 0.5rem;
+    cursor: pointer;
+    color: #000;
+    background-color: #fff;
+    transition: all 0.5s;
+    min-width: 48px;
+}
+
+    .custom-option:hover {
+        cursor: pointer;
+        background-color: #b2b2b2;
+    }
+
+    .custom-option.selected {
+        color: #fff;
+        box-shadow: 3px 3px 5px rgb(0 0 0 / 15%);
+        background: linear-gradient(180deg, #198754 0%, #316f52 100%);
+    }
+
+.scroll-container {
+    overflow-x: auto;
+    white-space: nowrap; /* Prevent text from wrapping */
+    /* max-width: 1200px;
+    margin: 0 auto; */
+    /* margin-left: 2%;
+    margin-right: 2%; */
+    background: #fff;
+}
+
+.query-messages-box {
+    width: 100%; /* Ensure the content takes up the full width */
+    display: flex;
+    gap: 15px; /* Prevent the container from expanding to fit content */
+    /* padding-top: 1rem; */
+}
+
+/* Optionally, you can style the scrollbar */
+.scroll-container::-webkit-scrollbar {
+    height: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    /* border-radius: 6px; */
+}
+
+::-moz-scrollbar-button:decrement,
+::-moz-scrollbar-button:increment,
+::-webkit-scrollbar-button:decrement,
+::-webkit-scrollbar-button:increment {
+    width: 0px;
+}
+
+.custom-options::-webkit-scrollbar {
+    height: 3px;
+}
+
+.custom-options::-webkit-scrollbar-thumb {
+    background-color: #3b3b3b;
+    /* border-radius: 6px; */
+}

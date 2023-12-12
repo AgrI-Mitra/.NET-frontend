@@ -364,13 +364,13 @@
     <value>ਮੈਨੂੰ ਮੇਰੀ ਪਿਛਲੀ ਕਿਸ਼ਤ ਦਾ ਭੁਗਤਾਨ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</value>
   </data>
   <data name="message.popular_question_2" xml:space="preserve">
-    <value>ਮੈਨੂੰ ਮੇਰੇ ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਕਿਸਾਨ ਖਾਤੇ ਦੀ ਸਥਿਤੀ ਦੱਸੋ</value>
+    <value>ਮੇਰੇ ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਕਿਸ ਦੇ ਖਾਤੇ ਦੀ ਸਥਿਤੀ ਨੂੰ ਕਿਵੇਂ ਪਤਾ ਹੈ?</value>
   </data>
   <data name="message.popular_question_3" xml:space="preserve">
-    <value>ਮੇਰੇ ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਕਿਸਾਨ ਖਾਤੇ ਨਾਲ ਕੀ ਸਮੱਸਿਆ ਹੈ?</value>
+    <value>ਯੋਜਨਾ ਦੇ ਕੀ ਲਾਭ ਹਨ?</value>
   </data>
   <data name="message.popular_question_4" xml:space="preserve">
-    <value>ਮੈਂ ਯੋਗ ਲਾਭਪਾਤਰੀ ਕਿਉਂ ਨਹੀਂ ਹਾਂ?</value>
+    <value>ਮੈਂ ਪ੍ਰਧਾਨਮ ਨੂੰ ਐਮ ਪੀ ਕਿਸਾਨ ਮੋਬਾਈਲ ਐਪ ਰਾਹੀਂ ਸਵੈ-ਰਜਿਸਟਰ ਕਰ ਸਕਦਾ ਹਾਂ?</value>
   </data>
   <data name="message.rating" xml:space="preserve">
     <value>ਕੀ ਤੁਹਾਨੂੰ ਇਹ ਲਾਭਦਾਇਕ ਲੱਗਿਆ?</value>
@@ -436,7 +436,8 @@
     <value>OTP ਮੁੜ ਭੇਜਣ ਤੋਂ ਪਹਿਲਾਂ ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>ਜੀ ਆਇਆਂ ਨੂੰ Kisan-eMitra ਜੀ! ਮੈਂ ਤੁਹਾਡਾ ਨਿੱਜੀ ਸਹਾਇਕ ਹਾਂ। ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂੰ ਦੱਸੋ ਕਿ ਮੈਂ ਤੁਹਾਡੀ ਮਦਦ ਕਿਵੇਂ ਕਰ ਸਕਦਾ ਹਾਂ? &lt;br&gt;ਤੁਸੀਂ ਆਪਣੀ ਪਸੰਦੀਦਾ ਭਾਸ਼ਾ ਚੁਣ ਸਕਦੇ ਹੋ।</value>
+    <value>ਕਿਸਾਨ-ਈ ਦੋਸਤ ਵਿੱਚ ਤੁਹਾਡਾ ਸਵਾਗਤ ਹੈ! ਮੈਂ ਤੁਹਾਡਾ ਨਿੱਜੀ ਸਹਾਇਕ ਹਾਂ ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂੰ ਦੱਸੋ ਕਿ ਮੈਂ ਤੁਹਾਡੀ ਕਿਵੇਂ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?
+ਤੁਸੀਂ ਆਪਣੀ ਮਨਪਸੰਦ ਭਾਸ਼ਾ ਵਿੱਚ ਜਵਾਬਾਂ ਲਈ ਭਾਸ਼ਾ ਚੁਣ ਸਕਦੇ ਹੋ.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>ਜਵਾਬ ਨੂੰ ਸਫਲਤਾਪੂਰਵਕ ਨਾਪਸੰਦ ਕੀਤਾ ਗਿਆ</value>

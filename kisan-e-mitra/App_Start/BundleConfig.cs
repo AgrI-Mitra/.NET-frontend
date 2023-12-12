@@ -27,6 +27,13 @@ namespace KisanEMitra
                       "~/Content/style.css",
                       "~/Content/responsive.css",
                       "~/Content/chatbot.css"));
+
+            bundles.Add(new StyleBundle("~/Content/staging/css").Include(
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/style-staging.css",
+                      "~/Content/responsive-staging.css",
+                      "~/Content/shepherd.css",
+                      "~/Content/chatbot-staging.css"));
         }
     }
 }

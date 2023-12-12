@@ -348,8 +348,8 @@
     <value>OTP ପଠାଇବା ପୂର୍ବରୁ ଦୟାକରି ଅପେକ୍ଷା କରନ୍ତୁ |</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>କିସାନ୍-eମତ୍ତ୍ରାଙ୍କୁ ସ୍ୱାଗତ! ମୁଁ ତୁମର ବ୍ୟକ୍ତିଗତ ସହାୟକ ଅଟେ | ଦୟାକରି ମୋତେ ଜଣାନ୍ତୁ ମୁଁ କିପରି ଆପଣଙ୍କୁ ସାହାଯ୍ୟ କରିପାରିବି?
-&lt;br&gt; ଆପଣ ଆପଣଙ୍କର ପସନ୍ଦିତ ଭାଷା ଚୟନ କରିପାରିବେ |</value>
+    <value>କିସାନ୍-eମତ୍ତ୍ରାଙ୍କୁ ସ୍ୱାଗତ! ମୁଁ ତୁମର ଡିଜିଟାଲ୍ ଆସିଷ୍ଟାଣ୍ଟ | ଦୟାକରି ମୋତେ କୁହ ମୁଁ କିପରି ଆପଣଙ୍କୁ ସାହାଯ୍ୟ କରିପାରିବି?
+ତୁମର ପ୍ରିୟ ଭାଷାରେ ଉତ୍ତର ପାଇଁ ଆପଣ ଭାଷା ବାଛିପାରିବେ |</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>ସଫଳତାର ସହିତ ପ୍ରତିକ୍ରିୟାକୁ ନାପସନ୍ଦ କଲେ |</value>
@@ -364,13 +364,13 @@
     <value>ମୁଁ ମୋର ଶେଷ କିସ୍ତି ଦେୟ ଗ୍ରହଣ କରି ନାହିଁ |</value>
   </data>
   <data name="message.popular_question_2" xml:space="preserve">
-    <value>ମୋର PM Kisan ଖାତାର ସ୍ଥିତି ମୋତେ କୁହ |</value>
+    <value>ମୋର PM କିସାନ୍ ଆକାଉଣ୍ଟର ସ୍ଥିତି କିପରି ଜାଣିବେ ?</value>
   </data>
   <data name="message.popular_question_3" xml:space="preserve">
-    <value>ମୋର ପିଏମ କିସାନ ଆକାଉଣ୍ଟରେ କ’ଣ ସମସ୍ୟା ଅଛି?</value>
+    <value>ଯୋଜନାର ଲାଭ କ'ଣ?</value>
   </data>
   <data name="message.popular_question_4" xml:space="preserve">
-    <value>ମୁଁ କାହିଁକି ଯୋଗ୍ୟ ହିତାଧିକାରୀ ନୁହେଁ?</value>
+    <value>PM କିସାନ୍ ମୋବାଇଲ୍ ଆପ୍ ମାଧ୍ୟମରେ ମୁଁ କିପରି ଆତ୍ମ-ପଞ୍ଜିକରଣ କରିପାରିବି?</value>
   </data>
   <data name="error.default_message" xml:space="preserve">
     <value>ଦୁ Sorry ଖିତ, କିଛି ସମସ୍ୟା ଥିବା ପରି ମନେ ହେଉଛି | ମୁଁ ତୁମକୁ ଅନୁରୋଧ କରୁଛି ଯେ ତୁମର ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଯାଞ୍ଚ କର, ତାପରେ ନିମ୍ନ ବାମ କୋଣରେ ଥିବା ସତେଜ ବଟନ୍ କ୍ଲିକ୍ କରି ଅଧିବେଶନକୁ ସତେଜ କର, ଏବଂ ତାପରେ ପୁନର୍ବାର ଚେଷ୍ଟା କର |</value>

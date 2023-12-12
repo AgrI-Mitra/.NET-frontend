@@ -801,7 +801,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell me the status of my PM Kisan account.
+        ///   Looks up a localized string similar to How to know the status of my PM Kisan account?.
         /// </summary>
         public static string message_popular_question_2 {
             get {
@@ -810,7 +810,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to What is the issue with my PM KISAN account?.
+        ///   Looks up a localized string similar to What are the benefits of the scheme?.
         /// </summary>
         public static string message_popular_question_3 {
             get {
@@ -819,7 +819,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Why am I not an eligible beneficiary?.
+        ///   Looks up a localized string similar to How can I self-register through the PM Kisan mobile app?.
         /// </summary>
         public static string message_popular_question_4 {
             get {
@@ -1019,8 +1019,8 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to Kisan-eMitra! I am your personal assistant. Please let me know how can I help you?         ///        ///        ///        ///
-        ///&lt;br&gt;You may select your preferred language..
+        ///   Looks up a localized string similar to Welcome to Kisan-eMitra! I am your digital assistant. Please let me know how can I help you? 
+        ///You may select your preferred language..
         /// </summary>
         public static string message_welcome_greeting {
             get {

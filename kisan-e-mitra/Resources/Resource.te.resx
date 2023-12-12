@@ -348,7 +348,8 @@
     <value>OTP మళ్ళీ పంపుకోవడం కుండా దయచేసి వేచి ఉండండి</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>కిసాన్-eమిత్రకు స్వాగతం! నేను మీ వ్యక్తిగత సహాయకుడిని. దయచేసి నేను మీకు ఎలా సహాయం చేయగలను అని నాకు తెలియజేయండి?&lt;br&gt;మీరు ఇష్టపడే భాషను ఎంచుకోవచ్చు.</value>
+    <value>కిసాన్-eమిత్రకు స్వాగతం! నేను మీ డిజిటల్ అసిస్టెంట్. నేను మీకు ఎలా సహాయం చేయగలను అని దయచేసి చెప్పండి?
+మీకు ఇష్టమైన భాషలో సమాధానాల కోసం భాషను ఎంచుకోవచ్చు.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>సమాధానంని సరిగా ఇష్టపడండి</value>
@@ -363,13 +364,13 @@
     <value>నేను నా చివరి వాయిదా చెల్లింపును అందుకోలేదు.</value>
   </data>
   <data name="message.popular_question_2" xml:space="preserve">
-    <value>నా పీఎం కిసాన్ ఖాతా స్థితిని చెప్పండి</value>
+    <value>నా PM కిసాన్ ఖాతా యొక్క స్థితిని ఎలా తెలుసుకోవాలి?</value>
   </data>
   <data name="message.popular_question_3" xml:space="preserve">
-    <value>నా పీఎం కిసాన్ ఖాతాకు సంబంధించిన సమస్య ఏమిటి?</value>
+    <value>పథకం యొక్క ప్రయోజనాలు ఏమిటి?</value>
   </data>
   <data name="message.popular_question_4" xml:space="preserve">
-    <value>నేను ఎందుకు అర్హులైన లబ్ధిదారుని కాను?</value>
+    <value>PM కిసాన్ మొబైల్ అనువర్తనం ద్వారా నేను ఎలా స్వీయ-నమోదు చేయగలను?</value>
   </data>
   <data name="error.default_message" xml:space="preserve">
     <value>క్షమించండి, ఏదో సమస్య ఉన్నట్లుంది. నేను మీ ఇంటర్నెట్ కనెక్షన్‌ని తనిఖీ చేయమని అభ్యర్థిస్తున్నాను, ఆపై దిగువ ఎడమ మూలలో ఉన్న రిఫ్రెష్ బటన్‌ను క్లిక్ చేయడం ద్వారా సెషన్‌ను రిఫ్రెష్ చేసి, ఆపై మళ్లీ ప్రయత్నించండి.</value>

@@ -364,13 +364,13 @@
     <value>મને મારા છેલ્લા હપ્તાની ચુકવણી મળી નથી.</value>
   </data>
   <data name="message.popular_question_2" xml:space="preserve">
-    <value>મને મારા પીએમ કિસાન એકાઉન્ટનું સ્ટેટસ જણાવો</value>
+    <value>મારા પીએમ કિસાન ખાતાની સ્થિતિ કેવી રીતે જાણવી?</value>
   </data>
   <data name="message.popular_question_3" xml:space="preserve">
-    <value>મારા પીએમ કિસાન ખાતામાં શું સમસ્યા છે?</value>
+    <value>યોજનાના ફાયદા શું છે?</value>
   </data>
   <data name="message.popular_question_4" xml:space="preserve">
-    <value>શા માટે હું પાત્ર લાભાર્થી નથી?</value>
+    <value>હું પીએમ કિસાન મોબાઇલ એપ્લિકેશન દ્વારા સ્વ-નોંધણી કેવી રીતે કરી શકું?</value>
   </data>
   <data name="message.rating" xml:space="preserve">
     <value>શું તમને આ ઉપયોગી લાગ્યું?</value>
@@ -436,7 +436,8 @@
     <value>OTP ફરીથી મોકલતા પહેલા કૃપા કરીને રાહ જુઓ</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>કિસાન-eમિત્રમાં આપનું સ્વાગત છે! હું તમારો અંગત મદદનીશ છું. કૃપા કરીને મને જણાવો કે હું તમને કેવી રીતે મદદ કરી શકું? &lt;br&gt;તમે તમારી પસંદગીની ભાષા પસંદ કરી શકો છો.</value>
+    <value>કિસાન-eમિત્રમાં આપનું સ્વાગત છે! હું તમારો ડિજિટલ સહાયક છું. કૃપા કરી મને કહો કે હું તમને કેવી રીતે મદદ કરી શકું?
+તમે તમારી મનપસંદ ભાષામાં જવાબો માટે ભાષા પસંદ કરી શકો છો.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
     <value>પ્રતિભાવ સફળતાપૂર્વક નાપસંદ કર્યો</value>
