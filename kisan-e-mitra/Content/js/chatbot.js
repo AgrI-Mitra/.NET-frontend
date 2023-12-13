@@ -1135,7 +1135,6 @@
 
             if (isMessageFromBot == true) {
                 message = formatChatbotResponse(message);
-                message = marked.parse(message);
             }
 
             let chatMessageWrapperStartingDivHtmlContent =
@@ -1172,10 +1171,7 @@
                     : '') +
                 closingDivHtmlContent;
 
-
-            let formattedResponse = response.replaceAll("\\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0");
-
-            $('#message-list').append(formattedResponse);
+            $('#message-list').append(response);
 
             if (messageType == 'final_response') {
                 sessionStorage.setItem('final_response', true);
@@ -1476,28 +1472,9 @@
      */
     function formatChatbotResponse(response) {
 
-        //response = '<table class="aadhar-table"><tbody><tr><td>Name :</td><td>Lal Chand</td></tr><tr><td>Father Name :</td><td></td></tr><tr><td>Date Of Birth :</td><td>01/01/1900</td></tr><tr><td>Address :</td><td>Jana (24/46),NAGGAR,Kullu,KULLU,HIMACHAL PRADESH</td></tr><tr><td>Registration Date :</td><td>19/02/2019</td></tr></tbody></table>Dear Lal Chand, I have checked your status and found that you have been marked as a *Landless farmer* by the State. If this information is not correct, I suggest you to kindly visit your nearest district/ block office and get your land details updated on the PM KISAN portal.'
-        // Check the chatbot response message, and see if any word is given between 2 starts *word*
-        // If there is any such word, we need to display it in bold font.
-        var myRegexp = /\*(.*?)\*/g;
-        var match = myRegexp.exec(response);
-        var matchedWords = [];
-        while (match != null) {
-            matchedWords.push({
-                wordToFind: match[0],
-                wordToReplace: match[1],
-            });
-
-            match = myRegexp.exec(response);
-        }
-
-        // Replace matched words with <b></b> tags to display them in bold font
-        for (var i = 0; i < matchedWords.length; i++) {
-            response = response.replace(
-                matchedWords[i].wordToFind,
-                '<b>' + matchedWords[i].wordToReplace + '</b>'
-            );
-        }
+        response = response.replaceAll("\\n", "<br>").replaceAll("\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0").replaceAll("\t", "\u00A0\u00A0\u00A0\u00A0");
+        response = response.trim();
+        response = marked.parse(response);
 
         // AADHAR Info UI Format START
         // If aadhar info is available in chat response then we need to display it in table format
