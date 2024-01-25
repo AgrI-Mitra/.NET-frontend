@@ -1135,6 +1135,7 @@
 
             if (isMessageFromBot == true) {
                 message = formatChatbotResponse(message);
+                message = marked.parse(message);
             }
 
             let chatMessageWrapperStartingDivHtmlContent =
@@ -1474,7 +1475,6 @@
 
         response = response.replaceAll("\\n", "<br>").replaceAll("\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0").replaceAll("\t", "\u00A0\u00A0\u00A0\u00A0");
         response = response.trim();
-        response = marked.parse(response);
 
         // AADHAR Info UI Format START
         // If aadhar info is available in chat response then we need to display it in table format
