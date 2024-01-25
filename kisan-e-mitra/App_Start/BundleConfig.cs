@@ -26,7 +26,8 @@ namespace KisanEMitra
                       "~/Content/bootstrap.min.css",
                       "~/Content/style.css",
                       "~/Content/responsive.css",
-                      "~/Content/chatbot.css"));
+                      "~/Content/chatbot.css",
+                      "~/Content/shepherd.css"));
 
             bundles.Add(new StyleBundle("~/Content/staging/css").Include(
                       "~/Content/bootstrap.min.css",

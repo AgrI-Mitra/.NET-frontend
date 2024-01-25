@@ -31,52 +31,57 @@
             <div class="header-flex justify-content-between align-items-center kisan-e-mitra-texts-padding">
                 <div class="logo-flex responsive-logo"><span class="d-flex justify-content-start p-2"><img src="~/Content/images/kisan-e-mitra-logo.png" class="kisan-e-mitra-logo"></span></div>
                 <div class="content-head-text"><h1 class="labelTitle">@Resources.Resource.label_title</h1></div>
-                <div class="custom-select-wrapper">
-                    <button class="btn btn-style dropdown-toggle" type="button" id="languageDropDown"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="fw-bold" id="selectedLanguageLabel">@{ @selectedLanguage.LanguageCultureLabel}</span>
-                    </button>
-                    <ul id="languageDropDown" class="dropdown-menu" aria-labelledby="languageDropDown">
-                        @foreach (var availableLanguage in availableLanguages)
-                        {
-                            <li class="languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">
-                                <a class="dropdown-item @((availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode) ? "fw-bold" : "")">@availableLanguage.LanguageCultureLabel</a>
-                            </li>
-                        }
-                    </ul>
+                <div class="d-flex">
+                    <span id="startAppTourButton">
+                        <img class="refresh-btn-style help-button" src="~/Content/images/help.png" />
+                    </span>
+                    <div class="custom-select-wrapper app_tour_alternate_language_selection_description" id="languageDropdownWrapper">
+                        <button class="btn btn-style dropdown-toggle" type="button" id="languageDropDown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fw-bold" id="selectedLanguageLabel">@{ @selectedLanguage.LanguageCultureLabel}</span>
+                        </button>
+                        <ul id="languageDropDown" class="dropdown-menu" aria-labelledby="languageDropDown">
+                            @foreach (var availableLanguage in availableLanguages)
+                            {
+                                <li class="languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">
+                                    <a class="dropdown-item @((availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode) ? "fw-bold" : "")">@availableLanguage.LanguageCultureLabel</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="content-head-text-responsive"><h1 class="labelTitle">@Resources.Resource.label_title</h1></div>
             @RenderBody()
         </div>
-        @*<div class="navigation-icon" style="display: none;">
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="footer-svg-hover" width="30" height="30"
-                         viewBox="0 0 30 30">
-                        <path d="M16.8135 3.16647C15.766 2.28272 14.234 2.28272 13.1865 3.16647L4.74895 10.2846C4.11551 10.819 3.75 11.6056 3.75 12.4343V24.0657C3.75 25.2739 4.72938 26.2532 5.9375 26.2532H9.6875C10.8956 26.2532 11.875 25.2739 11.875 24.0657V19.0625C11.875 18.2134 12.5522 17.5225 13.3961 17.5005H16.6039C17.4478 17.5225 18.125 18.2134 18.125 19.0625V24.0657C18.125 25.2739 19.1044 26.2532 20.3125 26.2532H24.0625C25.2706 26.2532 26.25 25.2739 26.25 24.0657V12.4343C26.25 11.6056 25.8845 10.819 25.251 10.2846L16.8135 3.16647Z">
-                        </path>
-                    </svg>
-                </a>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="footer-svg-hover" width="30" height="30"
-                         viewBox="0 0 30 30">
-                        <path d="M15 3C21.6274 3 27 8.37258 27 15C27 15.1275 26.998 15.2544 26.994 15.3808C25.5685 14.2058 23.7417 13.5 21.75 13.5C17.1936 13.5 13.5 17.1936 13.5 21.75C13.5 23.7417 14.2058 25.5685 15.3808 26.994C15.2544 26.998 15.1275 27 15 27C13.0902 27 11.2439 26.5527 9.58003 25.7089L9.399 25.6125L3.93163 26.9776C3.4669 27.0937 3.03933 26.7553 3.00197 26.3157L3.00171 26.1936L3.0224 26.068L4.3875 20.6025L4.29253 20.4229C3.6099 19.0779 3.18649 17.6133 3.04912 16.0924L3.01107 15.5194L3 15C3 8.37258 8.37258 3 15 3ZM21.75 28.5C25.4779 28.5 28.5 25.4779 28.5 21.75C28.5 18.022 25.4779 15 21.75 15C18.022 15 15 18.022 15 21.75C15 25.4779 18.022 28.5 21.75 28.5ZM20.4054 18.9054L19.0606 20.25H21.375C23.6532 20.25 25.5 22.0968 25.5 24.375V24.75C25.5 25.1641 25.1641 25.5 24.75 25.5C24.3358 25.5 24 25.1641 24 24.75V24.375C24 22.9252 22.8247 21.75 21.375 21.75H19.0606L20.4054 23.0946C20.6982 23.3875 20.6982 23.8624 20.4054 24.1554C20.1124 24.4482 19.6375 24.4482 19.3446 24.1554L16.7164 21.5271C16.6461 21.456 16.593 21.3742 16.5568 21.2871C16.5202 21.1986 16.5 21.1017 16.5 21C16.5 20.8983 16.5202 20.8014 16.5568 20.7129C16.5934 20.6244 16.6477 20.5416 16.7196 20.4696L19.3446 17.8446C19.6375 17.5518 20.1124 17.5518 20.4054 17.8446C20.6982 18.1375 20.6982 18.6124 20.4054 18.9054Z">
-                        </path>
-                    </svg>
-                </a>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="footer-svg-hover" width="30" height="30"
-                         viewBox="0 0 30 30">
-                        <path d="M3.75 21.25H26.25C26.9404 21.25 27.5 21.8096 27.5 22.5C27.5 23.141 27.0175 23.6694 26.3958 23.7416L26.25 23.75H3.75C3.05965 23.75 2.5 23.1904 2.5 22.5C2.5 21.859 2.98255 21.3306 3.60422 21.2584L3.75 21.25ZM3.74985 13.75L26.2499 13.7472C26.9403 13.7472 27.5 14.3067 27.5 14.9971C27.5 15.6381 27.0176 16.1666 26.3959 16.2389L26.2501 16.2472L3.75015 16.25C3.0598 16.2501 2.5 15.6905 2.5 15.0001C2.5 14.3591 2.98243 13.8307 3.60407 13.7584L3.74985 13.75ZM3.75 6.25H26.25C26.9404 6.25 27.5 6.80965 27.5 7.5C27.5 8.14105 27.0175 8.66939 26.3958 8.74159L26.25 8.75H3.75C3.05965 8.75 2.5 8.19035 2.5 7.5C2.5 6.85895 2.98255 6.33061 3.60422 6.25841L3.75 6.25Z">
-                        </path>
-                    </svg>
-                </a>
-            </div>*@
+    @*<div class="navigation-icon" style="display: none;">
+            <a href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="footer-svg-hover" width="30" height="30"
+                     viewBox="0 0 30 30">
+                    <path d="M16.8135 3.16647C15.766 2.28272 14.234 2.28272 13.1865 3.16647L4.74895 10.2846C4.11551 10.819 3.75 11.6056 3.75 12.4343V24.0657C3.75 25.2739 4.72938 26.2532 5.9375 26.2532H9.6875C10.8956 26.2532 11.875 25.2739 11.875 24.0657V19.0625C11.875 18.2134 12.5522 17.5225 13.3961 17.5005H16.6039C17.4478 17.5225 18.125 18.2134 18.125 19.0625V24.0657C18.125 25.2739 19.1044 26.2532 20.3125 26.2532H24.0625C25.2706 26.2532 26.25 25.2739 26.25 24.0657V12.4343C26.25 11.6056 25.8845 10.819 25.251 10.2846L16.8135 3.16647Z">
+                    </path>
+                </svg>
+            </a>
+            <a href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="footer-svg-hover" width="30" height="30"
+                     viewBox="0 0 30 30">
+                    <path d="M15 3C21.6274 3 27 8.37258 27 15C27 15.1275 26.998 15.2544 26.994 15.3808C25.5685 14.2058 23.7417 13.5 21.75 13.5C17.1936 13.5 13.5 17.1936 13.5 21.75C13.5 23.7417 14.2058 25.5685 15.3808 26.994C15.2544 26.998 15.1275 27 15 27C13.0902 27 11.2439 26.5527 9.58003 25.7089L9.399 25.6125L3.93163 26.9776C3.4669 27.0937 3.03933 26.7553 3.00197 26.3157L3.00171 26.1936L3.0224 26.068L4.3875 20.6025L4.29253 20.4229C3.6099 19.0779 3.18649 17.6133 3.04912 16.0924L3.01107 15.5194L3 15C3 8.37258 8.37258 3 15 3ZM21.75 28.5C25.4779 28.5 28.5 25.4779 28.5 21.75C28.5 18.022 25.4779 15 21.75 15C18.022 15 15 18.022 15 21.75C15 25.4779 18.022 28.5 21.75 28.5ZM20.4054 18.9054L19.0606 20.25H21.375C23.6532 20.25 25.5 22.0968 25.5 24.375V24.75C25.5 25.1641 25.1641 25.5 24.75 25.5C24.3358 25.5 24 25.1641 24 24.75V24.375C24 22.9252 22.8247 21.75 21.375 21.75H19.0606L20.4054 23.0946C20.6982 23.3875 20.6982 23.8624 20.4054 24.1554C20.1124 24.4482 19.6375 24.4482 19.3446 24.1554L16.7164 21.5271C16.6461 21.456 16.593 21.3742 16.5568 21.2871C16.5202 21.1986 16.5 21.1017 16.5 21C16.5 20.8983 16.5202 20.8014 16.5568 20.7129C16.5934 20.6244 16.6477 20.5416 16.7196 20.4696L19.3446 17.8446C19.6375 17.5518 20.1124 17.5518 20.4054 17.8446C20.6982 18.1375 20.6982 18.6124 20.4054 18.9054Z">
+                    </path>
+                </svg>
+            </a>
+            <a href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="footer-svg-hover" width="30" height="30"
+                     viewBox="0 0 30 30">
+                    <path d="M3.75 21.25H26.25C26.9404 21.25 27.5 21.8096 27.5 22.5C27.5 23.141 27.0175 23.6694 26.3958 23.7416L26.25 23.75H3.75C3.05965 23.75 2.5 23.1904 2.5 22.5C2.5 21.859 2.98255 21.3306 3.60422 21.2584L3.75 21.25ZM3.74985 13.75L26.2499 13.7472C26.9403 13.7472 27.5 14.3067 27.5 14.9971C27.5 15.6381 27.0176 16.1666 26.3959 16.2389L26.2501 16.2472L3.75015 16.25C3.0598 16.2501 2.5 15.6905 2.5 15.0001C2.5 14.3591 2.98243 13.8307 3.60407 13.7584L3.74985 13.75ZM3.75 6.25H26.25C26.9404 6.25 27.5 6.80965 27.5 7.5C27.5 8.14105 27.0175 8.66939 26.3958 8.74159L26.25 8.75H3.75C3.05965 8.75 2.5 8.19035 2.5 7.5C2.5 6.85895 2.98255 6.33061 3.60422 6.25841L3.75 6.25Z">
+                    </path>
+                </svg>
+            </a>
+        </div>*@
     </div>
     <div class="footer">
         <p>Powered by Sunbird UCI | BHASHINI</p>
     </div>
-    
+
     <script type="text/javascript" src="~/Content/js/autosize.js"></script>
 
     <script type="text/javascript" src="~/Content/js/wavBlobUtil.js"></script>

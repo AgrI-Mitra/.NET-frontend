@@ -1,7 +1,7 @@
 (async function () {
     var apiUrlConfig = {
-        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
-        chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
+        chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
+        //chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
         userApiBaseEndPoint: 'user/',
         generateUserId: 'user/generateUserId',
         Prompt: 'prompt',
@@ -131,6 +131,10 @@
 
         if (isGetWelcomeGreetingsTextToSpeechRequestInProgress) {
             isGetWelcomeGreetingsTextToSpeechRequestInProgress.abort();
+        }
+
+        if (isGetUITranslationsRequestInProgress) {
+            isGetUITranslationsRequestInProgress.abort();
         }
 
         restartSession();
@@ -881,6 +885,7 @@
         chatbotMessageActionButtonsOnClickListener();
         feedbackSubmitButtonOnClickListener();
         restartSessionButtonOnClickListener();
+        startAppTourButtonOnClickListener();
         resendOtpOnClickListener();
         popularQuestionsOnClickListener();
         initAutoSizeInputBox();

@@ -38,27 +38,27 @@
         <div class="chatbot-message-wrapper-column-two">
             <span class="messageWelcomeGreeting">@(new HtmlString(Resources.Resource.message_welcome_greeting.ToString()))</span>
 
-            <div>
+            <div class="app_tour_language_selection_description">
                 @foreach (var availableLanguage in availableLanguages)
                 {
                     if (availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode)
-                        {
-                            <button data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn btn-success language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
-                        }
-                        else
-                        {
-                            <button data-type="secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn btn-secondary language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
-                        }
+                    {
+                        <button data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn btn-success language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
+                    }
+                    else
+                    {
+                        <button data-type="secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn btn-secondary language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
+                    }
                 }
             </div>
         </div>
-        <div class="d-flex align-self-start chatbot-message-wrapper-column-three me-md-2">
+        <div class="d-flex align-self-start chatbot-message-wrapper-column-three me-md-2 first-audio-icon-wrapper app_tour_audio_button_description">
             <img id="playMessageImg-@{@welcomeGreetingMessageBase64StringName}" data-audio-id="@{@welcomeGreetingMessageBase64StringName}" data-action-name="setAutoPlayAudioMessage" src="../Content/images/start-audio.svg" alt="avatar 1" class="chatbot-message-action-buttons setAutoPlayAudioMessage">
         </div>
     </div>
 </div>
 <div class="input-container align-items-center justify-content-center p-3 p-md-4">
-    <div class="scroll-container d-flex flex-row" id="popularQuestionsWrapper">
+    <div class="scroll-container d-flex flex-row app_tour_sample_questions_description" id="popularQuestionsWrapper">
         <div class="query-messages-box">
             @foreach (var popularQuestion in popularQuestions)
             {
@@ -71,7 +71,7 @@
         </div>
     </div>
     <div class="d-flex flex-row w-100 align-items-center">
-        <button id="restartSessionButton" class="send-button me-2 me-sm-3">
+        <button id="restartSessionButton" class="send-button me-2 me-sm-3 app_tour_refresh_button_description">
             <img class="refresh-btn-style" src="~/Content/images/restart-session.svg" />
         </button>
         <div class="meg-input position-relative me-2 me-sm-3 flex-grow-1">
