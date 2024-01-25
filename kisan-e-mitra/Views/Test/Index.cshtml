@@ -1,27 +1,27 @@
 @{
-    ViewBag.Title = Resources.Resource.label_title;
-    //var welcomeNoteGreetingBase64 = ViewBag.AudioBase64Strings[0];
-    //var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
-    var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
-    var isMaintenanceModeOn = TempData["isMaintenanceModeOn"];
-    var resendOtpTranslation = Resources.Resource.message_resend_otp;
-    var defaultErrorMessage = Resources.Resource.error_default_message;
-    var defaultPlaceholder = Resources.Resource.message_ask_ur_question;
-    var chatbotRestartSessionConfirmationMessage = Resources.Resource.message_session_restart_confirmation_message;
-    var confirmationTitle = Resources.Resource.message_confirmation;
-    var yesLabel = Resources.Resource.label_yes;
-    var noLabel = Resources.Resource.label_no;
-    var maintenanceModeHeader = Resources.Resource.message_maintenance_mode_header;
-    var maintenanceModeBody = Resources.Resource.message_maintenance_mode_body;
+        ViewBag.Title = Resources.Resource.label_title;
+        //var welcomeNoteGreetingBase64 = ViewBag.AudioBase64Strings[0];
+        //var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
+        var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
+        var isMaintenanceModeOn = TempData["isMaintenanceModeOn"];
+        var resendOtpTranslation = Resources.Resource.message_resend_otp;
+        var defaultErrorMessage = Resources.Resource.error_default_message;
+        var defaultPlaceholder = Resources.Resource.message_ask_ur_question;
+        var chatbotRestartSessionConfirmationMessage = Resources.Resource.message_session_restart_confirmation_message;
+        var confirmationTitle = Resources.Resource.message_confirmation;
+        var yesLabel = Resources.Resource.label_yes;
+        var noLabel = Resources.Resource.label_no;
+        var maintenanceModeHeader = Resources.Resource.message_maintenance_mode_header;
+        var maintenanceModeBody = Resources.Resource.message_maintenance_mode_body;
 
-    List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;//ViewBag?.LanguageModel?.AvailableLanguages;
-    KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;//ViewBag?.LanguageModel?.SelectedLanguage;
-    List<kishan_bot.Models.PopularQuestion> popularQuestions = TempData["PopularQuestions"] as List<kishan_bot.Models.PopularQuestion>;//ViewBag.PopularQuestions;
-    var welcomeGreetingMessageBase64StringName = "welcome-greeting-message-base64-" + selectedLanguage.LanguageCultureCode + "-audio";
+        List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;//ViewBag?.LanguageModel?.AvailableLanguages;
+        KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;//ViewBag?.LanguageModel?.SelectedLanguage;
+        List<kishan_bot.Models.PopularQuestion> popularQuestions = TempData["PopularQuestions"] as List<kishan_bot.Models.PopularQuestion>;//ViewBag.PopularQuestions;
+        var welcomeGreetingMessageBase64StringName = "welcome-greeting-message-base64-" + selectedLanguage.LanguageCultureCode + "-audio";
 
-    TempData.Keep("LanguageModel");
-    TempData.Keep("PopularQuestions");
-    TempData.Keep("isMaintenanceModeOn");
+        TempData.Keep("LanguageModel");
+        TempData.Keep("PopularQuestions");
+        TempData.Keep("isMaintenanceModeOn");
 }
 
 @*@Html.Hidden("welcome-greeting-message-base64", (object)welcomeNoteGreetingBase64.ToString())
@@ -43,11 +43,11 @@
                 {
                     if (availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode)
                     {
-                        <button type="button" class="btn btn-success language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
+                        <button data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn btn-success language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
                     }
                     else
                     {
-                        <button type="button" class="btn btn-secondary language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
+                        <button data-type="secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn btn-secondary language-buttons languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
                     }
                 }
             </div>
@@ -191,3 +191,5 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="~/Content/js/chatbot-staging.js"></script>

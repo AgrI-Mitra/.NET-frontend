@@ -133,10 +133,6 @@
             isGetWelcomeGreetingsTextToSpeechRequestInProgress.abort();
         }
 
-        if (isGetUITranslationsRequestInProgress) {
-            isGetUITranslationsRequestInProgress.abort();
-        }
-
         restartSession();
     };
 
@@ -885,7 +881,6 @@
         chatbotMessageActionButtonsOnClickListener();
         feedbackSubmitButtonOnClickListener();
         restartSessionButtonOnClickListener();
-        startAppTourButtonOnClickListener();
         resendOtpOnClickListener();
         popularQuestionsOnClickListener();
         initAutoSizeInputBox();

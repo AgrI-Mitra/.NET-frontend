@@ -5,16 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/staging/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="text/javascript" src="~/Content/js/fingerprint.js" defer></script>
     <script type="text/javascript" src="~/Content/js/recorder.js"></script>
     <script type="text/javascript" src="~/Content/js/languageDropDown.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RCEZR4J24G"></script>
-    <script type="text/javascript" src="~/Content/js/gtag.js"></script>
+
 </head>
 <body class="">
     @{
@@ -31,19 +29,24 @@
             <div class="header-flex justify-content-between align-items-center kisan-e-mitra-texts-padding">
                 <div class="logo-flex responsive-logo"><span class="d-flex justify-content-start p-2"><img src="~/Content/images/kisan-e-mitra-logo.png" class="kisan-e-mitra-logo"></span></div>
                 <div class="content-head-text"><h1 class="labelTitle">@Resources.Resource.label_title</h1></div>
-                <div class="custom-select-wrapper">
-                    <button class="btn btn-style dropdown-toggle" type="button" id="languageDropDown"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="fw-bold" id="selectedLanguageLabel">@{ @selectedLanguage.LanguageCultureLabel}</span>
-                    </button>
-                    <ul id="languageDropDown" class="dropdown-menu" aria-labelledby="languageDropDown">
-                        @foreach (var availableLanguage in availableLanguages)
-                        {
-                            <li class="languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">
-                                <a class="dropdown-item @((availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode) ? "fw-bold" : "")">@availableLanguage.LanguageCultureLabel</a>
-                            </li>
-                        }
-                    </ul>
+                <div class="d-flex">
+                    <span id="startAppTourButton">
+                        <img class="refresh-btn-style help-button" src="~/Content/images/help.png" />
+                    </span>
+                    <div class="custom-select-wrapper app_tour_alternate_language_selection_description" id="languageDropdownWrapper">
+                        <button class="btn btn-style dropdown-toggle" type="button" id="languageDropDown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fw-bold" id="selectedLanguageLabel">@{ @selectedLanguage.LanguageCultureLabel}</span>
+                        </button>
+                        <ul id="languageDropDown" class="dropdown-menu" aria-labelledby="languageDropDown">
+                            @foreach (var availableLanguage in availableLanguages)
+                            {
+                                <li class="languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">
+                                    <a class="dropdown-item @((availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode) ? "fw-bold" : "")">@availableLanguage.LanguageCultureLabel</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="content-head-text-responsive"><h1 class="labelTitle">@Resources.Resource.label_title</h1></div>
@@ -76,7 +79,7 @@
     <div class="footer">
         <p>Powered by Sunbird UCI | BHASHINI</p>
     </div>
-    
+
     <script type="text/javascript" src="~/Content/js/autosize.js"></script>
 
     <script type="text/javascript" src="~/Content/js/wavBlobUtil.js"></script>

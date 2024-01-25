@@ -17,11 +17,11 @@
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
-    <IISExpressSSLPort>44337</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <IISExpressSSLPort>44318</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -163,10 +163,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
-    <Compile Include="Controllers\TestHomeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Resources\Resource.kn.Designer.cs" />
+    <Compile Include="Resources\Resource.ml.Designer.cs" />
+    <Compile Include="Resources\Resource.pa.Designer.cs" />
     <Compile Include="Services\ChatbotService.cs" />
     <Compile Include="Services\Contracts\IChatbotService.cs" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\js\shepherd.js" />
+    <Content Include="Content\shepherd.css" />
+    <Content Include="Content\chatbot-staging.css" />
     <Content Include="Content\chatbot.css" />
     <Content Include="Content\images\chatbot.png" />
     <Content Include="Content\images\chatc.png" />
@@ -175,7 +181,6 @@
     <Content Include="Content\images\hand-thumbs-down.svg" />
     <Content Include="Content\images\hand-thumbs-up-fill.svg" />
     <Content Include="Content\images\hand-thumbs-up.svg" />
-    <Content Include="Content\images\help.png" />
     <Content Include="Content\images\recording-in-progress-background.svg" />
     <Content Include="Content\images\recording-in-progress-animation.svg" />
     <Content Include="Content\images\voice-recording-animation.svg" />
@@ -327,13 +332,13 @@
     <Content Include="Content\js\gtag.js" />
     <Content Include="Content\js\languageDropDown.js" />
     <Content Include="Content\js\recorder.js" />
-    <Content Include="Content\js\shepherd.js" />
     <Content Include="Content\js\splash.js" />
     <Content Include="Content\js\wavBlobUtil.js" />
     <Content Include="Content\js\WavRecorder.js" />
+    <Content Include="Content\responsive-staging.css" />
     <Content Include="Content\responsive.css" />
-    <Content Include="Content\shepherd.css" />
     <Content Include="Content\splash.css" />
+    <Content Include="Content\style-staging.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -385,8 +390,11 @@
     <Content Include="Views\Test\ProfileView.cshtml" />
     <Content Include="Views\Test\Splash.cshtml" />
     <Content Include="Views\Test\Test.cshtml" />
+    <Content Include="Views\Shared\_StagingLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource.kn.resx" />
+    <EmbeddedResource Include="Resources\Resource.ml.resx" />
     <EmbeddedResource Include="Resources\Resource.kn.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.kn.Designer.cs</LastGenOutput>
@@ -428,6 +436,7 @@
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.pa.resx" />
     <EmbeddedResource Include="Resources\Resource.ta.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.ta.Designer.cs</LastGenOutput>

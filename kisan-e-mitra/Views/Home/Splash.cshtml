@@ -13,6 +13,9 @@
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" type="text/css" href="~/Content/splash.css" />
     @Scripts.Render("~/bundles/jquery")
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RCEZR4J24G"></script>
+    <script type="text/javascript" src="~/Content/js/gtag.js"></script>
 </head>
 <body class="splash-body">
     @Html.Hidden("RedirectFromSplash", Url.Action("Index", "Home"))

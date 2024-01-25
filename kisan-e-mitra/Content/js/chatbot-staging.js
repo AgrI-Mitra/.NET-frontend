@@ -12,6 +12,14 @@
         ConversationFeedback: 'conversation/feedback',
     };
 
+    marked.use({
+        breaks: true,
+        gfm: true,
+    });
+
+    let latitude;
+    let longitude;
+
     var currentParentRoute = "/Test/";
 
     var isRecording = false;
@@ -672,28 +680,42 @@
      * This method is used to listen language change event
      */
     function languageChangeListener() {
-        $('.languagesLabels').click(function (e) {
-            let languageCultureCode = $(this).data('language-culture-code');
-            let languageEnglishLabel = $(this).data('language-english-label');
-            let languageCultureLabel = $(this).data('language-culture-label');
-            let currentLanguageCultureCode = $(this).data(
-                'current-language-culture-code'
-            );
 
-            changeLanguage(
-                languageCultureCode,
-                languageEnglishLabel,
-                languageCultureLabel,
-                currentLanguageCultureCode
-            );
+        $(document).on(
+            'click',
+            '.languagesLabels',
+            function (ev) {
+                let languageCultureCode = $(this).data('language-culture-code');
+                let languageEnglishLabel = $(this).data('language-english-label');
+                let languageCultureLabel = $(this).data('language-culture-label');
+                let currentLanguageCultureCode = $(this).data(
+                    'current-language-culture-code'
+                );
+
+
+                hideAllThePopovers();
+                changeLanguage(
+                    languageCultureCode,
+                    languageEnglishLabel,
+                    languageCultureLabel,
+                    currentLanguageCultureCode
+                );
         });
+            }
+        );
     }
 
     function voiceRecorderListener() {
-        $(voiceRecordButtonClass).click(function (e) {
-            let currentScreenName = $(this).data('screen-name');
-            recordAudio(currentScreenName);
+
+        $(document).on(
+            'click',
+            voiceRecordButtonClass,
+            function (ev) {
+                let currentScreenName = $(this).data('screen-name');
+                recordAudio(currentScreenName);
         });
+            }
+        );
     }
 
     /**
@@ -701,26 +723,43 @@
      * It will copy clicked question to user question text box
      */
     function popularQuestionClickListener() {
-        $('#popularQuestion').click(function (event) {
-            event.stopPropagation();
-            let popularQuestion = $(this).data('popular-question');
-            copyPopularQuestionInTextBox(popularQuestion);
+        $(document).on(
+            'click',
+            '#popularQuestion',
+            function (event) {
+                event.stopPropagation();
+                let popularQuestion = $(this).data('popular-question');
+                copyPopularQuestionInTextBox(popularQuestion);
         });
+            }
+        );
     }
 
     /**
      * This method is used to listen restart session button click event
      */
     function restartSessionButtonOnClickListener() {
-        $('#restartSessionButton').click(function (e) {
-            restartSession(true);
+
+        $(document).on(
+            'click',
+            '#restartSessionButton',
+            function (ev) {
+
+                restartSession(true);
         });
+            }
+        );
     }
 
     function startAppTourButtonOnClickListener() {
-        $('#startAppTourButton').click(function (e) {
-            startAppTour();
-        });
+
+        $(document).on(
+            'click',
+            '#startAppTourButton',
+            function (ev) {
+                startAppTour();
+            }
+        );
     }
 
     function feedbackSubmitButtonOnClickListener() {
@@ -785,6 +824,7 @@
                 //chatbotConfirmationModal.hide();
 
                 if (modalType == 'restart-session') {
+                    $(".app_tour_language_selection_description").show();
                     restartSession();
                 }
             }
@@ -819,6 +859,21 @@
         });
     }
 
+    function initPopovers() {
+        // Instantiate all popovers in docs or StackBlitz
+        document.querySelectorAll('[data-bs-toggle="popover"]')
+            .forEach(popover => {
+                new bootstrap.Popover(popover, {
+                    customClass: 'popover-custom',
+                    trigger: 'hover'
+                })
+            })
+    }
+
+    function hideAllThePopovers() {
+        $('[data-bs-toggle="popover"]').popover('hide');
+    }
+
     function initChatBotConfig() {
 
         // Set parent route
@@ -844,6 +899,8 @@
         getUITranslations();
 
         configAppTour();
+        initPopovers();
+        setLocationInfo();
 
         // Check if maintenance mode is on or not
         // If on, we need to show maintenance mode modal
@@ -867,7 +924,7 @@
         });
 
         tour.on('cancel', function () {
-            sessionStorage.setItem('isAppTourDisplayed', 'true');
+            localStorage.setItem('isAppTourDisplayed', 'true');
         });
     }
 
@@ -1079,6 +1136,12 @@
         showAudioOption
     ) {
         if (message != '') {
+
+            if (isMessageFromBot == true) {
+                message = formatChatbotResponse(message);
+                message = marked.parse(message);
+            }
+
             let chatMessageWrapperStartingDivHtmlContent =
                 getChatMessageWrapperStartingDivHtmlContent(
                     isMessageFromBot,
@@ -1113,12 +1176,10 @@
                     : '') +
                 closingDivHtmlContent;
 
-            // Format message if it is from chatbot
-            if (isMessageFromBot == true) {
-                response = formatChatbotResponse(response);
-            }
 
-            $('#message-list').append(response.replace(/\n/g, '<br>'));
+            let formattedResponse = response.replaceAll("\\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0");
+
+            $('#message-list').append(formattedResponse);
 
             if (messageType == 'final_response') {
                 sessionStorage.setItem('final_response', true);
@@ -1133,6 +1194,31 @@
             }
         }
     }
+
+    function convertToClickableLinks(text) {
+        var urlRegex = /(https?:\/\/[^\s<>"{}|\\^`[\]]+)/g;
+        return text.replace(urlRegex, function (url) {
+            // Check if the URL is already within <a> tags
+            var precedingText = text.slice(0, text.indexOf(url));
+            var followingText = text.slice(text.indexOf(url));
+            if (precedingText.includes('<a') && followingText.includes('</a>')) {
+                // The URL is already within <a> tags, so return it as is
+                return url;
+            } else {
+                // The URL is not within <a> tags, so convert it into a clickable link
+                // Remove trailing dot, if it exists
+
+                let hasTrailingZero = false;
+                if (url.endsWith('.')) {
+                    url = url.slice(0, -1);
+
+                    hasTrailingZero = true;
+                }
+                return '<a href="' + url + '" target="_blank" class="pm-kisan-hyperlink">' + url + '</a>' + (hasTrailingZero ? '.' : '');
+            }
+        });
+    }
+
 
     function recordAudio(screenName) {
         isRecording = !isRecording;
@@ -1357,6 +1443,33 @@
         askQuestions('resend OTP', 'text');
     }
 
+
+    /**
+     * This function is used to genearte hyperlink from the inputString
+     * @param {any} inputString
+     * @returns
+     */
+    function generateHyperlink(inputString) {
+        // Regular expression to match the pattern [some text] (link)
+        var regex = /\[(.*?)\]\s*\((.*?)\)/g;
+        var match = regex.exec(inputString);
+
+        if (match) {
+            var linkText = match[1];
+            var url = match[2];
+
+            // Construct the HTML hyperlink string
+            var hyperlink = '<a href="' + url + '" target="_blank" class="pm-kisan-hyperlink">' + linkText + '</a>';
+
+            // Replace hyperlink in existing inputString
+            inputString = inputString.replace(regex, hyperlink);
+
+            return { isHyperlinkGenerated: true, inputString: inputString };
+        } else {
+            return { isHyperlinkGenerated: false, inputString: inputString };//"Invalid format. Please provide input in the format [some text] (link)";
+        }
+    }
+
     /**
      * This method is used to format the chat bot response,
      * We need to display aadhar information in different format.
@@ -1366,6 +1479,7 @@
      * @returns
      */
     function formatChatbotResponse(response) {
+
         //response = '<table class="aadhar-table"><tbody><tr><td>Name :</td><td>Lal Chand</td></tr><tr><td>Father Name :</td><td></td></tr><tr><td>Date Of Birth :</td><td>01/01/1900</td></tr><tr><td>Address :</td><td>Jana (24/46),NAGGAR,Kullu,KULLU,HIMACHAL PRADESH</td></tr><tr><td>Registration Date :</td><td>19/02/2019</td></tr></tbody></table>Dear Lal Chand, I have checked your status and found that you have been marked as a *Landless farmer* by the State. If this information is not correct, I suggest you to kindly visit your nearest district/ block office and get your land details updated on the PM KISAN portal.'
         // Check the chatbot response message, and see if any word is given between 2 starts *word*
         // If there is any such word, we need to display it in bold font.
@@ -1394,7 +1508,8 @@
         // Add bootstrap table class and "table-responsive card" classes as wrapper to beautify the table
 
         //Remove all the table related element and replace them with div to show aadhar info in a new UI
-        if (response.indexOf('aadhar-table') >= 0) {
+        if (response.indexOf('"aadhar-table"') >= 0) {
+            response = response.replaceAll('"aadhar-table"', "'aadhar-table'");
             response = response.replaceAll('<table', '<div');
             response = response.replaceAll('<tbody', '<div');
             response = response.replaceAll('<tr', '<div class="div-row"');
@@ -1518,7 +1633,7 @@
                     category == 'base64audio'
                         ? { category: 'base64audio', text: input }
                         : null,
-                location: null,
+                location: latitude && longitude ? { lat: latitude, long: longitude } : null,
                 contactCard: null,
                 buttonChoices: null,
                 stylingTag: null,
@@ -2016,7 +2131,7 @@
 
                 // Check if app tour is already displayed or not
                 // If not then display it, because it means user is opening the app for the first time.
-                const isAppTourDisplayed = sessionStorage.getItem('isAppTourDisplayed');
+                const isAppTourDisplayed = localStorage.getItem('isAppTourDisplayed');
 
                 if (!isAppTourDisplayed) {
                     startAppTour();
@@ -2042,6 +2157,10 @@
             dataType: 'json',
             data: { lang: languageCultureCode },
             success: function (data) {
+
+                // Hide language buttons
+                $(".app_tour_language_selection_description").hide();
+
                 //If language is changed after session refresh was done,
                 //Add metric count for it
 
@@ -2169,7 +2288,7 @@
     function getWelcomeGreetingsAudio(isLanguageChanged) {
         isGetWelcomeGreetingsTextToSpeechRequestInProgress = $.ajax({
             type: 'POST',
-            url: currentParentRoute +  'GetWelcomeGreetingsTextToSpeech',
+            url: currentParentRoute + 'GetWelcomeGreetingsTextToSpeech',
             dataType: 'json',
             success: function (data) {
                 isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
@@ -2411,7 +2530,9 @@
                     handleError(sessionError);
                 });
         }
+
         if (showConfirmation == true) {
+
             const confirmationMessage = $(
                 '#chatbot-restart-session-confirmation-message'
             ).val();
@@ -2493,4 +2614,40 @@
             sessionAutoRestartTimeoutId = null;
         }
     }
+
+    function setLocationInfo() {
+
+        function getLocation() {
+            navigator.geolocation.getCurrentPosition((position) => {
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+
+            }, (errorCallback) => {
+
+                console.log('errorCallback: ', errorCallback);
+            });
+        }
+
+        if (navigator.geolocation) {
+
+            navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
+                if (result.state == 'granted') {
+
+                    getLocation();
+
+                } else if (result.state == 'prompt') {
+                    getLocation();
+
+                } else if (result.state == 'denied') {
+                    // Display instructions to reactivate location sharing in browser settings
+                    console.log('User denied the permission');
+                }
+            });
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+
+
+    }
+
 })();

@@ -102,7 +102,7 @@ namespace kishan_bot.Models
 
     public class BhashiniApiServiceId
     {
-        public string LanguageCode { get; set; }
+        public string[] LanguageCode { get; set; }
         public string ServiceId { get; set; }
     }
 }

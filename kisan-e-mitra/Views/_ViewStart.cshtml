@@ -1,3 +1,13 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var routeUrl = ViewContext.RouteData.Values["Controller"].ToString();
+
+    if (routeUrl.Contains("Test"))
+    {
+        Layout = "~/Views/Shared/_StagingLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 }
