@@ -1464,6 +1464,22 @@
     }
 
     /**
+     * This function uses a regular expression to match any text enclosed in single quotes and replaces it with the same text enclosed in backticks. 
+     
+     * @param {any} str
+     * @returns
+     */
+    function replaceEnclosedSingleQuotesWithBackticks(str) {
+        /**
+         * The ([^']*) part of the regular expression matches any character except a single quote or the “।” sign. 
+         * This means that any text enclosed in single quotes that contains the “।” sign will not be replaced, effectively capturing the enclosed text. 
+         * The $1 in the replacement string refers to the first captured group, which is the enclosed text. 
+         * This way, contractions like “it’s” are not affected
+         */
+        return str.replace(/'([^'।]*)'/g, "`$1`");
+    }
+
+    /**
      * This method is used to format the chat bot response,
      * We need to display aadhar information in different format.
      * If there are any texts with *anyword*, we need to display those words in bold letters.
@@ -1475,6 +1491,7 @@
 
         response = response.replaceAll("\\n", "<br>").replaceAll("\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0").replaceAll("\t", "\u00A0\u00A0\u00A0\u00A0");
         response = response.trim();
+        response = replaceEnclosedSingleQuotesWithBackticks(response);
 
         // AADHAR Info UI Format START
         // If aadhar info is available in chat response then we need to display it in table format
