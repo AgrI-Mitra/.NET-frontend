@@ -700,9 +700,7 @@
                     languageCultureLabel,
                     currentLanguageCultureCode
                 );
-        });
-            }
-        );
+            });
     }
 
     function voiceRecorderListener() {
@@ -713,9 +711,7 @@
             function (ev) {
                 let currentScreenName = $(this).data('screen-name');
                 recordAudio(currentScreenName);
-        });
-            }
-        );
+            });
     }
 
     /**
@@ -730,9 +726,7 @@
                 event.stopPropagation();
                 let popularQuestion = $(this).data('popular-question');
                 copyPopularQuestionInTextBox(popularQuestion);
-        });
-            }
-        );
+            });
     }
 
     /**
@@ -746,9 +740,7 @@
             function (ev) {
 
                 restartSession(true);
-        });
-            }
-        );
+            });
     }
 
     function startAppTourButtonOnClickListener() {
