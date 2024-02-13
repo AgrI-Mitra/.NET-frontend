@@ -1,7 +1,5 @@
 @{
     ViewBag.Title = Resources.Resource.label_title;
-    //var welcomeNoteGreetingBase64 = ViewBag.AudioBase64Strings[0];
-    //var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
     var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
     var isMaintenanceModeOn = TempData["isMaintenanceModeOn"];
     var resendOtpTranslation = Resources.Resource.message_resend_otp;
@@ -14,9 +12,9 @@
     var maintenanceModeHeader = Resources.Resource.message_maintenance_mode_header;
     var maintenanceModeBody = Resources.Resource.message_maintenance_mode_body;
 
-    List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;//ViewBag?.LanguageModel?.AvailableLanguages;
-    KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;//ViewBag?.LanguageModel?.SelectedLanguage;
-    List<kishan_bot.Models.PopularQuestion> popularQuestions = TempData["PopularQuestions"] as List<kishan_bot.Models.PopularQuestion>;//ViewBag.PopularQuestions;
+    List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;
+    KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;
+    List<kishan_bot.Models.PopularQuestion> popularQuestions = TempData["PopularQuestions"] as List<kishan_bot.Models.PopularQuestion>;
     var welcomeGreetingMessageBase64StringName = "welcome-greeting-message-base64-" + selectedLanguage.LanguageCultureCode + "-audio";
 
     TempData.Keep("LanguageModel");
@@ -24,11 +22,6 @@
     TempData.Keep("isMaintenanceModeOn");
 }
 
-@*@Html.Hidden("welcome-greeting-message-base64", (object)welcomeNoteGreetingBase64.ToString())
-    @Html.Hidden("language-change-greeting-message-base64", (object)languageChangeGreetingBase64.ToString())*@
-@Html.Hidden("resend-otp-translation", (object)resendOtpTranslation.ToString())
-@Html.Hidden("default-chatbot-error-message", (object)defaultErrorMessage.ToString())
-@Html.Hidden("default-placeholder-message", (object)defaultPlaceholder.ToString())
 @Html.Hidden("isMaintenanceModeOn", (object)isMaintenanceModeOn.ToString())
 @Html.Hidden("currentParentRoute", "/Home/")
 

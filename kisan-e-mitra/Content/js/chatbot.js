@@ -1,7 +1,7 @@
 (async function () {
     var apiUrlConfig = {
-        chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
-        //chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
+        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
+        chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
         userApiBaseEndPoint: 'user/',
         generateUserId: 'user/generateUserId',
         Prompt: 'prompt',
@@ -1399,7 +1399,7 @@
                 .toLowerCase()
                 .indexOf('one time password is wrong') >= 0
         ) {
-            var resendOtpTranslation = $('#resend-otp-translation').val();
+            var resendOtpTranslation = translations.find((f) => f.Key == 'message_resend_otp').Value;
 
             let chatMessageWrapperStartingDivHtmlContent =
                 getChatMessageWrapperStartingDivHtmlContent(
@@ -1536,7 +1536,7 @@
             addMetricsCount('internalServerError');
         }
 
-        var defaultChatbotErrorMessage = $('#default-chatbot-error-message').val();
+        var defaultChatbotErrorMessage = translations.find((f) => f.Key == 'error_default_message').Value;
 
         const currentDateTime = new Date().getTime().toString();
 
@@ -1643,9 +1643,8 @@
 
                     if (data.error !== null) {
                         // Show default error message
-                        var defaultChatbotErrorMessage = $(
-                            '#default-chatbot-error-message'
-                        ).val();
+                        var defaultChatbotErrorMessage = translations.find((f) => f.Key == 'error_default_message').Value;
+
                         processChatBotResponse(
                             defaultChatbotErrorMessage,
                             data.messageId,
@@ -2538,7 +2537,7 @@
 
     function clearChatHistory() {
         $('.conversationsWrapper').remove();
-        var defaultPlaceholderMessage = $('#default-placeholder-message').val();
+        var defaultPlaceholderMessage = translations.find((f) => f.Key == 'message_ask_ur_question').Value;
         changeInputPlaceholderValue(defaultPlaceholderMessage);
         showPopularQuestions();
     }
@@ -2561,7 +2560,7 @@
 
     function changeInputPlaceholderValue(valueToChange) {
 
-        var defaultPlaceholderMessage = $('#default-placeholder-message').val();
+        var defaultPlaceholderMessage = translations.find((f) => f.Key == 'message_ask_ur_question').Value;
 
         $(userQuestionTextBox).attr(
             'placeholder',
