@@ -2560,9 +2560,12 @@
     }
 
     function changeInputPlaceholderValue(valueToChange) {
+
+        var defaultPlaceholderMessage = $('#default-placeholder-message').val();
+
         $(userQuestionTextBox).attr(
             'placeholder',
-            valueToChange != undefined ? valueToChange : 'Ask your question'
+            valueToChange != undefined ? valueToChange : defaultPlaceholderMessage
         );
     }
 
