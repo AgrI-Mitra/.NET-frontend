@@ -389,8 +389,16 @@
      * This method is used to get starting span tag html content
      * @returns
      */
-    function getStartingSpanHtmlContent() {
-        return '<span>';
+    function getStartingSpanHtmlContent(customId) {
+        var customSpanWrapperId =
+            customId != null || customId != undefined
+                ? "id='" + 'chat-message-span-wrapper-' + customId + "'"
+                : '';
+
+        return "<span class='chat-message-span-wrapper'" +
+            " " +
+            customSpanWrapperId +
+            ">";
     }
 
     /**
@@ -419,8 +427,12 @@
         return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three me-md-2'>";
     }
 
-    function getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent() {
-        return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three-part-two me-md-2'>";
+    function getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(customId, keepHidden) {
+        return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three-part-two" + (keepHidden == true ? " d-none'" : "'") + (customId ? "id='chatbot-message-wrapper-column-three-part-two" + customId + "'" : "") + "'me-md-2'>";
+    }
+
+    function showChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(customId) {
+        $('#chatbot-message-wrapper-column-three-part-two' + customId).removeClass('d-none');
     }
 
     /**
@@ -1085,7 +1097,7 @@
             ).Value;
             /*showToastNotification(toastMessage);*/
             const feedbackResponseMessageId =
-                'message-thank-for-feedback-' + new Date().toLocaleString();
+                'message-thank-for-feedback-' + new Date().getTime();
 
             updateChatMessagesList(toastMessage, feedbackResponseMessageId, '', true);
 
@@ -1151,13 +1163,16 @@
                     : null; // Audio icon inside third column
 
             let feedbackOptionHtmlContent = getFeedbackButtonsHtmlContent(messageId);
+            let spanStartingHtmlContentWithId = getStartingSpanHtmlContent(messageId);
+
+            chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId, true);
 
             var response =
                 chatMessageWrapperStartingDivHtmlContent +
                 chatbotLogoHtmlContent +
                 chatMessageWrapperColumnTwoStartingDivHtmlContent +
-                spanStartingHtmlContent +
-                message +
+                spanStartingHtmlContentWithId +
+                '' +
                 spanClosingHtmlContent +
                 closingDivHtmlContent +
                 (showAudioOption == true
@@ -1180,8 +1195,29 @@
                 showPopularQuestions();
             }
 
-            scrollToBottom();
+            var typed = new Typed('#chat-message-span-wrapper-' + messageId, {
+                strings: [message],
+                typeSpeed: 15,
+                loop: false,
+                contentType: 'html',
+                showCursor: false,
+                onStringTyped: (arrayPos, self) => {
 
+                    if (messageType == 'final_response' && isMessageFromBot == true) {
+                        showChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
+                    }
+                }
+            });
+
+            const divElem = document.querySelector('#chat-message-span-wrapper-' + messageId);
+
+            const resizeObserver = new ResizeObserver((entries) => {
+                scrollToBottom();
+            });
+
+            resizeObserver.observe(divElem);
+
+            scrollToBottom();
             if (isMessageFromBot == true) {
                 autoPlayAudio(messageId);
             }

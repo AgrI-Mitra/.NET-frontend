@@ -172,6 +172,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\help.png" />
     <Content Include="Content\js\shepherd.js" />
+    <Content Include="Content\js\typed.umd.js" />
     <Content Include="Content\shepherd.css" />
     <Content Include="Content\chatbot-staging.css" />
     <Content Include="Content\chatbot.css" />
