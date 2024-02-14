@@ -37,6 +37,8 @@
 
     var currentUserId = null;
     var previousUserId = null;
+    var sessionId = null;
+    var previousSessionId = null;
     var currentConversationId = null;
 
     var chatbotConfirmationModalId = 'chatbotConfirmationModal';
@@ -148,7 +150,7 @@
         let fingerPrintId = sessionStorage.getItem('fingerPrintId');
 
         if (fingerPrintId != null || fingerPrintId != undefined) {
-            createSession(fingerPrintId);
+            createSession(fingerPrintId, true);
         }
     }
 
@@ -158,10 +160,10 @@
      * @param {string} fingerPrintId - The fingerprint ID used to create the session.
      * @returns {Promise} - A promise that resolves when the session is created.
      */
-    function createSession(fingerPrintId) {
+    function createSession(fingerPrintId, shouldGenerateUserId) {
         const currentDate = new Date();
 
-        fingerPrintId += currentDate.getTime().toString();
+        sessionId = fingerPrintId + currentDate.getTime().toString();
 
         const apiUrl =
             apiUrlConfig.chatbotApiBaseUrl +
@@ -170,16 +172,21 @@
             fingerPrintId;
 
         return new Promise((resolve, reject) => {
-            makeRequestRetry('POST', apiUrl)
-                .then((apiResponse) => {
-                    currentUserId = apiResponse;
-                    resolve();
-                })
-                .catch((apiError) => {
-                    handleError(apiError);
 
-                    reject();
-                });
+            if (shouldGenerateUserId) {
+                makeRequestRetry('POST', apiUrl)
+                    .then((apiResponse) => {
+                        currentUserId = apiResponse;
+                        resolve();
+                    })
+                    .catch((apiError) => {
+                        handleError(apiError);
+
+                        reject();
+                    });
+            } else {
+                resolve();
+            }
         });
     }
 
@@ -1555,6 +1562,7 @@
             apiUrlConfig.chatbotApiBaseUrl + apiUrlConfig.MetricsIncrement;
         const headers = new Headers();
         headers.append('User-id', currentUserId);
+        headers.append('session_id', sessionId);
 
         makeRequestRetry('POST', apiUrl, headers, metricsType)
             .then((apiResponse) => { })
@@ -1600,6 +1608,7 @@
 
         const headers = new Headers();
         headers.append('User-id', currentUserId);
+        headers.append('session_id', sessionId);
 
         makeRequestRetry('POST', apiUrl, headers, requestPayload)
             .then((apiResponse) => {
@@ -1648,6 +1657,7 @@
                 apiUrlConfig.ApiVersion;
             const headers = new Headers();
             headers.append('User-id', currentUserId);
+            headers.append('session_id', sessionId);
 
             let currentLanguageCultureCode = $('.language-buttons').data(
                 'current-language-culture-code'
@@ -1759,19 +1769,7 @@
                 });
         }
 
-        if (isFinalResponseReceived == true && screenName == 'conversation') {
-            const fingerPrintId = sessionStorage.getItem('fingerPrintId');
-
-            createSession(fingerPrintId)
-                .then((sessionResult) => {
-                    prompt();
-                })
-                .catch((sessionError) => {
-                    handleError(sessionError);
-                });
-        } else {
-            prompt();
-        }
+        prompt();
     }
 
     /**
@@ -1885,6 +1883,7 @@
             messageId;
         const headers = new Headers();
         headers.append('User-id', currentUserId);
+        headers.append('session_id', sessionId);
 
         makeRequestRetry('GET', apiUrl, headers)
             .then((apiResponse) => {
@@ -1952,6 +1951,7 @@
 
         const headers = new Headers();
         headers.append('User-id', currentUserId);
+        headers.append('session_id', sessionId);
 
         makeRequestRetry('GET', apiUrl, headers)
             .then((apiResponse) => {
@@ -2066,10 +2066,15 @@
         reader.readAsDataURL(blob);
 
         reader.onloadend = async function () {
-            base64 = reader.result;
-
-            base64 = base64.split(',')[1];
+            let base64 = reader.result.replace(/^data:.+;base64,/, '');
             scrollToBottom();
+
+            // Check base64 string length is multiply of 4 or not
+            // If not add missing number of "=" characters and make it correct
+            while (base64.length % 4 != 0) {
+                console.log('base64 adding: ', base64.length);
+                base64 += '=';
+            }
 
             askQuestions(base64, 'base64audio', blob, screenName);
         };
@@ -2189,7 +2194,7 @@
                 //If language is changed after session refresh was done,
                 //Add metric count for it
 
-                if (currentUserId != previousUserId) {
+                if (sessionId != previousSessionId) {
                     addMetricsCount('stage2Count');
                 }
 
@@ -2250,7 +2255,8 @@
                 updatePopularQuestionsTranslations(data.Data.PopularQuestions);
                 showUserRecordedMessageInTextBox('');
 
-                previousUserId = currentUserId;
+                //previousUserId = currentUserId;
+                previousSessionId = sessionId;
             },
             failure: function (data) {
                 isChangeLanguageRequestInProgress = null;
