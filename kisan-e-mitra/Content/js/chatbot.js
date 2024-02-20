@@ -1562,7 +1562,7 @@
             apiUrlConfig.chatbotApiBaseUrl + apiUrlConfig.MetricsIncrement;
         const headers = new Headers();
         headers.append('User-id', currentUserId);
-        headers.append('session_id', sessionId);
+        headers.append('session-id', sessionId);
 
         makeRequestRetry('POST', apiUrl, headers, metricsType)
             .then((apiResponse) => { })
@@ -1608,7 +1608,7 @@
 
         const headers = new Headers();
         headers.append('User-id', currentUserId);
-        headers.append('session_id', sessionId);
+        headers.append('session-id', sessionId);
 
         makeRequestRetry('POST', apiUrl, headers, requestPayload)
             .then((apiResponse) => {
@@ -1657,7 +1657,7 @@
                 apiUrlConfig.ApiVersion;
             const headers = new Headers();
             headers.append('User-id', currentUserId);
-            headers.append('session_id', sessionId);
+            headers.append('session-id', sessionId);
 
             let currentLanguageCultureCode = $('.language-buttons').data(
                 'current-language-culture-code'
@@ -1883,7 +1883,7 @@
             messageId;
         const headers = new Headers();
         headers.append('User-id', currentUserId);
-        headers.append('session_id', sessionId);
+        headers.append('session-id', sessionId);
 
         makeRequestRetry('GET', apiUrl, headers)
             .then((apiResponse) => {
@@ -1951,7 +1951,7 @@
 
         const headers = new Headers();
         headers.append('User-id', currentUserId);
-        headers.append('session_id', sessionId);
+        headers.append('session-id', sessionId);
 
         makeRequestRetry('GET', apiUrl, headers)
             .then((apiResponse) => {
