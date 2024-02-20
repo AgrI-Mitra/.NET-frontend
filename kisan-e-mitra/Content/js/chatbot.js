@@ -154,6 +154,29 @@
         }
     }
 
+    // Generate a UUID using timestamp and random numbers
+    /**
+     * function generates a unique identifier (UUID) using a combination of the current timestamp and a random number.
+     * The function gets the current timestamp using new Date().getTime().
+     * It generates a random number between 0 and 16 using Math.random() * 16.
+     * It calculates the remainder of the random number divided by 16 using the modulo operator %.
+     * It converts the remainder to an integer using the bitwise OR operator | and the 0x3 and 0x8 hexadecimal values.
+     * It converts the integer to a hexadecimal string using the toString(16) method.
+     * It replaces the 'x' and 'y' characters in the UUID template with the generated hexadecimal string.
+     * It returns the generated UUID.
+     * @returns  string representing a unique identifier (UUID).
+     */
+    function generateUUID() {
+
+        var dt = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (dt + Math.random() * 16) % 16 | 0;
+            dt = Math.floor(dt / 16);
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        return uuid;
+    }
+
     /**
      * Creates a session for the given fingerprint ID.
      *
@@ -161,9 +184,8 @@
      * @returns {Promise} - A promise that resolves when the session is created.
      */
     function createSession(fingerPrintId, shouldGenerateUserId) {
-        const currentDate = new Date();
 
-        sessionId = fingerPrintId + currentDate.getTime().toString();
+        sessionId = generateUUID();
 
         const apiUrl =
             apiUrlConfig.chatbotApiBaseUrl +
@@ -1562,7 +1584,6 @@
             apiUrlConfig.chatbotApiBaseUrl + apiUrlConfig.MetricsIncrement;
         const headers = new Headers();
         headers.append('User-id', currentUserId);
-        headers.append('session-id', sessionId);
 
         makeRequestRetry('POST', apiUrl, headers, metricsType)
             .then((apiResponse) => { })
@@ -1608,7 +1629,6 @@
 
         const headers = new Headers();
         headers.append('User-id', currentUserId);
-        headers.append('session-id', sessionId);
 
         makeRequestRetry('POST', apiUrl, headers, requestPayload)
             .then((apiResponse) => {
@@ -1883,7 +1903,6 @@
             messageId;
         const headers = new Headers();
         headers.append('User-id', currentUserId);
-        headers.append('session-id', sessionId);
 
         makeRequestRetry('GET', apiUrl, headers)
             .then((apiResponse) => {
@@ -1951,7 +1970,6 @@
 
         const headers = new Headers();
         headers.append('User-id', currentUserId);
-        headers.append('session-id', sessionId);
 
         makeRequestRetry('GET', apiUrl, headers)
             .then((apiResponse) => {
