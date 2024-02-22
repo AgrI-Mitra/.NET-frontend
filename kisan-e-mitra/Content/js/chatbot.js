@@ -1224,6 +1224,8 @@
                 showPopularQuestions();
             }
 
+            const divElem = document.querySelector('#chat-message-span-wrapper-' + messageId);
+
             var typed = new Typed('#chat-message-span-wrapper-' + messageId, {
                 strings: [message],
                 typeSpeed: 15,
@@ -1234,11 +1236,10 @@
 
                     if (messageType == 'final_response' && isMessageFromBot == true) {
                         showChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
+                        resizeObserver.unobserve(divElem);
                     }
                 }
             });
-
-            const divElem = document.querySelector('#chat-message-span-wrapper-' + messageId);
 
             const resizeObserver = new ResizeObserver((entries) => {
                 scrollToBottom();
