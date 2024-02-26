@@ -453,4 +453,7 @@
   <data name="message.translation_feedback" xml:space="preserve">
     <value>అనువాద అభిప్రాయం</value>
   </data>
+  <data name="message.pm_kisan_scheme" xml:space="preserve">
+    <value>పీఎం కిసాన్ పథకం</value>
+  </data>
 </root>

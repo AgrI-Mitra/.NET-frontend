@@ -452,4 +452,7 @@
   <data name="message.translation_feedback" xml:space="preserve">
     <value>மொழிபெயர்ப்பு கருத்து</value>
   </data>
+  <data name="message.pm_kisan_scheme" xml:space="preserve">
+    <value>பிரதம மந்திரி கிசான் திட்டம்</value>
+  </data>
 </root>

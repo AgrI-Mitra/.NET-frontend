@@ -48,7 +48,7 @@ body {
 }
 
 .kisan-e-mitra-texts-padding {
-  padding: 10px 16px 32px 25px;
+  padding: 10px 16px 0px 25px;
 }
 
 .dropdown-style .dropdown-menu {
@@ -171,18 +171,22 @@ button[type="submit"] {
 }
 
 .navigation-icon {
-  border-radius: 50px;
-  background: #eab64f;
-  padding: 17px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0 80px;
-  margin-top: 18px;
+    border-radius: 50px;
+    background: #eab64f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0 80px;
+    margin-top: 10px;
+    height: 108px;
 }
 
 svg.footer-svg-hover {
   fill: #3e3117;
+}
+
+svg.footer-svg-hover {
+    fill: #3e3117;
 }
 
 svg.footer-svg-hover:hover {
@@ -419,7 +423,7 @@ svg.footer-svg-hover:hover {
   border: 1px solid #ececf1;
   background: #fff;
   padding: 0px 10px;
-  height: 60px;
+  height: 70px;
   font-size: 14px;
   font-weight: 500;
   margin: 0;

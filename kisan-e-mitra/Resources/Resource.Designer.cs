@@ -792,6 +792,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PM Kisan Scheme.
+        /// </summary>
+        public static string message_pm_kisan_scheme {
+            get {
+                return ResourceManager.GetString("message.pm_kisan_scheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I have not received my last instalment payment..
         /// </summary>
         public static string message_popular_question_1 {

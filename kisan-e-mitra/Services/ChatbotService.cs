@@ -251,6 +251,11 @@ namespace KisanEMitra.Services
                 {
                     Key = "message_thank_you_for_feedback",
                     Value = Resources.Resource.message_thank_you_for_feedback
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_pm_kisan_scheme",
+                    Value = Resources.Resource.message_pm_kisan_scheme
                 }
             };
 

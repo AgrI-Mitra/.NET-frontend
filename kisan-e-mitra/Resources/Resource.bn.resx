@@ -452,4 +452,7 @@
   <data name="message.translation_feedback" xml:space="preserve">
     <value>অনুবাদ প্রতিক্রিয়া</value>
   </data>
+  <data name="message.pm_kisan_scheme" xml:space="preserve">
+    <value>প্রধানমন্ত্রী কিষাণ যোজনা</value>
+  </data>
 </root>

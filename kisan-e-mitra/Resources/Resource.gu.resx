@@ -360,6 +360,9 @@
   <data name="message.otp_verification" xml:space="preserve">
     <value>ઓટીપી ચકાસણી</value>
   </data>
+  <data name="message.pm_kisan_scheme" xml:space="preserve">
+    <value>પીએમ કિસાન યોજના</value>
+  </data>
   <data name="message.popular_question_1" xml:space="preserve">
     <value>મને મારા છેલ્લા હપ્તાની ચુકવણી મળી નથી.</value>
   </data>

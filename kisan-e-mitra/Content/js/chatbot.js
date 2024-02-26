@@ -1,4 +1,6 @@
 (async function () {
+
+
     var apiUrlConfig = {
         //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
         chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
@@ -11,6 +13,65 @@
         MetricsIncrement: 'custom/metrics/increment',
         ConversationFeedback: 'conversation/feedback',
     };
+
+    var popularQuestionsTranslations = [
+        {
+            language: 'english',
+            languageCode: 'en',
+            translations: []
+        },
+        {
+            language: 'bengali',
+            languageCode: 'bn',
+            translations: []
+        },
+        {
+            language: 'gujarati',
+            languageCode: 'gu',
+            translations: []
+        },
+        {
+            language: 'hindi',
+            languageCode: 'hi',
+            translations: []
+        },
+        {
+            language: 'kannada',
+            languageCode: 'kn',
+            translations: []
+        },
+        {
+            language: 'malayalam',
+            languageCode: 'ml',
+            translations: []
+        },
+        {
+            language: 'marathi',
+            languageCode: 'mr',
+            translations: []
+        },
+        {
+            language: 'odia',
+            languageCode: 'or',
+            translations: []
+        },
+        {
+            language: 'punjabi',
+            languageCode: 'pa',
+            translations: []
+        },
+        {
+            language: 'tamil',
+            languageCode: 'ta',
+            translations: []
+        },
+        {
+            language: 'telugu',
+            languageCode: 'te',
+            translations: []
+        }
+
+    ];
 
     marked.use({
         breaks: true,
@@ -555,6 +616,36 @@
         );
     }
 
+    function getPopularQuestionsHtmlContent(popularQuestionsList) {
+
+        let popularQuestionsHtmlContent = "";
+
+        for (var i = 0; i < popularQuestionsList.length; i++) {
+            const currentPopularQuestion = popularQuestionsList[i];
+
+            popularQuestionsHtmlContent += "<div id='" + currentPopularQuestion.key + "' class='query-msg popularQuestions' data-popular-question='" + currentPopularQuestion.value + "'>" +
+                "<p>" + currentPopularQuestion.value + "</p>" +
+                "</div>"
+        }
+        return popularQuestionsHtmlContent;
+    }
+
+    function getGeneralQuestionsHtmlContent(generalQuestionsList) {
+
+        let generalQuestionsHtmlContent = "";
+
+        for (var i = 0; i < generalQuestionsList.length; i++) {
+            const currentPopularQuestion = generalQuestionsList[i];
+
+            generalQuestionsHtmlContent += "<div class='card popular-query-card' id='" + currentPopularQuestion.key + "' data-popular-question='" + currentPopularQuestion.value + "'>" +
+                "<div class='card-body popular-query-card-body'>" +
+                "<p>" + currentPopularQuestion.value + "</p>" +
+                "</div>" +
+                "</div>";
+        }
+        return generalQuestionsHtmlContent;
+    }
+
     let userLogoHtmlContent = getUserLogoHtmlContent();
     let chatbotLogoHtmlContent = getChatbotLogoHtmlContent();
     let chatMessageWrapperColumnTwoStartingDivHtmlContent =
@@ -678,6 +769,12 @@
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
             },
+            {
+                translationKey: 'message_pm_kisan_scheme',
+                htmlElementKeyName: 'pm-kisan-scheme-name',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text',
+            },
         ];
 
         for (var i = 0; i < translationsToUpdate.length; i++) {
@@ -769,6 +866,19 @@
                 event.stopPropagation();
                 let popularQuestion = $(this).data('popular-question');
                 copyPopularQuestionInTextBox(popularQuestion);
+            }
+        );
+    }
+
+    function generalQuestionClickListener() {
+        $(document).on(
+            'click',
+            '.popular-query-card',
+            function (event) {
+                event.stopPropagation();
+                let popularQuestion = $(this).data('popular-question');
+                copyPopularQuestionInTextBox(popularQuestion, false, true);
+                toggleHamburger();
             }
         );
     }
@@ -922,6 +1032,7 @@
         voiceRecorderListener();
         languageChangeListener();
         popularQuestionClickListener();
+        generalQuestionClickListener();
         userQuestionTextBoxOnKeyPressListener();
         chatbotMessageActionButtonsOnClickListener();
         feedbackSubmitButtonOnClickListener();
@@ -934,6 +1045,7 @@
         submitFeedbackModalCloseEventListener();
 
         getUITranslations();
+        //getPopularQuestionsTranslations();
 
         configAppTour();
         initPopovers();
@@ -946,6 +1058,37 @@
         if (isMaintenanceModeOn == 'True') {
             showMaintenanceModeModal();
         }
+    }
+
+    function getPopularQuestionsTranslations() {
+        const currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
+
+        getTranslationFiles().then(translations => {
+
+
+            // Find the current selected langauge translations
+            // And show top 5 popular questions from it
+            const currentSelectedLanaguageTranslations = translations.find(f => f.languageCode == currentLanguageCode);
+
+            const topFiveRandomPopularQuestions = getRandomValues(currentSelectedLanaguageTranslations.translations, 5);
+
+            const generalQuestions = convertObjectToArray(currentSelectedLanaguageTranslations.translations);
+
+            bindGeneralQuestions(generalQuestions);
+
+            const popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topFiveRandomPopularQuestions);
+
+            $('.query-messages-box').empty();
+            $('.query-messages-box').append(popularQuestionsHtmlContent);
+            showPopularQuestions();
+        });
+    }
+
+    function bindGeneralQuestions(generalQuestionsList) {
+        const generalQuestionsHtmlContent = getGeneralQuestionsHtmlContent(generalQuestionsList);
+
+        $('.popular-questions-accordian-body').empty();
+        $('.popular-questions-accordian-body').append(generalQuestionsHtmlContent);
     }
 
     function configAppTour() {
@@ -1410,10 +1553,13 @@
         });
     });
 
-    function copyPopularQuestionInTextBox(message) {
+    function copyPopularQuestionInTextBox(message, shouldHidePopularQuestions = true, shouldAutoSend) {
         // Hide popular questions now
-        hidePopularQuestions();
-        showUserRecordedMessageInTextBox(message);
+        if (shouldHidePopularQuestions == true) {
+            hidePopularQuestions();
+        }
+        
+        showUserRecordedMessageInTextBox(message, shouldAutoSend);
     }
 
     function hidePopularQuestions() {
@@ -1428,10 +1574,14 @@
         $('#message-list').removeClass('without-popular-questions');
     }
 
-    function showUserRecordedMessageInTextBox(message) {
+    function showUserRecordedMessageInTextBox(message, shouldAutoSend) {
         $(userQuestionTextBox).val(message);
         $(userQuestionTextBox).focus();
         $(userQuestionTextBox).trigger('change');
+
+        if (shouldAutoSend === true) {
+            $(sendTextButtonId).trigger('click');
+        }
         isSampleQueryUsed = true;
     }
 
@@ -2190,7 +2340,80 @@
                 isGetUITranslationsRequestInProgress = null;
             },
         });
+
+        getPopularQuestionsTranslations();
+
+        //getTranslationFiles().then(([englishTranslations, bengaliTranslations,
+        //    gujaratiTranslations, hindiTranslations,
+        //    kannadaTranslations, malayalamTranslations,
+        //    marathiTranslations, odiaTranslations, pubjabiTranslations,
+        //    tamilTranslations, teluguTranslations]) => {
+        //    englishTranslations;     // fetched movies
+        //    bengaliTranslations; // fetched categories
+        //}).catch(error => {
+        //    // /movies or /categories request failed
+        //});
+
     }
+
+    function convertObjectToArray(obj) {
+
+        let keys = Object.keys(obj);
+        let result = [];
+
+        for (let i = 0; i < keys.length; i++) {
+
+            // Get the key and value
+            let key = keys[i];
+            let value = obj[key];
+
+            // Add the object to the result array
+            result.push({ key: key, value: value });
+        }
+
+        return result;
+    }
+
+    function getRandomValues(obj, count) {
+        let keys = Object.keys(obj).filter(key => typeof obj[key] === 'string' && obj[key].length < 100);
+        let result = [];
+
+        for (let i = 0; i < count; i++) {
+            // Get a random index
+            let index = Math.floor(Math.random() * keys.length);
+
+            // Get the key and value
+            let key = keys[index];
+            let value = obj[key];
+
+            // Add the object to the result array
+            result.push({ key: key, value: value });
+
+            // Remove the key from the keys array
+            keys.splice(index, 1);
+        }
+
+        return result;
+    }
+
+    async function getTranslationFiles() {
+
+        // Fetch the translations for all the languages
+        for (var i = 0; i < popularQuestionsTranslations.length; i++) {
+
+            const currentLanguage = popularQuestionsTranslations[i];
+
+            if (currentLanguage.translations.length == 0) {
+                const response = await fetch('/Content/translations/' + currentLanguage.language + '.json');
+                const translations = await response.json();
+
+                popularQuestionsTranslations[i].translations = translations;
+            }
+        }
+
+        return popularQuestionsTranslations;
+    }
+
 
     function changeLanguage(
         languageCultureCode,
@@ -2285,17 +2508,18 @@
     }
 
     function updatePopularQuestionsTranslations(popularQuestions) {
-        $('.query-messages-box').empty();
+        //$('.query-messages-box').empty();
 
-        for (var i = 0; i < popularQuestions.length; i++) {
-            let currentPopularQuestion = popularQuestions[i];
+        //for (var i = 0; i < popularQuestions.length; i++) {
+        //    let currentPopularQuestion = popularQuestions[i];
 
-            let currentPopularQuestionHtmlContent = getPopularQuestionHtmlContent(
-                currentPopularQuestion.PopularQuestionValue
-            );
+        //    let currentPopularQuestionHtmlContent = getPopularQuestionHtmlContent(
+        //        currentPopularQuestion.PopularQuestionValue
+        //    );
 
-            $('.query-messages-box').append(currentPopularQuestionHtmlContent);
-        }
+        //    $('.query-messages-box').append(currentPopularQuestionHtmlContent);
+        //}
+        getPopularQuestionsTranslations();
 
         showPopularQuestions();
     }

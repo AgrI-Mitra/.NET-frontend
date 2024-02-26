@@ -164,13 +164,27 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Resources\Resource.kn.Designer.cs" />
-    <Compile Include="Resources\Resource.ml.Designer.cs" />
-    <Compile Include="Resources\Resource.pa.Designer.cs" />
+    <Compile Include="Resources\Resource.kn.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Resource.ml.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Resource.pa.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Services\ChatbotService.cs" />
     <Compile Include="Services\Contracts\IChatbotService.cs" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\Expanded.svg" />
     <Content Include="Content\images\help.png" />
+    <Content Include="Content\ham-menu.css" />
+    <Content Include="Content\images\feedback.svg" />
+    <Content Include="Content\images\refresh.svg" />
+    <Content Include="Content\js\ham-menu.js" />
     <Content Include="Content\js\shepherd.js" />
     <Content Include="Content\js\typed.umd.js" />
     <Content Include="Content\shepherd.css" />
@@ -342,6 +356,17 @@
     <Content Include="Content\splash.css" />
     <Content Include="Content\style-staging.css" />
     <Content Include="Content\style.css" />
+    <None Include="Content\translations\gujarati.json" />
+    <None Include="Content\translations\telugu.json" />
+    <None Include="Content\translations\odia.json" />
+    <None Include="Content\translations\marathi.json" />
+    <None Include="Content\translations\tamil.json" />
+    <None Include="Content\translations\punjabi.json" />
+    <None Include="Content\translations\malayalam.json" />
+    <None Include="Content\translations\kannada.json" />
+    <None Include="Content\translations\bengali.json" />
+    <None Include="Content\translations\english.json" />
+    <None Include="Content\translations\hindi.json" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -394,72 +419,72 @@
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\Shared\_StagingLayout.cshtml" />
   </ItemGroup>
-	<ItemGroup>
-		<EmbeddedResource Include="Resources\Resource.kn.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.kn.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Resource.ml.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.ml.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Resource.pa.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.pa.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Resource.mr.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.mr.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Resource.or.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.or.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Resource.gu.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.gu.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Resource.bn.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.bn.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Resource.ta.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.ta.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Resource.te.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.te.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Resource.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
-		<EmbeddedResource Include="Resources\Resource.hi.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resource.hi.Designer.cs</LastGenOutput>
-			<CustomToolNamespace>Resources</CustomToolNamespace>
-			<SubType>Designer</SubType>
-		</EmbeddedResource>
-	</ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource.kn.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.kn.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.ml.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.ml.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.pa.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.pa.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.mr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.mr.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.or.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.or.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.gu.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.gu.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.bn.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.bn.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.ta.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.ta.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.te.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.te.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.hi.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.hi.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

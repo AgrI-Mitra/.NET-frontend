@@ -360,6 +360,9 @@
   <data name="message.otp_verification" xml:space="preserve">
     <value>OTP ਪੁਸ਼ਟੀਕਰਨ</value>
   </data>
+  <data name="message.pm_kisan_scheme" xml:space="preserve">
+    <value>ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਕਿਸਾਨ ਯੋਜਨਾ</value>
+  </data>
   <data name="message.popular_question_1" xml:space="preserve">
     <value>ਮੈਨੂੰ ਮੇਰੀ ਪਿਛਲੀ ਕਿਸ਼ਤ ਦਾ ਭੁਗਤਾਨ ਨਹੀਂ ਮਿਲਿਆ ਹੈ।</value>
   </data>

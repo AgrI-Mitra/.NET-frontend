@@ -360,6 +360,9 @@
   <data name="message.otp_verification" xml:space="preserve">
     <value>OTP പരിശോധന</value>
   </data>
+  <data name="message.pm_kisan_scheme" xml:space="preserve">
+    <value>പ്രധാനമന്ത്രി കിസാൻ പദ്ധതി</value>
+  </data>
   <data name="message.popular_question_1" xml:space="preserve">
     <value>എന്റെ അവസാന ഗഡു പേയ്‌മെന്റ് എനിക്ക് ലഭിച്ചിട്ടില്ല.</value>
   </data>

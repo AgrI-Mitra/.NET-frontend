@@ -452,4 +452,7 @@
   <data name="message.translation_feedback" xml:space="preserve">
     <value>ଅନୁବାଦ ମତାମତ |</value>
   </data>
+  <data name="message.pm_kisan_scheme" xml:space="preserve">
+    <value>ପିଏମ କିସାନ ଯୋଜନା</value>
+  </data>
 </root>

@@ -455,4 +455,7 @@
   <data name="message.translation_feedback" xml:space="preserve">
     <value>अनुवाद प्रतिक्रिया</value>
   </data>
+  <data name="message.pm_kisan_scheme" xml:space="preserve">
+    <value>पीएम किसान योजना</value>
+  </data>
 </root>

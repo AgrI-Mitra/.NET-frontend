@@ -452,4 +452,7 @@ Do you want to continue and refresh the page?</value>
   <data name="message.translation_feedback" xml:space="preserve">
     <value>Translation Feedback</value>
   </data>
+  <data name="message.pm_kisan_scheme" xml:space="preserve">
+    <value>PM Kisan Scheme</value>
+  </data>
 </root>
