@@ -11,7 +11,7 @@
 	.content-head-text-responsive h1{ color: #198754; font-size: 24px; line-height: normal; margin: 0; }
 	.message-input{ height: 48px; padding: 0 2.5rem 0 1rem; }
 	.input-container {
-		border-radius: 0 0 26px 26px; padding-bottom: 3.5rem!important;
+		border-radius: 0 0 26px 26px; padding-bottom: 0.5rem!important;
 	}
 	.send-button{ width: 48px; height: 48px; }
 	button[type="submit"]{ width: 28px; height: 28px; background-size: contain; bottom: 0; margin: auto; right: 6px; }

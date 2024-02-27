@@ -51,12 +51,10 @@ table.aadhar-table {
     flex-wrap: wrap;
     flex-flow: column wrap;
     padding: 5px 10px;
-
 }
 
 .chatbot-message-wrapper-column-three {
     flex: 0 1 auto;
-    
 }
 
 .chatbot-message-wrapper-column-three-part-two {
@@ -167,6 +165,10 @@ table.aadhar-table {
     .message-input-textarea {
         padding-top: 1.4em;
     }
+
+    /*.navigation-icon{
+        margin-bottom: 20px;
+    }*/
 }
 
 /*// Large devices (desktops, 992px and up)*/
@@ -374,6 +376,6 @@ img.query-msg-send-icon {
     max-height: 94%;
 }
 
-.footer-svg-hover{
+.footer-svg-hover {
     cursor: pointer;
 }
