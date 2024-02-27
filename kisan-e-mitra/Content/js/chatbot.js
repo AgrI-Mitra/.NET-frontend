@@ -1344,7 +1344,7 @@
                 chatbotLogoHtmlContent +
                 chatMessageWrapperColumnTwoStartingDivHtmlContent +
                 spanStartingHtmlContentWithId +
-                '' +
+                message +
                 spanClosingHtmlContent +
                 closingDivHtmlContent +
                 (showAudioOption == true
@@ -1367,28 +1367,28 @@
                 showPopularQuestions();
             }
 
-            const divElem = document.querySelector('#chat-message-span-wrapper-' + messageId);
+            //const divElem = document.querySelector('#chat-message-span-wrapper-' + messageId);
 
-            var typed = new Typed('#chat-message-span-wrapper-' + messageId, {
-                strings: [message],
-                typeSpeed: 15,
-                loop: false,
-                contentType: 'html',
-                showCursor: false,
-                onStringTyped: (arrayPos, self) => {
+            //var typed = new Typed('#chat-message-span-wrapper-' + messageId, {
+            //    strings: [message],
+            //    typeSpeed: 15,
+            //    loop: false,
+            //    contentType: 'html',
+            //    showCursor: false,
+            //    onStringTyped: (arrayPos, self) => {
 
-                    if (messageType == 'final_response' && isMessageFromBot == true) {
-                        showChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
-                        resizeObserver.unobserve(divElem);
-                    }
-                }
-            });
+            //        if (messageType == 'final_response' && isMessageFromBot == true) {
+            //            showChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
+            //            resizeObserver.unobserve(divElem);
+            //        }
+            //    }
+            //});
 
-            const resizeObserver = new ResizeObserver((entries) => {
-                scrollToBottom();
-            });
+            //const resizeObserver = new ResizeObserver((entries) => {
+            //    scrollToBottom();
+            //});
 
-            resizeObserver.observe(divElem);
+            //resizeObserver.observe(divElem);
 
             scrollToBottom();
             if (isMessageFromBot == true) {
