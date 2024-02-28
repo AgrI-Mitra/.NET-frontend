@@ -1204,6 +1204,12 @@
                 showPreviousButton: false,
             },
             {
+                id: 'app_tour_scheme_selection_description',
+                text: 'app_tour_scheme_selection_description',
+                showNextButton: true,
+                showPreviousButton: true,
+            },
+            {
                 id: 'app_tour_language_selection_description',
                 text: 'app_tour_language_selection_description',
                 showNextButton: true,
@@ -1248,16 +1254,10 @@
             {
                 id: 'app_tour_refresh_button_description',
                 text: 'app_tour_refresh_button_description',
-                showNextButton: true,
-                showPreviousButton: true,
-            },
-            {
-                id: 'app_tour_scheme_selection_description',
-                text: 'app_tour_scheme_selection_description',
                 showNextButton: false,
                 showPreviousButton: true,
                 showExitButton: true,
-            },
+            }
         ];
 
         for (var i = 0; i < appTourTranslationMappingDetails.length; i++) {
