@@ -261,6 +261,9 @@
   <data name="message.app_tour_sample_questions_description" xml:space="preserve">
     <value>ਮਦਦ ਲਈ ਇਹਨਾਂ ਉਦਾਹਰਨ ਸਵਾਲਾਂ ਦੀ ਵਰਤੋਂ ਕਰੋ</value>
   </data>
+  <data name="message.app_tour_scheme_selection_description" xml:space="preserve">
+    <value>ਇਸ ਮੀਨੂ ਵਿੱਚੋਂ ਆਪਣੀ ਸਕੀਮ ਚੁਣੋ।</value>
+  </data>
   <data name="message.app_tour_send_button_description" xml:space="preserve">
     <value>ਆਪਣਾ ਸੁਨੇਹਾ ਭੇਜਣ ਲਈ ਇਸ ਐਰੋ ਬਟਨ ਨੂੰ ਦਬਾਓ।</value>
   </data>
@@ -333,6 +336,9 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>ਅਵੈਧ Otp</value>
   </data>
+  <data name="message.kcc_scheme" xml:space="preserve">
+    <value>ਕਿਸਾਨ ਕ੍ਰੈਡਿਟ ਕਾਰਡ</value>
+  </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
     <value>ਪੰਜਾਬੀ ਭਾਸ਼ਾ ਦੀ ਚੋਣ ਕਰਨ ਲਈ ਧੰਨਵਾਦ। ਪਿਆਰੇ ਲਾਭਪਾਤਰੀ, ਆਪਣਾ ਸਵਾਲ ਟਾਈਪ ਕਰੋ ਜਾਂ ਮਾਈਕ ਬਟਨ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਬੋਲੋ। ਬੱਸ ਮਾਈਕ ਬਟਨ ਨੂੰ ਛੋਹਵੋ ਅਤੇ ਆਪਣਾ ਸਵਾਲ ਕਹੋ। ਰਿਕਾਰਡਿੰਗ ਨੂੰ ਰੋਕਣ ਲਈ ਮਾਈਕ ਬਟਨ ਨੂੰ ਦੁਬਾਰਾ ਛੋਹਵੋ।</value>
   </data>
@@ -359,6 +365,9 @@
   </data>
   <data name="message.otp_verification" xml:space="preserve">
     <value>OTP ਪੁਸ਼ਟੀਕਰਨ</value>
+  </data>
+  <data name="message.pmfby_scheme" xml:space="preserve">
+    <value>ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਫਸਲ ਬੀਮਾ ਯੋਜਨਾ</value>
   </data>
   <data name="message.pm_kisan_scheme" xml:space="preserve">
     <value>ਪ੍ਰਧਾਨ ਮੰਤਰੀ ਕਿਸਾਨ ਯੋਜਨਾ</value>

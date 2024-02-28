@@ -163,6 +163,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Content Include="Content\js\popularQueriesService.js" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Resources\Resource.kn.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -185,6 +186,7 @@
     <Content Include="Content\images\feedback.svg" />
     <Content Include="Content\images\refresh.svg" />
     <Content Include="Content\js\ham-menu.js" />
+    <Content Include="Content\js\schemesDropdown.js" />
     <Content Include="Content\js\shepherd.js" />
     <Content Include="Content\js\typed.umd.js" />
     <Content Include="Content\shepherd.css" />
@@ -407,6 +409,8 @@
     <Folder Include="Views\Language\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\data\schemes.json" />
+    <Content Include="Content\data\clientConfig.json" />
     <None Include="packages.config" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Test\ChatHistory.cshtml" />

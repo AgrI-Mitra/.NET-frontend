@@ -455,4 +455,13 @@
   <data name="message.pm_kisan_scheme" xml:space="preserve">
     <value>पीएम किसान योजना</value>
   </data>
+  <data name="message.app_tour_scheme_selection_description" xml:space="preserve">
+    <value>या मेनूमधून तुमची योजना निवडा.</value>
+  </data>
+  <data name="message.kcc_scheme" xml:space="preserve">
+    <value>किसान क्रेडिट कार्ड</value>
+  </data>
+  <data name="message.pmfby_scheme" xml:space="preserve">
+    <value>पीएम पीक विमा योजना</value>
+  </data>
 </root>

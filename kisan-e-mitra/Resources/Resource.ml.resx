@@ -261,6 +261,9 @@
   <data name="message.app_tour_sample_questions_description" xml:space="preserve">
     <value>സഹായത്തിനായി ഈ ഉദാഹരണ ചോദ്യങ്ങൾ ഉപയോഗിക്കുക</value>
   </data>
+  <data name="message.app_tour_scheme_selection_description" xml:space="preserve">
+    <value>ഈ മെനുവിൽ നിന്ന് നിങ്ങളുടെ സ്കീം തിരഞ്ഞെടുക്കുക.</value>
+  </data>
   <data name="message.app_tour_send_button_description" xml:space="preserve">
     <value>നിങ്ങളുടെ സന്ദേശം അയയ്‌ക്കാൻ ഈ ആരോ ബട്ടൺ അമർത്തുക.</value>
   </data>
@@ -333,6 +336,9 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>Otp അസാധുവാണ്</value>
   </data>
+  <data name="message.kcc_scheme" xml:space="preserve">
+    <value>കിസാൻ ക്രെഡിറ്റ് കാർഡ്</value>
+  </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
     <value>മലയാളം തിരഞ്ഞെടുത്തതിന് നന്ദി. പ്രിയ ഗുണഭോക്താവേ, നിങ്ങളുടെ ചോദ്യം ടൈപ്പ് ചെയ്യുക അല്ലെങ്കിൽ മൈക്ക് ബട്ടൺ ഉപയോഗിച്ച് സംസാരിക്കുക. മൈക്ക് ബട്ടണിൽ സ്പർശിച്ച് നിങ്ങളുടെ ചോദ്യം പറയുക. റെക്കോർഡിംഗ് നിർത്താൻ മൈക്ക് ബട്ടൺ വീണ്ടും സ്‌പർശിക്കുക.</value>
   </data>
@@ -359,6 +365,9 @@
   </data>
   <data name="message.otp_verification" xml:space="preserve">
     <value>OTP പരിശോധന</value>
+  </data>
+  <data name="message.pmfby_scheme" xml:space="preserve">
+    <value>പിഎം വിള ഇൻഷുറൻസ് പദ്ധതി</value>
   </data>
   <data name="message.pm_kisan_scheme" xml:space="preserve">
     <value>പ്രധാനമന്ത്രി കിസാൻ പദ്ധതി</value>

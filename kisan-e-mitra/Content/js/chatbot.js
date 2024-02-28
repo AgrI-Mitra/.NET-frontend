@@ -771,12 +771,26 @@
             },
             {
                 translationKey: 'message_pm_kisan_scheme',
-                htmlElementKeyName: 'pm-kisan-scheme-name',
+                htmlElementKeyName: 'pmkisan',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
+                ignore: true
             },
+            {
+                translationKey: 'message_kcc_scheme',
+                htmlElementKeyName: 'kcc',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text',
+                ignore: true
+            },
+            {
+                translationKey: 'message_pmfby_scheme',
+                htmlElementKeyName: 'pmfby',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text',
+                ignore: true
+            }
         ];
-
         for (var i = 0; i < translationsToUpdate.length; i++) {
             // Get the current translation's html element related details from "translationsMappingIds" so we can know which html element we need to update for the translations
             let currentTranslation = translationsToUpdate[i];
@@ -784,6 +798,11 @@
             let currentTranslationMappingDetails = translationsMappingIds.find(
                 (f) => f?.translationKey == currentTranslation.Key
             );
+
+            // Update selected scheme translations
+            // Find the current selected selected scheme
+            // And then find the translation for it
+            const currentSelectedScheme = window.schemesInfo.currentScheme;
 
             if (currentTranslationMappingDetails) {
                 // Update page title
@@ -838,6 +857,32 @@
                     languageCultureLabel,
                     currentLanguageCultureCode
                 );
+            }
+        );
+    }
+
+    /**
+     * This method is used to listen scheme change event
+     */
+    function schemeChangeListener() {
+
+        $(document).on(
+            'click',
+            '.scheme-label-wrapper',
+            async function (ev) {
+                let selectedSchemeId = $(this).data('scheme-id');
+                //let languageEnglishLabel = $(this).data('language-english-label');
+                //let languageCultureLabel = $(this).data('language-culture-label');
+                //let currentLanguageCultureCode = $(this).data(
+                //    'current-language-culture-code'
+                //);
+
+                // Proceed ahead only if selected scheme is different than previous one
+                if (selectedSchemeId != window.schemesInfo.currentScheme) {
+
+                    window.schemesInfo.bindSchemesToDropdown(window.schemesInfo.list, selectedSchemeId);
+                    await getPopularQuestionsTranslations();
+                }
             }
         );
     }
@@ -1021,7 +1066,7 @@
         $('[data-bs-toggle="popover"]').popover('hide');
     }
 
-    function initChatBotConfig() {
+    async function initChatBotConfig() {
 
         // Set parent route
         currentParentRoute = $('#currentParentRoute').val();
@@ -1031,6 +1076,7 @@
 
         voiceRecorderListener();
         languageChangeListener();
+        schemeChangeListener();
         popularQuestionClickListener();
         generalQuestionClickListener();
         userQuestionTextBoxOnKeyPressListener();
@@ -1044,7 +1090,7 @@
         chatbotConfirmationModalCloseEventListener();
         submitFeedbackModalCloseEventListener();
 
-        getUITranslations();
+        await getUITranslations();
         //getPopularQuestionsTranslations();
 
         configAppTour();
@@ -1060,27 +1106,36 @@
         }
     }
 
-    function getPopularQuestionsTranslations() {
+    async function getPopularQuestionsTranslations() {
         const currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
 
-        getTranslationFiles().then(translations => {
-
+        await getTranslationFiles().then(translations => {
 
             // Find the current selected langauge translations
             // And show top 5 popular questions from it
+            const currentSelectedSchemeId = window.schemesInfo.currentScheme;
             const currentSelectedLanaguageTranslations = translations.find(f => f.languageCode == currentLanguageCode);
 
-            const topFiveRandomPopularQuestions = getRandomValues(currentSelectedLanaguageTranslations.translations, 5);
+            // Update schemes translations as well
+            const translationsList = convertObjectToArray(currentSelectedLanaguageTranslations.translations.lables);
+            window.schemesInfo.updateSchemesTranslations(translationsList);
+            const currentSelectedSChemeTranslations = currentSelectedLanaguageTranslations.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
 
-            const generalQuestions = convertObjectToArray(currentSelectedLanaguageTranslations.translations);
+            if (currentSelectedSChemeTranslations) {
+                const topRandomPopularQuestions = getRandomValues(currentSelectedSChemeTranslations.queries, 4);
 
-            bindGeneralQuestions(generalQuestions);
+                //const generalQuestions = convertObjectToArray(currentSelectedLanaguageTranslations.translations);
 
-            const popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topFiveRandomPopularQuestions);
+                //bindGeneralQuestions(generalQuestions);
 
-            $('.query-messages-box').empty();
-            $('.query-messages-box').append(popularQuestionsHtmlContent);
-            showPopularQuestions();
+                const popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topRandomPopularQuestions);
+
+                $('.query-messages-box').empty();
+                $('.query-messages-box').append(popularQuestionsHtmlContent);
+                showPopularQuestions();
+            } else {
+                console.log('Translations missing');
+            }
         });
     }
 
@@ -1193,6 +1248,12 @@
             {
                 id: 'app_tour_refresh_button_description',
                 text: 'app_tour_refresh_button_description',
+                showNextButton: true,
+                showPreviousButton: true,
+            },
+            {
+                id: 'app_tour_scheme_selection_description',
+                text: 'app_tour_scheme_selection_description',
                 showNextButton: false,
                 showPreviousButton: true,
                 showExitButton: true,
@@ -1202,6 +1263,9 @@
         for (var i = 0; i < appTourTranslationMappingDetails.length; i++) {
             let currentTranslationMappingDetails =
                 appTourTranslationMappingDetails[i];
+
+
+
 
             let appTourStep = {};
             appTourStepButtons = [];
@@ -1248,6 +1312,18 @@
     }
 
     function startAppTour() {
+
+        // Check if current translation mapping details app tour step is visible in UI or not
+        // Sometimes some ui elements can be hidden as per the user action,
+        // So no need to display app tour for it, as it is not visible on the screen
+        const appTourStepId = 'app_tour_language_selection_description';
+        const appTourUiElementClassName = '.' + appTourStepId;
+        const currentAppTourStepUiElement = $(appTourUiElementClassName).css('display');
+
+        if (currentAppTourStepUiElement == "none") {
+            tour.removeStep(appTourStepId);
+        }
+
         tour.start();
     }
 
@@ -1558,7 +1634,7 @@
         if (shouldHidePopularQuestions == true) {
             hidePopularQuestions();
         }
-        
+
         showUserRecordedMessageInTextBox(message, shouldAutoSend);
     }
 
@@ -2241,7 +2317,6 @@
             // Check base64 string length is multiply of 4 or not
             // If not add missing number of "=" characters and make it correct
             while (base64.length % 4 != 0) {
-                console.log('base64 adding: ', base64.length);
                 base64 += '=';
             }
 
@@ -2319,7 +2394,10 @@
         return blob;
     };
 
-    function getUITranslations() {
+    async function getUITranslations() {
+
+        await window.schemesInfo.getSchemesList();
+
         isGetUITranslationsRequestInProgress = $.ajax({
             type: 'POST',
             url: currentParentRoute + 'GetUITranslations',
@@ -2926,5 +3004,7 @@
 
 
     }
+
+
 
 })();

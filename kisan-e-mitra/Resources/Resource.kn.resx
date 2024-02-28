@@ -261,6 +261,9 @@
   <data name="message.app_tour_sample_questions_description" xml:space="preserve">
     <value>ಸಹಾಯಕ್ಕಾಗಿ ಈ ಉದಾಹರಣೆ ಪ್ರಶ್ನೆಗಳನ್ನು ಬಳಸಿ</value>
   </data>
+  <data name="message.app_tour_scheme_selection_description" xml:space="preserve">
+    <value>ಈ ಮೆನುವಿನಿಂದ ನಿಮ್ಮ ಸ್ಕೀಮ್ ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ.</value>
+  </data>
   <data name="message.app_tour_send_button_description" xml:space="preserve">
     <value>ನಿಮ್ಮ ಸಂದೇಶವನ್ನು ಕಳುಹಿಸಲು ಈ ಬಾಣದ ಗುಂಡಿಯನ್ನು ಒತ್ತಿರಿ.</value>
   </data>
@@ -333,6 +336,9 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>ಅಮಾನ್ಯ Otp</value>
   </data>
+  <data name="message.kcc_scheme" xml:space="preserve">
+    <value>ಕಿಸಾನ್ ಕ್ರೆಡಿಟ್ ಕಾರ್ಡ್</value>
+  </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
     <value>ಕನ್ನಡ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿದ್ದಕ್ಕಾಗಿ ಧನ್ಯವಾದಗಳು. ಆತ್ಮೀಯ ಫಲಾನುಭವಿಗಳೇ, ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಟೈಪ್ ಮಾಡಿ ಅಥವಾ ಮೈಕ್ ಬಟನ್ ಬಳಸಿ ಮಾತನಾಡಿ. ಮೈಕ್ ಬಟನ್ ಸ್ಪರ್ಶಿಸಿ ಮತ್ತು ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಕೇಳಿ. ರೆಕಾರ್ಡಿಂಗ್ ನಿಲ್ಲಿಸಲು ಮೈಕ್ ಬಟನ್ ಅನ್ನು ಮತ್ತೊಮ್ಮೆ ಸ್ಪರ್ಶಿಸಿ.</value>
   </data>
@@ -359,6 +365,9 @@
   </data>
   <data name="message.otp_verification" xml:space="preserve">
     <value>OTP ಪರಿಶೀಲನೆ</value>
+  </data>
+  <data name="message.pmfby_scheme" xml:space="preserve">
+    <value>ಪಿಎಂ ಬೆಳೆ ವಿಮಾ ಯೋಜನೆ</value>
   </data>
   <data name="message.pm_kisan_scheme" xml:space="preserve">
     <value>ಪ್ರಧಾನ ಮಂತ್ರಿ ಕಿಸಾನ್ ಯೋಜನೆ</value>

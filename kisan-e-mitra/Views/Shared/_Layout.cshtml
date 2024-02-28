@@ -36,20 +36,20 @@
                 <div class="content-head-text"><h1 class="labelTitle">@Resources.Resource.label_title</h1></div>
                 <div class="d-flex justify-content-end">
 
-                   <!-- <div class="custom-select-wrapper app_tour_alternate_language_selection_description schemes-wrapper" id="languageDropdownWrapper">
-                        <button class="btn btn-style dropdown-toggle" type="button" id="languageDropDown"
+                    <div class="custom-select-wrapper app_tour_scheme_selection_description schemes-wrapper" id="schemesDropdownWrapper">
+                        <button class="btn btn-style dropdown-toggle" type="button" id="schemesDropdownButton"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="fw-bold" id="selectedLanguageLabel">PM Fasal Bima Yojna</span>
+                            <span class="fw-bold" id="selectedSchemeLabel"></span>
                         </button>
-                        <ul id="languageDropDown" class="dropdown-menu" aria-labelledby="languageDropDown">
-                            @foreach (var availableLanguage in availableLanguages)
+                        <ul id="schemesDropdown" class="dropdown-menu" aria-labelledby="languageDropDown">
+                            @*@foreach (var availableLanguage in availableLanguages)
                             {
-                                <li class="languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">
+                                <li class="scheme-label-wrapper" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">
                                     <a class="dropdown-item @((availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode) ? "fw-bold" : "")">@availableLanguage.LanguageCultureLabel</a>
                                 </li>
-                            }
+                            }*@
                         </ul>
-                    </div> -->
+                    </div>
 
                     <div class="custom-select-wrapper app_tour_alternate_language_selection_description" id="languageDropdownWrapper">
                         <button class="btn btn-style dropdown-toggle" type="button" id="languageDropDown"
@@ -108,6 +108,7 @@
     <script type="text/javascript" src="~/Content/js/WavRecorder.js"></script>
 
     <script type="text/javascript" src="~/Content/js/shepherd.js"></script>
-    <script type="text/javascript" src="~/Content/js/ham-menu.js"></script>
+    <script type="text/javascript" src="~/Content/js/schemesDropdown.js"></script>
+    @*<script type="text/javascript" src="~/Content/js/ham-menu.js"></script>*@
 </body>
 </html>

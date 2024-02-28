@@ -199,7 +199,13 @@ namespace KisanEMitra.Services
                 {
                     Key = "app_tour_refresh_button_description",
                     Value = Resources.Resource.message_app_tour_refresh_button_description
-                },new CommonKeyValue
+                },
+                new CommonKeyValue
+                {
+                    Key = "app_tour_scheme_selection_description",
+                    Value = Resources.Resource.message_app_tour_scheme_selection_description
+                }
+                ,new CommonKeyValue
                 {
                     Key = "previous",
                     Value = Resources.Resource.label_previous
@@ -256,6 +262,16 @@ namespace KisanEMitra.Services
                 {
                     Key = "message_pm_kisan_scheme",
                     Value = Resources.Resource.message_pm_kisan_scheme
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_kcc_scheme",
+                    Value = Resources.Resource.message_kcc_scheme
+                },
+                new CommonKeyValue
+                {
+                    Key = "message_pmfby_scheme",
+                    Value = Resources.Resource.message_pmfby_scheme
                 }
             };
 

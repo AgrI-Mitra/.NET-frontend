@@ -493,6 +493,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Choose your scheme from this menu..
+        /// </summary>
+        public static string message_app_tour_scheme_selection_description {
+            get {
+                return ResourceManager.GetString("message.app_tour_scheme_selection_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Press this Arrow button to send your message..
         /// </summary>
         public static string message_app_tour_send_button_description {
@@ -709,6 +718,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kisan Credit Card.
+        /// </summary>
+        public static string message_kcc_scheme {
+            get {
+                return ResourceManager.GetString("message.kcc_scheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Thank you for selecting the English language.
         ///Dear Beneficiary,
         ///Type your question or speak using the mic button. Just touch the mic button and say your question. Touch the mic button again to stop recording..
@@ -797,6 +815,15 @@ namespace Resources {
         public static string message_pm_kisan_scheme {
             get {
                 return ResourceManager.GetString("message.pm_kisan_scheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PM Fasal Bima Yojana.
+        /// </summary>
+        public static string message_pmfby_scheme {
+            get {
+                return ResourceManager.GetString("message.pmfby_scheme", resourceCulture);
             }
         }
         

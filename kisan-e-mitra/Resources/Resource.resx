@@ -455,4 +455,13 @@ Do you want to continue and refresh the page?</value>
   <data name="message.pm_kisan_scheme" xml:space="preserve">
     <value>PM Kisan Scheme</value>
   </data>
+  <data name="message.app_tour_scheme_selection_description" xml:space="preserve">
+    <value>Choose your scheme from this menu.</value>
+  </data>
+  <data name="message.kcc_scheme" xml:space="preserve">
+    <value>Kisan Credit Card</value>
+  </data>
+  <data name="message.pmfby_scheme" xml:space="preserve">
+    <value>PM Fasal Bima Yojana</value>
+  </data>
 </root>

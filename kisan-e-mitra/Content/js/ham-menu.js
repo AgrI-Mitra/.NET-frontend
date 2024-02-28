@@ -21,6 +21,3 @@
     // Attach to the global object (window)
     window.toggleHamburger = toggleHamburger;
 })();
-
-// Now you can use myFunction globally
-console.log('toggleHamburger: ', toggleHamburger);

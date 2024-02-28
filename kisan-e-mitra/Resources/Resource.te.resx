@@ -456,4 +456,13 @@
   <data name="message.pm_kisan_scheme" xml:space="preserve">
     <value>పీఎం కిసాన్ పథకం</value>
   </data>
+  <data name="message.app_tour_scheme_selection_description" xml:space="preserve">
+    <value>ఈ మెను నుండి మీ పథకాన్ని ఎంచుకోండి.</value>
+  </data>
+  <data name="message.kcc_scheme" xml:space="preserve">
+    <value>కిసాన్ క్రెడిట్ కార్డ్</value>
+  </data>
+  <data name="message.pmfby_scheme" xml:space="preserve">
+    <value>PM ఫసల్ బీమా యోజన</value>
+  </data>
 </root>

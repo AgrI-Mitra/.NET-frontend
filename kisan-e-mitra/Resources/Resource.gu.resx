@@ -261,6 +261,9 @@
   <data name="message.app_tour_sample_questions_description" xml:space="preserve">
     <value>મદદ માટે આ ઉદાહરણ પ્રશ્નોનો ઉપયોગ કરો</value>
   </data>
+  <data name="message.app_tour_scheme_selection_description" xml:space="preserve">
+    <value>આ મેનુમાંથી તમારી સ્કીમ પસંદ કરો.</value>
+  </data>
   <data name="message.app_tour_send_button_description" xml:space="preserve">
     <value>તમારો સંદેશ મોકલવા માટે આ એરો બટન દબાવો.</value>
   </data>
@@ -333,6 +336,9 @@
   <data name="message.invalid_otp" xml:space="preserve">
     <value>અમાન્ય ઓટીપી</value>
   </data>
+  <data name="message.kcc_scheme" xml:space="preserve">
+    <value>કિસાન ક્રેડિટ કાર્ડ</value>
+  </data>
   <data name="message.language_changed_greeting" xml:space="preserve">
     <value>ગુજરાતી ભાષા પસંદ કરવા બદલ આભાર. પ્રિય લાભાર્થી, તમારો પ્રશ્ન લખો અથવા માઈક બટનનો ઉપયોગ કરીને બોલો. ફક્ત માઈક બટનને ટચ કરો અને તમારો પ્રશ્ન કહો. રેકોર્ડિંગ બંધ કરવા માટે ફરીથી માઇક બટનને ટચ કરો.</value>
   </data>
@@ -359,6 +365,9 @@
   </data>
   <data name="message.otp_verification" xml:space="preserve">
     <value>ઓટીપી ચકાસણી</value>
+  </data>
+  <data name="message.pmfby_scheme" xml:space="preserve">
+    <value>પીએમ પાક વીમા યોજના</value>
   </data>
   <data name="message.pm_kisan_scheme" xml:space="preserve">
     <value>પીએમ કિસાન યોજના</value>

@@ -455,4 +455,13 @@
   <data name="message.pm_kisan_scheme" xml:space="preserve">
     <value>প্রধানমন্ত্রী কিষাণ যোজনা</value>
   </data>
+  <data name="message.app_tour_scheme_selection_description" xml:space="preserve">
+    <value>এই মেনু থেকে আপনার স্কিম চয়ন করুন.</value>
+  </data>
+  <data name="message.kcc_scheme" xml:space="preserve">
+    <value>কিষাণ ক্রেডিট কার্ড</value>
+  </data>
+  <data name="message.pmfby_scheme" xml:space="preserve">
+    <value>প্রধানমন্ত্রী ফসল বীমা প্রকল্প</value>
+  </data>
 </root>

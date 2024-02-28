@@ -455,4 +455,13 @@
   <data name="message.pm_kisan_scheme" xml:space="preserve">
     <value>பிரதம மந்திரி கிசான் திட்டம்</value>
   </data>
+  <data name="message.app_tour_scheme_selection_description" xml:space="preserve">
+    <value>இந்த மெனுவிலிருந்து உங்கள் திட்டத்தைத் தேர்ந்தெடுக்கவும்.</value>
+  </data>
+  <data name="message.kcc_scheme" xml:space="preserve">
+    <value>கிசான் கிரெடிட் கார்டு</value>
+  </data>
+  <data name="message.pmfby_scheme" xml:space="preserve">
+    <value>PM பயிர் காப்பீட்டுத் திட்டம்</value>
+  </data>
 </root>

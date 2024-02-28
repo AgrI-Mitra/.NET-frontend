@@ -455,4 +455,13 @@
   <data name="message.pm_kisan_scheme" xml:space="preserve">
     <value>ପିଏମ କିସାନ ଯୋଜନା</value>
   </data>
+  <data name="message.app_tour_scheme_selection_description" xml:space="preserve">
+    <value>ଏହି ମେନୁରୁ ଆପଣଙ୍କର ସ୍କିମ୍ ବାଛନ୍ତୁ |</value>
+  </data>
+  <data name="message.kcc_scheme" xml:space="preserve">
+    <value>କିସାନ୍ କ୍ରେଡିଟ୍ କାର୍ଡ |</value>
+  </data>
+  <data name="message.pmfby_scheme" xml:space="preserve">
+    <value>ପ୍ରଧାନମନ୍ତ୍ରୀ ଫସଲ ବୀମା ଯୋଜନା</value>
+  </data>
 </root>
