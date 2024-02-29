@@ -260,6 +260,8 @@
                 makeRequestRetry('POST', apiUrl)
                     .then((apiResponse) => {
                         currentUserId = apiResponse;
+
+                        popularQueriesService.resetUsedQueries();
                         resolve();
                     })
                     .catch((apiError) => {
@@ -598,24 +600,6 @@
         return "<div class='ms-2 dot-flashing'></div>";
     }
 
-    /**
-     * This method is used to get html content to display popular question
-     * @param {any} popularQuestion
-     * @returns
-     */
-    function getPopularQuestionHtmlContent(popularQuestion) {
-        return (
-            "<div id='popularQuestion' class='query-msg popularQuestions'" +
-            "data-popular-question='" +
-            popularQuestion +
-            "'>" +
-            '<p>' +
-            popularQuestion +
-            '</p>' +
-            '</div>'
-        );
-    }
-
     function getPopularQuestionsHtmlContent(popularQuestionsList) {
 
         let popularQuestionsHtmlContent = "";
@@ -802,7 +786,7 @@
             // Update selected scheme translations
             // Find the current selected selected scheme
             // And then find the translation for it
-            const currentSelectedScheme = window.schemesInfo.currentScheme;
+            const currentSelectedScheme = schemesInfo.currentScheme;
 
             if (currentTranslationMappingDetails) {
                 // Update page title
@@ -878,9 +862,9 @@
                 //);
 
                 // Proceed ahead only if selected scheme is different than previous one
-                if (selectedSchemeId != window.schemesInfo.currentScheme) {
+                if (selectedSchemeId != schemesInfo.currentScheme) {
 
-                    window.schemesInfo.bindSchemesToDropdown(window.schemesInfo.list, selectedSchemeId);
+                    schemesInfo.bindSchemesToDropdown(schemesInfo.list, selectedSchemeId);
                     await getPopularQuestionsTranslations();
                 }
             }
@@ -899,29 +883,14 @@
         );
     }
 
-    /**
-     * This method is used to listen popular question click event,
-     * It will copy clicked question to user question text box
-     */
-    function popularQuestionClickListener() {
-        $(document).on(
-            'click',
-            '#popularQuestion',
-            function (event) {
-                event.stopPropagation();
-                let popularQuestion = $(this).data('popular-question');
-                copyPopularQuestionInTextBox(popularQuestion);
-            }
-        );
-    }
-
     function generalQuestionClickListener() {
         $(document).on(
             'click',
             '.popular-query-card',
             function (event) {
                 event.stopPropagation();
-                let popularQuestion = $(this).data('popular-question');
+                const popularQuestion = $(this).data('popular-question');
+                const popularQuestionKey = $(this).attr('id');
                 copyPopularQuestionInTextBox(popularQuestion, false, true);
                 toggleHamburger();
             }
@@ -1046,8 +1015,14 @@
 
     function popularQuestionsOnClickListener() {
         $(document).on('click', '.popularQuestions', function (ev) {
-            let popularQuestion = $(this).data('popular-question');
+            const popularQuestion = $(this).data('popular-question');
+            const popularQuestionKey = $(this).attr('id');
             copyPopularQuestionInTextBox(popularQuestion);
+
+            // Update used popular questions list,
+            // So when we display new popular questions, we can exclude used ones and show different questions
+            const currentScheme = schemesInfo.currentScheme;
+            popularQueriesService.updateUsedQueries(currentScheme, popularQuestionKey);
         });
     }
 
@@ -1077,7 +1052,7 @@
         voiceRecorderListener();
         languageChangeListener();
         schemeChangeListener();
-        popularQuestionClickListener();
+        //popularQuestionClickListener();
         generalQuestionClickListener();
         userQuestionTextBoxOnKeyPressListener();
         chatbotMessageActionButtonsOnClickListener();
@@ -1107,22 +1082,31 @@
     }
 
     async function getPopularQuestionsTranslations() {
+
+        const numberOfVisiblePopularQueries = appConfig && appConfig.numberOfVisiblePopularQueries ? appConfig.numberOfVisiblePopularQueries : 4;
+
         const currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
 
         await getTranslationFiles().then(translations => {
 
             // Find the current selected langauge translations
             // And show top 5 popular questions from it
-            const currentSelectedSchemeId = window.schemesInfo.currentScheme;
+            const currentSelectedSchemeId = schemesInfo.currentScheme;
             const currentSelectedLanaguageTranslations = translations.find(f => f.languageCode == currentLanguageCode);
 
             // Update schemes translations as well
             const translationsList = convertObjectToArray(currentSelectedLanaguageTranslations.translations.lables);
-            window.schemesInfo.updateSchemesTranslations(translationsList);
+            schemesInfo.updateSchemesTranslations(translationsList);
             const currentSelectedSChemeTranslations = currentSelectedLanaguageTranslations.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
 
             if (currentSelectedSChemeTranslations) {
-                const topRandomPopularQuestions = getRandomValues(currentSelectedSChemeTranslations.queries, 4);
+
+                // Get already used queries of the current scheme
+                // We don't need to display already used queries
+
+                const alreadyUsedQueries = popularQueriesService.getUsedQueries(currentSelectedSchemeId);
+
+                const topRandomPopularQuestions = getRandomValues(currentSelectedSChemeTranslations.queries, numberOfVisiblePopularQueries, alreadyUsedQueries.length ? alreadyUsedQueries : undefined);
 
                 //const generalQuestions = convertObjectToArray(currentSelectedLanaguageTranslations.translations);
 
@@ -2452,8 +2436,8 @@
         return result;
     }
 
-    function getRandomValues(obj, count) {
-        let keys = Object.keys(obj).filter(key => typeof obj[key] === 'string' && obj[key].length < 100);
+    function getRandomValues(obj, count, valuesToExclude) {
+        let keys = Object.keys(obj).filter(key => typeof obj[key] === 'string' && obj[key].length < 100 && (!valuesToExclude || (valuesToExclude && !valuesToExclude.includes(key))));
         let result = [];
 
         for (let i = 0; i < count; i++) {
@@ -2599,7 +2583,7 @@
         //}
         getPopularQuestionsTranslations();
 
-        showPopularQuestions();
+        //showPopularQuestions();
     }
 
     function updateSelectedLanguageInUI(

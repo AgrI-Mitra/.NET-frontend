@@ -163,6 +163,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Content Include="Content\js\app-config.js" />
     <Content Include="Content\js\popularQueriesService.js" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Resources\Resource.kn.Designer.cs">

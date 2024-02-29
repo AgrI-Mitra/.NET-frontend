@@ -1,4 +1,4 @@
 {
-  "visibleNNumberOfPopularQuestions": 4,
-  "doNotRepeatNNumberOfLastUsedPopularQuestions": 4
+  "numberOfVisiblePopularQueries": 4,
+  "numberOfUsedPopularQueriesToRetain": 5
 }
