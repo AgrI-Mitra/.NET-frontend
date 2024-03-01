@@ -262,6 +262,8 @@
                         currentUserId = apiResponse;
 
                         popularQueriesService.resetUsedQueries();
+                        getPopularQuestionsTranslations();
+
                         resolve();
                     })
                     .catch((apiError) => {
@@ -607,8 +609,10 @@
         for (var i = 0; i < popularQuestionsList.length; i++) {
             const currentPopularQuestion = popularQuestionsList[i];
 
-            popularQuestionsHtmlContent += "<div id='" + currentPopularQuestion.key + "' class='query-msg popularQuestions' data-popular-question='" + currentPopularQuestion.value + "'>" +
-                "<p>" + currentPopularQuestion.value + "</p>" +
+            const currentPopularQuestionValue = commonService.escapeSingleQuote(currentPopularQuestion.value);
+
+            popularQuestionsHtmlContent += "<div id='" + currentPopularQuestion.key + "' class='query-msg popularQuestions' data-popular-question='" + currentPopularQuestionValue + "'>" +
+                "<p>" + currentPopularQuestionValue + "</p>" +
                 "</div>"
         }
         return popularQuestionsHtmlContent;
@@ -620,10 +624,11 @@
 
         for (var i = 0; i < generalQuestionsList.length; i++) {
             const currentPopularQuestion = generalQuestionsList[i];
+            const currentPopularQuestionValue = commonService.escapeSingleQuote(currentPopularQuestion.value);
 
-            generalQuestionsHtmlContent += "<div class='card popular-query-card' id='" + currentPopularQuestion.key + "' data-popular-question='" + currentPopularQuestion.value + "'>" +
+            generalQuestionsHtmlContent += "<div class='card popular-query-card' id='" + currentPopularQuestion.key + "' data-popular-question='" + currentPopularQuestionValue + "'>" +
                 "<div class='card-body popular-query-card-body'>" +
-                "<p>" + currentPopularQuestion.value + "</p>" +
+                "<p>" + currentPopularQuestionValue + "</p>" +
                 "</div>" +
                 "</div>";
         }
@@ -1048,7 +1053,7 @@
 
         const controller = new AbortController();
         const signal = controller.signal;
-
+        await window.schemesInfo.getSchemesList();
         voiceRecorderListener();
         languageChangeListener();
         schemeChangeListener();
@@ -1064,9 +1069,8 @@
         initAutoSizeInputBox();
         chatbotConfirmationModalCloseEventListener();
         submitFeedbackModalCloseEventListener();
-
-        await getUITranslations();
-        //getPopularQuestionsTranslations();
+        await getPopularQuestionsTranslations();
+        getUITranslations();
 
         configAppTour();
         initPopovers();
@@ -1424,7 +1428,8 @@
             if (messageType == 'final_response') {
                 sessionStorage.setItem('final_response', true);
 
-                showPopularQuestions();
+                //showPopularQuestions();
+                getPopularQuestionsTranslations();
             }
 
             //const divElem = document.querySelector('#chat-message-span-wrapper-' + messageId);
@@ -2380,7 +2385,7 @@
 
     async function getUITranslations() {
 
-        await window.schemesInfo.getSchemesList();
+        
 
         isGetUITranslationsRequestInProgress = $.ajax({
             type: 'POST',
@@ -2403,19 +2408,7 @@
             },
         });
 
-        getPopularQuestionsTranslations();
-
-        //getTranslationFiles().then(([englishTranslations, bengaliTranslations,
-        //    gujaratiTranslations, hindiTranslations,
-        //    kannadaTranslations, malayalamTranslations,
-        //    marathiTranslations, odiaTranslations, pubjabiTranslations,
-        //    tamilTranslations, teluguTranslations]) => {
-        //    englishTranslations;     // fetched movies
-        //    bengaliTranslations; // fetched categories
-        //}).catch(error => {
-        //    // /movies or /categories request failed
-        //});
-
+        //getPopularQuestionsTranslations();
     }
 
     function convertObjectToArray(obj) {
@@ -2556,7 +2549,8 @@
 
                 updateTranslations(data.Data.Translations);
 
-                updatePopularQuestionsTranslations(data.Data.PopularQuestions);
+                //updatePopularQuestionsTranslations(data.Data.PopularQuestions);
+                getPopularQuestionsTranslations();
                 showUserRecordedMessageInTextBox('');
 
                 //previousUserId = currentUserId;
@@ -2570,20 +2564,7 @@
     }
 
     function updatePopularQuestionsTranslations(popularQuestions) {
-        //$('.query-messages-box').empty();
-
-        //for (var i = 0; i < popularQuestions.length; i++) {
-        //    let currentPopularQuestion = popularQuestions[i];
-
-        //    let currentPopularQuestionHtmlContent = getPopularQuestionHtmlContent(
-        //        currentPopularQuestion.PopularQuestionValue
-        //    );
-
-        //    $('.query-messages-box').append(currentPopularQuestionHtmlContent);
-        //}
         getPopularQuestionsTranslations();
-
-        //showPopularQuestions();
     }
 
     function updateSelectedLanguageInUI(
@@ -2886,7 +2867,8 @@
         $('.conversationsWrapper').remove();
         var defaultPlaceholderMessage = translations.find((f) => f.Key == 'message_ask_ur_question').Value;
         changeInputPlaceholderValue(defaultPlaceholderMessage);
-        showPopularQuestions();
+        //showPopularQuestions();
+        
     }
 
     function createGlobalAudioElement() {

@@ -43,15 +43,26 @@
             queries: []
         };
 
-        const isCurrentSchemeAlreadyAvailable = usedQueries.find(f => f.scheme == scheme);
-        if (!isCurrentSchemeAlreadyAvailable) {
+        let usedQueriesBySchemeNameIndex = usedQueries.findIndex(f => f.scheme == scheme);
+
+        if (usedQueriesBySchemeNameIndex >= 0) {
+
+            // Check if query is already saved as used query or not
+            const usedQueriesOfCurrentScheme = usedQueries[usedQueriesBySchemeNameIndex];
+            const isQueryAlreadySaved = usedQueriesOfCurrentScheme.queries.find(f => f == usedQuery);
+
+            if (isQueryAlreadySaved) {
+                return;
+            }
+
+        } else {
             usedQueries.push(selectedSchemeUsedQueries);
         }
 
         //selectedSchemeUsedQueries.queries.push(usedQuery);
 
         // Check the lenght of existing used queries
-        const usedQueriesBySchemeNameIndex = usedQueries.findIndex(f => f.scheme == scheme);
+        usedQueriesBySchemeNameIndex = usedQueries.findIndex(f => f.scheme == scheme);
 
         if (usedQueriesBySchemeNameIndex >= 0) {
             usedQueries[usedQueriesBySchemeNameIndex].queries = usedQueries[usedQueriesBySchemeNameIndex].queries.concat([usedQuery]);
