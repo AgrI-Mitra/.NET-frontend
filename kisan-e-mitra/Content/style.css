@@ -436,6 +436,11 @@ svg.footer-svg-hover {
     white-space: initial;
 }
 
+.query-messages-box p:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
 .query-messages-box {
     max-width: 700px;
     padding-bottom: 10px;
