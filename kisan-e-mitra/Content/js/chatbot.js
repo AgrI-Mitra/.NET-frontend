@@ -612,7 +612,7 @@
             const currentPopularQuestionValue = commonService.escapeSingleQuote(currentPopularQuestion.value);
 
             popularQuestionsHtmlContent += "<div id='" + currentPopularQuestion.key + "' class='query-msg popularQuestions' data-popular-question='" + currentPopularQuestionValue + "'>" +
-                "<p>" + currentPopularQuestionValue + "</p>" +
+                "<p>" + currentPopularQuestion.value + "</p>" +
                 "</div>"
         }
         return popularQuestionsHtmlContent;
@@ -628,7 +628,7 @@
 
             generalQuestionsHtmlContent += "<div class='card popular-query-card' id='" + currentPopularQuestion.key + "' data-popular-question='" + currentPopularQuestionValue + "'>" +
                 "<div class='card-body popular-query-card-body'>" +
-                "<p>" + currentPopularQuestionValue + "</p>" +
+                "<p>" + currentPopularQuestion.value + "</p>" +
                 "</div>" +
                 "</div>";
         }
