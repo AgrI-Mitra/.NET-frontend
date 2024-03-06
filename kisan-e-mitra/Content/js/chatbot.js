@@ -261,8 +261,7 @@
                     .then((apiResponse) => {
                         currentUserId = apiResponse;
 
-                        popularQueriesService.resetUsedQueries();
-                        getPopularQuestionsTranslations();
+
 
                         resolve();
                     })
@@ -604,18 +603,22 @@
 
     function getPopularQuestionsHtmlContent(popularQuestionsList) {
 
-        let popularQuestionsHtmlContent = "";
-
+        let popularQuestionsElementsList = [];
         for (var i = 0; i < popularQuestionsList.length; i++) {
             const currentPopularQuestion = popularQuestionsList[i];
 
-            const currentPopularQuestionValue = commonService.escapeSingleQuote(currentPopularQuestion.value);
+            const popularQuestionElementNode = document.createElement('div');
+            popularQuestionElementNode.setAttribute("id", currentPopularQuestion.key);
+            popularQuestionElementNode.setAttribute("data-popular-question", currentPopularQuestion.value);
+            popularQuestionElementNode.className = "query-msg popularQuestions";
 
-            popularQuestionsHtmlContent += "<div id='" + currentPopularQuestion.key + "' class='query-msg popularQuestions' data-popular-question='" + currentPopularQuestionValue + "'>" +
-                "<p>" + currentPopularQuestion.value + "</p>" +
-                "</div>"
+            const popularQuestionParagrapElementNode = document.createElement('p');
+            popularQuestionParagrapElementNode.innerHTML = currentPopularQuestion.value;
+            popularQuestionElementNode.appendChild(popularQuestionParagrapElementNode);
+            popularQuestionsElementsList.push(popularQuestionElementNode);
         }
-        return popularQuestionsHtmlContent;
+
+        return popularQuestionsElementsList;
     }
 
     function getGeneralQuestionsHtmlContent(generalQuestionsList) {
@@ -1119,7 +1122,11 @@
                 const popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topRandomPopularQuestions);
 
                 $('.query-messages-box').empty();
-                $('.query-messages-box').append(popularQuestionsHtmlContent);
+
+                for (var i = 0; i < popularQuestionsHtmlContent.length; i++) {
+                    $('.query-messages-box').append(popularQuestionsHtmlContent[i]);
+                }
+
                 showPopularQuestions();
             } else {
                 console.log('Translations missing');
@@ -2385,7 +2392,7 @@
 
     async function getUITranslations() {
 
-        
+
 
         isGetUITranslationsRequestInProgress = $.ajax({
             type: 'POST',
@@ -2842,7 +2849,10 @@
             const fingerPrintId = sessionStorage.getItem('fingerPrintId');
 
             createSession(fingerPrintId)
-                .then((sessionResult) => { })
+                .then((sessionResult) => {
+                    popularQueriesService.resetUsedQueries();
+                    getPopularQuestionsTranslations();
+                })
                 .catch((sessionError) => {
                     handleError(sessionError);
                 });
@@ -2868,7 +2878,7 @@
         var defaultPlaceholderMessage = translations.find((f) => f.Key == 'message_ask_ur_question').Value;
         changeInputPlaceholderValue(defaultPlaceholderMessage);
         //showPopularQuestions();
-        
+
     }
 
     function createGlobalAudioElement() {
