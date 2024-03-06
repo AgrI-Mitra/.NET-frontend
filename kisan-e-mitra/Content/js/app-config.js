@@ -6,7 +6,8 @@
 
             window.appConfig = {
                 numberOfVisiblePopularQueries: appConfig.numberOfVisiblePopularQueries,
-                numberOfUsedPopularQueriesToRetain: appConfig.numberOfUsedPopularQueriesToRetain
+                numberOfUsedPopularQueriesToRetain: appConfig.numberOfUsedPopularQueriesToRetain,
+                defaultScheme: appConfig.defaultScheme
             }
 
         } catch (e) {

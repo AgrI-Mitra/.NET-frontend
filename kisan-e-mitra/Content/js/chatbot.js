@@ -1029,7 +1029,7 @@
 
             // Update used popular questions list,
             // So when we display new popular questions, we can exclude used ones and show different questions
-            const currentScheme = schemesInfo.currentScheme;
+            const currentScheme = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
             popularQueriesService.updateUsedQueries(currentScheme, popularQuestionKey);
         });
     }
@@ -1098,7 +1098,7 @@
 
             // Find the current selected langauge translations
             // And show top 5 popular questions from it
-            const currentSelectedSchemeId = schemesInfo.currentScheme;
+            const currentSelectedSchemeId = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
             const currentSelectedLanaguageTranslations = translations.find(f => f.languageCode == currentLanguageCode);
 
             // Update schemes translations as well
