@@ -1,36 +1,29 @@
 @{
-        ViewBag.Title = Resources.Resource.label_title;
-        //var welcomeNoteGreetingBase64 = ViewBag.AudioBase64Strings[0];
-        //var languageChangeGreetingBase64 = ViewBag.AudioBase64Strings[1];
-        var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
-        var isMaintenanceModeOn = TempData["isMaintenanceModeOn"];
-        var resendOtpTranslation = Resources.Resource.message_resend_otp;
-        var defaultErrorMessage = Resources.Resource.error_default_message;
-        var defaultPlaceholder = Resources.Resource.message_ask_ur_question;
-        var chatbotRestartSessionConfirmationMessage = Resources.Resource.message_session_restart_confirmation_message;
-        var confirmationTitle = Resources.Resource.message_confirmation;
-        var yesLabel = Resources.Resource.label_yes;
-        var noLabel = Resources.Resource.label_no;
-        var maintenanceModeHeader = Resources.Resource.message_maintenance_mode_header;
-        var maintenanceModeBody = Resources.Resource.message_maintenance_mode_body;
+    ViewBag.Title = Resources.Resource.label_title;
+    var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
+    var isMaintenanceModeOn = TempData["isMaintenanceModeOn"];
+    var resendOtpTranslation = Resources.Resource.message_resend_otp;
+    var defaultErrorMessage = Resources.Resource.error_default_message;
+    var defaultPlaceholder = Resources.Resource.message_ask_ur_question;
+    var chatbotRestartSessionConfirmationMessage = Resources.Resource.message_session_restart_confirmation_message;
+    var confirmationTitle = Resources.Resource.message_confirmation;
+    var yesLabel = Resources.Resource.label_yes;
+    var noLabel = Resources.Resource.label_no;
+    var maintenanceModeHeader = Resources.Resource.message_maintenance_mode_header;
+    var maintenanceModeBody = Resources.Resource.message_maintenance_mode_body;
 
-        List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;//ViewBag?.LanguageModel?.AvailableLanguages;
-        KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;//ViewBag?.LanguageModel?.SelectedLanguage;
-        List<kishan_bot.Models.PopularQuestion> popularQuestions = TempData["PopularQuestions"] as List<kishan_bot.Models.PopularQuestion>;//ViewBag.PopularQuestions;
-        var welcomeGreetingMessageBase64StringName = "welcome-greeting-message-base64-" + selectedLanguage.LanguageCultureCode + "-audio";
+    List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;
+    KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;
+    List<kishan_bot.Models.PopularQuestion> popularQuestions = TempData["PopularQuestions"] as List<kishan_bot.Models.PopularQuestion>;
+    var welcomeGreetingMessageBase64StringName = "welcome-greeting-message-base64-" + selectedLanguage.LanguageCultureCode + "-audio";
 
-        TempData.Keep("LanguageModel");
-        TempData.Keep("PopularQuestions");
-        TempData.Keep("isMaintenanceModeOn");
+    TempData.Keep("LanguageModel");
+    TempData.Keep("PopularQuestions");
+    TempData.Keep("isMaintenanceModeOn");
 }
 
-@*@Html.Hidden("welcome-greeting-message-base64", (object)welcomeNoteGreetingBase64.ToString())
-    @Html.Hidden("language-change-greeting-message-base64", (object)languageChangeGreetingBase64.ToString())*@
-@Html.Hidden("resend-otp-translation", (object)resendOtpTranslation.ToString())
-@Html.Hidden("default-chatbot-error-message", (object)defaultErrorMessage.ToString())
-@Html.Hidden("default-placeholder-message", (object)defaultPlaceholder.ToString())
 @Html.Hidden("isMaintenanceModeOn", (object)isMaintenanceModeOn.ToString())
-@Html.Hidden("currentParentRoute", "/Test/")
+@Html.Hidden("currentParentRoute", "/Home/")
 
 <div class="msg-scrollbar" id="message-list">
     <div class="my-msg-content system-msg-bg chatbot-message-wrapper">
@@ -59,7 +52,7 @@
 </div>
 <div class="input-container align-items-center justify-content-center p-3 p-md-4">
     <div class="scroll-container d-flex flex-row app_tour_sample_questions_description" id="popularQuestionsWrapper">
-        <div class="query-messages-box">
+        <div class="query-messages-box" id="popular-questions-area">
             @foreach (var popularQuestion in popularQuestions)
             {
                 <div id="popularQuestion" class="query-msg popularQuestions" data-popular-question="@popularQuestion.PopularQuestionValue">
@@ -192,4 +185,4 @@
     </div>
 </div>
 
-<script type="text/javascript" src="~/Content/js/chatbot-staging.js"></script>
+<script type="text/javascript" src="~/Content/js/chatbot.js"></script>

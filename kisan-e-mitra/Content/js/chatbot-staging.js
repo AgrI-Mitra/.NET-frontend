@@ -1,4 +1,6 @@
-(async function () {
+﻿(async function () {
+
+
     var apiUrlConfig = {
         //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
         chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
@@ -12,6 +14,65 @@
         ConversationFeedback: 'conversation/feedback',
     };
 
+    var popularQuestionsTranslations = [
+        {
+            language: 'english',
+            languageCode: 'en',
+            translations: []
+        },
+        {
+            language: 'bengali',
+            languageCode: 'bn',
+            translations: []
+        },
+        {
+            language: 'gujarati',
+            languageCode: 'gu',
+            translations: []
+        },
+        {
+            language: 'hindi',
+            languageCode: 'hi',
+            translations: []
+        },
+        {
+            language: 'kannada',
+            languageCode: 'kn',
+            translations: []
+        },
+        {
+            language: 'malayalam',
+            languageCode: 'ml',
+            translations: []
+        },
+        {
+            language: 'marathi',
+            languageCode: 'mr',
+            translations: []
+        },
+        {
+            language: 'odia',
+            languageCode: 'or',
+            translations: []
+        },
+        {
+            language: 'punjabi',
+            languageCode: 'pa',
+            translations: []
+        },
+        {
+            language: 'tamil',
+            languageCode: 'ta',
+            translations: []
+        },
+        {
+            language: 'telugu',
+            languageCode: 'te',
+            translations: []
+        }
+
+    ];
+
     marked.use({
         breaks: true,
         gfm: true,
@@ -20,7 +81,7 @@
     let latitude;
     let longitude;
 
-    var currentParentRoute = "/Test/";
+    var currentParentRoute = "/Home/";
 
     var isRecording = false;
     var tour;
@@ -37,6 +98,8 @@
 
     var currentUserId = null;
     var previousUserId = null;
+    var sessionId = null;
+    var previousSessionId = null;
     var currentConversationId = null;
 
     var chatbotConfirmationModalId = 'chatbotConfirmationModal';
@@ -148,8 +211,31 @@
         let fingerPrintId = sessionStorage.getItem('fingerPrintId');
 
         if (fingerPrintId != null || fingerPrintId != undefined) {
-            createSession(fingerPrintId);
+            createSession(fingerPrintId, true);
         }
+    }
+
+    // Generate a UUID using timestamp and random numbers
+    /**
+     * function generates a unique identifier (UUID) using a combination of the current timestamp and a random number.
+     * The function gets the current timestamp using new Date().getTime().
+     * It generates a random number between 0 and 16 using Math.random() * 16.
+     * It calculates the remainder of the random number divided by 16 using the modulo operator %.
+     * It converts the remainder to an integer using the bitwise OR operator | and the 0x3 and 0x8 hexadecimal values.
+     * It converts the integer to a hexadecimal string using the toString(16) method.
+     * It replaces the 'x' and 'y' characters in the UUID template with the generated hexadecimal string.
+     * It returns the generated UUID.
+     * @returns  string representing a unique identifier (UUID).
+     */
+    function generateUUID() {
+
+        var dt = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (dt + Math.random() * 16) % 16 | 0;
+            dt = Math.floor(dt / 16);
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        return uuid;
     }
 
     /**
@@ -158,10 +244,9 @@
      * @param {string} fingerPrintId - The fingerprint ID used to create the session.
      * @returns {Promise} - A promise that resolves when the session is created.
      */
-    function createSession(fingerPrintId) {
-        const currentDate = new Date();
+    function createSession(fingerPrintId, shouldGenerateUserId) {
 
-        fingerPrintId += currentDate.getTime().toString();
+        sessionId = generateUUID();
 
         const apiUrl =
             apiUrlConfig.chatbotApiBaseUrl +
@@ -170,16 +255,24 @@
             fingerPrintId;
 
         return new Promise((resolve, reject) => {
-            makeRequestRetry('POST', apiUrl)
-                .then((apiResponse) => {
-                    currentUserId = apiResponse;
-                    resolve();
-                })
-                .catch((apiError) => {
-                    handleError(apiError);
 
-                    reject();
-                });
+            if (shouldGenerateUserId) {
+                makeRequestRetry('POST', apiUrl)
+                    .then((apiResponse) => {
+                        currentUserId = apiResponse;
+
+
+
+                        resolve();
+                    })
+                    .catch((apiError) => {
+                        handleError(apiError);
+
+                        reject();
+                    });
+            } else {
+                resolve();
+            }
         });
     }
 
@@ -389,8 +482,16 @@
      * This method is used to get starting span tag html content
      * @returns
      */
-    function getStartingSpanHtmlContent() {
-        return '<span>';
+    function getStartingSpanHtmlContent(customId) {
+        var customSpanWrapperId =
+            customId != null || customId != undefined
+                ? "id='" + 'chat-message-span-wrapper-' + customId + "'"
+                : '';
+
+        return "<span class='chat-message-span-wrapper'" +
+            " " +
+            customSpanWrapperId +
+            ">";
     }
 
     /**
@@ -419,8 +520,12 @@
         return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three me-md-2'>";
     }
 
-    function getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent() {
-        return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three-part-two me-md-2'>";
+    function getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(customId, keepHidden) {
+        return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three-part-two" + (keepHidden == true ? " d-none'" : "'") + (customId ? "id='chatbot-message-wrapper-column-three-part-two" + customId + "'" : "") + "'me-md-2'>";
+    }
+
+    function showChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(customId) {
+        $('#chatbot-message-wrapper-column-three-part-two' + customId).removeClass('d-none');
     }
 
     /**
@@ -496,22 +601,41 @@
         return "<div class='ms-2 dot-flashing'></div>";
     }
 
-    /**
-     * This method is used to get html content to display popular question
-     * @param {any} popularQuestion
-     * @returns
-     */
-    function getPopularQuestionHtmlContent(popularQuestion) {
-        return (
-            "<div id='popularQuestion' class='query-msg popularQuestions'" +
-            "data-popular-question='" +
-            popularQuestion +
-            "'>" +
-            '<p>' +
-            popularQuestion +
-            '</p>' +
-            '</div>'
-        );
+    function getPopularQuestionsHtmlContent(popularQuestionsList) {
+
+        let popularQuestionsElementsList = [];
+        for (var i = 0; i < popularQuestionsList.length; i++) {
+            const currentPopularQuestion = popularQuestionsList[i];
+
+            const popularQuestionElementNode = document.createElement('div');
+            popularQuestionElementNode.setAttribute("id", currentPopularQuestion.key);
+            popularQuestionElementNode.setAttribute("data-popular-question", currentPopularQuestion.value);
+            popularQuestionElementNode.className = "query-msg popularQuestions";
+
+            const popularQuestionParagrapElementNode = document.createElement('p');
+            popularQuestionParagrapElementNode.innerHTML = currentPopularQuestion.value;
+            popularQuestionElementNode.appendChild(popularQuestionParagrapElementNode);
+            popularQuestionsElementsList.push(popularQuestionElementNode);
+        }
+
+        return popularQuestionsElementsList;
+    }
+
+    function getGeneralQuestionsHtmlContent(generalQuestionsList) {
+
+        let generalQuestionsHtmlContent = "";
+
+        for (var i = 0; i < generalQuestionsList.length; i++) {
+            const currentPopularQuestion = generalQuestionsList[i];
+            const currentPopularQuestionValue = commonService.escapeSingleQuote(currentPopularQuestion.value);
+
+            generalQuestionsHtmlContent += "<div class='card popular-query-card' id='" + currentPopularQuestion.key + "' data-popular-question='" + currentPopularQuestionValue + "'>" +
+                "<div class='card-body popular-query-card-body'>" +
+                "<p>" + currentPopularQuestion.value + "</p>" +
+                "</div>" +
+                "</div>";
+        }
+        return generalQuestionsHtmlContent;
     }
 
     let userLogoHtmlContent = getUserLogoHtmlContent();
@@ -637,8 +761,28 @@
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
             },
+            {
+                translationKey: 'message_pm_kisan_scheme',
+                htmlElementKeyName: 'pmkisan',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text',
+                ignore: true
+            },
+            {
+                translationKey: 'message_kcc_scheme',
+                htmlElementKeyName: 'kcc',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text',
+                ignore: true
+            },
+            {
+                translationKey: 'message_pmfby_scheme',
+                htmlElementKeyName: 'pmfby',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text',
+                ignore: true
+            }
         ];
-
         for (var i = 0; i < translationsToUpdate.length; i++) {
             // Get the current translation's html element related details from "translationsMappingIds" so we can know which html element we need to update for the translations
             let currentTranslation = translationsToUpdate[i];
@@ -646,6 +790,11 @@
             let currentTranslationMappingDetails = translationsMappingIds.find(
                 (f) => f?.translationKey == currentTranslation.Key
             );
+
+            // Update selected scheme translations
+            // Find the current selected selected scheme
+            // And then find the translation for it
+            const currentSelectedScheme = schemesInfo.currentScheme;
 
             if (currentTranslationMappingDetails) {
                 // Update page title
@@ -700,7 +849,34 @@
                     languageCultureLabel,
                     currentLanguageCultureCode
                 );
-            });
+            }
+        );
+    }
+
+    /**
+     * This method is used to listen scheme change event
+     */
+    function schemeChangeListener() {
+
+        $(document).on(
+            'click',
+            '.scheme-label-wrapper',
+            async function (ev) {
+                let selectedSchemeId = $(this).data('scheme-id');
+                //let languageEnglishLabel = $(this).data('language-english-label');
+                //let languageCultureLabel = $(this).data('language-culture-label');
+                //let currentLanguageCultureCode = $(this).data(
+                //    'current-language-culture-code'
+                //);
+
+                // Proceed ahead only if selected scheme is different than previous one
+                if (selectedSchemeId != schemesInfo.currentScheme) {
+
+                    schemesInfo.bindSchemesToDropdown(schemesInfo.list, selectedSchemeId);
+                    await getPopularQuestionsTranslations();
+                }
+            }
+        );
     }
 
     function voiceRecorderListener() {
@@ -711,22 +887,22 @@
             function (ev) {
                 let currentScreenName = $(this).data('screen-name');
                 recordAudio(currentScreenName);
-            });
+            }
+        );
     }
 
-    /**
-     * This method is used to listen popular question click event,
-     * It will copy clicked question to user question text box
-     */
-    function popularQuestionClickListener() {
+    function generalQuestionClickListener() {
         $(document).on(
             'click',
-            '#popularQuestion',
+            '.popular-query-card',
             function (event) {
                 event.stopPropagation();
-                let popularQuestion = $(this).data('popular-question');
-                copyPopularQuestionInTextBox(popularQuestion);
-            });
+                const popularQuestion = $(this).data('popular-question');
+                const popularQuestionKey = $(this).attr('id');
+                copyPopularQuestionInTextBox(popularQuestion, false, true);
+                toggleHamburger();
+            }
+        );
     }
 
     /**
@@ -740,7 +916,8 @@
             function (ev) {
 
                 restartSession(true);
-            });
+            }
+        );
     }
 
     function startAppTourButtonOnClickListener() {
@@ -846,8 +1023,14 @@
 
     function popularQuestionsOnClickListener() {
         $(document).on('click', '.popularQuestions', function (ev) {
-            let popularQuestion = $(this).data('popular-question');
+            const popularQuestion = $(this).data('popular-question');
+            const popularQuestionKey = $(this).attr('id');
             copyPopularQuestionInTextBox(popularQuestion);
+
+            // Update used popular questions list,
+            // So when we display new popular questions, we can exclude used ones and show different questions
+            const currentScheme = schemesInfo.currentScheme;
+            popularQueriesService.updateUsedQueries(currentScheme, popularQuestionKey);
         });
     }
 
@@ -866,17 +1049,19 @@
         $('[data-bs-toggle="popover"]').popover('hide');
     }
 
-    function initChatBotConfig() {
+    async function initChatBotConfig() {
 
         // Set parent route
         currentParentRoute = $('#currentParentRoute').val();
 
         const controller = new AbortController();
         const signal = controller.signal;
-
+        await window.schemesInfo.getSchemesList();
         voiceRecorderListener();
         languageChangeListener();
-        popularQuestionClickListener();
+        schemeChangeListener();
+        //popularQuestionClickListener();
+        generalQuestionClickListener();
         userQuestionTextBoxOnKeyPressListener();
         chatbotMessageActionButtonsOnClickListener();
         feedbackSubmitButtonOnClickListener();
@@ -887,7 +1072,7 @@
         initAutoSizeInputBox();
         chatbotConfirmationModalCloseEventListener();
         submitFeedbackModalCloseEventListener();
-
+        await getPopularQuestionsTranslations();
         getUITranslations();
 
         configAppTour();
@@ -901,6 +1086,59 @@
         if (isMaintenanceModeOn == 'True') {
             showMaintenanceModeModal();
         }
+    }
+
+    async function getPopularQuestionsTranslations() {
+
+        const numberOfVisiblePopularQueries = appConfig && appConfig.numberOfVisiblePopularQueries ? appConfig.numberOfVisiblePopularQueries : 4;
+
+        const currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
+
+        await getTranslationFiles().then(translations => {
+
+            // Find the current selected langauge translations
+            // And show top 5 popular questions from it
+            const currentSelectedSchemeId = schemesInfo.currentScheme;
+            const currentSelectedLanaguageTranslations = translations.find(f => f.languageCode == currentLanguageCode);
+
+            // Update schemes translations as well
+            const translationsList = convertObjectToArray(currentSelectedLanaguageTranslations.translations.lables);
+            schemesInfo.updateSchemesTranslations(translationsList);
+            const currentSelectedSChemeTranslations = currentSelectedLanaguageTranslations.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
+
+            if (currentSelectedSChemeTranslations) {
+
+                // Get already used queries of the current scheme
+                // We don't need to display already used queries
+
+                const alreadyUsedQueries = popularQueriesService.getUsedQueries(currentSelectedSchemeId);
+
+                const topRandomPopularQuestions = getRandomValues(currentSelectedSChemeTranslations.queries, numberOfVisiblePopularQueries, alreadyUsedQueries.length ? alreadyUsedQueries : undefined);
+
+                //const generalQuestions = convertObjectToArray(currentSelectedLanaguageTranslations.translations);
+
+                //bindGeneralQuestions(generalQuestions);
+
+                const popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topRandomPopularQuestions);
+
+                $('.query-messages-box').empty();
+
+                for (var i = 0; i < popularQuestionsHtmlContent.length; i++) {
+                    $('.query-messages-box').append(popularQuestionsHtmlContent[i]);
+                }
+
+                showPopularQuestions();
+            } else {
+                console.log('Translations missing');
+            }
+        });
+    }
+
+    function bindGeneralQuestions(generalQuestionsList) {
+        const generalQuestionsHtmlContent = getGeneralQuestionsHtmlContent(generalQuestionsList);
+
+        $('.popular-questions-accordian-body').empty();
+        $('.popular-questions-accordian-body').append(generalQuestionsHtmlContent);
     }
 
     function configAppTour() {
@@ -961,6 +1199,12 @@
                 showPreviousButton: false,
             },
             {
+                id: 'app_tour_scheme_selection_description',
+                text: 'app_tour_scheme_selection_description',
+                showNextButton: true,
+                showPreviousButton: true,
+            },
+            {
                 id: 'app_tour_language_selection_description',
                 text: 'app_tour_language_selection_description',
                 showNextButton: true,
@@ -1008,12 +1252,15 @@
                 showNextButton: false,
                 showPreviousButton: true,
                 showExitButton: true,
-            },
+            }
         ];
 
         for (var i = 0; i < appTourTranslationMappingDetails.length; i++) {
             let currentTranslationMappingDetails =
                 appTourTranslationMappingDetails[i];
+
+
+
 
             let appTourStep = {};
             appTourStepButtons = [];
@@ -1060,6 +1307,18 @@
     }
 
     function startAppTour() {
+
+        // Check if current translation mapping details app tour step is visible in UI or not
+        // Sometimes some ui elements can be hidden as per the user action,
+        // So no need to display app tour for it, as it is not visible on the screen
+        const appTourStepId = 'app_tour_language_selection_description';
+        const appTourUiElementClassName = '.' + appTourStepId;
+        const currentAppTourStepUiElement = $(appTourUiElementClassName).css('display');
+
+        if (currentAppTourStepUiElement == "none") {
+            tour.removeStep(appTourStepId);
+        }
+
         tour.start();
     }
 
@@ -1081,7 +1340,7 @@
             ).Value;
             /*showToastNotification(toastMessage);*/
             const feedbackResponseMessageId =
-                'message-thank-for-feedback-' + new Date().toLocaleString();
+                'message-thank-for-feedback-' + new Date().getTime();
 
             updateChatMessagesList(toastMessage, feedbackResponseMessageId, '', true);
 
@@ -1147,12 +1406,15 @@
                     : null; // Audio icon inside third column
 
             let feedbackOptionHtmlContent = getFeedbackButtonsHtmlContent(messageId);
+            let spanStartingHtmlContentWithId = getStartingSpanHtmlContent(messageId);
+
+            chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId, true);
 
             var response =
                 chatMessageWrapperStartingDivHtmlContent +
                 chatbotLogoHtmlContent +
                 chatMessageWrapperColumnTwoStartingDivHtmlContent +
-                spanStartingHtmlContent +
+                spanStartingHtmlContentWithId +
                 message +
                 spanClosingHtmlContent +
                 closingDivHtmlContent +
@@ -1168,19 +1430,39 @@
                     : '') +
                 closingDivHtmlContent;
 
-
-            let formattedResponse = response.replaceAll("\\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0");
-
-            $('#message-list').append(formattedResponse);
+            $('#message-list').append(response);
 
             if (messageType == 'final_response') {
                 sessionStorage.setItem('final_response', true);
 
-                showPopularQuestions();
+                //showPopularQuestions();
+                getPopularQuestionsTranslations();
             }
 
-            scrollToBottom();
+            //const divElem = document.querySelector('#chat-message-span-wrapper-' + messageId);
 
+            //var typed = new Typed('#chat-message-span-wrapper-' + messageId, {
+            //    strings: [message],
+            //    typeSpeed: 15,
+            //    loop: false,
+            //    contentType: 'html',
+            //    showCursor: false,
+            //    onStringTyped: (arrayPos, self) => {
+
+            //        if (messageType == 'final_response' && isMessageFromBot == true) {
+            //            showChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
+            //            resizeObserver.unobserve(divElem);
+            //        }
+            //    }
+            //});
+
+            //const resizeObserver = new ResizeObserver((entries) => {
+            //    scrollToBottom();
+            //});
+
+            //resizeObserver.observe(divElem);
+
+            scrollToBottom();
             if (isMessageFromBot == true) {
                 autoPlayAudio(messageId);
             }
@@ -1343,10 +1625,13 @@
         });
     });
 
-    function copyPopularQuestionInTextBox(message) {
+    function copyPopularQuestionInTextBox(message, shouldHidePopularQuestions = true, shouldAutoSend) {
         // Hide popular questions now
-        hidePopularQuestions();
-        showUserRecordedMessageInTextBox(message);
+        if (shouldHidePopularQuestions == true) {
+            hidePopularQuestions();
+        }
+
+        showUserRecordedMessageInTextBox(message, shouldAutoSend);
     }
 
     function hidePopularQuestions() {
@@ -1361,10 +1646,14 @@
         $('#message-list').removeClass('without-popular-questions');
     }
 
-    function showUserRecordedMessageInTextBox(message) {
+    function showUserRecordedMessageInTextBox(message, shouldAutoSend) {
         $(userQuestionTextBox).val(message);
         $(userQuestionTextBox).focus();
         $(userQuestionTextBox).trigger('change');
+
+        if (shouldAutoSend === true) {
+            $(sendTextButtonId).trigger('click');
+        }
         isSampleQueryUsed = true;
     }
 
@@ -1398,7 +1687,7 @@
                 .toLowerCase()
                 .indexOf('one time password is wrong') >= 0
         ) {
-            var resendOtpTranslation = $('#resend-otp-translation').val();
+            var resendOtpTranslation = translations.find((f) => f.Key == 'message_resend_otp').Value;
 
             let chatMessageWrapperStartingDivHtmlContent =
                 getChatMessageWrapperStartingDivHtmlContent(
@@ -1463,6 +1752,22 @@
     }
 
     /**
+     * This function uses a regular expression to match any text enclosed in single quotes and replaces it with the same text enclosed in backticks. 
+     
+     * @param {any} str
+     * @returns
+     */
+    function replaceEnclosedSingleQuotesWithBackticks(str) {
+        /**
+         * The ([^']*) part of the regular expression matches any character except a single quote or the “।” sign. 
+         * This means that any text enclosed in single quotes that contains the “।” sign will not be replaced, effectively capturing the enclosed text. 
+         * The $1 in the replacement string refers to the first captured group, which is the enclosed text. 
+         * This way, contractions like “it’s” are not affected
+         */
+        return str.replace(/'([^'।]*)'/g, "`$1`");
+    }
+
+    /**
      * This method is used to format the chat bot response,
      * We need to display aadhar information in different format.
      * If there are any texts with *anyword*, we need to display those words in bold letters.
@@ -1472,28 +1777,9 @@
      */
     function formatChatbotResponse(response) {
 
-        //response = '<table class="aadhar-table"><tbody><tr><td>Name :</td><td>Lal Chand</td></tr><tr><td>Father Name :</td><td></td></tr><tr><td>Date Of Birth :</td><td>01/01/1900</td></tr><tr><td>Address :</td><td>Jana (24/46),NAGGAR,Kullu,KULLU,HIMACHAL PRADESH</td></tr><tr><td>Registration Date :</td><td>19/02/2019</td></tr></tbody></table>Dear Lal Chand, I have checked your status and found that you have been marked as a *Landless farmer* by the State. If this information is not correct, I suggest you to kindly visit your nearest district/ block office and get your land details updated on the PM KISAN portal.'
-        // Check the chatbot response message, and see if any word is given between 2 starts *word*
-        // If there is any such word, we need to display it in bold font.
-        var myRegexp = /\*(.*?)\*/g;
-        var match = myRegexp.exec(response);
-        var matchedWords = [];
-        while (match != null) {
-            matchedWords.push({
-                wordToFind: match[0],
-                wordToReplace: match[1],
-            });
-
-            match = myRegexp.exec(response);
-        }
-
-        // Replace matched words with <b></b> tags to display them in bold font
-        for (var i = 0; i < matchedWords.length; i++) {
-            response = response.replace(
-                matchedWords[i].wordToFind,
-                '<b>' + matchedWords[i].wordToReplace + '</b>'
-            );
-        }
+        response = response.replaceAll("\\n", "<br>").replaceAll("\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0").replaceAll("\t", "\u00A0\u00A0\u00A0\u00A0");
+        response = response.trim();
+        response = replaceEnclosedSingleQuotesWithBackticks(response);
 
         // AADHAR Info UI Format START
         // If aadhar info is available in chat response then we need to display it in table format
@@ -1538,7 +1824,7 @@
             addMetricsCount('internalServerError');
         }
 
-        var defaultChatbotErrorMessage = $('#default-chatbot-error-message').val();
+        var defaultChatbotErrorMessage = translations.find((f) => f.Key == 'error_default_message').Value;
 
         const currentDateTime = new Date().getTime().toString();
 
@@ -1614,6 +1900,7 @@
                 apiUrlConfig.ApiVersion;
             const headers = new Headers();
             headers.append('User-id', currentUserId);
+            headers.append('session-id', sessionId);
 
             let currentLanguageCultureCode = $('.language-buttons').data(
                 'current-language-culture-code'
@@ -1645,9 +1932,8 @@
 
                     if (data.error !== null) {
                         // Show default error message
-                        var defaultChatbotErrorMessage = $(
-                            '#default-chatbot-error-message'
-                        ).val();
+                        var defaultChatbotErrorMessage = translations.find((f) => f.Key == 'error_default_message').Value;
+
                         processChatBotResponse(
                             defaultChatbotErrorMessage,
                             data.messageId,
@@ -1726,19 +2012,7 @@
                 });
         }
 
-        if (isFinalResponseReceived == true && screenName == 'conversation') {
-            const fingerPrintId = sessionStorage.getItem('fingerPrintId');
-
-            createSession(fingerPrintId)
-                .then((sessionResult) => {
-                    prompt();
-                })
-                .catch((sessionError) => {
-                    handleError(sessionError);
-                });
-        } else {
-            prompt();
-        }
+        prompt();
     }
 
     /**
@@ -2033,10 +2307,14 @@
         reader.readAsDataURL(blob);
 
         reader.onloadend = async function () {
-            base64 = reader.result;
-
-            base64 = base64.split(',')[1];
+            let base64 = reader.result.replace(/^data:.+;base64,/, '');
             scrollToBottom();
+
+            // Check base64 string length is multiply of 4 or not
+            // If not add missing number of "=" characters and make it correct
+            while (base64.length % 4 != 0) {
+                base64 += '=';
+            }
 
             askQuestions(base64, 'base64audio', blob, screenName);
         };
@@ -2112,7 +2390,10 @@
         return blob;
     };
 
-    function getUITranslations() {
+    async function getUITranslations() {
+
+
+
         isGetUITranslationsRequestInProgress = $.ajax({
             type: 'POST',
             url: currentParentRoute + 'GetUITranslations',
@@ -2133,7 +2414,68 @@
                 isGetUITranslationsRequestInProgress = null;
             },
         });
+
+        //getPopularQuestionsTranslations();
     }
+
+    function convertObjectToArray(obj) {
+
+        let keys = Object.keys(obj);
+        let result = [];
+
+        for (let i = 0; i < keys.length; i++) {
+
+            // Get the key and value
+            let key = keys[i];
+            let value = obj[key];
+
+            // Add the object to the result array
+            result.push({ key: key, value: value });
+        }
+
+        return result;
+    }
+
+    function getRandomValues(obj, count, valuesToExclude) {
+        let keys = Object.keys(obj).filter(key => typeof obj[key] === 'string' && obj[key].length < 100 && (!valuesToExclude || (valuesToExclude && !valuesToExclude.includes(key))));
+        let result = [];
+
+        for (let i = 0; i < count; i++) {
+            // Get a random index
+            let index = Math.floor(Math.random() * keys.length);
+
+            // Get the key and value
+            let key = keys[index];
+            let value = obj[key];
+
+            // Add the object to the result array
+            result.push({ key: key, value: value });
+
+            // Remove the key from the keys array
+            keys.splice(index, 1);
+        }
+
+        return result;
+    }
+
+    async function getTranslationFiles() {
+
+        // Fetch the translations for all the languages
+        for (var i = 0; i < popularQuestionsTranslations.length; i++) {
+
+            const currentLanguage = popularQuestionsTranslations[i];
+
+            if (currentLanguage.translations.length == 0) {
+                const response = await fetch('/Content/translations/' + currentLanguage.language + '.json');
+                const translations = await response.json();
+
+                popularQuestionsTranslations[i].translations = translations;
+            }
+        }
+
+        return popularQuestionsTranslations;
+    }
+
 
     function changeLanguage(
         languageCultureCode,
@@ -2156,7 +2498,7 @@
                 //If language is changed after session refresh was done,
                 //Add metric count for it
 
-                if (currentUserId != previousUserId) {
+                if (sessionId != previousSessionId) {
                     addMetricsCount('stage2Count');
                 }
 
@@ -2214,10 +2556,12 @@
 
                 updateTranslations(data.Data.Translations);
 
-                updatePopularQuestionsTranslations(data.Data.PopularQuestions);
+                //updatePopularQuestionsTranslations(data.Data.PopularQuestions);
+                getPopularQuestionsTranslations();
                 showUserRecordedMessageInTextBox('');
 
-                previousUserId = currentUserId;
+                //previousUserId = currentUserId;
+                previousSessionId = sessionId;
             },
             failure: function (data) {
                 isChangeLanguageRequestInProgress = null;
@@ -2227,19 +2571,7 @@
     }
 
     function updatePopularQuestionsTranslations(popularQuestions) {
-        $('.query-messages-box').empty();
-
-        for (var i = 0; i < popularQuestions.length; i++) {
-            let currentPopularQuestion = popularQuestions[i];
-
-            let currentPopularQuestionHtmlContent = getPopularQuestionHtmlContent(
-                currentPopularQuestion.PopularQuestionValue
-            );
-
-            $('.query-messages-box').append(currentPopularQuestionHtmlContent);
-        }
-
-        showPopularQuestions();
+        getPopularQuestionsTranslations();
     }
 
     function updateSelectedLanguageInUI(
@@ -2517,7 +2849,10 @@
             const fingerPrintId = sessionStorage.getItem('fingerPrintId');
 
             createSession(fingerPrintId)
-                .then((sessionResult) => { })
+                .then((sessionResult) => {
+                    popularQueriesService.resetUsedQueries();
+                    getPopularQuestionsTranslations();
+                })
                 .catch((sessionError) => {
                     handleError(sessionError);
                 });
@@ -2540,9 +2875,10 @@
 
     function clearChatHistory() {
         $('.conversationsWrapper').remove();
-        var defaultPlaceholderMessage = $('#default-placeholder-message').val();
+        var defaultPlaceholderMessage = translations.find((f) => f.Key == 'message_ask_ur_question').Value;
         changeInputPlaceholderValue(defaultPlaceholderMessage);
-        showPopularQuestions();
+        //showPopularQuestions();
+
     }
 
     function createGlobalAudioElement() {
@@ -2562,9 +2898,12 @@
     }
 
     function changeInputPlaceholderValue(valueToChange) {
+
+        var defaultPlaceholderMessage = translations.find((f) => f.Key == 'message_ask_ur_question').Value;
+
         $(userQuestionTextBox).attr(
             'placeholder',
-            valueToChange != undefined ? valueToChange : 'Ask your question'
+            valueToChange != undefined ? valueToChange : defaultPlaceholderMessage
         );
     }
 
@@ -2641,5 +2980,7 @@
 
 
     }
+
+
 
 })();
