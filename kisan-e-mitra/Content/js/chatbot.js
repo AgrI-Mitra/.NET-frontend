@@ -1407,7 +1407,7 @@
             let feedbackOptionHtmlContent = getFeedbackButtonsHtmlContent(messageId);
             let spanStartingHtmlContentWithId = getStartingSpanHtmlContent(messageId);
 
-            chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId, true);
+            chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
 
             var response =
                 chatMessageWrapperStartingDivHtmlContent +
