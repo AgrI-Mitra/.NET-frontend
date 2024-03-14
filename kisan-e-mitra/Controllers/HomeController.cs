@@ -17,7 +17,7 @@ namespace KisanEMitra.Controllers
 
         private IChatbotService ChatbotService { get; set; }
 
-        private string[] languageCodesToEnable = new string[] { "hi", "te", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
+        private string[] languageCodesToEnable = new string[] { "hi", "te", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa", "kn" };
 
         public HomeController(IAgrimitraService _agrimitraService, IBhashiniService bhashiniService, IChatbotService chatbotService)
         {
@@ -50,7 +50,7 @@ namespace KisanEMitra.Controllers
 
         public ActionResult Test()
         {
-            languageCodesToEnable = new string[] { "hi", "te", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa" };
+            languageCodesToEnable = new string[] { "hi", "te", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa", "kn" };
 
             HttpCookie langCookie = Request.Cookies["culture"];
             var userLanguage = Request.UserLanguages;
