@@ -25,9 +25,8 @@ namespace KisanEMitra.Services
             },
             new BhashiniApiServiceId
             {
-                ServiceId = "ai4bharat/indic-tts-coqui-dravidian-gpu--t4", LanguageCode = new string[] { "ta", "ml", "kl" }
+                ServiceId = "ai4bharat/indic-tts-coqui-dravidian-gpu--t4", LanguageCode = new string[] { "ta", "ml", "kl", "kn" }
             }
-
         };
 
         public static class APIPaths
