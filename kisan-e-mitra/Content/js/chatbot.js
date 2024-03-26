@@ -2,8 +2,8 @@
 
 
     var apiUrlConfig = {
-        chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
-        //chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
+        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
+        chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
         userApiBaseEndPoint: 'user/',
         generateUserId: 'user/generateUserId',
         Prompt: 'prompt',
@@ -73,9 +73,17 @@
 
     ];
 
+    const renderer = {
+        link(href, title, text) {
+            const link = marked.Renderer.prototype.link.call(this, href, title, text);
+            return link.replace("<a", "<a target='_blank' rel='noreferrer' ");
+        }
+    };
+
     marked.use({
         breaks: true,
         gfm: true,
+        renderer: renderer
     });
 
     let latitude;
