@@ -390,8 +390,8 @@ You may select your preferred language.</value>
 Do you want to continue and refresh the page?</value>
   </data>
   <data name="message.maintenance_mode_body" xml:space="preserve">
-    <value>درخواست کی منتقلی اور دیکھ بھال کی سرگرمیوں کی وجہ سے، پی ایم-کسان پورٹل کی خدمات 31 مارچ، 2024 سے 3 اپریل، 2024 تک دستیاب نہیں ہوں گی۔
-مکمل فعالیت کے ساتھ پورٹل 04 اپریل 2024 سے دستیاب ہوگا۔</value>
+    <value>درخواست کی منتقلی اور دیکھ بھال کی سرگرمیوں کی وجہ سے، Kisan-eMitra Chatbot کی خدمات 31 مارچ، 2024 سے 3 اپریل، 2024 تک دستیاب نہیں ہوں گی۔
+مکمل خصوصیات کے ساتھ چیٹ بوٹ 04 اپریل 2024 سے دستیاب ہوگا۔</value>
   </data>
   <data name="message.maintenance_mode_header" xml:space="preserve">
     <value>We'll be back soon!</value>

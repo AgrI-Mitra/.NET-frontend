@@ -738,8 +738,8 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Due to application migration and maintenance activities, the services of PM-Kisan portal will not be available from 31st March, 2024 to 3rd April, 2024.
-        ///Portal with full functionalities will be available from 04 April 2024.
+        ///   Looks up a localized string similar to Due to application migration and maintenance activities, the services of Kisan-eMitra Chatbot will not be available from 31st March, 2024 to 3rd April, 2024.
+        ///The Chatbot with full functionalities will be available from 04 April 2024..
         /// </summary>
         public static string message_maintenance_mode_body {
             get {
