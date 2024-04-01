@@ -1,5 +1,6 @@
 ﻿using KisanEMitra.Services;
 using KisanEMitra.Services.Contracts;
+using kishan_bot.Services;
 using kishan_bot.Services.Contracts;
 using System;
 using System.Web;
@@ -35,7 +36,21 @@ namespace KisanEMitra
         void Application_Error(object sender, EventArgs e)
         {
             Exception ex = Server.GetLastError();
-            if (ex is HttpException && ((HttpException)ex).GetHttpCode() == 404)
+
+            var requestInfo = sender.GetPropertyValue("Request");
+            bool isStaticContent = false;
+
+            if (requestInfo != null)
+            {
+                var fileInfo = requestInfo.GetPropertyValue("FilePath");
+
+                if (fileInfo != null && fileInfo.ToString().Contains("Content/"))
+                {
+                    isStaticContent = true;
+                }
+            }
+
+            if (ex is HttpException && ((HttpException)ex).GetHttpCode() == 404 && !isStaticContent)
             {
                 Response.Redirect("~/Home/Index");
             }
