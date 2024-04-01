@@ -390,7 +390,8 @@ You may select your preferred language.</value>
 Do you want to continue and refresh the page?</value>
   </data>
   <data name="message.maintenance_mode_body" xml:space="preserve">
-    <value>Sorry for any trouble. I'm getting updated and fixing some issues to assist you better. I will be available again soon. Please come back and try again after some time.</value>
+    <value>Due to application migration and maintenance activities, the services of PM-Kisan portal will not be available from 31st March, 2024 to 3rd April, 2024.
+Portal with full functionalities will be available from 04 April 2024</value>
   </data>
   <data name="message.maintenance_mode_header" xml:space="preserve">
     <value>We'll be back soon!</value>
