@@ -163,6 +163,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Services\ServiceHelper.cs" />
     <Content Include="Content\js\app-config.js" />
     <Content Include="Content\js\commonService.js" />
     <Content Include="Content\js\popularQueriesService.js" />
