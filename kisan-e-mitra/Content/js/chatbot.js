@@ -802,6 +802,7 @@
             // Update selected scheme translations
             // Find the current selected selected scheme
             // And then find the translation for it
+            const currentSelectedScheme = schemesInfo.currentScheme;
 
             if (currentTranslationMappingDetails) {
                 // Update page title
@@ -1063,7 +1064,7 @@
 
         const controller = new AbortController();
         const signal = controller.signal;
-        //await window.schemesInfo.getSchemesList();
+        await window.schemesInfo.getSchemesList();
         voiceRecorderListener();
         languageChangeListener();
         schemeChangeListener();
@@ -1110,7 +1111,7 @@
 
             // Update schemes translations as well
             const translationsList = convertObjectToArray(currentSelectedLanaguageTranslations.translations.lables);
-            //schemesInfo.updateSchemesTranslations(translationsList);
+            schemesInfo.updateSchemesTranslations(translationsList);
             const currentSelectedSChemeTranslations = currentSelectedLanaguageTranslations.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
 
             if (currentSelectedSChemeTranslations) {
@@ -1205,12 +1206,12 @@
                 showNextButton: true,
                 showPreviousButton: false,
             },
-            //{
-            //    id: 'app_tour_scheme_selection_description',
-            //    text: 'app_tour_scheme_selection_description',
-            //    showNextButton: true,
-            //    showPreviousButton: true,
-            //},
+            {
+                id: 'app_tour_scheme_selection_description',
+                text: 'app_tour_scheme_selection_description',
+                showNextButton: true,
+                showPreviousButton: true,
+            },
             {
                 id: 'app_tour_language_selection_description',
                 text: 'app_tour_language_selection_description',
