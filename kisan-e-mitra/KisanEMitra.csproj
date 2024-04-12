@@ -164,6 +164,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Services\ServiceHelper.cs" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\js\app-config.js" />
     <Content Include="Content\js\commonService.js" />
     <Content Include="Content\js\popularQueriesService.js" />
@@ -187,7 +188,6 @@
     </Compile>
     <Compile Include="Services\ChatbotService.cs" />
     <Compile Include="Services\Contracts\IChatbotService.cs" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\Expanded.svg" />
     <Content Include="Content\images\help.png" />
     <Content Include="Content\ham-menu.css" />
