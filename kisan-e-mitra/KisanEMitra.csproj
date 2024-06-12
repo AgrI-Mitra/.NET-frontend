@@ -61,6 +61,7 @@
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Json, Version=7.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.Json.7.0.1\lib\net462\System.Net.Http.Json.dll</HintPath>
     </Reference>
@@ -101,8 +102,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.1\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http">
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
@@ -163,7 +162,62 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Content Include="Content\audio\pa.txt" />
+    <Content Include="Content\audio\language-change-pa.txt" />
+    <Content Include="Content\audio\language-change-bn.txt" />
+    <Content Include="Content\audio\language-change-hi.txt" />
+    <Content Include="Content\audio\language-change-kn.txt" />
+    <Content Include="Content\audio\language-change-ml.txt" />
+    <Content Include="Content\audio\language-change-mr.txt" />
+    <Content Include="Content\audio\language-change-or.txt" />
+    <Content Include="Content\audio\language-change-ta.txt" />
+    <Content Include="Content\audio\language-change-te.txt" />
+    <Content Include="Content\audio\language-change-gu.txt" />
+    <Content Include="Content\audio\language-change-en.txt" />
+    <Content Include="Content\audio\bn.txt" />
+    <Content Include="Content\audio\en.txt" />
+    <Content Include="Content\audio\gu.txt" />
+    <Content Include="Content\audio\hi.txt" />
+    <Content Include="Content\audio\welcome-pa.txt" />
+    <Content Include="Content\audio\welcome-bn.txt" />
+    <Content Include="Content\audio\welcome-hi.txt" />
+    <Content Include="Content\audio\kn.txt" />
+    <Content Include="Content\audio\welcome-kn.txt" />
+    <Content Include="Content\audio\ml.txt" />
+    <Content Include="Content\audio\welcome-ml.txt" />
+    <Content Include="Content\audio\mr.txt" />
+    <Content Include="Content\audio\welcome-mr.txt" />
+    <Content Include="Content\audio\or.txt" />
+    <Content Include="Content\audio\welcome-or.txt" />
+    <Content Include="Content\audio\ta.txt" />
+    <Content Include="Content\audio\welcome-ta.txt" />
+    <Content Include="Content\audio\te.txt" />
+    <Content Include="Content\audio\welcome-te.txt" />
+    <Content Include="Content\audio\welcome-gu.txt" />
+    <Content Include="Content\audio\welcome-en.txt" />
+    <Content Include="Content\bundle-prod-css.css" />
+    <Content Include="Content\bundle-prod-css.min.css">
+      <DependentUpon>bundle-prod-css.css</DependentUpon>
+    </Content>
+    <Content Include="Content\bundle-staging.css" />
+    <Content Include="Content\bundle-staging.min.css">
+      <DependentUpon>bundle-staging.css</DependentUpon>
+    </Content>
+    <Content Include="Content\images\kisan-e-mitra-logo-original.png" />
+    <Content Include="Content\images\land_of_grass-bg-original.png" />
+    <Content Include="Content\images\land_of_grass-bg_50.png" />
     <Content Include="Content\js\app-config.js" />
+    <Content Include="Content\js\bundle-post-body.js" />
+    <Content Include="Content\js\bundle-post-body.min.js">
+      <DependentUpon>bundle-post-body.js</DependentUpon>
+    </Content>
+    <Content Include="Content\js\bundle-pre-body.js" />
+    <Content Include="Content\js\bundle-pre-body.min.js">
+      <DependentUpon>bundle-pre-body.js</DependentUpon>
+    </Content>
+    <Content Include="Content\js\chatbot.min.js">
+      <DependentUpon>chatbot.js</DependentUpon>
+    </Content>
     <Content Include="Content\js\commonService.js" />
     <Content Include="Content\js\popularQueriesService.js" />
     <Compile Include="Controllers\TestController.cs" />
@@ -413,6 +467,8 @@
   <ItemGroup>
     <Content Include="Content\data\schemes.json" />
     <Content Include="Content\data\clientConfig.json" />
+    <Content Include="Content\translations\urdu.json" />
+    <None Include="bundleconfig.json" />
     <None Include="packages.config" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Test\ChatHistory.cshtml" />

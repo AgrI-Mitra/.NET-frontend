@@ -14,61 +14,72 @@
         ConversationFeedback: 'conversation/feedback',
     };
 
-    var popularQuestionsTranslations = [
+    var allLanguagesTranslations = [
         {
             language: 'english',
+            languageLabel: 'English',
             languageCode: 'en',
-            translations: []
+            translations: null
         },
         {
             language: 'bengali',
+            languageLabel: 'Bangla',
             languageCode: 'bn',
-            translations: []
+            translations: null
         },
         {
             language: 'gujarati',
+            languageLabel: 'Gujarati',
             languageCode: 'gu',
-            translations: []
+            translations: null
         },
         {
             language: 'hindi',
+            languageLabel: 'Hindi',
             languageCode: 'hi',
-            translations: []
+            translations: null
         },
         {
             language: 'kannada',
+            languageLabel: 'Kannada',
             languageCode: 'kn',
-            translations: []
+            translations: null
         },
         {
             language: 'malayalam',
+            languageLabel: 'Malayalam',
             languageCode: 'ml',
-            translations: []
+            translations: null
         },
         {
             language: 'marathi',
+            languageLabel: 'Marathi',
             languageCode: 'mr',
-            translations: []
+            translations: null
         },
         {
             language: 'odia',
+            languageLabel: 'Odia',
             languageCode: 'or',
-            translations: []
+            translations: null
         },
         {
             language: 'punjabi',
+            languageLabel: 'Punjabi',
             languageCode: 'pa',
-            translations: []
+            translations: null
         },
         {
             language: 'tamil',
+            languageLabel: 'Tamil',
             languageCode: 'ta',
-            translations: []
+            translations: null
         },
         {
             language: 'telugu',
+            languageLabel: 'Telugu',
             languageCode: 'te',
-            translations: []
+            translations: null
         }
 
     ];
@@ -95,6 +106,17 @@
     var isGetTextToSpeechFromBhashiniRequestInProgress = null;
 
     var translations = [];
+    let currentLanguageInfo = {
+        currentLanguageCode: '',
+        language: '',
+        translations: {
+            errors: {},
+            lables: {},
+            messages: {},
+            schemes: {},
+            toasts: {}
+        }
+    };
 
     var currentUserId = null;
     var previousUserId = null;
@@ -659,147 +681,162 @@
 
         let translationsMappingIds = [
             {
-                translationKey: 'message_welcome_greeting',
+                translationType: 'messages',
+                translationKey: 'welcome_greeting',
                 htmlElementKeyName: 'messageWelcomeGreeting',
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'message_ask_ur_question',
+                translationType: 'messages',
+                translationKey: 'ask_ur_question',
                 htmlElementKeyName: 'messageAskUrQuestion',
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'placeholder',
             },
             {
-                translationKey: 'label_title',
+                translationType: 'lables',
+                translationKey: 'title',
                 htmlElementKeyName: 'labelTitle',
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'message_resend_otp',
+                translationType: 'messages',
+                translationKey: 'resend_otp',
                 htmlElementKeyName: 'resend-otp-translation',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'value',
             },
             {
-                translationKey: 'error_default_message',
+                translationType: 'errors',
+                translationKey: 'default_message',
                 htmlElementKeyName: 'default-chatbot-error-message',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'value',
             },
             {
-                translationKey: 'message_ask_ur_question',
+                translationType: 'messages',
+                translationKey: 'ask_ur_question',
                 htmlElementKeyName: 'default-placeholder-message',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'value',
             },
             {
-                translationKey: 'message_confirmation',
+                translationType: 'messages',
+                translationKey: 'confirmation',
                 htmlElementKeyName: 'message-confirmation',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'message_session_restart_confirmation_message',
+                translationType: 'messages',
+                translationKey: 'session_restart_confirmation_message',
                 htmlElementKeyName: 'chatbot-restart-session-confirmation-message',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'label_yes',
+                translationType: 'lables',
+                translationKey: 'yes',
                 htmlElementKeyName: 'yesLabel',
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'label_no',
+                translationType: 'lables',
+                translationKey: 'no',
                 htmlElementKeyName: 'noLabel',
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'label_submit',
+                translationType: 'lables',
+                translationKey: 'submit',
                 htmlElementKeyName: 'submitLabelTranslation',
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'message_feedback_description',
+                translationType: 'messages',
+                translationKey: 'feedback_description',
                 htmlElementKeyName: 'feedbackTextArea',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'value',
             },
             {
-                translationKey: 'message_chatbot_functionality_feedback',
+                translationType: 'messages',
+                translationKey: 'chatbot_functionality_feedback',
                 htmlElementKeyName: 'chatbotFunctionalityFeedback',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'message_information_feedback',
+                translationType: 'messages',
+                translationKey: 'information_feedback',
                 htmlElementKeyName: 'informationFeedback',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
             },
-            ,
             {
-                translationKey: 'message_translation_feedback',
+                translationType: 'messages',
+                translationKey: 'translation_feedback',
                 htmlElementKeyName: 'translationsFeedback',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'label_close',
+                translationType: 'lables',
+                translationKey: 'close',
                 htmlElementKeyName: 'closeLabelTranslation',
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'message_feedback_title',
+                translationType: 'messages',
+                translationKey: 'feedback_title',
                 htmlElementKeyName: 'submitFeedbackModalTitle',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationKey: 'message_pm_kisan_scheme',
+                translationType: 'messages',
+                translationKey: 'pm_kisan_scheme',
                 htmlElementKeyName: 'pmkisan',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
                 ignore: true
             },
             {
-                translationKey: 'message_kcc_scheme',
+                translationType: 'messages',
+                translationKey: 'kcc_scheme',
                 htmlElementKeyName: 'kcc',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
                 ignore: true
             },
             {
-                translationKey: 'message_pmfby_scheme',
+                translationType: 'messages',
+                translationKey: 'pmfby_scheme',
                 htmlElementKeyName: 'pmfby',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
                 ignore: true
             }
         ];
-        for (var i = 0; i < translationsToUpdate.length; i++) {
-            // Get the current translation's html element related details from "translationsMappingIds" so we can know which html element we need to update for the translations
-            let currentTranslation = translationsToUpdate[i];
 
-            let currentTranslationMappingDetails = translationsMappingIds.find(
-                (f) => f?.translationKey == currentTranslation.Key
-            );
+        for (var i = 0; i < translationsMappingIds.length; i++) {
 
-            // Update selected scheme translations
-            // Find the current selected selected scheme
-            // And then find the translation for it
-            const currentSelectedScheme = schemesInfo.currentScheme;
+            let currentTranslationMappingDetails = translationsMappingIds[i];
 
-            if (currentTranslationMappingDetails) {
+            let currentTranslation = currentLanguageInfo.translations[currentTranslationMappingDetails.translationType];
+
+            if (currentTranslation && currentTranslation[currentTranslationMappingDetails.translationKey]) {
+
+                const currentTranslationValue = currentTranslation[currentTranslationMappingDetails.translationKey];
                 // Update page title
-                if (currentTranslationMappingDetails.translationKey == 'label_title') {
-                    document.title = currentTranslation.Value;
+                if (currentTranslationMappingDetails.translationKey == 'title') {
+                    document.title = currentTranslationValue;
                 }
 
                 if (
@@ -809,18 +846,59 @@
                     $(
                         currentTranslationMappingDetails.htmlElementKeyAttributeType +
                         currentTranslationMappingDetails.htmlElementKeyName
-                    ).html(currentTranslation.Value);
+                    ).html(currentTranslationValue);
                 } else {
                     $(
                         currentTranslationMappingDetails.htmlElementKeyAttributeType +
                         currentTranslationMappingDetails.htmlElementKeyName
                     ).attr(
                         currentTranslationMappingDetails.htmlElementValueAttributeType,
-                        currentTranslation.Value
+                        currentTranslationValue
                     );
                 }
             }
+            else {
+                console.log('translation missing: ', currentTranslationMappingDetails);
+            }
         }
+        //for (var i = 0; i < translationsToUpdate.length; i++) {
+        //    // Get the current translation's html element related details from "translationsMappingIds" so we can know which html element we need to update for the translations
+        //    let currentTranslation = translationsToUpdate[i];
+
+        //    let currentTranslationMappingDetails = translationsMappingIds.find(
+        //        (f) => f?.translationKey == currentTranslation.key
+        //    );
+
+        //    // Update selected scheme translations
+        //    // Find the current selected selected scheme
+        //    // And then find the translation for it
+        //    const currentSelectedScheme = schemesInfo.currentScheme;
+
+        //    if (currentTranslationMappingDetails) {
+        //        // Update page title
+        //        if (currentTranslationMappingDetails.translationKey == 'title') {
+        //            document.title = currentTranslation.value;
+        //        }
+
+        //        if (
+        //            currentTranslationMappingDetails.htmlElementValueAttributeType ==
+        //            'text'
+        //        ) {
+        //            $(
+        //                currentTranslationMappingDetails.htmlElementKeyAttributeType +
+        //                currentTranslationMappingDetails.htmlElementKeyName
+        //            ).html(currentTranslation.value);
+        //        } else {
+        //            $(
+        //                currentTranslationMappingDetails.htmlElementKeyAttributeType +
+        //                currentTranslationMappingDetails.htmlElementKeyName
+        //            ).attr(
+        //                currentTranslationMappingDetails.htmlElementValueAttributeType,
+        //                currentTranslation.value
+        //            );
+        //        }
+        //    }
+        //}
 
         initAppTour(translations);
     }
@@ -873,7 +951,7 @@
                 if (selectedSchemeId != schemesInfo.currentScheme) {
 
                     schemesInfo.bindSchemesToDropdown(schemesInfo.list, selectedSchemeId);
-                    await getPopularQuestionsTranslations();
+                    await getTranslations();
                 }
             }
         );
@@ -1060,6 +1138,7 @@
         voiceRecorderListener();
         languageChangeListener();
         schemeChangeListener();
+        configAppTour();
         //popularQuestionClickListener();
         generalQuestionClickListener();
         userQuestionTextBoxOnKeyPressListener();
@@ -1072,10 +1151,9 @@
         initAutoSizeInputBox();
         chatbotConfirmationModalCloseEventListener();
         submitFeedbackModalCloseEventListener();
-        await getPopularQuestionsTranslations();
-        getUITranslations();
+        await getTranslations();
+        //getUITranslations();
 
-        configAppTour();
         initPopovers();
         setLocationInfo();
 
@@ -1088,23 +1166,39 @@
         }
     }
 
-    async function getPopularQuestionsTranslations() {
+    async function getTranslations() {
 
         const numberOfVisiblePopularQueries = appConfig && appConfig.numberOfVisiblePopularQueries ? appConfig.numberOfVisiblePopularQueries : 4;
 
-        const currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
+        let currentLanguageCode = localStorage.getItem("currentLanguageCode");
 
-        await getTranslationFiles().then(translations => {
+        if (currentLanguageCode == null || currentLanguageCode == undefined) {
+            currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
+            localStorage.setItem("currentLanguageCode", currentLanguageCode);
+        }
+
+        await getTranslationFiles(currentLanguageCode).then(translations => {
 
             // Find the current selected langauge translations
             // And show top 5 popular questions from it
             const currentSelectedSchemeId = schemesInfo.currentScheme;
-            const currentSelectedLanaguageTranslations = translations.find(f => f.languageCode == currentLanguageCode);
+            currentLanguageInfo = translations.find(f => f.languageCode == currentLanguageCode);
 
             // Update schemes translations as well
-            const translationsList = convertObjectToArray(currentSelectedLanaguageTranslations.translations.lables);
+            const translationsList = convertObjectToArray(currentLanguageInfo.translations.lables);
+
+            // Get labels translations and convert it into key value array
+            //const labelsTranslationsList = convertObjectToArray(currentLanguageInfo .translations.label);
+
+            // Get messages transaltions and convert it into key value array
+            const messageTranslationsList = convertObjectToArray(currentLanguageInfo.translations.messages);
+
+            const allTranslations = messageTranslationsList.concat(translationsList);
+            updateTranslations(allTranslations);
+
+
             schemesInfo.updateSchemesTranslations(translationsList);
-            const currentSelectedSChemeTranslations = currentSelectedLanaguageTranslations.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
+            const currentSelectedSChemeTranslations = currentLanguageInfo.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
 
             if (currentSelectedSChemeTranslations) {
 
@@ -1115,7 +1209,7 @@
 
                 const topRandomPopularQuestions = getRandomValues(currentSelectedSChemeTranslations.queries, numberOfVisiblePopularQueries, alreadyUsedQueries.length ? alreadyUsedQueries : undefined);
 
-                //const generalQuestions = convertObjectToArray(currentSelectedLanaguageTranslations.translations);
+                //const generalQuestions = convertObjectToArray(currentLanguageInfo .translations);
 
                 //bindGeneralQuestions(generalQuestions);
 
@@ -1162,13 +1256,10 @@
         // First remove the old steps to update the translations when language is changed
         configAppTour();
 
-        let nextButtonTranslation = translations.find((f) => f.Key == 'next').Value;
-        let previousButtonTranslation = translations.find(
-            (f) => f.Key == 'previous'
-        ).Value;
-        let exitButtonTranslation = translations.find(
-            (f) => f.Key == 'app_tour_exit'
-        ).Value;
+        let nextButtonTranslation = currentLanguageInfo.translations.lables.next;
+        let previousButtonTranslation = currentLanguageInfo.translations.lables.previous;
+
+        let exitButtonTranslation = currentLanguageInfo.translations.lables.app_tour_exit;
 
         let nextButtonInfo = {
             text: nextButtonTranslation,
@@ -1193,6 +1284,7 @@
         let appTourTranslationMappingDetails = [
             {
                 id: '',
+                translationType: 'messages',
                 title: 'app_tour_welcome_header',
                 text: 'app_tour_welcome_description',
                 showNextButton: true,
@@ -1200,54 +1292,63 @@
             },
             {
                 id: 'app_tour_scheme_selection_description',
+                translationType: 'messages',
                 text: 'app_tour_scheme_selection_description',
                 showNextButton: true,
                 showPreviousButton: true,
             },
             {
                 id: 'app_tour_language_selection_description',
+                translationType: 'messages',
                 text: 'app_tour_language_selection_description',
                 showNextButton: true,
                 showPreviousButton: true,
             },
             {
                 id: 'app_tour_alternate_language_selection_description',
+                translationType: 'messages',
                 text: 'app_tour_alternate_language_selection_description',
                 showNextButton: true,
                 showPreviousButton: true,
             },
             {
                 id: 'app_tour_audio_button_description',
+                translationType: 'messages',
                 text: 'app_tour_audio_button_description',
                 showNextButton: true,
                 showPreviousButton: true,
             },
             {
                 id: 'app_tour_sample_questions_description',
+                translationType: 'messages',
                 text: 'app_tour_sample_questions_description',
                 showNextButton: true,
                 showPreviousButton: true,
             },
             {
                 id: 'app_tour_typebox_description',
+                translationType: 'messages',
                 text: 'app_tour_typebox_description',
                 showNextButton: true,
                 showPreviousButton: true,
             },
             {
                 id: 'app_tour_mic_button_description',
+                translationType: 'messages',
                 text: 'app_tour_mic_button_description',
                 showNextButton: true,
                 showPreviousButton: true,
             },
             {
                 id: 'app_tour_send_button_description',
+                translationType: 'messages',
                 text: 'app_tour_send_button_description',
                 showNextButton: true,
                 showPreviousButton: true,
             },
             {
                 id: 'app_tour_refresh_button_description',
+                translationType: 'messages',
                 text: 'app_tour_refresh_button_description',
                 showNextButton: false,
                 showPreviousButton: true,
@@ -1256,9 +1357,7 @@
         ];
 
         for (var i = 0; i < appTourTranslationMappingDetails.length; i++) {
-            let currentTranslationMappingDetails =
-                appTourTranslationMappingDetails[i];
-
+            let currentTranslationMappingDetails = appTourTranslationMappingDetails[i];
 
 
 
@@ -1277,12 +1376,9 @@
                 appTourStepButtons.push(exitButtonInfo);
             }
 
-            let titleTranslationInfo = translations.find(
-                (f) => f.Key == currentTranslationMappingDetails.title
-            );
-            let textTranslationInfo = translations.find(
-                (f) => f.Key == currentTranslationMappingDetails.text
-            );
+            let titleTranslationInfo = currentLanguageInfo.translations[currentTranslationMappingDetails.translationType][currentTranslationMappingDetails.title];
+
+            let textTranslationInfo = currentLanguageInfo.translations[currentTranslationMappingDetails.translationType][currentTranslationMappingDetails.text];
 
             let attachToInfo = {
                 element: '.' + currentTranslationMappingDetails.id,
@@ -1291,8 +1387,8 @@
 
             appTourStep = {
                 id: currentTranslationMappingDetails.id,
-                title: titleTranslationInfo ? titleTranslationInfo.Value : undefined,
-                text: textTranslationInfo.Value,
+                title: titleTranslationInfo ? titleTranslationInfo : undefined,
+                text: textTranslationInfo,
                 attachTo: currentTranslationMappingDetails.id
                     ? attachToInfo
                     : undefined,
@@ -1303,11 +1399,11 @@
             appTourSteps.push(appTourStep);
         }
 
+
         tour.addSteps(appTourSteps);
     }
 
     function startAppTour() {
-
         // Check if current translation mapping details app tour step is visible in UI or not
         // Sometimes some ui elements can be hidden as per the user action,
         // So no need to display app tour for it, as it is not visible on the screen
@@ -1335,9 +1431,8 @@
     function submitFeedbackModalCloseEventListener() {
         submitFeedbackModalElement.addEventListener('hidden.bs.modal', (event) => {
             // Show toaster to show thank you message for the feedback
-            const toastMessage = translations.find(
-                (f) => f.Key == 'message_thank_you_for_feedback'
-            ).Value;
+            const toastMessage = currentLanguageInfo.translations.toasts.thank_you_for_feedback;
+
             /*showToastNotification(toastMessage);*/
             const feedbackResponseMessageId =
                 'message-thank-for-feedback-' + new Date().getTime();
@@ -1436,7 +1531,7 @@
                 sessionStorage.setItem('final_response', true);
 
                 //showPopularQuestions();
-                getPopularQuestionsTranslations();
+                getTranslations();
             }
 
             //const divElem = document.querySelector('#chat-message-span-wrapper-' + messageId);
@@ -1687,7 +1782,7 @@
                 .toLowerCase()
                 .indexOf('one time password is wrong') >= 0
         ) {
-            var resendOtpTranslation = translations.find((f) => f.Key == 'message_resend_otp').Value;
+            var resendOtpTranslation = currentLanguageInfo.translations.messages.resend_otp;
 
             let chatMessageWrapperStartingDivHtmlContent =
                 getChatMessageWrapperStartingDivHtmlContent(
@@ -1779,7 +1874,7 @@
 
         response = response.replaceAll("\\n", "<br>").replaceAll("\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0").replaceAll("\t", "\u00A0\u00A0\u00A0\u00A0");
         response = response.trim();
-        response = replaceEnclosedSingleQuotesWithBackticks(response);
+        //response = replaceEnclosedSingleQuotesWithBackticks(response);
 
         // AADHAR Info UI Format START
         // If aadhar info is available in chat response then we need to display it in table format
@@ -1824,7 +1919,7 @@
             addMetricsCount('internalServerError');
         }
 
-        var defaultChatbotErrorMessage = translations.find((f) => f.Key == 'error_default_message').Value;
+        var defaultChatbotErrorMessage = currentLanguageInfo.translations.errors.default_message; //translations.find((f) => f.key == 'error_default_message').value;
 
         const currentDateTime = new Date().getTime().toString();
 
@@ -1932,7 +2027,7 @@
 
                     if (data.error !== null) {
                         // Show default error message
-                        var defaultChatbotErrorMessage = translations.find((f) => f.Key == 'error_default_message').Value;
+                        var defaultChatbotErrorMessage = currentLanguageInfo.translations.errors.default_message; //translations.find((f) => f.key == 'error_default_message').value;
 
                         processChatBotResponse(
                             defaultChatbotErrorMessage,
@@ -2400,7 +2495,7 @@
             dataType: 'json',
             success: function (data) {
                 isGetUITranslationsRequestInProgress = null;
-                updateTranslations(data.Data.Translations);
+                //updateTranslations(data.Data.Translations);
 
                 // Check if app tour is already displayed or not
                 // If not then display it, because it means user is opening the app for the first time.
@@ -2415,7 +2510,7 @@
             },
         });
 
-        //getPopularQuestionsTranslations();
+        //getTranslations();
     }
 
     function convertObjectToArray(obj) {
@@ -2458,22 +2553,52 @@
         return result;
     }
 
-    async function getTranslationFiles() {
+    async function getTranslationFiles(currentLanguageCode) {
 
         // Fetch the translations for all the languages
-        for (var i = 0; i < popularQuestionsTranslations.length; i++) {
+        for (var i = 0; i < allLanguagesTranslations.length; i++) {
 
-            const currentLanguage = popularQuestionsTranslations[i];
+            const currentLanguage = allLanguagesTranslations[i];
 
-            if (currentLanguage.translations.length == 0) {
-                const response = await fetch('/Content/translations/' + currentLanguage.language + '.json');
-                const translations = await response.json();
+            if (currentLanguage.languageCode == currentLanguageCode) {
+                if (currentLanguage.translations === null) {
+                    const response = await fetch('/Content/translations/' + currentLanguage.language + '.json');
+                    const translationsInfo = await response.json();
 
-                popularQuestionsTranslations[i].translations = translations;
+                    allLanguagesTranslations[i].translations = translationsInfo;
+
+                    break;
+                }
             }
         }
 
-        return popularQuestionsTranslations;
+        return allLanguagesTranslations;
+    }
+
+    async function getLanguageLabelsAudioes() {
+
+        const allLanguagesAudioBase64Data = [];
+
+        for (var i = 0; i < allLanguagesTranslations.length; i++) {
+            const currentLanguage = allLanguagesTranslations[i];
+
+            const apiResponse = await fetch('/Content/audio/' + currentLanguage.languageCode + '.txt');
+            const apiJsonResponse = await apiResponse.text();
+
+            allLanguagesAudioBase64Data.push({
+                Key: 'language-labels-' + currentLanguage.languageLabel,
+                Value: apiJsonResponse
+            });
+        }
+
+        initGeneralAudioConfig(allLanguagesAudioBase64Data);
+    }
+
+    function changeLanguageUI(languageCultureCode,
+        LanguageEnglishLabel,
+        languageCultureLabel,
+        currentLanguageCultureCode) {
+
     }
 
 
@@ -2503,8 +2628,6 @@
                 }
 
                 isChangeLanguageRequestInProgress = null;
-
-                getWelcomeGreetingsAudio(true);
 
                 sessionStorage.setItem('languageChangedMessage', data.Message);
 
@@ -2551,13 +2674,17 @@
                     true
                 );
 
+
+
                 // Update selected language buttons and labels to update the selected language in UI.
                 updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
 
-                updateTranslations(data.Data.Translations);
+                getWelcomeGreetingsAudio(true);
+
+                //updateTranslations(data.Data.Translations);
 
                 //updatePopularQuestionsTranslations(data.Data.PopularQuestions);
-                getPopularQuestionsTranslations();
+                getTranslations();
                 showUserRecordedMessageInTextBox('');
 
                 //previousUserId = currentUserId;
@@ -2570,14 +2697,12 @@
         });
     }
 
-    function updatePopularQuestionsTranslations(popularQuestions) {
-        getPopularQuestionsTranslations();
-    }
-
     function updateSelectedLanguageInUI(
         languageCultureCode,
         languageCultureLabel
     ) {
+
+        localStorage.setItem('currentLanguageCode', languageCultureCode);
         $('.language-buttons').removeClass('btn-success');
         $('.language-buttons').addClass('btn-secondary');
 
@@ -2609,36 +2734,70 @@
         ).addClass('fw-bold');
     }
 
-    function getWelcomeGreetingsAudio(isLanguageChanged) {
-        isGetWelcomeGreetingsTextToSpeechRequestInProgress = $.ajax({
-            type: 'POST',
-            url: currentParentRoute + 'GetWelcomeGreetingsTextToSpeech',
-            dataType: 'json',
-            success: function (data) {
-                isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
-                initWelcomeGreetingAudioConfig(data.Data, isLanguageChanged);
-            },
-            failure: function (data) {
-                isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
-                alert('oops something went wrong');
-            },
-        });
+    async function getWelcomeGreetingsAudio(isLanguageChanged) {
+        const currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
+
+        // Get current selected language and welcome message
+        const languageChangeMessageAPIResponse = await fetch('/Content/audio/language-change-' + currentLanguageCode + '.txt');
+        const welcomeMessageAPIResponse = await fetch('/Content/audio/welcome-' + currentLanguageCode + '.txt');
+
+        const languageChangeBase64Data = await languageChangeMessageAPIResponse.text();
+        const welcomeMessageBase64Data = await welcomeMessageAPIResponse.text();
+
+        const base64Key = 'welcome-greeting-message-base64-' + currentLanguageCode;
+        const base64Value = 'language-change-greeting-message-base64-' + currentLanguageCode;
+
+        // Add fetched data in an array
+
+
+        const base64Data =
+            [
+                {
+                    Key: 'welcome-greeting-message-base64-' + currentLanguageCode,
+                    Value: languageChangeBase64Data
+                },
+                {
+                    Key: 'language-change-greeting-message-base64-' + currentLanguageCode,
+                    Value: welcomeMessageBase64Data
+                }
+            ];
+
+        initWelcomeGreetingAudioConfig(base64Data, isLanguageChanged);
+        //isGetWelcomeGreetingsTextToSpeechRequestInProgress = $.ajax({
+        //    type: 'POST',
+        //    url: currentParentRoute + 'GetWelcomeGreetingsTextToSpeech',
+        //    dataType: 'json',
+        //    success: async function (data) {
+        //        isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
+
+
+        //        initWelcomeGreetingAudioConfig(data.Data, isLanguageChanged);
+        //    },
+        //    failure: function (data) {
+        //        isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
+        //        alert('oops something went wrong');
+        //    },
+        //});
     }
 
     function getTextToSpeechFromBhashini() {
-        isGetTextToSpeechFromBhashiniRequestInProgress = $.ajax({
-            type: 'POST',
-            url: currentParentRoute + 'GetTextToSpeechFromBhashini',
-            dataType: 'json',
-            success: function (data) {
-                isGetTextToSpeechFromBhashiniRequestInProgress = null;
-                initGeneralAudioConfig(data.Data);
-            },
-            failure: function (data) {
-                isGetTextToSpeechFromBhashiniRequestInProgress = null;
-                alert('oops something went wrong');
-            },
-        });
+
+        getLanguageLabelsAudioes();
+
+        //isGetTextToSpeechFromBhashiniRequestInProgress = $.ajax({
+        //    type: 'POST',
+        //    url: currentParentRoute + 'GetTextToSpeechFromBhashini',
+        //    dataType: 'json',
+        //    success: async function (data) {
+        //        isGetTextToSpeechFromBhashiniRequestInProgress = null;
+
+        //        initGeneralAudioConfig(data.Data);
+        //    },
+        //    failure: function (data) {
+        //        isGetTextToSpeechFromBhashiniRequestInProgress = null;
+        //        alert('oops something went wrong');
+        //    },
+        //});
     }
 
     function initGeneralAudioConfig(data) {
@@ -2851,7 +3010,7 @@
             createSession(fingerPrintId)
                 .then((sessionResult) => {
                     popularQueriesService.resetUsedQueries();
-                    getPopularQuestionsTranslations();
+                    getTranslations();
                 })
                 .catch((sessionError) => {
                     handleError(sessionError);
@@ -2875,7 +3034,7 @@
 
     function clearChatHistory() {
         $('.conversationsWrapper').remove();
-        var defaultPlaceholderMessage = translations.find((f) => f.Key == 'message_ask_ur_question').Value;
+        var defaultPlaceholderMessage = currentLanguageInfo.translations.messages.ask_ur_question; //translations.find((f) => f.key == 'ask_ur_question').value;
         changeInputPlaceholderValue(defaultPlaceholderMessage);
         //showPopularQuestions();
 
@@ -2899,12 +3058,16 @@
 
     function changeInputPlaceholderValue(valueToChange) {
 
-        var defaultPlaceholderMessage = translations.find((f) => f.Key == 'message_ask_ur_question').Value;
+        var defaultPlaceholderMessage = currentLanguageInfo.translations.messages.ask_ur_question; //translations.find((f) => f.key == 'ask_ur_question').value;
 
         $(userQuestionTextBox).attr(
             'placeholder',
             valueToChange != undefined ? valueToChange : defaultPlaceholderMessage
         );
+
+        $(userQuestionTextBox).trigger('keyup');
+
+        autosize.update($(userQuestionTextBox));
     }
 
     function showChatbotConfirmationModal(

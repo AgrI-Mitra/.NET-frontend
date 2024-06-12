@@ -23,19 +23,66 @@ namespace KisanEMitra
                       "~/Scripts/bootstrap.bundle.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css",
-                      "~/Content/style.css",
-                      "~/Content/responsive.css",
-                      "~/Content/chatbot.css",
-                      "~/Content/shepherd.css",
-                      "~/Content/ham-menu.css"));
+            //"~/Content/bootstrap.min.css",
+            //          "~/Content/style.css",
+            //          "~/Content/responsive.css",
+            //          "~/Content/chatbot.css",
+            //          "~/Content/shepherd.css",
+            //          "~/Content/ham-menu.css"
+                      "~/Content/bundle-prod-css.min.css"
+                      ));
+
+            //bundles.Add(new StyleBundle("~/Content/css").Include(
+            //    "~/Content/bundle-prod-css.css"
+            //    ));
 
             bundles.Add(new StyleBundle("~/Content/staging/css").Include(
-                      "~/Content/bootstrap.min.css",
-                      "~/Content/style-staging.css",
-                      "~/Content/responsive-staging.css",
-                      "~/Content/shepherd.css",
-                      "~/Content/chatbot-staging.css"));
+                      //"~/Content/bootstrap.min.css",
+                      //"~/Content/style-staging.css",
+                      //"~/Content/responsive-staging.css",
+                      //"~/Content/shepherd.css",
+                      //"~/Content/chatbot-staging.css"
+                      "~/Content/bundle-staging.min.css"
+                      ));
+            //bundles.Add(new StyleBundle("~/Content/staging/css").Include(
+            //    "~/Content/bundle-staging.css"
+            //    ));
+
+            bundles.Add(new Bundle("~/bundles/pre-init-js").Include(
+                //"~/Content/js/app-config.js",
+                //"~/Content/js/commonService.js",
+                //"~/Content/js/schemesDropdown.js",
+                //"~/Content/js/recorder.js",
+                //"~/Content/js/languageDropDown.js",
+                //"~/Content/js/typed.umd.js"
+                "~/Content/js/bundle-pre-body.min.js"
+                ));
+
+            //bundles.Add(new Bundle("~/bundles/pre-init-js").Include(
+            //    "~/Content/js/bunle-pre-body.js"
+            //    ));
+
+            //bundles.Add(new Bundle("~/bundles/post-init-js").Include(
+            //    "~/Content/js/bunle-post-body.js"
+            //    ));
+
+            //bundles.Add(new Bundle("~/bundles/post-init-staging-js").Include(
+            //    "~/Content/js/bunle-post-body-staging.js"
+            //    ));
+
+            bundles.Add(new Bundle("~/bundles/post-init-js").Include(
+                //"~/Content/js/autosize.js",
+                //"~/Content/js/wavBlobUtil.js",
+                //"~/Content/js/WavRecorder.js",
+                //"~/Content/js/popularQueriesService.js",
+                //"~/Content/js/shepherd.js"
+                "~/Content/js/bundle-post-body.min.js"
+                ));
+
+            //bundles.Add(new Bundle("~/bundles/chatbot-js").Include(
+            //    "~/Content/js/chatbot.js"));
+
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

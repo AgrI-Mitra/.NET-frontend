@@ -379,3 +379,12 @@ img.query-msg-send-icon {
 .footer-svg-hover {
     cursor: pointer;
 }
+
+.text-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    position: relative;
+    top: 4px;
+    /*max-width: 100px;*/
+}

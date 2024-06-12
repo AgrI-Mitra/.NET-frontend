@@ -1,0 +1,65 @@
+[
+  {
+    "outputFileName": "Content/bundle-prod-css.css",
+    "inputFiles": [
+      "Content/bootstrap.min.css",
+      "Content/style.css",
+      "Content/responsive.css",
+      "Content/chatbot.css",
+      "Content/shepherd.css",
+      "Content/ham-menu.css"
+    ],
+    "sourceMap": false,
+    "sourceMapRootPath": null,
+    "MostRecentWrite": "0001-01-01T00:00:00"
+  },
+  {
+    "outputFileName": "Content/bundle-staging.css",
+    "inputFiles": [
+      "Content/bootstrap.min.css",
+      "Content/style-staging.css",
+      "Content/responsive-staging.css",
+      "Content/shepherd.css",
+      "Content/chatbot-staging.css"
+    ],
+    "sourceMap": false,
+    "sourceMapRootPath": null,
+    "MostRecentWrite": "0001-01-01T00:00:00"
+  },
+  {
+    "outputFileName": "Content/js/bundle-pre-body.js",
+    "inputFiles": [
+      "Content/js/app-config.js",
+      "Content/js/commonService.js",
+      "Content/js/languageDropDown.js",
+      "Content/js/schemesDropdown.js",
+      "Content/js/typed.umd.js",
+      "Content/js/recorder.js"
+    ],
+    "sourceMap": false,
+    "sourceMapRootPath": null,
+    "MostRecentWrite": "0001-01-01T00:00:00"
+  },
+  {
+    "outputFileName": "Content/js/bundle-post-body.js",
+    "inputFiles": [
+      "Content/js/autosize.js",
+      "Content/js/wavBlobUtil.js",
+      "Content/js/WavRecorder.js",
+      "Content/js/popularQueriesService.js",
+      "Content/js/shepherd.js"
+    ],
+    "sourceMap": false,
+    "sourceMapRootPath": null,
+    "MostRecentWrite": "0001-01-01T00:00:00"
+  },
+  {
+    "outputFileName": "Content/js/chatbot.min.js",
+    "inputFiles": [
+      "Content/js/chatbot.js"
+    ],
+    "sourceMap": false,
+    "sourceMapRootPath": null,
+    "MostRecentWrite": "0001-01-01T00:00:00"
+  }
+]

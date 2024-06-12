@@ -46,7 +46,6 @@
 
     function submitReview() {
         var review = $('#experience-feedback').val();
-        console.log('review: ', review);
         $.ajax({
             type: "POST",
             url: "/Home/SubmitReview",
