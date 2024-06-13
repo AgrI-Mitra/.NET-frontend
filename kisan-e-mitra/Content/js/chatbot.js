@@ -1084,7 +1084,7 @@
 
         const controller = new AbortController();
         const signal = controller.signal;
-        //await window.schemesInfo.getSchemesList();
+        await window.schemesInfo.getSchemesList();
         voiceRecorderListener();
         languageChangeListener();
         schemeChangeListener();
