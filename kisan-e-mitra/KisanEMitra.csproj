@@ -428,7 +428,7 @@
     <Content Include="Content\translations\punjabi.json" />
     <Content Include="Content\translations\malayalam.json" />
     <Content Include="Content\translations\kannada.json" />
-    <Content Include="Content\translations\bengali.json" />
+    <Content Include="Content\translations\bangla.json" />
     <Content Include="Content\translations\english.json" />
     <Content Include="Content\translations\hindi.json" />
     <Content Include="favicon.ico" />

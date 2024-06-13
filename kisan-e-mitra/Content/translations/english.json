@@ -206,7 +206,7 @@
     "invalid_mobile": "Enter a 10 digit number!",
     "invalid_otp": "Invalid Otp",
     "kcc_scheme": "Kisan Credit Card",
-    "language_changed_greeting": "Thank you for selecting the English language.\nDear Beneficiary,\nType your question or speak using the mic button. Just touch the mic button and say your question. Touch the mic button again to stop recording.",
+    "language_changed_greeting": "Thank you for selecting English language. You can ask me queries related to Government Schemes like Pradhan Mantri Kisan Samman Nidhi (PM KISAN), Pradhan Mantri Fasal Bima Yojana (PMFBY) and Kisan Credit Card (KCC). Select your scheme below or choose from the drop down above to change your scheme anytime. You can type your question or speak using the mic button.",
     "maintenance_mode_body": "Sorry for any trouble. I'm getting updated and fixing some issues to assist you better. I will be available again soon. Please come back and try again after some time.",
     "maintenance_mode_header": "We'll be back soon!",
     "no_history": "Your Chat History with AI will come here",
@@ -242,7 +242,7 @@
     "thank_you_for_feedback": "Thanks for your feedback.",
     "translation_feedback": "Translation Feedback",
     "wait_resending_otp": "Please wait before resending OTP",
-    "welcome_greeting": "Welcome to Kisan-eMitra! I am your digital assistant. Please let me know how can I help you? \nYou may select your preferred language."
+    "welcome_greeting": "Welcome to Kisan-eMitra! I am your digital assistant for Government Schemes like Pradhan Mantri Kisan Samman Nidhi (PM KISAN), Pradhan Mantri Fasal Bima Yojana (PMFBY) and Kisan Credit Card (KCC). Please let me know how can I help you?  You may select your preferred language."
   },
   "toasts": {
     "reaction_dislike": "Successfully disliked the response",

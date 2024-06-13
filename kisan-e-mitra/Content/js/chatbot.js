@@ -2,8 +2,8 @@
 
 
     var apiUrlConfig = {
-        chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
-        //chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
+        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
+        chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
         userApiBaseEndPoint: 'user/',
         generateUserId: 'user/generateUserId',
         Prompt: 'prompt',
@@ -22,7 +22,7 @@
             translations: null
         },
         {
-            language: 'bengali',
+            language: 'bangla',
             languageLabel: 'Bangla',
             languageCode: 'bn',
             translations: null
@@ -888,7 +888,7 @@
 
         $(document).on(
             'click',
-            '.scheme-label-wrapper',
+            '.schemeEventListener',
             async function (ev) {
                 let selectedSchemeId = $(this).data('scheme-id');
                 //let languageEnglishLabel = $(this).data('language-english-label');
@@ -1084,6 +1084,8 @@
 
         const controller = new AbortController();
         const signal = controller.signal;
+
+        await appConfigConstruct.getAppConfig();
 
         if (appConfig.showSchemes) {
             await window.schemesInfo.getSchemesList();
@@ -2477,7 +2479,7 @@
             url: currentParentRoute + 'ChangeLanguage',
             dataType: 'json',
             data: { lang: languageCultureCode },
-            success: function (data) {
+            success: async function (data) {
 
                 // Hide language buttons
                 $(".app_tour_language_selection_description").hide();
@@ -2491,7 +2493,7 @@
 
                 isChangeLanguageRequestInProgress = null;
 
-                sessionStorage.setItem('languageChangedMessage', data.Message);
+                /*sessionStorage.setItem('languageChangedMessage', data.Message);*/
 
                 // Remove previous language changed message
                 let previousLanguageChangedMessageId =
@@ -2525,9 +2527,19 @@
                     'playMessageImg-' + newWelcomeGreetingDataId
                 );
 
+                // Update selected language buttons and labels to update the selected language in UI.
+                updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
+
+                getWelcomeGreetingsAudio(true);
+
+                await getTranslations();
+                showUserRecordedMessageInTextBox('');
+
+                // Get current language change message
+                const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.language_changed_greeting;
                 // Add language change message to chat screen
                 updateChatMessagesList(
-                    data.Message,
+                    currentLanguageChangeMessage,
                     'language-change-greeting-message-base64-' +
                     languageCultureCode +
                     '-audio',
@@ -2535,19 +2547,6 @@
                     true,
                     true
                 );
-
-
-
-                // Update selected language buttons and labels to update the selected language in UI.
-                updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
-
-                getWelcomeGreetingsAudio(true);
-
-                //updateTranslations(data.Data.Translations);
-
-                //updatePopularQuestionsTranslations(data.Data.PopularQuestions);
-                getTranslations();
-                showUserRecordedMessageInTextBox('');
 
                 //previousUserId = currentUserId;
                 previousSessionId = sessionId;
@@ -2564,7 +2563,7 @@
         languageCultureLabel
     ) {
 
-        localStorage.setItem('currentLanguageCode', languageCultureCode);
+        localStorage.setItem("currentLanguageCode", languageCultureCode);
         $('.language-buttons').removeClass('btn-success');
         $('.language-buttons').addClass('btn-secondary');
 
@@ -2611,11 +2610,11 @@
             [
                 {
                     Key: 'welcome-greeting-message-base64-' + currentLanguageCode,
-                    Value: languageChangeBase64Data
+                    Value: welcomeMessageBase64Data
                 },
                 {
                     Key: 'language-change-greeting-message-base64-' + currentLanguageCode,
-                    Value: welcomeMessageBase64Data
+                    Value: languageChangeBase64Data
                 }
             ];
 

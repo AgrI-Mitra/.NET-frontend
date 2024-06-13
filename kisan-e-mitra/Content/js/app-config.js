@@ -16,5 +16,9 @@
         }
     }
 
-    await getAppConfig();
+    //await getAppConfig();
+
+    window.appConfigConstruct = {
+        getAppConfig: getAppConfig
+    }
 })();

@@ -2,5 +2,5 @@
   "numberOfVisiblePopularQueries": 4,
   "numberOfUsedPopularQueriesToRetain": 5,
   "defaultScheme": "pmkisan",
-  "showSchemes": false
+  "showSchemes": true
 }
