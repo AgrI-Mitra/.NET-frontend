@@ -16,7 +16,11 @@
         }
     }
 
-    await getAppConfig();
+    //await getAppConfig();
+
+    window.appConfigConstruct = {
+        getAppConfig: getAppConfig
+    }
 })();
 (function () {
     function escapeSingleQuote(str) {
@@ -87,7 +91,7 @@
 
         console.log('bindSchemesToDropdown: ', schemes);
         var dropdown = document.getElementById('schemesDropdown');
-        //updateSelectedSchemeTranslation('');
+        var labelsWrapper = document.getElementById('schemesLabelsWrapper');
 
         for (var i = 0; i < schemes.length; i++) {
 
@@ -101,16 +105,23 @@
 
             var option = getSchemeOptionHtmlContent(currentScheme, currentScheme.id == selectedSchemeId ? "fw-bold" : "");
 
+            var label = getSchemesLabelsHtmlContent(currentScheme, currentScheme.id == selectedSchemeId ? "btn-secondary" : "");
 
             // Parse html string to html Node to update it inside UL element
             const parsedHtml = new DOMParser().parseFromString(option, 'text/html');
+            const parsedLabelHtml = new DOMParser().parseFromString(label, 'text/html');
+
+            const labelHtml = parsedLabelHtml.getElementsByTagName("button")[0];
 
             const liHtml = parsedHtml.getElementsByTagName("li")[0];
             if (i == 0) {
                 dropdown.replaceChildren();
+                labelsWrapper.replaceChildren();
             }
 
             dropdown.appendChild(liHtml);
+
+            labelsWrapper.appendChild(labelHtml);
         }
 
         // Set schemes info to global object
@@ -123,7 +134,7 @@
             "dropdown-item " + extraClass
             : "dropdown-item";
         return (
-            "<li class='scheme-label-wrapper'" +
+            "<li class='scheme-label-wrapper schemeEventListener'" +
 
             "data-scheme-id='" +
             schemeInfo.id +
@@ -138,11 +149,19 @@
         );
     }
 
+    function getSchemesLabelsHtmlContent(schemeInfo, extraClass) {
+
+        let labelsClassString = extraClass ? extraClass : "btn btn-success";
+        return (
+            "<button data-bs-container='body' type='button' class='btn language-buttons " + labelsClassString + "'>" + schemeInfo.title + "</button>"
+        )
+    }
+
     async function getSchemesList() {
 
         //Enable Schemes dropdown
-        document.getElementById('selectedSchemeLabel').style.display = "flex";
-        
+        document.getElementById('schemesDropdownWrapper').style.display = "flex";
+
         try {
             const response = await fetch('/Content/data/schemes.json');
             const schemes = await response.json();
