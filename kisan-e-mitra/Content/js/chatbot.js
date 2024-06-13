@@ -170,9 +170,6 @@
     var mediaRecorder;
 
     // shim for AudioContext when it's not avb.
-    var AudioContext = window.AudioContext || window.webkitAudioContext;
-    var audioContext; //audio context to help us record
-    var isMessagePlaying = false; // To maintain state of message is being played or not
     var previousPlayingMessageId = ''; // To maintain previous playing message id. So when user tries to play another message in middle of current playing message
     var lastUserTypedMessageId = '';
     // We need to stop current playing message.
@@ -643,23 +640,6 @@
         return popularQuestionsElementsList;
     }
 
-    function getGeneralQuestionsHtmlContent(generalQuestionsList) {
-
-        let generalQuestionsHtmlContent = "";
-
-        for (var i = 0; i < generalQuestionsList.length; i++) {
-            const currentPopularQuestion = generalQuestionsList[i];
-            const currentPopularQuestionValue = commonService.escapeSingleQuote(currentPopularQuestion.value);
-
-            generalQuestionsHtmlContent += "<div class='card popular-query-card' id='" + currentPopularQuestion.key + "' data-popular-question='" + currentPopularQuestionValue + "'>" +
-                "<div class='card-body popular-query-card-body'>" +
-                "<p>" + currentPopularQuestion.value + "</p>" +
-                "</div>" +
-                "</div>";
-        }
-        return generalQuestionsHtmlContent;
-    }
-
     let userLogoHtmlContent = getUserLogoHtmlContent();
     let chatbotLogoHtmlContent = getChatbotLogoHtmlContent();
     let chatMessageWrapperColumnTwoStartingDivHtmlContent =
@@ -861,46 +841,8 @@
                 console.log('translation missing: ', currentTranslationMappingDetails);
             }
         }
-        //for (var i = 0; i < translationsToUpdate.length; i++) {
-        //    // Get the current translation's html element related details from "translationsMappingIds" so we can know which html element we need to update for the translations
-        //    let currentTranslation = translationsToUpdate[i];
 
-        //    let currentTranslationMappingDetails = translationsMappingIds.find(
-        //        (f) => f?.translationKey == currentTranslation.key
-        //    );
-
-        //    // Update selected scheme translations
-        //    // Find the current selected selected scheme
-        //    // And then find the translation for it
-        //    const currentSelectedScheme = schemesInfo.currentScheme;
-
-        //    if (currentTranslationMappingDetails) {
-        //        // Update page title
-        //        if (currentTranslationMappingDetails.translationKey == 'title') {
-        //            document.title = currentTranslation.value;
-        //        }
-
-        //        if (
-        //            currentTranslationMappingDetails.htmlElementValueAttributeType ==
-        //            'text'
-        //        ) {
-        //            $(
-        //                currentTranslationMappingDetails.htmlElementKeyAttributeType +
-        //                currentTranslationMappingDetails.htmlElementKeyName
-        //            ).html(currentTranslation.value);
-        //        } else {
-        //            $(
-        //                currentTranslationMappingDetails.htmlElementKeyAttributeType +
-        //                currentTranslationMappingDetails.htmlElementKeyName
-        //            ).attr(
-        //                currentTranslationMappingDetails.htmlElementValueAttributeType,
-        //                currentTranslation.value
-        //            );
-        //        }
-        //    }
-        //}
-
-        initAppTour(translations);
+        initAppTour();
     }
 
     /**
@@ -1235,13 +1177,6 @@
         });
     }
 
-    function bindGeneralQuestions(generalQuestionsList) {
-        const generalQuestionsHtmlContent = getGeneralQuestionsHtmlContent(generalQuestionsList);
-
-        $('.popular-questions-accordian-body').empty();
-        $('.popular-questions-accordian-body').append(generalQuestionsHtmlContent);
-    }
-
     function configAppTour() {
         tour = new Shepherd.Tour({
             useModalOverlay: true,
@@ -1259,7 +1194,7 @@
         });
     }
 
-    function initAppTour(translations) {
+    function initAppTour() {
         // First remove the old steps to update the translations when language is changed
         configAppTour();
 
@@ -1571,31 +1506,6 @@
         }
     }
 
-    function convertToClickableLinks(text) {
-        var urlRegex = /(https?:\/\/[^\s<>"{}|\\^`[\]]+)/g;
-        return text.replace(urlRegex, function (url) {
-            // Check if the URL is already within <a> tags
-            var precedingText = text.slice(0, text.indexOf(url));
-            var followingText = text.slice(text.indexOf(url));
-            if (precedingText.includes('<a') && followingText.includes('</a>')) {
-                // The URL is already within <a> tags, so return it as is
-                return url;
-            } else {
-                // The URL is not within <a> tags, so convert it into a clickable link
-                // Remove trailing dot, if it exists
-
-                let hasTrailingZero = false;
-                if (url.endsWith('.')) {
-                    url = url.slice(0, -1);
-
-                    hasTrailingZero = true;
-                }
-                return '<a href="' + url + '" target="_blank" class="pm-kisan-hyperlink">' + url + '</a>' + (hasTrailingZero ? '.' : '');
-            }
-        });
-    }
-
-
     function recordAudio(screenName) {
         isRecording = !isRecording;
 
@@ -1641,14 +1551,13 @@
     $(document).ready(function () {
         initChatBotConfig();
 
-        //$(voiceRecordMicCircleId).hide();
         $(voiceRecordMicCircleClass).hide();
 
         createGlobalAudioElement();
 
         getWelcomeGreetingsAudio(false);
 
-        getTextToSpeechFromBhashini();
+        getLanguageLabelsAudioes();
 
         enableDisableSendButton();
 
@@ -1678,12 +1587,6 @@
         });
 
         getLocalStream();
-
-        //$(voiceRecordButtonId).click(function () {
-        //    //recordAudio();
-        //});
-
-        // To listen click event on send user question button
         $(function () {
             $('body').on('click', sendTextButtonId, function (e) {
                 e.preventDefault();
@@ -1824,33 +1727,6 @@
     function resendOTP(element) {
         $('#chatbotMessageWrapper-resendOtp').remove();
         askQuestions('resend OTP', 'text');
-    }
-
-
-    /**
-     * This function is used to genearte hyperlink from the inputString
-     * @param {any} inputString
-     * @returns
-     */
-    function generateHyperlink(inputString) {
-        // Regular expression to match the pattern [some text] (link)
-        var regex = /\[(.*?)\]\s*\((.*?)\)/g;
-        var match = regex.exec(inputString);
-
-        if (match) {
-            var linkText = match[1];
-            var url = match[2];
-
-            // Construct the HTML hyperlink string
-            var hyperlink = '<a href="' + url + '" target="_blank" class="pm-kisan-hyperlink">' + linkText + '</a>';
-
-            // Replace hyperlink in existing inputString
-            inputString = inputString.replace(regex, hyperlink);
-
-            return { isHyperlinkGenerated: true, inputString: inputString };
-        } else {
-            return { isHyperlinkGenerated: false, inputString: inputString };//"Invalid format. Please provide input in the format [some text] (link)";
-        }
     }
 
     /**
@@ -2492,34 +2368,6 @@
         return blob;
     };
 
-    async function getUITranslations() {
-
-
-
-        isGetUITranslationsRequestInProgress = $.ajax({
-            type: 'POST',
-            url: currentParentRoute + 'GetUITranslations',
-            dataType: 'json',
-            success: function (data) {
-                isGetUITranslationsRequestInProgress = null;
-                //updateTranslations(data.Data.Translations);
-
-                // Check if app tour is already displayed or not
-                // If not then display it, because it means user is opening the app for the first time.
-                const isAppTourDisplayed = localStorage.getItem('isAppTourDisplayed');
-
-                if (!isAppTourDisplayed) {
-                    startAppTour();
-                }
-            },
-            failure: function (data) {
-                isGetUITranslationsRequestInProgress = null;
-            },
-        });
-
-        //getTranslations();
-    }
-
     function convertObjectToArray(obj) {
 
         let keys = Object.keys(obj);
@@ -2600,14 +2448,6 @@
 
         initGeneralAudioConfig(allLanguagesAudioBase64Data);
     }
-
-    function changeLanguageUI(languageCultureCode,
-        LanguageEnglishLabel,
-        languageCultureLabel,
-        currentLanguageCultureCode) {
-
-    }
-
 
     function changeLanguage(
         languageCultureCode,
@@ -2751,12 +2591,7 @@
         const languageChangeBase64Data = await languageChangeMessageAPIResponse.text();
         const welcomeMessageBase64Data = await welcomeMessageAPIResponse.text();
 
-        const base64Key = 'welcome-greeting-message-base64-' + currentLanguageCode;
-        const base64Value = 'language-change-greeting-message-base64-' + currentLanguageCode;
-
         // Add fetched data in an array
-
-
         const base64Data =
             [
                 {
@@ -2770,41 +2605,6 @@
             ];
 
         initWelcomeGreetingAudioConfig(base64Data, isLanguageChanged);
-        //isGetWelcomeGreetingsTextToSpeechRequestInProgress = $.ajax({
-        //    type: 'POST',
-        //    url: currentParentRoute + 'GetWelcomeGreetingsTextToSpeech',
-        //    dataType: 'json',
-        //    success: async function (data) {
-        //        isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
-
-
-        //        initWelcomeGreetingAudioConfig(data.Data, isLanguageChanged);
-        //    },
-        //    failure: function (data) {
-        //        isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
-        //        alert('oops something went wrong');
-        //    },
-        //});
-    }
-
-    function getTextToSpeechFromBhashini() {
-
-        getLanguageLabelsAudioes();
-
-        //isGetTextToSpeechFromBhashiniRequestInProgress = $.ajax({
-        //    type: 'POST',
-        //    url: currentParentRoute + 'GetTextToSpeechFromBhashini',
-        //    dataType: 'json',
-        //    success: async function (data) {
-        //        isGetTextToSpeechFromBhashiniRequestInProgress = null;
-
-        //        initGeneralAudioConfig(data.Data);
-        //    },
-        //    failure: function (data) {
-        //        isGetTextToSpeechFromBhashiniRequestInProgress = null;
-        //        alert('oops something went wrong');
-        //    },
-        //});
     }
 
     function initGeneralAudioConfig(data) {
@@ -2940,7 +2740,6 @@
     }
 
     async function playAudio(audioId) {
-        const currentAudioIdElement = document.getElementById(audioId);
         playAudioWithRememberingLastPause(audioId);
 
         return;
@@ -3043,8 +2842,6 @@
         $('.conversationsWrapper').remove();
         var defaultPlaceholderMessage = currentLanguageInfo.translations.messages.ask_ur_question; //translations.find((f) => f.key == 'ask_ur_question').value;
         changeInputPlaceholderValue(defaultPlaceholderMessage);
-        //showPopularQuestions();
-
     }
 
     function createGlobalAudioElement() {
@@ -3147,10 +2944,5 @@
         } else {
             console.error("Geolocation is not supported by this browser.");
         }
-
-
     }
-
-
-
 })();
