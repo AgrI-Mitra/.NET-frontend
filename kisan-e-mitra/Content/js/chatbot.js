@@ -84,9 +84,17 @@
 
     ];
 
+    const renderer = {
+        link(href, title, text) {
+            const link = marked.Renderer.prototype.link.call(this, href, title, text);
+            return link.replace("<a", "<a target='_blank' rel='noreferrer' ");
+        }
+    };
+
     marked.use({
         breaks: true,
         gfm: true,
+        renderer: renderer
     });
 
     let latitude;
@@ -1049,7 +1057,7 @@
 
             // Update used popular questions list,
             // So when we display new popular questions, we can exclude used ones and show different questions
-            const currentScheme = schemesInfo.currentScheme;
+            const currentScheme = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
             popularQueriesService.updateUsedQueries(currentScheme, popularQuestionKey);
         });
     }
@@ -1076,7 +1084,7 @@
 
         const controller = new AbortController();
         const signal = controller.signal;
-        await window.schemesInfo.getSchemesList();
+        //await window.schemesInfo.getSchemesList();
         voiceRecorderListener();
         languageChangeListener();
         schemeChangeListener();

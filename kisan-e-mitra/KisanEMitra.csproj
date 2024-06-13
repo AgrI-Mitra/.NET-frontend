@@ -221,6 +221,11 @@
     <Content Include="Content\js\commonService.js" />
     <Content Include="Content\js\popularQueriesService.js" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Resources\Resource.ur.Designer.cs">
+      <DependentUpon>Resource.ur.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\Resource.kn.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -235,7 +240,6 @@
     </Compile>
     <Compile Include="Services\ChatbotService.cs" />
     <Compile Include="Services\Contracts\IChatbotService.cs" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\Expanded.svg" />
     <Content Include="Content\images\help.png" />
     <Content Include="Content\ham-menu.css" />
@@ -482,6 +486,12 @@
     <Content Include="Views\Shared\_StagingLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource.ur.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.ur.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.kn.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.kn.Designer.cs</LastGenOutput>
