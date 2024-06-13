@@ -2,8 +2,8 @@
 
 
     var apiUrlConfig = {
-        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
-        chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
+        chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
+        //chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
         userApiBaseEndPoint: 'user/',
         generateUserId: 'user/generateUserId',
         Prompt: 'prompt',
@@ -1084,7 +1084,11 @@
 
         const controller = new AbortController();
         const signal = controller.signal;
-        await window.schemesInfo.getSchemesList();
+
+        if (appConfig.showSchemes) {
+            await window.schemesInfo.getSchemesList();
+        }
+        
         voiceRecorderListener();
         languageChangeListener();
         schemeChangeListener();
@@ -1131,7 +1135,7 @@
 
             // Find the current selected langauge translations
             // And show top 5 popular questions from it
-            const currentSelectedSchemeId = schemesInfo.currentScheme;
+            const currentSelectedSchemeId = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
             currentLanguageInfo = translations.find(f => f.languageCode == currentLanguageCode);
 
             // Update schemes translations as well
@@ -1154,7 +1158,10 @@
                 startAppTour();
             }
 
-            schemesInfo.updateSchemesTranslations(translationsList);
+            if (appConfig.showSchemes) {
+                schemesInfo.updateSchemesTranslations(translationsList);
+            }
+
             const currentSelectedSChemeTranslations = currentLanguageInfo.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
 
             if (currentSelectedSChemeTranslations) {

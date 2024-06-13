@@ -22,6 +22,7 @@
     }
     function bindSchemesToDropdown(schemes, selectedSchemeId, skipUpdatingCurrentSchemeTitle) {
 
+        console.log('bindSchemesToDropdown: ', schemes);
         var dropdown = document.getElementById('schemesDropdown');
         //updateSelectedSchemeTranslation('');
 
@@ -75,6 +76,10 @@
     }
 
     async function getSchemesList() {
+
+        //Enable Schemes dropdown
+        document.getElementById('selectedSchemeLabel').style.display = "flex";
+        
         try {
             const response = await fetch('/Content/data/schemes.json');
             const schemes = await response.json();

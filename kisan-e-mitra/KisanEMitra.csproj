@@ -162,6 +162,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Services\ServiceHelper.cs" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\audio\pa.txt" />
     <Content Include="Content\audio\language-change-pa.txt" />

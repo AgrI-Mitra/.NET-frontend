@@ -47,12 +47,6 @@
                             <span class="fw-bold d-inline-block text-ellipsis" id="selectedSchemeLabel"></span>
                         </button>
                         <ul id="schemesDropdown" class="dropdown-menu" aria-labelledby="languageDropDown">
-                            @*@foreach (var availableLanguage in availableLanguages)
-                                {
-                                    <li class="scheme-label-wrapper" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">
-                                        <a class="dropdown-item @((availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode) ? "fw-bold" : "")">@availableLanguage.LanguageCultureLabel</a>
-                                    </li>
-                                }*@
                         </ul>
                     </div>
 
