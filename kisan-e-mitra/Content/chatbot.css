@@ -388,3 +388,7 @@ img.query-msg-send-icon {
     top: 4px;
     /*max-width: 100px;*/
 }
+
+#schemesDropdownWrapper {
+    display: none;
+}
