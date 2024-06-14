@@ -41,8 +41,8 @@ table.aadhar-table {
 }
 
 .chatbot-message-wrapper-column-one {
-    flex: 0 1 48px;
-    height: 48px;
+    flex: 0 1 36px;
+    height: 36px;
 }
 
 .chatbot-message-wrapper-column-two {
@@ -144,6 +144,7 @@ table.aadhar-table {
     border-radius: 20px;
     font-size: .9rem;
     height: 30px;
+    white-space: nowrap;
 }
 
 /*// X-Small devices (portrait phones, less than 576px)
@@ -391,4 +392,36 @@ img.query-msg-send-icon {
 
 #schemesDropdownWrapper {
     display: none;
+}
+
+#schemesLabelsWrapper {
+    display: none;
+}
+
+.h-scrollable-wrapper {
+    max-width: 85vw;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.messageWelcomeGreeting_1 {
+    border-bottom: #19876e;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    margin: 0px 10px;
+}
+
+.content-head-text-responsive{ display: none; }
+
+.chat-message-span-wrapper p{
+    display: initial;
+}
+
+.welcome-message-wrapper{
+    position: sticky;
+    top:0;
+}
+
+.my-msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper{
+    padding-left: 5px;
 }

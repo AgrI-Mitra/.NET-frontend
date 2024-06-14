@@ -1,11 +1,14 @@
 [
   {
-    "id": "pmkisan"
+    "id": "pmkisan",
+    "apiKey":  "PM KISAN"
   },
   {
-    "id": "kcc"
+    "id": "kcc",
+    "apiKey": "KCC"
   },
   {
-    "id": "pmfby"
+    "id": "pmfby",
+    "apiKey": "PMFBY"
   }
 ]

@@ -1,7 +1,7 @@
-(async function async() {
+﻿(async function async() {
 
     function updateSelectedSchemeTranslation(updatedTranslation) {
-        document.getElementById('selectedSchemeLabel').innerText = updatedTranslation;
+        //document.getElementById('selectedSchemeLabel').innerText = updatedTranslation;
     }
 
     function updateSchemesTranslations(translations) {
@@ -22,32 +22,39 @@
     }
     function bindSchemesToDropdown(schemes, selectedSchemeId, skipUpdatingCurrentSchemeTitle) {
 
-        console.log('bindSchemesToDropdown: ', schemes);
-        var dropdown = document.getElementById('schemesDropdown');
-        //updateSelectedSchemeTranslation('');
+        //var dropdown = document.getElementById('schemesDropdown');
+        var labelsWrapper = document.getElementById('schemesLabelsWrapper');
 
         for (var i = 0; i < schemes.length; i++) {
 
             let currentScheme = schemes[i];
 
             if (currentScheme.id === selectedSchemeId && !skipUpdatingCurrentSchemeTitle) {
-                
+
                 //document.getElementById('selectedSchemeLabel').innerText = currentScheme.title;
                 updateSelectedSchemeTranslation(currentScheme.title);
             }
 
-            var option = getSchemeOptionHtmlContent(currentScheme, currentScheme.id == selectedSchemeId ? "fw-bold" : "");
+            //var option = getSchemeOptionHtmlContent(currentScheme, currentScheme.id == selectedSchemeId ? "fw-bold" : "");
 
+            var label = getSchemesLabelsHtmlContent(currentScheme, currentScheme.id == selectedSchemeId ? "btn-success" : "");
 
             // Parse html string to html Node to update it inside UL element
-            const parsedHtml = new DOMParser().parseFromString(option, 'text/html');
+            //const parsedHtml = new DOMParser().parseFromString(option, 'text/html');
 
-            const liHtml = parsedHtml.getElementsByTagName("li")[0];
+
+
+            //const liHtml = parsedHtml.getElementsByTagName("li")[0];
             if (i == 0) {
-                dropdown.replaceChildren();
+                //dropdown.replaceChildren();
+                labelsWrapper.replaceChildren();
             }
 
-            dropdown.appendChild(liHtml);
+            //dropdown.appendChild(liHtml);
+
+            const parsedLabelHtml = new DOMParser().parseFromString(label, 'text/html');
+            const labelHtml = parsedLabelHtml.getElementsByTagName("button")[0];
+            labelsWrapper.appendChild(labelHtml);
         }
 
         // Set schemes info to global object
@@ -60,7 +67,7 @@
             "dropdown-item " + extraClass
             : "dropdown-item";
         return (
-            "<li class='scheme-label-wrapper'" +
+            "<li class='scheme-label-wrapper schemeEventListener'" +
 
             "data-scheme-id='" +
             schemeInfo.id +
@@ -75,11 +82,25 @@
         );
     }
 
+    function getSchemesLabelsHtmlContent(schemeInfo, extraClass) {
+
+        let labelsClassString = extraClass ? extraClass : "btn btn-secondary";
+        let dataType = extraClass ? "data-type='secondary' " : "";
+        return (
+            "<button data-bs-container='body'" + dataType
+            + "data-bs-toggle='popover' data-bs-placement='top' data-bs-content='" + schemeInfo.title + "'" +
+            "data-scheme-id='" + schemeInfo.id + "'" +
+
+            "type='button' class='btn language-buttons mx-1 schemeEventListener " + labelsClassString + "'> " + schemeInfo.title + "</button>"
+        )
+    }
+
     async function getSchemesList() {
 
         //Enable Schemes dropdown
-        document.getElementById('selectedSchemeLabel').style.display = "flex";
-        
+        //document.getElementById('schemesDropdownWrapper').style.display = "flex";
+        document.getElementById('schemesLabelsWrapper').style.display = "flex";
+
         try {
             const response = await fetch('/Content/data/schemes.json');
             const schemes = await response.json();

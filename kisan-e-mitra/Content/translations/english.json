@@ -242,7 +242,8 @@
     "thank_you_for_feedback": "Thanks for your feedback.",
     "translation_feedback": "Translation Feedback",
     "wait_resending_otp": "Please wait before resending OTP",
-    "welcome_greeting": "Welcome to Kisan-eMitra! I am your digital assistant for Government Schemes like Pradhan Mantri Kisan Samman Nidhi (PM KISAN), Pradhan Mantri Fasal Bima Yojana (PMFBY) and Kisan Credit Card (KCC). Please let me know how can I help you?  You may select your preferred language."
+    "welcome_greeting": "Welcome to Kisan-eMitra! I am your digital assistant for below Government schemes. You may select your preferred language and scheme",
+    "welcome_greeting_1": "Also, please select the scheme."
   },
   "toasts": {
     "reaction_dislike": "Successfully disliked the response",

@@ -651,14 +651,18 @@ svg.footer-svg-hover {
 }
 
 @media (min-width:768px) {
-	.content-head-text-responsive{ display: none; }
+	/*.content-head-text-responsive{ display: none; }*/
 	.kisan-e-mitra-texts-padding{ background-color: #FFF; border-radius: 50px 50px 0 0; }
 	.custom-option:first-child{	margin-left: 0; }
+	
 }
 @media (max-width:767px) {
+	.msg-scrollbar {
+		border-radius: 26px 26px 0 0;
+	}
 	.kisan-e-mitra-content-text{margin-top: 0px;}
 	body{ background-size: unset; }
-	.content-head-text{ display: none; }
+	/*.content-head-text{ display: none; }*/
 	.content-head-text-responsive{ text-align: center; background-color: #F7F7F8; padding: .5rem 2rem; border-radius: 26px 26px 0 0; }
 	.content-head-text-responsive h1{ color: #198754; font-size: 24px; line-height: normal; margin: 0; }
 	.message-input{ height: 48px; padding: 0 2.5rem 0 1rem; }
@@ -775,8 +779,8 @@ table.aadhar-table {
 }
 
 .chatbot-message-wrapper-column-one {
-    flex: 0 1 48px;
-    height: 48px;
+    flex: 0 1 36px;
+    height: 36px;
 }
 
 .chatbot-message-wrapper-column-two {
@@ -878,6 +882,7 @@ table.aadhar-table {
     border-radius: 20px;
     font-size: .9rem;
     height: 30px;
+    white-space: nowrap;
 }
 
 /*// X-Small devices (portrait phones, less than 576px)
@@ -1127,6 +1132,37 @@ img.query-msg-send-icon {
     display: none;
 }
 
+#schemesLabelsWrapper {
+    display: none;
+}
+
+.h-scrollable-wrapper {
+    max-width: 85vw;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.messageWelcomeGreeting_1 {
+    border-bottom: #19876e;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    margin: 0px 10px;
+}
+
+.content-head-text-responsive{ display: none; }
+
+.chat-message-span-wrapper p{
+    display: initial;
+}
+
+.welcome-message-wrapper{
+    position: sticky;
+    top:0;
+}
+
+.my-msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper{
+    padding-left: 5px;
+}
 .shepherd-button{background:#3288e6;border:0;border-radius:3px;color:hsla(0,0%,100%,.75);cursor:pointer;margin-right:.5rem;padding:.5rem 1.5rem;transition:all .5s ease}.shepherd-button:not(:disabled):hover{background:#196fcc;color:hsla(0,0%,100%,.75)}.shepherd-button.shepherd-button-secondary{background:#f1f2f3;color:rgba(0,0,0,.75)}.shepherd-button.shepherd-button-secondary:not(:disabled):hover{background:#d6d9db;color:rgba(0,0,0,.75)}.shepherd-button:disabled{cursor:not-allowed}
 .shepherd-footer{border-bottom-left-radius:5px;border-bottom-right-radius:5px;display:flex;justify-content:flex-end;padding:0 .75rem .75rem}.shepherd-footer .shepherd-button:last-child{margin-right:0}
 .shepherd-cancel-icon{background:transparent;border:none;color:hsla(0,0%,50%,.75);cursor:pointer;font-size:2em;font-weight:400;margin:0;padding:0;transition:color .5s ease}.shepherd-cancel-icon:hover{color:rgba(0,0,0,.75)}.shepherd-has-title .shepherd-content .shepherd-cancel-icon{color:hsla(0,0%,50%,.75)}.shepherd-has-title .shepherd-content .shepherd-cancel-icon:hover{color:rgba(0,0,0,.75)}

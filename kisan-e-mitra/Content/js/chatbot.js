@@ -85,16 +85,26 @@
     ];
 
     const renderer = {
-        link(href, title, text) {
-            const link = marked.Renderer.prototype.link.call(this, href, title, text);
-            return link.replace("<a", "<a target='_blank' rel='noreferrer' ");
+        link(raw, href, title, text) {
+
+            try {
+
+                
+                const link = marked.Renderer.prototype.link.call(this, href, title, text);
+
+
+                return link.replace("<a", "<a target='_blank' rel='noreferrer' ");
+            } catch (e) {
+                return text;
+            }
+
         }
     };
 
     marked.use({
         breaks: true,
         gfm: true,
-        renderer: renderer
+        /*renderer: renderer*/
     });
 
     let latitude;
@@ -497,6 +507,9 @@
         );
     }
 
+    function getStartingDivHtmlContent() {
+        return '<div>';
+    }
     /**
      * This method is used to get closing div html content
      * @returns
@@ -658,6 +671,7 @@
         getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(); // Third column inside chat message wrapper
     let spanStartingHtmlContent = getStartingSpanHtmlContent();
     let spanClosingHtmlContent = getClosingSpanHtmlContent();
+    let startingDivHtmlContent = getStartingDivHtmlContent();
     let closingDivHtmlContent = getClosingDivHtmlContent();
 
     /**
@@ -675,6 +689,13 @@
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'text',
             },
+            //{
+            //    translationType: 'messages',
+            //    translationKey: 'welcome_greeting_1',
+            //    htmlElementKeyName: 'messageWelcomeGreeting_1',
+            //    htmlElementKeyAttributeType: '.',
+            //    htmlElementValueAttributeType: 'text',
+            //},
             {
                 translationType: 'messages',
                 translationKey: 'ask_ur_question',
@@ -1090,7 +1111,7 @@
         if (appConfig.showSchemes) {
             await window.schemesInfo.getSchemesList();
         }
-        
+
         voiceRecorderListener();
         languageChangeListener();
         schemeChangeListener();
@@ -1110,6 +1131,7 @@
         await getTranslations();
         //getUITranslations();
 
+
         initPopovers();
         setLocationInfo();
 
@@ -1120,6 +1142,24 @@
         if (isMaintenanceModeOn == 'True') {
             showMaintenanceModeModal();
         }
+    }
+
+    function hightlightSelectedLanguage() {
+        const menu = document.querySelector('button[data-language-culture-code="' + 'en' + '"]');
+        //console.log('menu: ', menu);
+        //const scrollspy = VanillaScrollspy({ menu, speed: 1000, easing: 'easeInOutQuint' });
+        //console.log('scrollspy: ', scrollspy);
+        //scrollspy.init();
+        let myScroll = new ScrollTo({
+            target: document.getElementById('language-button-new-en'),
+            duration: 1000,
+            axis: 'x',
+            callback: function (e) {
+                console.log('callback: ', e);
+            },
+            animationFn: 'easeIn' // "easeIn", "easeOut", "easeInOut", "linear"
+        })
+        myScroll.scroll();
     }
 
     async function getTranslations() {
@@ -1445,6 +1485,7 @@
             if (isMessageFromBot == true) {
                 message = formatChatbotResponse(message);
                 message = marked.parse(message);
+                message = message.replace("<a", "<a target='_blank' rel='noreferrer' ");
             }
 
             let chatMessageWrapperStartingDivHtmlContent =
@@ -1466,11 +1507,14 @@
 
             var response =
                 chatMessageWrapperStartingDivHtmlContent +
-                chatbotLogoHtmlContent +
+
                 chatMessageWrapperColumnTwoStartingDivHtmlContent +
+                startingDivHtmlContent +
+                chatbotLogoHtmlContent +
                 spanStartingHtmlContentWithId +
                 message +
                 spanClosingHtmlContent +
+                closingDivHtmlContent +
                 closingDivHtmlContent +
                 (showAudioOption == true
                     ? chatMessageWrapperColumnThreeStartingDivHtmlContent +
@@ -1483,7 +1527,6 @@
                     closingDivHtmlContent
                     : '') +
                 closingDivHtmlContent;
-
             $('#message-list').append(response);
 
             if (messageType == 'final_response') {
@@ -1625,10 +1668,13 @@
 
                     userQuery =
                         chatMessageWrapperStartingDivHtmlContent +
-                        userLogoHtmlContent +
+
                         chatMessageWrapperColumnTwoStartingDivHtmlContent +
                         spanStartingHtmlContent +
-                        questionInputContent +
+                        userLogoHtmlContent +
+                        spanStartingHtmlContent +
+                        questionInput +
+                        spanClosingHtmlContent +
                         spanClosingHtmlContent +
                         closingDivHtmlContent +
                         chatMessageWrapperColumnThreeStartingDivHtmlContent +
@@ -1901,6 +1947,15 @@
                 'current-language-culture-code'
             );
 
+            let schemeName = appConfig.defaultSchemeAPIKey;
+            if (appConfig.showSchemes) {
+                const currentScheme = schemesInfo.list.find(f => f.id == schemesInfo.currentScheme);
+
+                if (currentScheme) {
+                    schemeName = currentScheme.apiKey;
+                }
+            }
+
             const requestPayload = {
                 text: category == 'text' ? input : null,
                 media:
@@ -1914,6 +1969,7 @@
                 flow: '',
                 mediaCaption: '',
                 inputLanguage: currentLanguageCultureCode,
+                schemeName: schemeName
             };
 
             makeRequestRetry('POST', apiUrl, headers, requestPayload)
@@ -2482,7 +2538,7 @@
             success: async function (data) {
 
                 // Hide language buttons
-                $(".app_tour_language_selection_description").hide();
+                //$(".app_tour_language_selection_description").hide();
 
                 //If language is changed after session refresh was done,
                 //Add metric count for it

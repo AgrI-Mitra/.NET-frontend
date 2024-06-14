@@ -34,7 +34,8 @@
       "Content/js/languageDropDown.js",
       "Content/js/schemesDropdown.js",
       "Content/js/typed.umd.js",
-      "Content/js/recorder.js"
+      "Content/js/recorder.js",
+      "Content/js/scroll-animate-to.min.js"
     ],
     "sourceMap": false,
     "sourceMapRootPath": null,

@@ -209,6 +209,7 @@
     <Content Include="Content\images\land_of_grass-bg-original.png" />
     <Content Include="Content\images\land_of_grass-bg_50.png" />
     <Content Include="Content\js\app-config.js" />
+    <Content Include="Content\js\auto-scroll.js" />
     <Content Include="Content\js\bundle-post-body.js" />
     <Content Include="Content\js\bundle-post-body.min.js">
       <DependentUpon>bundle-post-body.js</DependentUpon>
@@ -249,8 +250,10 @@
     <Content Include="Content\images\refresh.svg" />
     <Content Include="Content\js\ham-menu.js" />
     <Content Include="Content\js\schemesDropdown.js" />
+    <Content Include="Content\js\scroll-animate-to.min.js" />
     <Content Include="Content\js\shepherd.js" />
     <Content Include="Content\js\typed.umd.js" />
+    <Content Include="Content\js\vanillajs-scrollspy.min.js" />
     <Content Include="Content\shepherd.css" />
     <Content Include="Content\chatbot-staging.css" />
     <Content Include="Content\chatbot.css" />
