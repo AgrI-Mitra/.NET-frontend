@@ -1,14 +1,14 @@
 [
   {
     "id": "pmkisan",
-    "apiKey":  "PM KISAN"
+    "apiKey": "PM Kisan"
   },
   {
     "id": "kcc",
-    "apiKey": "KCC"
+    "apiKey": "Kisan Credit Card"
   },
   {
     "id": "pmfby",
-    "apiKey": "PMFBY"
+    "apiKey": "PM Fasal Bima Yojana"
   }
 ]
