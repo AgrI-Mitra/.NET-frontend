@@ -89,7 +89,7 @@
 
             try {
 
-                
+
                 const link = marked.Renderer.prototype.link.call(this, href, title, text);
 
 
@@ -918,11 +918,37 @@
                 //    'current-language-culture-code'
                 //);
 
+                const languageCultureCode = $('.language-buttons').data('current-language-culture-code');
+
+                // Remove previous language changed message
+                let previousLanguageChangedMessageId =
+                    '#chatbotMessageWrapper-language-change-greeting-message-base64-' +
+                    languageCultureCode +
+                    '-audio';
+                $(previousLanguageChangedMessageId).remove();
+
+                hideAllThePopovers();
+
                 // Proceed ahead only if selected scheme is different than previous one
                 if (selectedSchemeId != schemesInfo.currentScheme) {
 
                     schemesInfo.bindSchemesToDropdown(schemesInfo.list, selectedSchemeId);
                     await getTranslations();
+
+                    
+
+                    // Get current language change message
+                    const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.language_changed_greeting;
+                    // Add language change message to chat screen
+                    updateChatMessagesList(
+                        currentLanguageChangeMessage,
+                        'language-change-greeting-message-base64-' +
+                        languageCultureCode +
+                        '-audio',
+                        '',
+                        true,
+                        true
+                    );
                 }
             }
         );
@@ -1095,7 +1121,12 @@
     }
 
     function hideAllThePopovers() {
-        $('[data-bs-toggle="popover"]').popover('hide');
+        $('[data-bs-toggle="popover"]').popover('dispose');
+
+        setTimeout(() => {
+            initPopovers();
+        }, 1000)
+
     }
 
     async function initChatBotConfig() {
@@ -2591,18 +2622,18 @@
                 await getTranslations();
                 showUserRecordedMessageInTextBox('');
 
-                // Get current language change message
-                const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.language_changed_greeting;
-                // Add language change message to chat screen
-                updateChatMessagesList(
-                    currentLanguageChangeMessage,
-                    'language-change-greeting-message-base64-' +
-                    languageCultureCode +
-                    '-audio',
-                    '',
-                    true,
-                    true
-                );
+                //// Get current language change message
+                //const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.language_changed_greeting;
+                //// Add language change message to chat screen
+                //updateChatMessagesList(
+                //    currentLanguageChangeMessage,
+                //    'language-change-greeting-message-base64-' +
+                //    languageCultureCode +
+                //    '-audio',
+                //    '',
+                //    true,
+                //    true
+                //);
 
                 //previousUserId = currentUserId;
                 previousSessionId = sessionId;
