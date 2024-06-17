@@ -400,6 +400,7 @@
                 method: requestType,
                 body: body, // string or object
                 headers: headers,
+                cache: 'no-cache'
             })
                 .then((result) => {
                     if (result.status == 201 || result.status == 200) {
@@ -935,7 +936,7 @@
                     schemesInfo.bindSchemesToDropdown(schemesInfo.list, selectedSchemeId);
                     await getTranslations();
 
-                    
+
 
                     // Get current language change message
                     const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.language_changed_greeting;
@@ -2521,7 +2522,7 @@
 
             if (currentLanguage.languageCode == currentLanguageCode) {
                 if (currentLanguage.translations === null) {
-                    const response = await fetch('/Content/translations/' + currentLanguage.language + '.json');
+                    const response = await fetch('/Content/translations/' + currentLanguage.language + '.json', { cache: 'no-cache' });
                     const translationsInfo = await response.json();
 
                     allLanguagesTranslations[i].translations = translationsInfo;
@@ -2541,7 +2542,7 @@
         for (var i = 0; i < allLanguagesTranslations.length; i++) {
             const currentLanguage = allLanguagesTranslations[i];
 
-            const apiResponse = await fetch('/Content/audio/' + currentLanguage.languageCode + '.txt');
+            const apiResponse = await fetch('/Content/audio/' + currentLanguage.languageCode + '.txt', { cache: 'no-cache' });
             const apiJsonResponse = await apiResponse.text();
 
             allLanguagesAudioBase64Data.push({
@@ -2686,8 +2687,8 @@
         const currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
 
         // Get current selected language and welcome message
-        const languageChangeMessageAPIResponse = await fetch('/Content/audio/language-change-' + currentLanguageCode + '.txt');
-        const welcomeMessageAPIResponse = await fetch('/Content/audio/welcome-' + currentLanguageCode + '.txt');
+        const languageChangeMessageAPIResponse = await fetch('/Content/audio/language-change-' + currentLanguageCode + '.txt', { cache: 'no-cache' });
+        const welcomeMessageAPIResponse = await fetch('/Content/audio/welcome-' + currentLanguageCode + '.txt', { cache: 'no-cache' });
 
         const languageChangeBase64Data = await languageChangeMessageAPIResponse.text();
         const welcomeMessageBase64Data = await welcomeMessageAPIResponse.text();
