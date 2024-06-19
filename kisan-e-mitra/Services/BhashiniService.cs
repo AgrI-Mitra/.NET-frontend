@@ -21,11 +21,11 @@ namespace KisanEMitra.Services
             },
             new BhashiniApiServiceId
             {
-                ServiceId = "ai4bharat/indic-tts-coqui-indo_aryan-gpu--t4", LanguageCode = new string[] { "hi", "bn", "mr", "or", "te", "gu", "pa" }
+                ServiceId = "ai4bharat/indic-tts-coqui-indo_aryan-gpu--t4", LanguageCode = new string[] { "hi", "bn", "mr", "or", "gu", "pa" }
             },
             new BhashiniApiServiceId
             {
-                ServiceId = "ai4bharat/indic-tts-coqui-dravidian-gpu--t4", LanguageCode = new string[] { "ta", "ml", "kl", "kn" }
+                ServiceId = "ai4bharat/indic-tts-coqui-dravidian-gpu--t4", LanguageCode = new string[] { "ta", "ml", "kn", "te" }
             }
         };
 
