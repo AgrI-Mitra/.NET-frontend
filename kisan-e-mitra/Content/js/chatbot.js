@@ -1311,7 +1311,7 @@
         let nextButtonTranslation = currentLanguageInfo.translations.lables.next;
         let previousButtonTranslation = currentLanguageInfo.translations.lables.previous;
 
-        let exitButtonTranslation = currentLanguageInfo.translations.lables.app_tour_exit;
+        let exitButtonTranslation = currentLanguageInfo.translations.messages.app_tour_exit;
 
         let nextButtonInfo = {
             text: nextButtonTranslation,
