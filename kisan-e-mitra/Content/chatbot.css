@@ -411,17 +411,32 @@ img.query-msg-send-icon {
     margin: 0px 10px;
 }
 
-.content-head-text-responsive{ display: none; }
+.content-head-text-responsive {
+    display: none;
+}
 
-.chat-message-span-wrapper p{
+.chat-message-span-wrapper p {
     display: initial;
 }
 
-.welcome-message-wrapper{
+.welcome-message-wrapper {
     position: sticky;
-    top:0;
+    top: 0;
 }
 
-.my-msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper{
+.my-msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper {
     padding-left: 5px;
+}
+
+#appHeader {
+    animation: icon-animation cubic-bezier(0.165, 0.84, 0.44, 1) 0.8s;
+}
+
+    #appHeader.without-header {
+        transition: all 2s ease-in;
+    }
+
+#message-list.without-header {
+    transition: all 1s ease-in;
+    margin-top: 20px;
 }

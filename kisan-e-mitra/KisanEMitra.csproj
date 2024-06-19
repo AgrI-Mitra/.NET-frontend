@@ -250,7 +250,7 @@
     <Content Include="Content\images\refresh.svg" />
     <Content Include="Content\js\ham-menu.js" />
     <Content Include="Content\js\schemesDropdown.js" />
-    <Content Include="Content\js\scroll-animate-to.min.js" />
+    <Content Include="Content\js\scroll-listener.js" />
     <Content Include="Content\js\shepherd.js" />
     <Content Include="Content\js\typed.umd.js" />
     <Content Include="Content\js\vanillajs-scrollspy.min.js" />

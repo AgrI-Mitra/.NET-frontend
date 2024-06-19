@@ -1149,20 +1149,36 @@ img.query-msg-send-icon {
     margin: 0px 10px;
 }
 
-.content-head-text-responsive{ display: none; }
+.content-head-text-responsive {
+    display: none;
+}
 
-.chat-message-span-wrapper p{
+.chat-message-span-wrapper p {
     display: initial;
 }
 
-.welcome-message-wrapper{
+.welcome-message-wrapper {
     position: sticky;
-    top:0;
+    top: 0;
 }
 
-.my-msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper{
+.my-msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper {
     padding-left: 5px;
 }
+
+#appHeader {
+    animation: icon-animation cubic-bezier(0.165, 0.84, 0.44, 1) 0.8s;
+}
+
+    #appHeader.without-header {
+        transition: all 2s ease-in;
+    }
+
+#message-list.without-header {
+    transition: all 1s ease-in;
+    margin-top: 20px;
+}
+
 .shepherd-button{background:#3288e6;border:0;border-radius:3px;color:hsla(0,0%,100%,.75);cursor:pointer;margin-right:.5rem;padding:.5rem 1.5rem;transition:all .5s ease}.shepherd-button:not(:disabled):hover{background:#196fcc;color:hsla(0,0%,100%,.75)}.shepherd-button.shepherd-button-secondary{background:#f1f2f3;color:rgba(0,0,0,.75)}.shepherd-button.shepherd-button-secondary:not(:disabled):hover{background:#d6d9db;color:rgba(0,0,0,.75)}.shepherd-button:disabled{cursor:not-allowed}
 .shepherd-footer{border-bottom-left-radius:5px;border-bottom-right-radius:5px;display:flex;justify-content:flex-end;padding:0 .75rem .75rem}.shepherd-footer .shepherd-button:last-child{margin-right:0}
 .shepherd-cancel-icon{background:transparent;border:none;color:hsla(0,0%,50%,.75);cursor:pointer;font-size:2em;font-weight:400;margin:0;padding:0;transition:color .5s ease}.shepherd-cancel-icon:hover{color:rgba(0,0,0,.75)}.shepherd-has-title .shepherd-content .shepherd-cancel-icon{color:hsla(0,0%,50%,.75)}.shepherd-has-title .shepherd-content .shepherd-cancel-icon:hover{color:rgba(0,0,0,.75)}
