@@ -79,8 +79,8 @@ namespace KisanEMitra
                 "~/Content/js/bundle-post-body.min.js"
                 ));
 
-            //bundles.Add(new Bundle("~/bundles/chatbot-js").Include(
-            //    "~/Content/js/chatbot.js"));
+            bundles.Add(new Bundle("~/bundles/chatbot-js").Include(
+                "~/Content/js/chatbot.js"));
 
             BundleTable.EnableOptimizations = true;
         }

@@ -37,7 +37,7 @@ namespace KisanEMitra.Models
                 LanguageEnglishLabel = "Marathi", LanguageCultureLabel = "मराठी", LanguageCultureCode = "mr", Position= 4, LanguageFirstAlphabet = "क"
             },
             new LanguageInfo {
-                LanguageEnglishLabel = "Bangla", LanguageCultureLabel = "বাংলা",LanguageCultureCode = "bn", Position = 2, LanguageFirstAlphabet = "ক"
+                LanguageEnglishLabel = "Bengali", LanguageCultureLabel = "বাংলা",LanguageCultureCode = "bn", Position = 2, LanguageFirstAlphabet = "ক"
             },
             new LanguageInfo {
                 LanguageEnglishLabel = "Tamil", LanguageCultureLabel = "தமிழ்", LanguageCultureCode = "ta", Position= 5, LanguageFirstAlphabet = "க்"

@@ -91,7 +91,9 @@ namespace KisanEMitra.Services
             {
                 _ = AgrimitraService.AddMatricsCount("bhashiniCount");
 
+                httpClient.DefaultRequestHeaders.Remove("Authorization");
                 httpClient.DefaultRequestHeaders.Add("Authorization", bhashiniApiAuthorizationHeaderKey);
+
                 var response = await httpClient.PostAsJsonAsync($"{APIPaths.TextToSpeechService}", bhashiniApiRequestBody);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
