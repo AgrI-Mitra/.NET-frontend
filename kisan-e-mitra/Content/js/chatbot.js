@@ -919,7 +919,7 @@
                 //    'current-language-culture-code'
                 //);
 
-                const languageCultureCode = $('.language-buttons').data('current-language-culture-code');
+                const languageCultureCode = getSetCurrentLanguageCode();
 
                 // Remove previous language changed message
                 let previousLanguageChangedMessageId =
@@ -1174,36 +1174,57 @@
         if (isMaintenanceModeOn == 'True') {
             showMaintenanceModeModal();
         }
+
+        // Highlight selected scheme
+        setTimeout(() => {
+            hightlightSelectedLanguage();
+            hightlightSelectedScheme();
+        }, 1000);
     }
 
+    /**
+     * This method is used to hightlight the selected language
+     */
     function hightlightSelectedLanguage() {
-        const menu = document.querySelector('button[data-language-culture-code="' + 'en' + '"]');
-        //console.log('menu: ', menu);
-        //const scrollspy = VanillaScrollspy({ menu, speed: 1000, easing: 'easeInOutQuint' });
-        //console.log('scrollspy: ', scrollspy);
-        //scrollspy.init();
-        let myScroll = new ScrollTo({
-            target: document.getElementById('language-button-new-en'),
-            duration: 1000,
-            axis: 'x',
-            callback: function (e) {
-                console.log('callback: ', e);
-            },
-            animationFn: 'easeIn' // "easeIn", "easeOut", "easeInOut", "linear"
-        })
-        myScroll.scroll();
+
+        const currentLanguageCode = getSetCurrentLanguageCode();
+
+        const scrollElement = document.getElementById('language-button-new-' + currentLanguageCode);
+        scrollElement.scrollIntoView({ behavior: 'smooth', inline: 'center' });
     }
 
-    async function getTranslations() {
+    /**
+     * This method is used to highlight the selected scheme. As we might have more than dozens of scheme so
+     * it will help user to identify which scheme is currently selected.
+     */
+    function hightlightSelectedScheme(){
+        const currentSelectedSchemeId = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
 
-        const numberOfVisiblePopularQueries = appConfig && appConfig.numberOfVisiblePopularQueries ? appConfig.numberOfVisiblePopularQueries : 4;
+        const scrollElement = document.getElementById('scheme-button-' + currentSelectedSchemeId);
+        scrollElement.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+    }
 
+    /**
+     * 
+     * This method is used to get the current selected language code and also set in localstorage if not already set
+     * @returns
+     */
+    function getSetCurrentLanguageCode() {
         let currentLanguageCode = localStorage.getItem("currentLanguageCode");
 
         if (currentLanguageCode == null || currentLanguageCode == undefined) {
             currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
             localStorage.setItem("currentLanguageCode", currentLanguageCode);
         }
+
+        return currentLanguageCode;
+    }
+
+    async function getTranslations() {
+
+        const numberOfVisiblePopularQueries = appConfig && appConfig.numberOfVisiblePopularQueries ? appConfig.numberOfVisiblePopularQueries : 4;
+
+        let currentLanguageCode = getSetCurrentLanguageCode();
 
         await getTranslationFiles(currentLanguageCode).then(translations => {
 
@@ -2684,7 +2705,7 @@
     }
 
     async function getWelcomeGreetingsAudio(isLanguageChanged) {
-        const currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
+        const currentLanguageCode = getSetCurrentLanguageCode();
 
         // Get current selected language and welcome message
         const languageChangeMessageAPIResponse = await fetch('/Content/audio/language-change-' + currentLanguageCode + '.txt', { cache: 'no-cache' });
