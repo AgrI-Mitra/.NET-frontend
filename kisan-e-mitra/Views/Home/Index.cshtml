@@ -44,7 +44,7 @@
                         }
                         else
                         {
-                            <button data-type="secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn btn-secondary language-buttons languagesLabels mx-1" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
+                            <button id="language-button-new-@{@availableLanguage.LanguageCultureCode}" data-type="secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn btn-secondary language-buttons languagesLabels mx-1" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
                         }
                     }
                 </div>
@@ -52,7 +52,7 @@
 
             <span class="messageWelcomeGreeting_1 mt-2"></span>
 
-            <div class="app_tour_scheme_labels_selection_description d-flex flex-nowrap overflow-x-auto schemesLabelsWrapper h-scrollable-wrapper" id="schemesLabelsWrapper">
+            <div class="app_tour_scheme_labels_selection_description app_tour_scheme_selection_description d-flex flex-nowrap overflow-x-auto schemesLabelsWrapper h-scrollable-wrapper" id="schemesLabelsWrapper">
                 <div class="d-flex flex-nowrap overflow-auto">
 
                 </div>
