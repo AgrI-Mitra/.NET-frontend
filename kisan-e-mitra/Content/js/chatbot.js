@@ -1356,13 +1356,13 @@
                 showNextButton: true,
                 showPreviousButton: true,
             },
-            {
-                id: 'app_tour_alternate_language_selection_description',
-                translationType: 'messages',
-                text: 'app_tour_alternate_language_selection_description',
-                showNextButton: true,
-                showPreviousButton: true,
-            },
+            //{
+            //    id: 'app_tour_alternate_language_selection_description',
+            //    translationType: 'messages',
+            //    text: 'app_tour_alternate_language_selection_description',
+            //    showNextButton: true,
+            //    showPreviousButton: true,
+            //},
             {
                 id: 'app_tour_audio_button_description',
                 translationType: 'messages',
