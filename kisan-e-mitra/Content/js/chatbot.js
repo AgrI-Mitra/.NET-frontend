@@ -93,8 +93,8 @@
 
     marked.use({
         breaks: true,
-        gfm: true,
-        renderer: renderer
+        gfm: true
+        /*renderer: renderer*/
     });
 
     let latitude;
@@ -1443,6 +1443,7 @@
             if (isMessageFromBot == true) {
                 message = formatChatbotResponse(message);
                 message = marked.parse(message);
+                message = message.replace("<a", "<a target='_blank' rel='noreferrer' ");
             }
 
             let chatMessageWrapperStartingDivHtmlContent =
@@ -2611,11 +2612,11 @@
             [
                 {
                     Key: 'welcome-greeting-message-base64-' + currentLanguageCode,
-                    Value: languageChangeBase64Data
+                    Value: welcomeMessageBase64Data
                 },
                 {
                     Key: 'language-change-greeting-message-base64-' + currentLanguageCode,
-                    Value: welcomeMessageBase64Data
+                    Value: languageChangeBase64Data
                 }
             ];
 
