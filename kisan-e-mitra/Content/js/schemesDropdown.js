@@ -107,7 +107,6 @@
             const schemes = await response.json();
 
             // Check if defaultScheme config is available, if yes then use the id mentioned in it else the first scheme will be the default selected
-            console.log("window.appConfig: ", window.appConfig);
             if (window.appConfig.defaultScheme) {
                 bindSchemesToDropdown(schemes, window.appConfig.defaultScheme, true);
             } else {
@@ -126,6 +125,4 @@
         getSchemesList: getSchemesList,
         updateSchemesTranslations: updateSchemesTranslations
     }
-
-    //await getSchemesList();
 })();
