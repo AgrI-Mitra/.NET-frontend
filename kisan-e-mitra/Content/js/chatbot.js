@@ -1085,6 +1085,8 @@
         const controller = new AbortController();
         const signal = controller.signal;
 
+        await appConfigConstruct.getAppConfig();
+
         if (appConfig.showSchemes) {
             await window.schemesInfo.getSchemesList();
         }
