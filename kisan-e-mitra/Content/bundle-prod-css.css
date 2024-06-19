@@ -624,7 +624,7 @@ svg.footer-svg-hover {
     /* padding-top: 1rem; */
 }
 
-/* Optionally, you can style the scrollbar */
+/*Style the scrollbar */
 .scroll-container::-webkit-scrollbar {
     height: 3px;
 }
