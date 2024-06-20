@@ -1,4 +1,4 @@
-(async function async() {
+﻿(async function async() {
 
     function updateSchemesTranslations(translations) {
         for (var i = 0; i < window.schemesInfo.list.length; i++) {
@@ -18,8 +18,7 @@
     }
     function bindSchemesToDropdown(schemes, selectedSchemeId) {
 
-        //var dropdown = document.getElementById('schemesDropdown');
-        var labelsWrapper = document.getElementById('schemesLabelsWrapper');
+        var labelsWrapper = document.getElementById('schemesChildWrapper');
 
         for (var i = 0; i < schemes.length; i++) {
 
@@ -50,7 +49,7 @@
             "data-scheme-id='" + schemeInfo.id + "'" +
             "id='scheme-button-" + schemeInfo.id + "'" +
 
-            "type='button' class='btn language-buttons mx-1 schemeEventListener " + labelsClassString + "'> " + schemeInfo.title + "</button>"
+            "type='button' class='btn fade-left language-buttons mx-1 schemeEventListener " + labelsClassString + "'> " + schemeInfo.title + "</button>"
         )
     }
 

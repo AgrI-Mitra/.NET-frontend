@@ -626,7 +626,7 @@
             const popularQuestionElementNode = document.createElement('div');
             popularQuestionElementNode.setAttribute("id", currentPopularQuestion.key);
             popularQuestionElementNode.setAttribute("data-popular-question", currentPopularQuestion.value);
-            popularQuestionElementNode.className = "query-msg popularQuestions";
+            popularQuestionElementNode.className = "query-msg popularQuestions fade-left";
 
             const popularQuestionParagrapElementNode = document.createElement('p');
             popularQuestionParagrapElementNode.innerHTML = currentPopularQuestion.value;
@@ -897,7 +897,7 @@
                 if (selectedSchemeId != schemesInfo.currentScheme) {
 
                     schemesInfo.bindSchemesToDropdown(schemesInfo.list, selectedSchemeId);
-                    await getTranslations();
+                    bindPopularQuestions();
 
 
 
@@ -1155,7 +1155,7 @@
      * This method is used to highlight the selected scheme. As we might have more than dozens of scheme so
      * it will help user to identify which scheme is currently selected.
      */
-    function hightlightSelectedScheme(){
+    function hightlightSelectedScheme() {
         const currentSelectedSchemeId = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
 
         const scrollElement = document.getElementById('scheme-button-' + currentSelectedSchemeId);
@@ -1179,8 +1179,6 @@
     }
 
     async function getTranslations() {
-
-        const numberOfVisiblePopularQueries = appConfig && appConfig.numberOfVisiblePopularQueries ? appConfig.numberOfVisiblePopularQueries : 4;
 
         let currentLanguageCode = getSetCurrentLanguageCode();
 
@@ -1215,31 +1213,35 @@
             const currentSelectedSChemeTranslations = currentLanguageInfo.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
 
             if (currentSelectedSChemeTranslations) {
-
-                // Get already used queries of the current scheme
-                // We don't need to display already used queries
-
-                const alreadyUsedQueries = popularQueriesService.getUsedQueries(currentSelectedSchemeId);
-
-                const topRandomPopularQuestions = getRandomValues(currentSelectedSChemeTranslations.queries, numberOfVisiblePopularQueries, alreadyUsedQueries.length ? alreadyUsedQueries : undefined);
-
-                //const generalQuestions = convertObjectToArray(currentLanguageInfo .translations);
-
-                //bindGeneralQuestions(generalQuestions);
-
-                const popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topRandomPopularQuestions);
-
-                $('.query-messages-box').empty();
-
-                for (var i = 0; i < popularQuestionsHtmlContent.length; i++) {
-                    $('.query-messages-box').append(popularQuestionsHtmlContent[i]);
-                }
-
-                showPopularQuestions();
+                bindPopularQuestions();
+                
             } else {
                 console.log('Translations missing');
             }
         });
+    }
+
+    function bindPopularQuestions() {
+        const numberOfVisiblePopularQueries = appConfig && appConfig.numberOfVisiblePopularQueries ? appConfig.numberOfVisiblePopularQueries : 4;
+        // Get already used queries of the current scheme
+        // We don't need to display already used queries
+
+        const currentSelectedSchemeId = schemesInfo.currentScheme;
+        const currentSelectedSChemeTranslations = currentLanguageInfo.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
+
+        const alreadyUsedQueries = popularQueriesService.getUsedQueries(currentSelectedSchemeId);
+
+        const topRandomPopularQuestions = getRandomValues(currentSelectedSChemeTranslations.queries, numberOfVisiblePopularQueries, alreadyUsedQueries.length ? alreadyUsedQueries : undefined);
+
+        const popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topRandomPopularQuestions);
+
+        $('.query-messages-box').empty();
+
+        for (var i = 0; i < popularQuestionsHtmlContent.length; i++) {
+            $('.query-messages-box').append(popularQuestionsHtmlContent[i]);
+        }
+
+        showPopularQuestions();
     }
 
     function configAppTour() {
@@ -1531,32 +1533,8 @@
             if (messageType == 'final_response') {
                 sessionStorage.setItem('final_response', true);
 
-                //showPopularQuestions();
-                getTranslations();
+                bindPopularQuestions();
             }
-
-            //const divElem = document.querySelector('#chat-message-span-wrapper-' + messageId);
-
-            //var typed = new Typed('#chat-message-span-wrapper-' + messageId, {
-            //    strings: [message],
-            //    typeSpeed: 15,
-            //    loop: false,
-            //    contentType: 'html',
-            //    showCursor: false,
-            //    onStringTyped: (arrayPos, self) => {
-
-            //        if (messageType == 'final_response' && isMessageFromBot == true) {
-            //            showChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
-            //            resizeObserver.unobserve(divElem);
-            //        }
-            //    }
-            //});
-
-            //const resizeObserver = new ResizeObserver((entries) => {
-            //    scrollToBottom();
-            //});
-
-            //resizeObserver.observe(divElem);
 
             scrollToBottom();
             if (isMessageFromBot == true) {
