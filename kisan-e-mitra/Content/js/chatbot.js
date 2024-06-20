@@ -164,7 +164,7 @@
 
     // shim for AudioContext when it's not avb.
     var previousPlayingMessageId = ''; // To maintain previous playing message id. So when user tries to play another message in middle of current playing message
-    var lastUserTypedMessageId = '';
+    var lastUserAudioMessageId = '';
     // We need to stop current playing message.
     var isUserTypedQuestion = false;
     var isSampleQueryUsed = false;
@@ -417,9 +417,6 @@
             chatbotRespondingHtmlContent +
             spanClosingHtmlContent +
             closingDivHtmlContent +
-            closingDivHtmlContent +
-            closingDivHtmlContent +
-            chatMessageWrapperColumnThreeStartingDivHtmlContent +
             closingDivHtmlContent +
             closingDivHtmlContent;
 
@@ -1097,15 +1094,12 @@
         $(document).on('click', '.popularQuestions', function (ev) {
             const popularQuestion = $(this).data('popular-question');
             const popularQuestionKey = $(this).attr('id');
-            copyPopularQuestionInTextBox(popularQuestion);
+            copyPopularQuestionInTextBox(popularQuestion, true, true);
 
             // Update used popular questions list,
             // So when we display new popular questions, we can exclude used ones and show different questions
             const currentScheme = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
             popularQueriesService.updateUsedQueries(currentScheme, popularQuestionKey);
-
-            // Auto send selected popular question
-            $(sendTextButtonId).click();
         });
     }
 
@@ -1566,6 +1560,7 @@
                     closingDivHtmlContent
                     : '') +
                 closingDivHtmlContent;
+
             $('#message-list').append(response);
 
             if (messageType == 'final_response') {
@@ -1673,7 +1668,7 @@
                         ); // Main chat message wrapper
 
                     let chatMessageAudioImageHtmlContent =
-                        getChatMessageAudioImageHtmlContent(lastUserTypedMessageId); // Audio icon inside third column
+                        getChatMessageAudioImageHtmlContent(lastUserAudioMessageId); // Audio icon inside third column
 
                     var userQuery = '';
 
@@ -1688,16 +1683,17 @@
                         spanClosingHtmlContent +
                         closingDivHtmlContent +
                         closingDivHtmlContent +
-                        closingDivHtmlContent +
-                        chatMessageWrapperColumnThreeStartingDivHtmlContent +
-                        (lastUserTypedMessageId != null && lastUserTypedMessageId != ''
-                            ? chatMessageAudioImageHtmlContent
+
+                        (lastUserAudioMessageId != null && lastUserAudioMessageId != ''
+                            ? chatMessageWrapperColumnThreeStartingDivHtmlContent +
+                            chatMessageAudioImageHtmlContent +
+                            closingDivHtmlContent
                             : '') +
                         closingDivHtmlContent +
                         closingDivHtmlContent;
 
                     $('#message-list').append(userQuery.replace(/\n/g, '<br>'));
-                    lastUserTypedMessageId = ''; // Clear last user typed messaged Id once it is sent
+                    lastUserAudioMessageId = ''; // Clear last user typed messaged Id once it is sent
                 }
 
                 askQuestions(questionInputContent, 'text');
@@ -1728,12 +1724,15 @@
 
     function showUserRecordedMessageInTextBox(message, shouldAutoSend) {
         $(userQuestionTextBox).val(message);
-        $(userQuestionTextBox).focus();
+
         $(userQuestionTextBox).trigger('change');
 
         if (shouldAutoSend === true) {
             $(sendTextButtonId).trigger('click');
+        } else {
+            $(userQuestionTextBox).focus();
         }
+
         isSampleQueryUsed = true;
     }
 
@@ -1780,13 +1779,16 @@
 
             userQuery =
                 chatMessageWrapperStartingDivHtmlContent +
-                startingDivHtmlContent +
-                userLogoHtmlContent +
+
                 chatMessageWrapperColumnTwoStartingDivHtmlContent +
                 startingDivHtmlContent +
-                "<button class='btn btn-success language-buttons resendOTP'>" +
+
+                userLogoHtmlContent +
+                spanStartingHtmlContent +
+                "<button class='btn btn-success language-buttons resendOTP mt-0'>" +
                 resendOtpTranslation +
                 '</button>' +
+                spanClosingHtmlContent +
                 closingDivHtmlContent +
                 closingDivHtmlContent +
                 closingDivHtmlContent;
@@ -1993,7 +1995,7 @@
                                 data.messageId,
                                 'right conversationsWrapper'
                             );
-                            lastUserTypedMessageId = data.messageId;
+                            lastUserAudioMessageId = data.messageId;
 
                             if (data.text) {
                                 message = data.text;

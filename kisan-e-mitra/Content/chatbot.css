@@ -15,10 +15,6 @@ table.aadhar-table {
     display: flex;
 }
 
-.user-avatar-img {
-    background-color: #219653;
-}
-
 .div-row div:nth-child(2) {
     font-weight: bold;
     color: #333;
@@ -250,6 +246,7 @@ table.aadhar-table {
 .user-avatar-img {
     background-color: #219653;
     margin-right: 5px;
+    margin-bottom: 3px;
 }
 
 /*Voice Recording Animation START*/
