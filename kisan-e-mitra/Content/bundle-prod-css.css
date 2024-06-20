@@ -807,8 +807,7 @@ table.aadhar-table {
  */
 .dot-flashing {
     position: relative;
-    margin-top: 30px;
-    margin-left: 0.5rem !important;
+    margin-left: 20px !important;
     width: 10px;
     height: 10px;
     border-radius: 5px;
@@ -816,6 +815,7 @@ table.aadhar-table {
     color: #219653;
     animation: dot-flashing 1s infinite linear alternate;
     animation-delay: 0.5s;
+    display:inline-block;
 }
 
     .dot-flashing::before,
@@ -978,6 +978,7 @@ table.aadhar-table {
 
 .user-avatar-img {
     background-color: #219653;
+    margin-right: 5px;
 }
 
 /*Voice Recording Animation START*/

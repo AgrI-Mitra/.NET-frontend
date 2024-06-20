@@ -410,9 +410,14 @@
 
         const responseLoader =
             chatMessageWrapperStartingDivHtmlContent +
-            chatbotLogoHtmlContent +
             chatMessageWrapperColumnTwoStartingDivHtmlContent +
+            startingDivHtmlContent +
+            chatbotLogoHtmlContent +
+            spanStartingHtmlContent +
             chatbotRespondingHtmlContent +
+            spanClosingHtmlContent +
+            closingDivHtmlContent +
+            closingDivHtmlContent +
             closingDivHtmlContent +
             chatMessageWrapperColumnThreeStartingDivHtmlContent +
             closingDivHtmlContent +
@@ -1214,7 +1219,7 @@
 
             if (currentSelectedSChemeTranslations) {
                 bindPopularQuestions();
-                
+
             } else {
                 console.log('Translations missing');
             }
@@ -1643,12 +1648,13 @@
                         chatMessageWrapperStartingDivHtmlContent +
 
                         chatMessageWrapperColumnTwoStartingDivHtmlContent +
-                        spanStartingHtmlContent +
+                        startingDivHtmlContent +
                         userLogoHtmlContent +
                         spanStartingHtmlContent +
-                        questionInput +
+                        "<p>" + questionInput + "</p>" +
                         spanClosingHtmlContent +
-                        spanClosingHtmlContent +
+                        closingDivHtmlContent +
+                        closingDivHtmlContent +
                         closingDivHtmlContent +
                         chatMessageWrapperColumnThreeStartingDivHtmlContent +
                         (lastUserTypedMessageId != null && lastUserTypedMessageId != ''
@@ -1741,11 +1747,14 @@
 
             userQuery =
                 chatMessageWrapperStartingDivHtmlContent +
+                startingDivHtmlContent +
                 userLogoHtmlContent +
                 chatMessageWrapperColumnTwoStartingDivHtmlContent +
-                "<div> <button class='btn btn-success language-buttons resendOTP'>" +
+                startingDivHtmlContent +
+                "<button class='btn btn-success language-buttons resendOTP'>" +
                 resendOtpTranslation +
-                '</button></div>' +
+                '</button>' +
+                closingDivHtmlContent +
                 closingDivHtmlContent +
                 closingDivHtmlContent;
 
