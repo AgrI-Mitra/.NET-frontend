@@ -59,8 +59,6 @@
             usedQueries.push(selectedSchemeUsedQueries);
         }
 
-        //selectedSchemeUsedQueries.queries.push(usedQuery);
-
         // Check the lenght of existing used queries
         usedQueriesBySchemeNameIndex = usedQueries.findIndex(f => f.scheme == scheme);
 

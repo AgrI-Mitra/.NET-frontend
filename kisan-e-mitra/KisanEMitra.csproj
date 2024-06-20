@@ -244,7 +244,6 @@
     <Compile Include="Services\Contracts\IChatbotService.cs" />
     <Content Include="Content\images\Expanded.svg" />
     <Content Include="Content\images\help.png" />
-    <Content Include="Content\ham-menu.css" />
     <Content Include="Content\images\feedback.svg" />
     <Content Include="Content\images\refresh.svg" />
     <Content Include="Content\js\ham-menu.js" />
@@ -351,7 +350,6 @@
     <Compile Include="Services\Contracts\IAgrimitraService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Botchat.css" />
     <Content Include="Content\images\background_mainpage.jpg" />
     <Content Include="Content\images\c4gt_logo.png" />
     <Content Include="Content\images\background.png" />
@@ -434,7 +432,6 @@
     <Content Include="Content\translations\hindi.json" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Font\Mulish-Bold.792fb274.ttf" />
     <Content Include="Font\Mulish-Regular.a4c4b1ab.ttf" />
     <Content Include="Content\Files\my_odia_manual.pdf" />

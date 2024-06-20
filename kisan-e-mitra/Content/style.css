@@ -126,7 +126,6 @@ body {
 .msg-scrollbar {
     overflow-y: auto;
     height: 100%;
-    /*height: calc(100vh - 370px);*/
     border-top: 1px solid #eae9e9;
     border-bottom: 1px solid #eae9e9;
     background: #f7f7f8;
@@ -603,19 +602,13 @@ svg.footer-svg-hover {
 
 .scroll-container {
     overflow-x: auto;
-    white-space: nowrap; /* Prevent text from wrapping */
-    /* max-width: 1200px;
-    margin: 0 auto; */
-    /* margin-left: 2%;
-    margin-right: 2%; */
-    background: #fff;
+    white-space: nowrap;
 }
 
 .query-messages-box {
     width: 100%; /* Ensure the content takes up the full width */
     display: flex;
     gap: 15px; /* Prevent the container from expanding to fit content */
-    /* padding-top: 1rem; */
 }
 
 /*Style the scrollbar */
@@ -625,7 +618,6 @@ svg.footer-svg-hover {
 
 .scroll-container::-webkit-scrollbar-thumb {
     background-color: #888;
-    /* border-radius: 6px; */
 }
 
 ::-moz-scrollbar-button:decrement,
@@ -641,5 +633,4 @@ svg.footer-svg-hover {
 
 .custom-options::-webkit-scrollbar-thumb {
     background-color: #3b3b3b;
-    /* border-radius: 6px; */
 }

@@ -404,13 +404,6 @@ img.query-msg-send-icon {
     overflow-x: auto;
 }
 
-.messageWelcomeGreeting_1 {
-    border-bottom: #19876e;
-    border-bottom-style: solid;
-    border-bottom-width: thin;
-    margin: 0px 10px;
-}
-
 .content-head-text-responsive {
     display: none;
 }

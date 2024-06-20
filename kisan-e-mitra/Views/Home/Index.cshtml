@@ -2,9 +2,6 @@
     ViewBag.Title = Resources.Resource.label_title;
     var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
     var isMaintenanceModeOn = TempData["isMaintenanceModeOn"];
-    var resendOtpTranslation = Resources.Resource.message_resend_otp;
-    var defaultErrorMessage = Resources.Resource.error_default_message;
-    var defaultPlaceholder = Resources.Resource.message_ask_ur_question;
     var chatbotRestartSessionConfirmationMessage = Resources.Resource.message_session_restart_confirmation_message;
     var confirmationTitle = Resources.Resource.message_confirmation;
     var yesLabel = Resources.Resource.label_yes;
@@ -50,8 +47,6 @@
                 </div>
             </div>
 
-            <span class="messageWelcomeGreeting_1 mt-1"></span>
-
             <div class="app_tour_scheme_labels_selection_description app_tour_scheme_selection_description d-flex flex-nowrap overflow-x-auto schemesLabelsWrapper h-scrollable-wrapper pb-2" id="schemesLabelsWrapper">
                 <div class="d-flex flex-nowrap overflow-auto scroll-container pb-2">
 
@@ -81,7 +76,6 @@
             <img class="refresh-btn-style" src="~/Content/images/restart-session.svg" />
         </button>
         <div class="meg-input position-relative me-2 me-sm-3 flex-grow-1">
-            @*<input id="userQuestionTextBox" type="text" class="message-input messageAskUrQuestion" placeholder="@Resources.Resource.message_ask_ur_question">*@
 <textarea id="userQuestionTextBox" data-screen-name="conversation" class="userQuestionTextBoxClass message-input messageAskUrQuestion message-input-textarea app_tour_typebox_description" placeholder="@Resources.Resource.message_ask_ur_question"></textarea>
             <button id="sendTextButton" type="submit" class="sendtext app_tour_send_button_description sendTextButtonClass" disabled></button>
         </div>
@@ -198,4 +192,4 @@
     </div>
 </div>
 
-@Scripts.Render("~/bundles/chatbot-js");
+@Scripts.Render("~/bundles/chatbot-js")

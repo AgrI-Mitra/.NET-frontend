@@ -84,27 +84,9 @@
 
     ];
 
-    const renderer = {
-        link(raw, href, title, text) {
-
-            try {
-
-
-                const link = marked.Renderer.prototype.link.call(this, href, title, text);
-
-
-                return link.replace("<a", "<a target='_blank' rel='noreferrer' ");
-            } catch (e) {
-                return text;
-            }
-
-        }
-    };
-
     marked.use({
         breaks: true,
-        gfm: true,
-        /*renderer: renderer*/
+        gfm: true
     });
 
     let latitude;
@@ -168,23 +150,16 @@
     var chatbotLogoImagePath = '../Content/images/chatbot.png'; //"../Content/images/MOA_logo.png";
 
     // Voice Recording button related variables - To Apply animation, change icon images etc. - START
-    var voiceRecordButtonId = '#voiceRecordButtonId'; // This variable is used to listen events regarding voice recording button.
     var voiceRecordButtonClass = '.voiceRecordButtonClass';
-    var voiceRecordingImageId = '#recordingImage'; // This variable is used to update voice recording image
     var voiceRecordingImageClass = '.recordingImageClass';
     var stopVoiceRecordingImagePath = '../Content/images/stop-recording.svg';
     var startVoiceRecordingImagePath = '../Content/images/start-recording.svg';
-    var voiceRecordMicCircleId = '#voiceRecordMicCircle';
     var voiceRecordMicCircleClass = '.voiceRecordMicCircleClass';
     var voiceRecordingStartBgColorClass = 'voice-start-recording-border-color';
     var voiceRecordingStopBgColorClass = 'voice-stop-recording-border-color';
     // Voice Recording button related variables - To Apply animation, change icon images etc. - END
 
     var sendTextButtonId = '#sendTextButton';
-
-    var gumStream; //stream from getUserMedia()
-    var rec; //Recorder.js object
-    var input; //MediaStreamAudioSourceNode we'll be recording
     var mediaRecorder;
 
     // shim for AudioContext when it's not avb.
@@ -690,13 +665,6 @@
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'text',
             },
-            //{
-            //    translationType: 'messages',
-            //    translationKey: 'welcome_greeting_1',
-            //    htmlElementKeyName: 'messageWelcomeGreeting_1',
-            //    htmlElementKeyAttributeType: '.',
-            //    htmlElementValueAttributeType: 'text',
-            //},
             {
                 translationType: 'messages',
                 translationKey: 'ask_ur_question',
@@ -913,11 +881,6 @@
             '.schemeEventListener',
             async function (ev) {
                 let selectedSchemeId = $(this).data('scheme-id');
-                //let languageEnglishLabel = $(this).data('language-english-label');
-                //let languageCultureLabel = $(this).data('language-culture-label');
-                //let currentLanguageCultureCode = $(this).data(
-                //    'current-language-culture-code'
-                //);
 
                 const languageCultureCode = getSetCurrentLanguageCode();
 
@@ -1066,8 +1029,6 @@
             function (ev) {
                 let modalType = $(this).data('modal-type');
 
-                //chatbotConfirmationModal.hide();
-
                 if (modalType == 'restart-session') {
                     $(".app_tour_language_selection_description").show();
                     restartSession();
@@ -1148,7 +1109,6 @@
         languageChangeListener();
         schemeChangeListener();
         configAppTour();
-        //popularQuestionClickListener();
         generalQuestionClickListener();
         userQuestionTextBoxOnKeyPressListener();
         chatbotMessageActionButtonsOnClickListener();
@@ -1161,8 +1121,6 @@
         chatbotConfirmationModalCloseEventListener();
         submitFeedbackModalCloseEventListener();
         await getTranslations();
-        //getUITranslations();
-
 
         initPopovers();
         setLocationInfo();
@@ -1235,9 +1193,6 @@
 
             // Update schemes translations as well
             const translationsList = convertObjectToArray(currentLanguageInfo.translations.lables);
-
-            // Get labels translations and convert it into key value array
-            //const labelsTranslationsList = convertObjectToArray(currentLanguageInfo .translations.label);
 
             // Get messages transaltions and convert it into key value array
             const messageTranslationsList = convertObjectToArray(currentLanguageInfo.translations.messages);
@@ -1356,13 +1311,6 @@
                 showNextButton: true,
                 showPreviousButton: true,
             },
-            //{
-            //    id: 'app_tour_alternate_language_selection_description',
-            //    translationType: 'messages',
-            //    text: 'app_tour_alternate_language_selection_description',
-            //    showNextButton: true,
-            //    showPreviousButton: true,
-            //},
             {
                 id: 'app_tour_audio_button_description',
                 translationType: 'messages',
@@ -1476,7 +1424,6 @@
             modalOptions
         );
 
-        //$("#chatbot-restart-session-confirmation-message").append(confirmationMessage);
         maintenanceModeModal.show();
     }
 
@@ -1485,7 +1432,6 @@
             // Show toaster to show thank you message for the feedback
             const toastMessage = currentLanguageInfo.translations.toasts.thank_you_for_feedback;
 
-            /*showToastNotification(toastMessage);*/
             const feedbackResponseMessageId =
                 'message-thank-for-feedback-' + new Date().getTime();
 
@@ -1632,11 +1578,9 @@
             $(
                 voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
             ).removeClass(voiceRecordingStartBgColorClass);
-            //$(voiceRecordMicCircleId).show();
             $(
                 voiceRecordMicCircleClass + '[data-screen-name=' + screenName + ']'
             ).show();
-            //$(voiceRecordMicCircleClass).show();
 
             $(sendTextButtonId).attr('disabled', 'disabled');
             startRecording(screenName);
@@ -1651,8 +1595,6 @@
                 voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
             ).removeClass(voiceRecordingStopBgColorClass);
 
-            /*$(voiceRecordMicCircleId).hide();*/
-            //$(voiceRecordMicCircleClass).hide();
             $(
                 voiceRecordMicCircleClass + '[data-screen-name=' + screenName + ']'
             ).hide();
@@ -1817,8 +1759,6 @@
                     'conversationsWrapper'
                 ); // Main chat message wrapper
 
-            //let chatMessageAudioImageHtmlContent = getChatMessageAudioImageHtmlContent(lastUserTypedMessageId); // Audio icon inside third column
-
             var userQuery = '';
 
             userQuery =
@@ -1846,22 +1786,6 @@
     }
 
     /**
-     * This function uses a regular expression to match any text enclosed in single quotes and replaces it with the same text enclosed in backticks. 
-     
-     * @param {any} str
-     * @returns
-     */
-    function replaceEnclosedSingleQuotesWithBackticks(str) {
-        /**
-         * The ([^']*) part of the regular expression matches any character except a single quote or the “।” sign. 
-         * This means that any text enclosed in single quotes that contains the “।” sign will not be replaced, effectively capturing the enclosed text. 
-         * The $1 in the replacement string refers to the first captured group, which is the enclosed text. 
-         * This way, contractions like “it’s” are not affected
-         */
-        return str.replace(/'([^'।]*)'/g, "`$1`");
-    }
-
-    /**
      * This method is used to format the chat bot response,
      * We need to display aadhar information in different format.
      * If there are any texts with *anyword*, we need to display those words in bold letters.
@@ -1873,7 +1797,6 @@
 
         response = response.replaceAll("\\n", "<br>").replaceAll("\n", "<br>").replaceAll("\\t", "\u00A0\u00A0\u00A0\u00A0").replaceAll("\t", "\u00A0\u00A0\u00A0\u00A0");
         response = response.trim();
-        //response = replaceEnclosedSingleQuotesWithBackticks(response);
 
         // AADHAR Info UI Format START
         // If aadhar info is available in chat response then we need to display it in table format
@@ -2590,9 +2513,6 @@
             data: { lang: languageCultureCode },
             success: async function (data) {
 
-                // Hide language buttons
-                //$(".app_tour_language_selection_description").hide();
-
                 //If language is changed after session refresh was done,
                 //Add metric count for it
 
@@ -2601,8 +2521,6 @@
                 }
 
                 isChangeLanguageRequestInProgress = null;
-
-                /*sessionStorage.setItem('languageChangedMessage', data.Message);*/
 
                 // Remove previous language changed message
                 let previousLanguageChangedMessageId =
@@ -2644,20 +2562,6 @@
                 await getTranslations();
                 showUserRecordedMessageInTextBox('');
 
-                //// Get current language change message
-                //const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.language_changed_greeting;
-                //// Add language change message to chat screen
-                //updateChatMessagesList(
-                //    currentLanguageChangeMessage,
-                //    'language-change-greeting-message-base64-' +
-                //    languageCultureCode +
-                //    '-audio',
-                //    '',
-                //    true,
-                //    true
-                //);
-
-                //previousUserId = currentUserId;
                 previousSessionId = sessionId;
             },
             failure: function (data) {
@@ -2812,7 +2716,6 @@
 
                 if (a.id != 'globalAudioElement') {
                     a.pause();
-                    //a.currentTime = 0;
                     $('#playMessageImg-' + a.id).attr('src', startAudioImagePath);
                 }
             });
