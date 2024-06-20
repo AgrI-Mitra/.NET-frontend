@@ -246,7 +246,6 @@
     <Content Include="Content\images\help.png" />
     <Content Include="Content\images\feedback.svg" />
     <Content Include="Content\images\refresh.svg" />
-    <Content Include="Content\js\ham-menu.js" />
     <Content Include="Content\js\schemesDropdown.js" />
     <Content Include="Content\js\scroll-listener.js" />
     <Content Include="Content\js\shepherd.js" />
@@ -409,7 +408,6 @@
     <Content Include="Content\js\feedback.js" />
     <Content Include="Content\js\fingerprint.js" />
     <Content Include="Content\js\gtag.js" />
-    <Content Include="Content\js\languageDropDown.js" />
     <Content Include="Content\js\recorder.js" />
     <Content Include="Content\js\splash.js" />
     <Content Include="Content\js\wavBlobUtil.js" />

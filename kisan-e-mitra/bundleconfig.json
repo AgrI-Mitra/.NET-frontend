@@ -24,7 +24,6 @@
     "inputFiles": [
       "Content/js/app-config.js",
       "Content/js/commonService.js",
-      "Content/js/languageDropDown.js",
       "Content/js/schemesDropdown.js",
       "Content/js/typed.umd.js",
       "Content/js/recorder.js"

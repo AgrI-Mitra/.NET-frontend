@@ -527,22 +527,6 @@ svg.footer-svg-hover {
     padding-bottom: 2% !important;
 }
 
-.custom-select-wrapper {
-    position: relative;
-    user-select: none;
-    display: flex;
-    align-items: center;
-}
-
-.choose__select {
-    display: flex;
-    align-items: center;
-    min-width: 78px;
-    color: #8e8e9e;
-    font-weight: 500;
-    margin-right: 1.25rem;
-}
-
 .caret {
     margin-left: auto;
     border-width: 0.45rem;
@@ -552,59 +536,6 @@ svg.footer-svg-hover {
     margin-top: 8px;
     display: inline-block;
 }
-
-.custom-select {
-    display: flex;
-    flex-direction: column;
-}
-
-.custom-select__trigger {
-    display: block;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 500;
-    color: #fff;
-    line-height: 48px;
-    cursor: pointer;
-}
-
-.custom-options {
-    display: inline-flex;
-    background-color: rgb(0 0 0 / 10%);
-    border-radius: 50px;
-    padding: 8px;
-    transition: all 0.5s;
-    max-width: 300px;
-    overflow-x: auto;
-}
-
-.custom-option {
-    display: block;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    font-size: 22px;
-    font-weight: 400;
-    line-height: 48px;
-    text-align: center;
-    margin-left: 0.5rem;
-    cursor: pointer;
-    color: #000;
-    background-color: #fff;
-    transition: all 0.5s;
-    min-width: 48px;
-}
-
-    .custom-option:hover {
-        cursor: pointer;
-        background-color: #b2b2b2;
-    }
-
-    .custom-option.selected {
-        color: #fff;
-        box-shadow: 3px 3px 5px rgb(0 0 0 / 15%);
-        background: linear-gradient(180deg, #198754 0%, #316f52 100%);
-    }
 
 .scroll-container {
     overflow-x: auto;
@@ -633,16 +564,7 @@ svg.footer-svg-hover {
     width: 0px;
 }
 
-.custom-options::-webkit-scrollbar {
-    height: 3px;
-}
-
-.custom-options::-webkit-scrollbar-thumb {
-    background-color: #3b3b3b;
-}
-
 @media (min-width:768px) {
-	/*.content-head-text-responsive{ display: none; }*/
 	.kisan-e-mitra-texts-padding{ background-color: #FFF; border-radius: 50px 50px 0 0; }
 	.custom-option:first-child{	margin-left: 0; }
 	
@@ -653,7 +575,6 @@ svg.footer-svg-hover {
 	}
 	.kisan-e-mitra-content-text{margin-top: 0px;}
 	body{ background-size: unset; }
-	/*.content-head-text{ display: none; }*/
 	.content-head-text-responsive{ text-align: center; background-color: #F7F7F8; padding: .5rem 2rem; border-radius: 26px 26px 0 0; }
 	.content-head-text-responsive h1{ color: #198754; font-size: 24px; line-height: normal; margin: 0; }
 	.message-input{ height: 48px; padding: 0 2.5rem 0 1rem; }
@@ -667,58 +588,6 @@ svg.footer-svg-hover {
 	.meg-input{ width: calc(100% - 128px); }
 	.navigation-icon{ margin-top: -36px; padding: 8px; height: 48px; }
 	.kisan-e-mitra-texts-padding{ padding: 0px 11px; }
-	/*.msg-scrollbar{ height: calc(100vh - 380px); }*/
-	.custom-select{ position: relative; }
-	.custom-select__trigger{ width: 48px; height: 48px; border-radius: 50%; box-shadow: 3px 3px 5px rgb(0 0 0 / 15%); background: linear-gradient(180deg, #198754 0%, #316F52 100%); z-index: 99; }
-
-
-	.custom-options {
-		opacity: 0;
-		visibility: hidden;
-		pointer-events: none;
-		display: inline-block;
-		padding: 5px;
-		padding-top: 56px;
-		width: 48px;
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		background: #c3ded2;
-		z-index: 2;
-	}
-
-	.custom-select.open .custom-options {
-		opacity: 1;
-		visibility: visible;
-		pointer-events: all;
-	}
-
-	.custom-option {
-		display: inline-block;
-		margin-left: 0;
-		cursor: pointer;
-		font-weight: bold;
-		margin-top: 0.5rem;
-		width: 38px;
-		height: 38px;
-		line-height: 38px;
-		min-width: auto;
-	}
-
-	.custom-option:first-child{
-		margin-top: 0;
-	}
-
-	.custom-option:hover {
-		cursor: pointer;
-		background-color: #b2b2b2;
-	}
-
-	.custom-option.selected {
-		color: #ffffff;
-		background-color: #305c91;
-	}
 }
 @media (max-width:400px) {
 	.my-msg-content{ padding: 2% 4%; }
