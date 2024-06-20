@@ -425,11 +425,77 @@ img.query-msg-send-icon {
     animation: icon-animation cubic-bezier(0.165, 0.84, 0.44, 1) 0.8s;
 }*/
 
-    #appHeader.without-header {
-        transition: all 2s ease-in;
-    }
+#appHeader.without-header {
+    transition: all 2s ease-in;
+}
 
 #message-list.without-header {
     transition: all 1s ease-in;
     margin-top: 20px;
+}
+
+.fade-in-content {
+    animation: fadeIn 1s ease-in;
+}
+
+.fade-bottom {
+    animation: fade-bottom 1s ease-in;
+}
+
+.fade-left {
+    animation: fade-left 0.5s ease-in;
+}
+
+.fade-top {
+    animation: fade-top 1s ease;
+}
+
+@keyframes fade-left {
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-bottom {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-top {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
