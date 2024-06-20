@@ -436,15 +436,15 @@ img.query-msg-send-icon {
 }
 
 .fade-in-content {
-    animation: fadeIn 1s ease-in;
+    animation: fadeIn 1s ease;
 }
 
 .fade-bottom {
-    animation: fade-bottom 1s ease-in;
+    animation: fade-bottom 1s ease;
 }
 
 .fade-left {
-    animation: fade-left 0.5s ease-in;
+    animation: fade-left 0.5s ease;
 }
 
 .fade-top {
