@@ -1073,6 +1073,9 @@
             // So when we display new popular questions, we can exclude used ones and show different questions
             const currentScheme = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
             popularQueriesService.updateUsedQueries(currentScheme, popularQuestionKey);
+
+            // Auto send selected popular question
+            $(sendTextButtonId).click();
         });
     }
 
