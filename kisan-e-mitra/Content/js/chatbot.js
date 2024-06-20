@@ -805,6 +805,36 @@
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
                 ignore: true
+            },
+            {
+                translationType: 'messages',
+                translationKey: 'confirmation',
+                htmlElementKeyName: 'message_confirmation',
+                htmlElementKeyAttributeType: '.',
+                htmlElementValueAttributeType: 'text',
+                ignore: true
+            },
+            {
+                translationType: 'messages',
+                translationKey: 'session_restart_confirmation_message',
+                htmlElementKeyName: 'message_session_restart_confirmation_message',
+                htmlElementKeyAttributeType: '.',
+                htmlElementValueAttributeType: 'text',
+                ignore: true
+            },
+            {
+                translationType: 'messages',
+                translationKey: 'maintenance_mode_header',
+                htmlElementKeyName: 'message_maintenance_mode_header',
+                htmlElementKeyAttributeType: '.',
+                htmlElementValueAttributeType: 'text'
+            },
+            {
+                translationType: 'messages',
+                translationKey: 'maintenance_mode_body',
+                htmlElementKeyName: 'message_maintenance_mode_body',
+                htmlElementKeyAttributeType: '.',
+                htmlElementValueAttributeType: 'text'
             }
         ];
 

@@ -2,12 +2,6 @@
     ViewBag.Title = Resources.Resource.label_title;
     var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
     var isMaintenanceModeOn = TempData["isMaintenanceModeOn"];
-    var chatbotRestartSessionConfirmationMessage = Resources.Resource.message_session_restart_confirmation_message;
-    var confirmationTitle = Resources.Resource.message_confirmation;
-    var yesLabel = Resources.Resource.label_yes;
-    var noLabel = Resources.Resource.label_no;
-    var maintenanceModeHeader = Resources.Resource.message_maintenance_mode_header;
-    var maintenanceModeBody = Resources.Resource.message_maintenance_mode_body;
 
     List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;
     KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;
@@ -69,7 +63,7 @@
             <img class="refresh-btn-style" src="~/Content/images/restart-session.svg" />
         </button>
         <div class="meg-input position-relative me-2 me-sm-3 flex-grow-1">
-<textarea id="userQuestionTextBox" data-screen-name="conversation" class="userQuestionTextBoxClass message-input messageAskUrQuestion message-input-textarea app_tour_typebox_description" placeholder="@Resources.Resource.message_ask_ur_question"></textarea>
+<textarea id="userQuestionTextBox" data-screen-name="conversation" class="userQuestionTextBoxClass message-input messageAskUrQuestion message-input-textarea app_tour_typebox_description" placeholder=""></textarea>
             <button id="sendTextButton" type="submit" class="sendtext app_tour_send_button_description sendTextButtonClass" disabled></button>
         </div>
         <button id="voiceRecordButtonId" data-screen-name="conversation" class="voiceRecordButtonClass send-button img-fluid bg-transparent position-relative app_tour_mic_button_description">
@@ -84,14 +78,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="message-confirmation">@confirmationTitle</h1>
+                <h1 class="modal-title fs-5 message_confirmation" id="message-confirmation"></h1>
             </div>
-            <div class="modal-body" id="chatbot-restart-session-confirmation-message">
-                @chatbotRestartSessionConfirmationMessage
+            <div class="modal-body message_session_restart_confirmation_message" id="chatbot-restart-session-confirmation-message">
             </div>
             <div class="modal-footer">
-                <button id="chatbotConfirmationModalCancelLabel" type="button" class="btn btn-secondary noLabel" data-bs-dismiss="modal">@noLabel</button>
-                <button id="chatbotConfirmationModalSaveButton" type="button" class="btn btn-success yesLabel" data-modal-type="confirmation" data-bs-dismiss="modal">@yesLabel</button>
+                <button id="chatbotConfirmationModalCancelLabel" type="button" class="btn btn-secondary noLabel label_no" data-bs-dismiss="modal"></button>
+                <button id="chatbotConfirmationModalSaveButton" type="button" class="btn btn-success yesLabel label_yes" data-modal-type="confirmation" data-bs-dismiss="modal"></button>
             </div>
         </div>
     </div>
@@ -102,10 +95,9 @@
     <div class="modal-dialog modal-dialog-centered" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="maintenance-mode-header">@maintenanceModeHeader</h1>
+                <h1 class="modal-title fs-5 message_maintenance_mode_header" id="maintenance-mode-header"></h1>
             </div>
-            <div class="modal-body" id="maintenance-mode-message">
-                @maintenanceModeBody
+            <div class="modal-body message_maintenance_mode_body" id="maintenance-mode-message">
             </div>
         </div>
     </div>
@@ -123,8 +115,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="chatbotConfirmationModalCancelLabel" type="button" class="btn btn-secondary noLabel" data-bs-dismiss="modal">@noLabel</button>
-                <button id="chatbotConfirmationModalSaveButton" type="button" class="btn btn-success yesLabel" data-modal-type="confirmation" data-bs-dismiss="modal">@yesLabel</button>
+                <button id="chatbotConfirmationModalCancelLabel" type="button" class="btn btn-secondary noLabel label_no" data-bs-dismiss="modal"></button>
+                <button id="chatbotConfirmationModalSaveButton" type="button" class="btn btn-success yesLabel label_yes" data-modal-type="confirmation" data-bs-dismiss="modal"></button>
             </div>
         </div>
     </div>
