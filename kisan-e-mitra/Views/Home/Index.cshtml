@@ -2,6 +2,7 @@
     ViewBag.Title = Resources.Resource.label_title;
     var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
     var isMaintenanceModeOn = TempData["isMaintenanceModeOn"];
+    var apiUrl = TempData["apiUrl"];
 
     List<KisanEMitra.Models.LanguageInfo> availableLanguages = languageModel.AvailableLanguages;
     KisanEMitra.Models.LanguageInfo selectedLanguage = languageModel.SelectedLanguage;
@@ -11,10 +12,12 @@
     TempData.Keep("LanguageModel");
     TempData.Keep("PopularQuestions");
     TempData.Keep("isMaintenanceModeOn");
+    TempData.Keep("apiUrl");
 }
 
 @Html.Hidden("isMaintenanceModeOn", (object)isMaintenanceModeOn.ToString())
 @Html.Hidden("currentParentRoute", "/Home/")
+@Html.Hidden("apiUrl", (object)apiUrl)
 
 <div class="msg-scrollbar" id="message-list">
     <div class="my-msg-content fade-in-content system-msg-bg chatbot-message-wrapper welcome-message-wrapper">

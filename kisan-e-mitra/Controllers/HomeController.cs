@@ -44,6 +44,8 @@ namespace KisanEMitra.Controllers
             // Check if site is in maintenence mode or not
             bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
             TempData["isMaintenanceModeOn"] = isMaintenanceModeOn;
+            string apiUrl = ConfigurationManager.AppSettings["apiUrl"].ToString();
+            TempData["apiUrl"] = apiUrl;
             return View();
         }
 
@@ -59,6 +61,8 @@ namespace KisanEMitra.Controllers
             // Check if site is in maintenence mode or not
             bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
             TempData["isMaintenanceModeOn"] = isMaintenanceModeOn;
+            string apiUrl = ConfigurationManager.AppSettings["apiUrl"].ToString();
+            TempData["apiUrl"] = apiUrl;
 
             return View();
         }

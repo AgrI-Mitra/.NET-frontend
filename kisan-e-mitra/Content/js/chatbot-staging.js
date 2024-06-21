@@ -2,8 +2,8 @@
 
 
     var apiUrlConfig = {
-        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
-        chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
+        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live
+        chatbotApiBaseUrl: 'https://demochatapi.pmkisan.gov.in/', // Stage //
         userApiBaseEndPoint: 'user/',
         generateUserId: 'user/generateUserId',
         Prompt: 'prompt',

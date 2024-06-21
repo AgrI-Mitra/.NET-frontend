@@ -482,6 +482,7 @@
     <Content Include="Views\Test\Splash.cshtml" />
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\Shared\_StagingLayout.cshtml" />
+    <Content Include="Web.Staging.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resource.ur.resx">

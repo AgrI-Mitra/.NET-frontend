@@ -326,11 +326,11 @@ img.query-msg-send-icon {
 }
 
 .button-close {
-    height: 1rem;
-    background: url(../Content/images/close.svg);
-    width: 1rem;
-    border: none;
-    color: black;
+    height: 0.95rem;
+    background: url(images/close.svg);
+    width: 0.99rem;
+    border: 0;
+    color: #000;
 }
 
 .close-button-wrapper {
@@ -496,4 +496,8 @@ img.query-msg-send-icon {
     100% {
         opacity: 1;
     }
+}
+
+.modal-header {
+    justify-content: space-between;
 }

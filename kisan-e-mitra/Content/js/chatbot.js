@@ -1,9 +1,7 @@
 (async function () {
 
-
     var apiUrlConfig = {
-        //chatbotApiBaseUrl: "https://apichatbot.pmkisan.gov.in/", // Live //https://bff.agrimitra.samagra.io/
-        chatbotApiBaseUrl: 'https://bff.agrimitra.samagra.io/', // Stage //
+        chatbotApiBaseUrl: document.getElementById('apiUrl').getAttribute('value'),
         userApiBaseEndPoint: 'user/',
         generateUserId: 'user/generateUserId',
         Prompt: 'prompt',
@@ -105,7 +103,6 @@
 
     var isGetTextToSpeechFromBhashiniRequestInProgress = null;
 
-    var translations = [];
     let currentLanguageInfo = {
         currentLanguageCode: '',
         language: '',
@@ -119,7 +116,6 @@
     };
 
     var currentUserId = null;
-    var previousUserId = null;
     var sessionId = null;
     var previousSessionId = null;
     var currentConversationId = null;
@@ -1513,7 +1509,7 @@
         isMessageFromBot,
         showAudioOption
     ) {
-        if (message != '') {
+        if (message != '' && message != undefined) {
 
             if (isMessageFromBot == true) {
                 message = formatChatbotResponse(message);
