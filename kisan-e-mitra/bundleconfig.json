@@ -12,7 +12,7 @@
   {
     "outputFileName": "Content/bundle-staging.css",
     "inputFiles": [
-      "Content/bootstrap.min.css",
+      "Content/bootstrap.css",
       "Content/style-staging.css",
       "Content/responsive-staging.css",
       "Content/shepherd.css",
