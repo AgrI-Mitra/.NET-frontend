@@ -38,9 +38,7 @@
       "Content/js/WavRecorder.js",
       "Content/js/popularQueriesService.js",
       "Content/js/shepherd.js",
-      "Content/js/settings-popover.js",
-      "/Content/js/horizontal-scroll-listener.js",
-      "/Content/js/show-hide-content.js"
+      "Content/js/settings-popover.js"
     ]
   },
   {
