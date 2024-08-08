@@ -608,6 +608,7 @@ img.query-msg-send-icon {
 /* Hide the popover content initially */
 #popover-content {
     display: none;
+    
 }
 
 .settings-popover-item {
@@ -626,12 +627,45 @@ img.query-msg-send-icon {
     width:100%;
 }
 
+@keyframes fade-top-popover {
+    0% {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
 .settings-popover {
     /*margin-right: 80px !important;*/
     /*top: 0px !important;*/
     left: -15px !important;
     background-color: lightgrey;
     min-width: 270px;
+    opacity: 0;
+    /*transform: scale(0.95);*/
+    transition: opacity 0.3s ease;
+    animation: fade-right-popover 0.5s ease-in-out;
 }
 
     .settings-popover div.popover-arrow {
@@ -646,6 +680,11 @@ img.query-msg-send-icon {
         border-bottom-color: transparent !important; /* Change this to your desired color */
     }
 
+    .settings-popover.show {
+        opacity: 1;
+        transform: scale(1);
+    }
+
 .popover-backdrop {
     position: fixed;
     top: 0;
@@ -655,4 +694,8 @@ img.query-msg-send-icon {
     background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity and color as needed */
     z-index: 1040; /* Ensure it is behind the popover but above other content */
     display: none; /* Initially hidden */
+    -webkit-animation: fadeInFromNone 0.5s ease-out;
+    -moz-animation: fadeInFromNone 0.5s ease-out;
+    -o-animation: fadeInFromNone 0.5s ease-out;
+    animation: fadeInFromNone 0.5s ease-out;
 }
