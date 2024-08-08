@@ -12,7 +12,6 @@
     @Scripts.Render("~/bundles/pre-init-js")
     <script type="text/javascript" src="~/Content/js/fingerprint.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RCEZR4J24G"></script>
     <script type="text/javascript" src="~/Content/js/gtag.js"></script>
@@ -21,20 +20,19 @@
     @{
         var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
         var availableLanguages = languageModel.AvailableLanguages;
-        var selectedLanguage = languageModel.SelectedLanguage; 
+        var selectedLanguage = languageModel.SelectedLanguage;
 
         TempData.Keep("LanguageModel");
     }
     <div class="container-fluid chatbot-container fade-top">
-        <div class="overlay"></div>
         <div class="kisan-e-mitra-content-text">
             <div class="d-flex justify-content-between align-items-center kisan-e-mitra-texts-padding" id="appHeader">
                 <div class="logo-flex responsive-logo"><span class="d-flex justify-content-start p-2"><img src="~/Content/images/kisan-e-mitra-logo.png" class="kisan-e-mitra-logo"></span></div>
                 <div class="content-head-text"><h1 class="labelTitle"></h1></div>
                 <div class="d-flex justify-content-end">
 
-                    <span id="startAppTourButton">
-                        <img class="refresh-btn-style help-button" src="~/Content/images/help.png" />
+                    <span id="settingsButton" class="example-popover">
+                        <img class="refresh-btn-style help-button" src="~/Content/images/settings.svg" />
                     </span>
                 </div>
             </div>
@@ -45,7 +43,31 @@
     <div class="footer">
         <p>Powered by Sunbird UCI | BHASHINI</p>
     </div>
-    
+
+
+    <div hidden>
+        <div id="settings-popover-content">
+            <div class="popover-content-row">
+                <div class="form-group">
+                    <div class="custom-select-wrapper app_tour_alternate_language_selection_description settings-popover-item" id="languageDropdownWrapper">
+                        <button class="btn btn-style dropdown-toggle language-dropdown-toggle" type="button" id="languageDropDown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fw-bold" id="selectedLanguageLabel">@{ @selectedLanguage.LanguageCultureLabel}</span>
+                        </button>
+                        <ul id="languageDropDown" class="dropdown-menu" aria-labelledby="languageDropDown">
+                            @foreach (var availableLanguage in availableLanguages)
+                            {
+                                <li class="languagesLabels" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">
+                                    <a class="dropdown-item @((availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode) ? "fw-bold" : "")">@availableLanguage.LanguageCultureLabel</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <button class="btn btn-secondary settings-popover-item" id="startAppTourButton">Tutorial</button>
+            </div>
+        </div>
+    </div>
     @Scripts.Render("~/bundles/post-init-js")
 </body>
 </html>

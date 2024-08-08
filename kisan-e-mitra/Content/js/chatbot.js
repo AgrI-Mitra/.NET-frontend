@@ -82,6 +82,9 @@
 
     ];
 
+    var rawAllLanguagesTranslations = JSON.parse(JSON.stringify(allLanguagesTranslations)); // Deep copy allLanguagesTranslations;
+
+    var translationsKeyValues;
     marked.use({
         breaks: true,
         gfm: true
@@ -114,6 +117,7 @@
             toasts: {}
         }
     };
+    let rawCurrentLanguageInfo;
 
     var currentUserId = null;
     var sessionId = null;
@@ -652,7 +656,7 @@
      * This method is used to update the translation in ui whenever language is changed
      * @param {any} translationsToUpdate
      */
-    function updateTranslations(translationsToUpdate) {
+    function updateTranslations(translationsToUpdate, keysToUpdate) {
         translations = translationsToUpdate;
 
         let translationsMappingIds = [
@@ -835,40 +839,59 @@
 
             let currentTranslationMappingDetails = translationsMappingIds[i];
 
-            let currentTranslation = currentLanguageInfo.translations[currentTranslationMappingDetails.translationType];
-
-            if (currentTranslation && currentTranslation[currentTranslationMappingDetails.translationKey]) {
-
-                const currentTranslationValue = currentTranslation[currentTranslationMappingDetails.translationKey];
-                // Update page title
-                if (currentTranslationMappingDetails.translationKey == 'title') {
-                    document.title = currentTranslationValue;
-                }
-
-                if (
-                    currentTranslationMappingDetails.htmlElementValueAttributeType ==
-                    'text'
-                ) {
-                    $(
-                        currentTranslationMappingDetails.htmlElementKeyAttributeType +
-                        currentTranslationMappingDetails.htmlElementKeyName
-                    ).html(currentTranslationValue);
+            if (keysToUpdate) {
+                // Find the keys to update and only update these translations
+                if (keysToUpdate.indexOf(currentTranslationMappingDetails.translationKey) < 0) {
+                    continue;
                 } else {
-                    $(
-                        currentTranslationMappingDetails.htmlElementKeyAttributeType +
-                        currentTranslationMappingDetails.htmlElementKeyName
-                    ).attr(
-                        currentTranslationMappingDetails.htmlElementValueAttributeType,
-                        currentTranslationValue
-                    );
+                    mapTranslations(currentTranslationMappingDetails);
                 }
+            } else {
+                //let currentTranslation = currentLanguageInfo.translations[currentTranslationMappingDetails.translationType];
+
+                mapTranslations(currentTranslationMappingDetails);
             }
-            else {
-                console.log('translation missing: ', currentTranslationMappingDetails);
-            }
+
+
         }
 
-        initAppTour();
+        if (!keysToUpdate) {
+            initAppTour();
+        }
+    }
+
+    function mapTranslations(currentTranslationMappingDetails) {
+        let currentTranslation = currentLanguageInfo.translations[currentTranslationMappingDetails.translationType];
+
+        if (currentTranslation && currentTranslation[currentTranslationMappingDetails.translationKey]) {
+
+            const currentTranslationValue = currentTranslation[currentTranslationMappingDetails.translationKey];
+            // Update page title
+            if (currentTranslationMappingDetails.translationKey == 'title') {
+                document.title = currentTranslationValue;
+            }
+
+            if (
+                currentTranslationMappingDetails.htmlElementValueAttributeType ==
+                'text'
+            ) {
+                $(
+                    currentTranslationMappingDetails.htmlElementKeyAttributeType +
+                    currentTranslationMappingDetails.htmlElementKeyName
+                ).html(currentTranslationValue);
+            } else {
+                $(
+                    currentTranslationMappingDetails.htmlElementKeyAttributeType +
+                    currentTranslationMappingDetails.htmlElementKeyName
+                ).attr(
+                    currentTranslationMappingDetails.htmlElementValueAttributeType,
+                    currentTranslationValue
+                );
+            }
+        }
+        else {
+            console.log('translation missing: ', currentTranslationMappingDetails);
+        }
     }
 
     /**
@@ -930,17 +953,21 @@
 
 
                     // Get current language change message
-                    const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.language_changed_greeting;
-                    // Add language change message to chat screen
-                    updateChatMessagesList(
-                        currentLanguageChangeMessage,
-                        'language-change-greeting-message-base64-' +
-                        languageCultureCode +
-                        '-audio',
-                        '',
-                        true,
-                        true
-                    );
+                    currentLanguageInfo = GetDynamicTranslations();
+                    const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
+                    updateTranslations([], ["welcome_greeting"]);
+                    //updateWelcomeGreetingMessage();
+
+                    // Add welcome greeting change message to chat screen
+                    //updateChatMessagesList(
+                    //    currentLanguageChangeMessage,
+                    //    'welcome-greeting-message-base64-' +
+                    //    languageCultureCode +
+                    //    '-audio',
+                    //    '',
+                    //    true,
+                    //    true
+                    //);
                 }
             }
         );
@@ -1163,7 +1190,7 @@
 
         // Highlight selected scheme
         setTimeout(() => {
-            hightlightSelectedLanguage();
+            //hightlightSelectedLanguage();
             hightlightSelectedScheme();
         }, 1000);
     }
@@ -1199,7 +1226,7 @@
         let currentLanguageCode = localStorage.getItem("currentLanguageCode");
 
         if (currentLanguageCode == null || currentLanguageCode == undefined) {
-            currentLanguageCode = $('.language-buttons').data('current-language-culture-code');
+            currentLanguageCode = $('.languagesLabels').data('current-language-culture-code');
             localStorage.setItem("currentLanguageCode", currentLanguageCode);
         }
 
@@ -1216,6 +1243,8 @@
             // And show top 5 popular questions from it
             const currentSelectedSchemeId = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
             currentLanguageInfo = translations.find(f => f.languageCode == currentLanguageCode);
+            rawCurrentLanguageInfo = JSON.parse(JSON.stringify(currentLanguageInfo)); // Deep copy currentLanguageInfo;
+            currentLanguageInfo = GetDynamicTranslations();
 
             // Update schemes translations as well
             const translationsList = convertObjectToArray(currentLanguageInfo.translations.lables);
@@ -1247,6 +1276,43 @@
                 console.log('Translations missing');
             }
         });
+    }
+
+    function GetDynamicTranslations() {
+
+        // Get the dynamic translation info from app config
+        const dynamicTranslations = appConfig.dynamicTranslations;
+
+        if (dynamicTranslations) {
+
+            for (var i = 0; i < dynamicTranslations.length; i++) {
+
+                const currentDynamicTranslation = dynamicTranslations[i];
+
+                // Get the messagesToUpdate from current dynamic translation
+                const messagesToUpdate = currentDynamicTranslation.messagesToUpdate;
+
+                for (var j = 0; j < messagesToUpdate.length; j++) {
+                    const currentMessageToUpdate = messagesToUpdate[j];
+
+                    // Get the translation for the current message
+                    const translation = rawCurrentLanguageInfo.translations.messages[currentMessageToUpdate];
+
+                    // Update the translation
+                    // Check the dynamic key and find the appropriate value for it
+                    if (currentDynamicTranslation.keyToFind === '{{SelectedScheme}}') {
+
+                        // Get the current selected scheme name
+                        const currentSelectedSchemeId = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
+                        const currentSelectedSChemeTranslations = rawCurrentLanguageInfo.translations.lables[currentSelectedSchemeId];
+                        currentLanguageInfo.translations.messages[currentMessageToUpdate] = translation.replace(currentDynamicTranslation.keyToFind, currentSelectedSChemeTranslations);
+                    }
+
+                }
+            }
+        }
+
+        return currentLanguageInfo;
     }
 
     function bindPopularQuestions() {
@@ -1937,9 +2003,8 @@
             headers.append('User-id', currentUserId);
             headers.append('session-id', sessionId);
 
-            let currentLanguageCultureCode = $('.language-buttons').data(
-                'current-language-culture-code'
-            );
+            //languagesLabels
+            let currentLanguageCultureCode = getSetCurrentLanguageCode();
 
             let schemeName = appConfig.defaultSchemeAPIKey;
             if (appConfig.showSchemes) {
@@ -2476,7 +2541,7 @@
     }
 
     async function getTranslationFiles(currentLanguageCode) {
-
+        
         // Fetch the translations for all the languages
         for (var i = 0; i < allLanguagesTranslations.length; i++) {
 
@@ -2488,8 +2553,11 @@
                     const translationsInfo = await response.json();
 
                     allLanguagesTranslations[i].translations = translationsInfo;
+                    rawAllLanguagesTranslations[i].translations = JSON.parse(JSON.stringify(translationsInfo)); // Deep copy translationsInfo;
 
                     break;
+                } else {
+                    allLanguagesTranslations[i] = JSON.parse(JSON.stringify(rawAllLanguagesTranslations[i])); // Deep copy rawAllLanguagesTranslations[i];
                 }
             }
         }
@@ -2516,6 +2584,40 @@
         initGeneralAudioConfig(allLanguagesAudioBase64Data);
     }
 
+    function updateWelcomeGreetingMessage(currentLanguageCultureCode, languageCultureCode) {
+        // Remove previous language changed message
+        let previousLanguageChangedMessageId =
+            '#chatbotMessageWrapper-language-change-greeting-message-base64-' +
+            currentLanguageCultureCode +
+            '-audio';
+        $(previousLanguageChangedMessageId).remove();
+
+        // Update Welcome greeting data id as per the new language
+        // So correct audio can be played when Welcome greeting audio icon is clicked after changing the language.
+        const currentWelcomeGreetingDataId =
+            welcomeGreetingMessageBase64StringName.replace(
+                selectedLanguageCultureCodeTemplateVarId,
+                currentLanguageCultureCode
+            );
+        const newWelcomeGreetingDataId =
+            welcomeGreetingMessageBase64StringName.replace(
+                selectedLanguageCultureCodeTemplateVarId,
+                languageCultureCode
+            );
+
+        $('#playMessageImg-' + currentWelcomeGreetingDataId).data(
+            'audio-id',
+            newWelcomeGreetingDataId
+        );
+
+        // We also need to update play icon image id
+        // To pass to correctly change the audio id whenever language is changed.
+        $('#playMessageImg-' + currentWelcomeGreetingDataId).attr(
+            'id',
+            'playMessageImg-' + newWelcomeGreetingDataId
+        );
+    }
+
     function changeLanguage(
         languageCultureCode,
         LanguageEnglishLabel,
@@ -2540,37 +2642,7 @@
 
                 isChangeLanguageRequestInProgress = null;
 
-                // Remove previous language changed message
-                let previousLanguageChangedMessageId =
-                    '#chatbotMessageWrapper-language-change-greeting-message-base64-' +
-                    currentLanguageCultureCode +
-                    '-audio';
-                $(previousLanguageChangedMessageId).remove();
-
-                // Update Welcome greeting data id as per the new language
-                // So correct audio can be played when Welcome greeting audio icon is clicked after changing the language.
-                const currentWelcomeGreetingDataId =
-                    welcomeGreetingMessageBase64StringName.replace(
-                        selectedLanguageCultureCodeTemplateVarId,
-                        currentLanguageCultureCode
-                    );
-                const newWelcomeGreetingDataId =
-                    welcomeGreetingMessageBase64StringName.replace(
-                        selectedLanguageCultureCodeTemplateVarId,
-                        languageCultureCode
-                    );
-
-                $('#playMessageImg-' + currentWelcomeGreetingDataId).data(
-                    'audio-id',
-                    newWelcomeGreetingDataId
-                );
-
-                // We also need to update play icon image id
-                // To pass to correctly change the audio id whenever language is changed.
-                $('#playMessageImg-' + currentWelcomeGreetingDataId).attr(
-                    'id',
-                    'playMessageImg-' + newWelcomeGreetingDataId
-                );
+                updateWelcomeGreetingMessage(currentLanguageCultureCode, languageCultureCode);
 
                 // Update selected language buttons and labels to update the selected language in UI.
                 updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);

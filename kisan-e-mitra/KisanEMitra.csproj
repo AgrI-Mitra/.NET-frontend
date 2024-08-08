@@ -206,9 +206,14 @@
     <Content Include="Content\bundle-staging.min.css">
       <DependentUpon>bundle-staging.css</DependentUpon>
     </Content>
+    <Content Include="Content\images\arrow-down.svg" />
+    <Content Include="Content\images\arrow-up.svg" />
+    <Content Include="Content\images\arrow_back.svg" />
+    <Content Include="Content\images\arrow_forward.svg" />
     <Content Include="Content\images\kisan-e-mitra-logo-original.png" />
     <Content Include="Content\images\land_of_grass-bg-original.png" />
     <Content Include="Content\images\land_of_grass-bg_50.png" />
+    <Content Include="Content\images\settings.svg" />
     <Content Include="Content\js\app-config.js" />
     <Content Include="Content\js\bundle-post-body.js" />
     <Content Include="Content\js\bundle-post-body.min.js">
@@ -222,6 +227,8 @@
       <DependentUpon>chatbot.js</DependentUpon>
     </Content>
     <Content Include="Content\js\commonService.js" />
+    <Content Include="Content\js\horizontal-scroll-listener.js" />
+    <Content Include="Content\js\languageDropdown.js" />
     <Content Include="Content\js\popularQueriesService.js" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Resources\Resource.ur.Designer.cs">
@@ -249,7 +256,9 @@
     <Content Include="Content\images\refresh.svg" />
     <Content Include="Content\js\schemesDropdown.js" />
     <Content Include="Content\js\scroll-listener.js" />
+    <Content Include="Content\js\settings-popover.js" />
     <Content Include="Content\js\shepherd.js" />
+    <Content Include="Content\js\show-hide-content.js" />
     <Content Include="Content\js\typed.umd.js" />
     <Content Include="Content\shepherd.css" />
     <Content Include="Content\chatbot-staging.css" />

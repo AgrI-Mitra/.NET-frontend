@@ -82,7 +82,7 @@ table.aadhar-table {
     color: #219653;
     animation: dot-flashing 1s infinite linear alternate;
     animation-delay: 0.5s;
-    display:inline-block;
+    display: inline-block;
 }
 
     .dot-flashing::before,
@@ -323,6 +323,7 @@ img.query-msg-send-icon {
 
 #startAppTourButton {
     cursor: pointer;
+    max-width: 50%;
 }
 
 .button-close {
@@ -397,7 +398,7 @@ img.query-msg-send-icon {
 }
 
 .h-scrollable-wrapper {
-    max-width: 85vw;
+    max-width: 88vw;
     flex-wrap: nowrap;
     overflow-x: auto;
 }
@@ -500,4 +501,158 @@ img.query-msg-send-icon {
 
 .modal-header {
     justify-content: space-between;
+}
+
+/*left right arrows to scroll content*/
+
+.scroll-arrow {
+    background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+    color: black; /* Black text color for better contrast */
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visibility */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, opacity 0.3s ease; /* Add transition effect */
+}
+
+    .scroll-arrow:disabled {
+        background-color: rgba(255, 255, 255, 0.5); /* Lighter background when disabled */
+        cursor: not-allowed;
+        opacity: 0.2;
+    }
+
+.d-flex.justify-content-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.scroll-container {
+    flex-grow: 1;
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+}
+
+
+/* Position the toggle button at the top center */
+.toggle-arrow {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    padding: 10px;
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);*/
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Smooth transition for content visibility */
+/*.fade-in-content {
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+}
+
+    .fade-in-content.show {
+        max-height: 1000px;*/ /* Adjust based on your content height */
+/*opacity: 1;
+    }*/
+
+/* Smooth transition for the main content wrapper */
+#mainContentWrapper {
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+}
+
+    #mainContentWrapper.show {
+        max-height: 1000px; /* Adjust based on your content height */
+        opacity: 1;
+        border: 1px solid #eae9e9;
+        border-radius: 10px;
+        background: white;
+    }
+
+.schemesLabelsWrapper {
+    max-width: 92vw !important;
+}
+
+
+.popover-content-row {
+    display: flex;
+    align-items: center;
+}
+
+    .popover-content-row .form-group {
+        margin-right: 10px;
+        display: flex;
+        flex-grow: 1;
+    }
+
+/* Hide the popover content initially */
+#popover-content {
+    display: none;
+}
+
+.settings-popover-item {
+    border-radius: 20px;
+    background: white;
+    color: black;
+    border-color: transparent;
+    width: 100%;
+}
+
+#languageDropDown {
+    border-color: transparent !important;
+}
+
+.language-dropdown-toggle{
+    width:100%;
+}
+
+.settings-popover {
+    /*margin-right: 80px !important;*/
+    /*top: 0px !important;*/
+    left: -15px !important;
+    background-color: lightgrey;
+    min-width: 270px;
+}
+
+    .settings-popover div.popover-arrow {
+        left: 15px !important;
+    }
+
+    .settings-popover .popover-arrow::before {
+        border-bottom-color: lightgrey !important; /* Change this to your desired color */
+    }
+
+    .settings-popover .popover-arrow::after {
+        border-bottom-color: transparent !important; /* Change this to your desired color */
+    }
+
+.popover-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity and color as needed */
+    z-index: 1040; /* Ensure it is behind the popover but above other content */
+    display: none; /* Initially hidden */
 }

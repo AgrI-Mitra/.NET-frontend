@@ -3,5 +3,11 @@
   "numberOfUsedPopularQueriesToRetain": 5,
   "defaultScheme": "pmkisan",
   "defaultSchemeAPIKey": "PM Kisan",
-  "showSchemes": true
+  "showSchemes": true,
+  "dynamicTranslations": [
+    {
+      "keyToFind": "{{SelectedScheme}}",
+      "messagesToUpdate": [ "welcome_greeting" ]
+    }
+  ]
 }
