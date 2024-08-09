@@ -832,6 +832,13 @@
                 htmlElementKeyName: 'message_maintenance_mode_body',
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'text'
+            },
+            {
+                translationType: 'lables',
+                translationKey: 'tutorial',
+                htmlElementKeyName: 'startAppTourButton',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text'
             }
         ];
 

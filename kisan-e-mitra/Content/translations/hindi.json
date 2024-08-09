@@ -170,7 +170,8 @@
     "submit_review": "समीक्षा प्रस्तुत करें",
     "title": "किसान e-मित्र",
     "welcome": "स्वागत",
-    "yes": "हाँ"
+    "yes": "हाँ",
+    "tutorial": "ट्यूटोरियल"
   },
   "messages": {
     "app_tour_alternate_language_selection_description": "आप यहां से अपनी भाषा भी बदल सकते हैं।",

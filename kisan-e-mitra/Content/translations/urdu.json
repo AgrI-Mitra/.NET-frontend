@@ -170,7 +170,8 @@
     "submit_review": "Submit Review",
     "title": "Kisan-eMitra",
     "welcome": "Welcome",
-    "yes": "Yes"
+    "yes": "Yes",
+    "tutorial": "Tutorial"
   },
   "messages": {
     "app_tour_alternate_language_selection_description": "You can also change your language from here.",
