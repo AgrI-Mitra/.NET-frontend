@@ -1159,9 +1159,9 @@ img.query-msg-send-icon {
     border-radius: 50%;
     border: none;
     padding: 10px;
-    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);*/
-    width: 36px;
-    height: 36px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
