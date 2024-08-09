@@ -247,10 +247,10 @@ svg.footer-svg-hover {
 
 .mic-style {
     border: 2px solid;
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
     border-radius: 50px;
-    padding: 10px;
+    padding: 8px;
 }
 
 @keyframes rotate {
@@ -274,8 +274,8 @@ svg.footer-svg-hover {
 }
 
 .load {
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
     margin: 0px auto 0;
     border: solid 2px #fa5f5f;
     border-radius: 50%;
@@ -530,7 +530,7 @@ svg.footer-svg-hover {
     /*background-color: #fff;*/
     /*border-radius: 0 0 50px 50px;*/
     padding-top: 2% !important;
-    padding-bottom: 2% !important;
+    padding-bottom: 0.5rem;
     padding-right: 5px;
     padding-left: 5px;
     position:relative;
@@ -574,37 +574,108 @@ svg.footer-svg-hover {
 }
 
 @media (min-width:768px) {
-	/*.kisan-e-mitra-texts-padding{ background-color: #FFF; border-radius: 50px 50px 0 0; }*/
-	.custom-option:first-child{	margin-left: 0; }
-	
+    /*.kisan-e-mitra-texts-padding{ background-color: #FFF; border-radius: 50px 50px 0 0; }*/
+    .custom-option:first-child {
+        margin-left: 0;
+    }
 }
+
 @media (max-width:767px) {
-	/*.msg-scrollbar {
+    /*.msg-scrollbar {
 		border-radius: 26px 26px 0 0;
 	}*/
-	.kisan-e-mitra-content-text{margin-top: 0px;}
-	body{ background-size: unset; }
-	.content-head-text-responsive{ text-align: center; background-color: #F7F7F8; padding: .5rem 2rem; border-radius: 26px 26px 0 0; }
-	.content-head-text-responsive h1{ color: #198754; font-size: 24px; line-height: normal; margin: 0; }
-	.message-input{ height: 48px; padding: 0 2.5rem 0 1rem; }
-	.input-container {
-		/*border-radius: 0 0 26px 26px;*/ padding-bottom: 0.5rem!important;
-	}
-	.send-button{ width: 48px; height: 48px; }
-	button[type="submit"]{ width: 28px; height: 28px; background-size: contain; bottom: 0; margin: auto; right: 6px; }
-	.refresh-btn-style, .mic-style{ width: 48px; height: 48px; padding: 6px; }
-	.load{ width: 38px; height: 38px; }
-	.meg-input{ width: calc(100% - 128px); }
-	.navigation-icon{ margin-top: -36px; padding: 8px; height: 48px; }
-	.kisan-e-mitra-texts-padding{ padding: 0px 11px; }
+    .kisan-e-mitra-content-text {
+        margin-top: 0px;
+    }
+
+    body {
+        background-size: unset;
+    }
+
+    .content-head-text-responsive {
+        text-align: center;
+        background-color: #F7F7F8;
+        padding: .5rem 2rem;
+        border-radius: 26px 26px 0 0;
+    }
+
+        .content-head-text-responsive h1 {
+            color: #198754;
+            font-size: 24px;
+            line-height: normal;
+            margin: 0;
+        }
+
+    .message-input {
+        height: 48px;
+        padding: 0 2.5rem 0 1rem;
+    }
+
+    .input-container {
+        /*border-radius: 0 0 26px 26px;*/ /*padding-bottom: 0.5rem!important;*/
+    }
+
+    .send-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    button[type="submit"] {
+        width: 28px;
+        height: 28px;
+        background-size: contain;
+        bottom: 0;
+        margin: auto;
+        right: 6px;
+    }
+
+    .refresh-btn-style, .mic-style {
+        width: 36px;
+        height: 36px;
+        padding: 6px;
+    }
+
+    .load {
+        width: 30px;
+        height: 30px;
+    }
+
+    .meg-input {
+        width: calc(100% - 128px);
+    }
+
+    .navigation-icon {
+        margin-top: -36px;
+        padding: 8px;
+        height: 48px;
+    }
+
+    .kisan-e-mitra-texts-padding {
+        padding: 0px 11px;
+    }
 }
+
 @media (max-width:400px) {
-	.my-msg-content{ padding: 2% 0%; }
-	.send-button{ width: 36px; height: 36px; }
-	.refresh-btn-style, .mic-style{ width: 36px; height: 36px; padding: 4px; }
-	.load{ width: 30px; height: 30px; }
-	.meg-input{ width: calc(100% - 88px); }
+    .my-msg-content {
+        padding: 2% 0%;
+    }
+
+    .send-button {
+        width: 36px;
+        height: 36px;
+    }
+
+    .refresh-btn-style, .mic-style {
+        width: 36px;
+        height: 36px;
+        padding: 4px;
+    }
+    /*.load{ width: 30px; height: 30px; }*/
+    .meg-input {
+        width: calc(100% - 88px);
+    }
 }
+
 :root {
     --pmk-primary: #198754;
 }
