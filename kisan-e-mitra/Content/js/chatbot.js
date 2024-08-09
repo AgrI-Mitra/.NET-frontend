@@ -957,24 +957,20 @@
                     schemesInfo.bindSchemesToDropdown(schemesInfo.list, selectedSchemeId);
                     bindPopularQuestions();
 
-
-
-                    // Get current language change message
+                    // Get current scheme change message
                     currentLanguageInfo = GetDynamicTranslations();
                     const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
-                    updateTranslations([], ["welcome_greeting"]);
+                    //updateTranslations([], ["welcome_greeting"]);
                     //updateWelcomeGreetingMessage();
+                    const uniqueMessageId = 'welcome-greeting-message-base64-' + languageCultureCode + '-audio';
 
-                    // Add welcome greeting change message to chat screen
-                    //updateChatMessagesList(
-                    //    currentLanguageChangeMessage,
-                    //    'welcome-greeting-message-base64-' +
-                    //    languageCultureCode +
-                    //    '-audio',
-                    //    '',
-                    //    true,
-                    //    true
-                    //);
+                    //Add welcome greeting change message to chat screen
+                    updateChatMessagesList(
+                        currentLanguageChangeMessage, uniqueMessageId,
+                        '',
+                        true,
+                        true
+                    );
                 }
             }
         );
@@ -2548,7 +2544,7 @@
     }
 
     async function getTranslationFiles(currentLanguageCode) {
-        
+
         // Fetch the translations for all the languages
         for (var i = 0; i < allLanguagesTranslations.length; i++) {
 
