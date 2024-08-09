@@ -523,7 +523,7 @@ svg.footer-svg-hover {
 .input-container {
     /*background-color: #fff;*/
     /*border-radius: 0 0 50px 50px;*/
-    padding-top: 2% !important;
+    padding-top: 0.5rem !important;
     padding-bottom: 0.5rem;
     padding-right: 5px;
     padding-left: 5px;

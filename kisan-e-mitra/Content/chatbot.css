@@ -282,7 +282,7 @@ img.query-msg-send-icon {
 }
 
 .chatbot-message-action-buttons {
-    width: 36px;
+    width: 24px;
     height: 100%;
 }
 
@@ -543,7 +543,7 @@ img.query-msg-send-icon {
 /* Position the toggle button at the top center */
 .toggle-arrow {
     position: absolute;
-    top: -30px;
+    top: -25px;
     left: 50%;
     transform: translateX(-50%);
     background: none;
