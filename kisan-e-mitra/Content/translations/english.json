@@ -243,7 +243,7 @@
     "thank_you_for_feedback": "Thanks for your feedback.",
     "translation_feedback": "Translation Feedback",
     "wait_resending_otp": "Please wait before resending OTP",
-    "welcome_greeting": "Pleaes type or speak your question about the {{SelectedScheme}}",
+    "welcome_greeting": "Please type or speak your question about {{SelectedScheme}}",
     "app_tour_welcome_greeting": "Welcome to Kisan-eMitra! I'm your digital assistant for the following agricultural schemes. Please choose your preferred language and scheme to continue.",
     "welcome_greeting_1": "Also, please select the scheme."
   },
