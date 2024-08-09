@@ -412,8 +412,8 @@ img.query-msg-send-icon {
 }
 
 .welcome-message-wrapper {
-    position: sticky;
-    top: 0;
+    /*position: sticky;
+    top: 0;*/
 }
 
 .my-msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper {
