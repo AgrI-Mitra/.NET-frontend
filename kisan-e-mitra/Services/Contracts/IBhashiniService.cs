@@ -7,5 +7,6 @@ namespace KisanEMitra.Services.Contracts
     public interface IBhashiniService
     {
         Task<BhashiniApiResponseBody> GetTextToSpeech(string currentLanguage, List<BhashiniApiRequestBodyInput> bhashiniApiInput);
+        Task<LanguageDetectionResponse> DetectAudioLanguage(string audioContent);
     }
 }

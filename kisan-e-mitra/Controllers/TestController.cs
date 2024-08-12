@@ -169,7 +169,7 @@ namespace KisanEMitra.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<List<BhashiniApiResponseAudioInfo>> TextToSpeach(string languageCode, List<string> texts)
+        public async Task<List<BhashiniAudioInfo>> TextToSpeach(string languageCode, List<string> texts)
         {
             var bhashiniApiInput = new List<BhashiniApiRequestBodyInput>();
 

@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace KisanEMitra.Controllers
@@ -47,6 +46,19 @@ namespace KisanEMitra.Controllers
             string apiUrl = ConfigurationManager.AppSettings["apiUrl"].ToString();
             TempData["apiUrl"] = apiUrl;
             return View();
+        }
+
+        public ActionResult IndexPartial()
+        {
+            var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
+            TempData["LanguageModel"] = languageModel;
+            TempData["PopularQuestions"] = ChatbotService.GetPopularQuestions();
+
+            bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
+            TempData["isMaintenanceModeOn"] = isMaintenanceModeOn;
+            string apiUrl = ConfigurationManager.AppSettings["apiUrl"].ToString();
+            TempData["apiUrl"] = apiUrl;
+            return PartialView("_IndexPartial");
         }
 
         public ActionResult Test()
@@ -410,7 +422,7 @@ namespace KisanEMitra.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<List<BhashiniApiResponseAudioInfo>> TextToSpeach(string languageCode, List<string> texts)
+        public async Task<List<BhashiniAudioInfo>> TextToSpeach(string languageCode, List<string> texts)
         {
             var bhashiniApiInput = new List<BhashiniApiRequestBodyInput>();
 
@@ -430,6 +442,48 @@ namespace KisanEMitra.Controllers
             TempData["PopularQuestions"] = ChatbotService.GetPopularQuestions();
 
             return responseBody.audio;
+        }
+
+        public async Task<JsonResult> DetectAudioLanguage(string base64Audio)
+        {
+            var apiResponse = await BhashiniService.DetectAudioLanguage(base64Audio);
+
+            var languageCode = "";
+            bool isSuccess;
+
+            // Check if language prediction is available or not
+            if (string.IsNullOrEmpty(apiResponse.errorText))
+            {
+                // Get language code from api response
+                if (apiResponse.output.Count > 0 && apiResponse.output[0].langPrediction.Count > 0)
+                {
+                    languageCode = apiResponse.output[0].langPrediction[0].langCode;
+                    isSuccess = true;
+                }
+                else
+                {
+                    languageCode = "";
+                    isSuccess = false;
+                }
+            }
+            else
+            {
+                isSuccess = false;
+            }
+            //var languageCode = string.IsNullOrEmpty(apiResponse.errorText) ? apiResponse.output[0].langPrediction[0].langCode : "";
+
+            LanguageInfo languageInfo = new LanguageInfo();
+
+            if (isSuccess)
+            {
+                languageInfo = LanguageManager.GetLanguageDetailsByCode(languageCode);
+            }
+
+            return Json(new AjaxActionResponse()
+            {
+                Success = isSuccess,
+                Data = languageInfo
+            });
         }
 
         public ActionResult ChatHistory()

@@ -92,6 +92,7 @@
 
     let latitude;
     let longitude;
+    let isLanguageDetected = false;
 
     var currentParentRoute = "/Home/";
 
@@ -1228,7 +1229,7 @@
     function getSetCurrentLanguageCode() {
         let currentLanguageCode = localStorage.getItem("currentLanguageCode");
 
-        if (currentLanguageCode == null || currentLanguageCode == undefined) {
+        if (currentLanguageCode == null || currentLanguageCode == undefined || !currentLanguageCode) {
             currentLanguageCode = $('.languagesLabels').data('current-language-culture-code');
             localStorage.setItem("currentLanguageCode", currentLanguageCode);
         }
@@ -2429,7 +2430,17 @@
                 base64 += '=';
             }
 
-            askQuestions(base64, 'base64audio', blob, screenName);
+            if (isLanguageDetected) {
+
+                askQuestions(base64, 'base64audio', blob, screenName);
+            } else {
+
+                detectAudioLanguage(base64).then((result) => {
+                    askQuestions(base64, 'base64audio', blob, screenName);
+                }).catch((error) => {
+                    askQuestions(base64, 'base64audio', blob, screenName);
+                });
+            }
         };
     }
 
@@ -2621,6 +2632,51 @@
         );
     }
 
+    /**
+     * This functio is used to detect Audio language
+     */
+    function detectAudioLanguage(base64Audio) {
+
+        // Return promise
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: 'POST',
+                url: currentParentRoute + 'DetectAudioLanguage',
+                dataType: 'json',
+                data: { base64Audio: base64Audio },
+                success: function (data) {
+                    if (data.Success == true) {
+
+                        isLanguageDetected = true;
+
+                        const currentLanguageCultureCode = getSetCurrentLanguageCode();
+                        changeLanguage(
+                            data.Data.LanguageCultureCode,
+                            data.Data.LanguageEnglishLabel,
+                            data.Data.LanguageCultureLabel,
+                            currentLanguageCultureCode
+                        ).then((result) => {
+                            resolve(data);
+                        }).catch(error => {
+                            reject(error);
+                        });
+                    }
+                },
+                failure: function (data) {
+                    reject(data);
+                },
+            })
+        })
+    }
+
+    /**
+     * 
+     * @param {any} languageCultureCode
+     * @param {any} LanguageEnglishLabel
+     * @param {any} languageCultureLabel
+     * @param {any} currentLanguageCultureCode
+     */
+
     function changeLanguage(
         languageCultureCode,
         LanguageEnglishLabel,
@@ -2629,38 +2685,41 @@
     ) {
         playAudio('language-labels-' + LanguageEnglishLabel + '-audio');
 
-        isChangeLanguageRequestInProgress = $.ajax({
-            type: 'POST',
-            url: currentParentRoute + 'ChangeLanguage',
-            dataType: 'json',
-            data: { lang: languageCultureCode },
-            success: async function (data) {
+        return new Promise((resolve, reject) => {
+            isChangeLanguageRequestInProgress = $.ajax({
+                type: 'POST',
+                url: currentParentRoute + 'ChangeLanguage',
+                dataType: 'json',
+                data: { lang: languageCultureCode },
+                success: async function (data) {
+                    // If language is changed after session refresh was done,
+                    // Add metric count for it
+                    if (sessionId !== previousSessionId) {
+                        addMetricsCount('stage2Count');
+                    }
 
-                //If language is changed after session refresh was done,
-                //Add metric count for it
+                    isChangeLanguageRequestInProgress = null;
 
-                if (sessionId != previousSessionId) {
-                    addMetricsCount('stage2Count');
+                    updateWelcomeGreetingMessage(currentLanguageCultureCode, languageCultureCode);
+
+                    // Update selected language buttons and labels to update the selected language in UI.
+                    updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
+
+                    getWelcomeGreetingsAudio(true);
+
+                    await getTranslations();
+                    showUserRecordedMessageInTextBox('');
+
+                    previousSessionId = sessionId;
+
+                    resolve(data);
+                },
+                failure: function (data) {
+                    isChangeLanguageRequestInProgress = null;
+                    alert('oops something went wrong');
+                    reject(data);
                 }
-
-                isChangeLanguageRequestInProgress = null;
-
-                updateWelcomeGreetingMessage(currentLanguageCultureCode, languageCultureCode);
-
-                // Update selected language buttons and labels to update the selected language in UI.
-                updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
-
-                getWelcomeGreetingsAudio(true);
-
-                await getTranslations();
-                showUserRecordedMessageInTextBox('');
-
-                previousSessionId = sessionId;
-            },
-            failure: function (data) {
-                isChangeLanguageRequestInProgress = null;
-                alert('oops something went wrong');
-            },
+            });
         });
     }
 

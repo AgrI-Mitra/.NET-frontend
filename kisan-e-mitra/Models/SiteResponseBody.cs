@@ -31,7 +31,7 @@ namespace kishan_bot.Models
 
     public class BhashiniApiResponseBody
     {
-        public List<BhashiniApiResponseAudioInfo> audio { get; set; }
+        public List<BhashiniAudioInfo> audio { get; set; }
         public List<BhashiniApiResponseInfo> pipelineResponse { get; set; }
         public string Error { get; set; }
         public string Text { get; set; }
@@ -42,7 +42,7 @@ namespace kishan_bot.Models
         public string taskType { get; set; }
         public BhashiniApiReponseConfig config { get; set; }
         public string output { get; set; }
-        public List<BhashiniApiResponseAudioInfo> audio { get; set; }
+        public List<BhashiniAudioInfo> audio { get; set; }
     }
 
     public class BhashiniApiReponseConfig
@@ -59,7 +59,7 @@ namespace kishan_bot.Models
         public string sourceScriptCode { get; set; }
     }
 
-    public class BhashiniApiResponseAudioInfo
+    public class BhashiniAudioInfo
     {
         public string audioContent { get; set; }
         public string audioUri { get; set; }
@@ -105,4 +105,38 @@ namespace kishan_bot.Models
         public string[] LanguageCode { get; set; }
         public string ServiceId { get; set; }
     }
+
+    public class LanguagePredictionConfig
+    {
+        public string langCode { get; set; }
+        public string scriptCode { get; set; }
+        public string langScore { get; set; }
+    }
+
+    public class LanguagePredictionOutput
+    {
+        public BhashiniAudioInfo audio { get; set; }
+        public List<LanguagePredictionConfig> langPrediction { get; set; }
+    }
+
+    public class LanguageDetectionResponse
+    {
+        public string taskType { get; set; }
+        public List<LanguagePredictionOutput> output { get; set; }
+        public string config { get; set; } = null;
+        public string errorCode { get; set; } = string.Empty;
+        public string errorText { get; set; } = string.Empty;
+    }
+
+    public class LanguageDetectionRequestBody
+    {
+        public LanguageDetectionRequestConfig config { get; set; }
+        public List<BhashiniAudioInfo> audio { get; set; }
+    }
+
+    public class LanguageDetectionRequestConfig
+    {
+        public string serviceId { get; set; }
+    }
+    
 }

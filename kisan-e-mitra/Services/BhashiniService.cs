@@ -28,10 +28,12 @@ namespace KisanEMitra.Services
                 ServiceId = "ai4bharat/indic-tts-coqui-dravidian-gpu--t4", LanguageCode = new string[] { "ta", "ml", "kn", "te" }
             }
         };
+        private readonly string bhashiniALDServiceId = "bhashini/iitmandi/audio-lang-detection/gpu";
 
         public static class APIPaths
         {
             public static string TextToSpeechService = "services/inference/pipeline";
+            public static string AudioLanguageDetectionService = "services/inference/audiolangdetection";
         }
 
         public BhashiniService(HttpClient httpClient, IAgrimitraService _agrimitraService)
@@ -39,6 +41,52 @@ namespace KisanEMitra.Services
             this.httpClient = httpClient;
             httpClient.BaseAddress = new Uri(baseURL);
             AgrimitraService = _agrimitraService;
+        }
+
+        public async Task<LanguageDetectionResponse> DetectAudioLanguage(string audioContent)
+        {
+            var bhashiniApiRequestBody = new LanguageDetectionRequestBody
+            {
+                config = new LanguageDetectionRequestConfig()
+            };
+
+            bhashiniApiRequestBody.config.serviceId = bhashiniALDServiceId;
+
+            bhashiniApiRequestBody.audio = new List<BhashiniAudioInfo>
+            {
+                new BhashiniAudioInfo
+                {
+                    audioContent = audioContent
+                }
+            };
+
+            var languageDetectionResponse = new LanguageDetectionResponse();
+
+            try
+            {
+                // Remove previous authorization header if added
+                httpClient.DefaultRequestHeaders.Remove("Authorization");
+                httpClient.DefaultRequestHeaders.Add("Authorization", bhashiniApiAuthorizationHeaderKey);
+
+                var response = await httpClient.PostAsJsonAsync($"{APIPaths.AudioLanguageDetectionService}", bhashiniApiRequestBody);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+
+                    // Convert response to LanguageDetectionResponse
+                    languageDetectionResponse = response.Content.ReadFromJsonAsync<LanguageDetectionResponse>().Result;
+                }
+                else
+                {
+                    languageDetectionResponse.errorText = response.ReasonPhrase;
+                    languageDetectionResponse.errorCode = response.StatusCode.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                languageDetectionResponse.errorText = ex.Message;
+            }
+
+            return languageDetectionResponse;
         }
 
         public async Task<BhashiniApiResponseBody> GetTextToSpeech(string currentLanguage, List<BhashiniApiRequestBodyInput> bhashiniApiInput)
@@ -85,7 +133,7 @@ namespace KisanEMitra.Services
                 inputData = bhashiniInputData
             };
 
-            var audioList = new List<BhashiniApiResponseAudioInfo>();
+            var audioList = new List<BhashiniAudioInfo>();
 
             try
             {
