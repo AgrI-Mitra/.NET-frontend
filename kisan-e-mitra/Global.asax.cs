@@ -3,6 +3,8 @@ using KisanEMitra.Services.Contracts;
 using kishan_bot.Services;
 using kishan_bot.Services.Contracts;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -21,6 +23,17 @@ namespace KisanEMitra
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            // Ensure the Logs directory exists
+            var logDirectory = Server.MapPath("~/Logs");
+            if (!Directory.Exists(logDirectory))
+            {
+                Directory.CreateDirectory(logDirectory);
+            }
+
+            Trace.Listeners.Clear();
+            Trace.Listeners.Add(new TimestampedTextWriterTraceListener(Server.MapPath("~/Logs/myapp.log")));
+
             RegisterComponents();
         }
 

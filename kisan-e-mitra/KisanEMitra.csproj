@@ -163,6 +163,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Services\ServiceHelper.cs" />
+    <Compile Include="Services\TraceListener.cs" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\audio\pa.txt" />
@@ -213,8 +214,10 @@
     <Content Include="Content\images\kisan-e-mitra-logo-original.png" />
     <Content Include="Content\images\land_of_grass-bg-original.png" />
     <Content Include="Content\images\land_of_grass-bg_50.png" />
+    <Content Include="Content\images\red-mic.svg" />
     <Content Include="Content\images\settings.svg" />
     <Content Include="Content\js\app-config.js" />
+    <Content Include="Content\js\audio-visualizer.js" />
     <Content Include="Content\js\bundle-post-body.js" />
     <Content Include="Content\js\bundle-post-body.min.js">
       <DependentUpon>bundle-post-body.js</DependentUpon>

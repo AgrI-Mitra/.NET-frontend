@@ -2,9 +2,12 @@
 using kishan_bot.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace KisanEMitra.Services
@@ -29,6 +32,7 @@ namespace KisanEMitra.Services
             }
         };
         private readonly string bhashiniALDServiceId = "bhashini/iitmandi/audio-lang-detection/gpu";
+        private readonly int requestTimeoutInMinutes = int.Parse(ConfigurationManager.AppSettings["requestTimeoutInMinutes"]);
 
         public static class APIPaths
         {
@@ -67,8 +71,14 @@ namespace KisanEMitra.Services
                 // Remove previous authorization header if added
                 httpClient.DefaultRequestHeaders.Remove("Authorization");
                 httpClient.DefaultRequestHeaders.Add("Authorization", bhashiniApiAuthorizationHeaderKey);
+                httpClient.Timeout = requestTimeoutInMinutes > 0 ? TimeSpan.FromMinutes(requestTimeoutInMinutes) : TimeSpan.FromMinutes(10);
+
+                Trace.TraceInformation($"Starting HTTP request to {APIPaths.AudioLanguageDetectionService}");
 
                 var response = await httpClient.PostAsJsonAsync($"{APIPaths.AudioLanguageDetectionService}", bhashiniApiRequestBody);
+
+                Trace.TraceInformation($"Completed HTTP request to {APIPaths.AudioLanguageDetectionService} with status code {response.StatusCode}");
+
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
 
@@ -83,7 +93,10 @@ namespace KisanEMitra.Services
             }
             catch (Exception ex)
             {
-                languageDetectionResponse.errorText = ex.Message;
+                languageDetectionResponse.errorMessage = ex.Message;
+                languageDetectionResponse.errorText = ex.StackTrace.ToString();
+
+                Trace.TraceError($"HTTP request to {APIPaths.AudioLanguageDetectionService} failed: {ex.Message}");
             }
 
             return languageDetectionResponse;
