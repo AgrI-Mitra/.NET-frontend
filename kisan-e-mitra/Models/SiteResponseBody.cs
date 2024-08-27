@@ -126,6 +126,8 @@ namespace kishan_bot.Models
         public string config { get; set; } = null;
         public string errorCode { get; set; } = string.Empty;
         public string errorText { get; set; } = string.Empty;
+
+        public string errorMessage { get; set; } = string.Empty;
     }
 
     public class LanguageDetectionRequestBody

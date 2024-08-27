@@ -6,6 +6,7 @@ using kishan_bot.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -38,7 +39,6 @@ namespace KisanEMitra.Controllers
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
 
             TempData["LanguageModel"] = languageModel;
-            TempData["PopularQuestions"] = ChatbotService.GetPopularQuestions();
 
             // Check if site is in maintenence mode or not
             bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
@@ -52,7 +52,6 @@ namespace KisanEMitra.Controllers
         {
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
             TempData["LanguageModel"] = languageModel;
-            TempData["PopularQuestions"] = ChatbotService.GetPopularQuestions();
 
             bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
             TempData["isMaintenanceModeOn"] = isMaintenanceModeOn;
@@ -68,7 +67,6 @@ namespace KisanEMitra.Controllers
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
 
             TempData["LanguageModel"] = languageModel;
-            TempData["PopularQuestions"] = ChatbotService.GetPopularQuestions();
 
             // Check if site is in maintenence mode or not
             bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
@@ -352,13 +350,13 @@ namespace KisanEMitra.Controllers
             }
         }
 
-        public async Task<List<CommonKeyValue>> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage, string languageChangedMessage)
+        public async Task<List<CommonKeyValue>> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage, string languageChangeMessage)
         {
 
             List<string> strings = new List<string>
             {
                 welcomeMessage,
-                languageChangedMessage
+                languageChangeMessage
             };
 
             var greetingMessagesAudioStrings = await TextToSpeach(languageCode, strings);
@@ -383,6 +381,45 @@ namespace KisanEMitra.Controllers
             }
 
             return audioBase64Strings;
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage)
+        {
+
+            List<string> strings = new List<string>
+            {
+                welcomeMessage
+            };
+
+            var greetingMessagesAudioStrings = await TextToSpeach(languageCode, strings);
+
+            // Load audio base64 strings to view bag so we can play audio using it
+            List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
+
+            if (greetingMessagesAudioStrings.Count > 0)
+            {
+
+                audioBase64Strings.Add(new CommonKeyValue
+                {
+                    Key = "welcome-greeting-message-base64-" + languageCode,
+                    Value = greetingMessagesAudioStrings[0].audioContent.ToString()
+                });
+
+                //audioBase64Strings.Add(new CommonKeyValue
+                //{
+                //    Key = "language-change-greeting-message-base64-" + languageCode,
+                //    Value = greetingMessagesAudioStrings[1].audioContent.ToString()
+                //});
+            }
+
+
+            return Json(new AjaxActionResponse()
+            {
+                Message = "Success",
+                Data = audioBase64Strings,
+                Success = true
+            });
         }
 
         [HttpPost]
@@ -439,51 +476,64 @@ namespace KisanEMitra.Controllers
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
 
             TempData["LanguageModel"] = languageModel;
-            TempData["PopularQuestions"] = ChatbotService.GetPopularQuestions();
 
             return responseBody.audio;
         }
 
         public async Task<JsonResult> DetectAudioLanguage(string base64Audio)
         {
-            var apiResponse = await BhashiniService.DetectAudioLanguage(base64Audio);
-
-            var languageCode = "";
-            bool isSuccess;
-
-            // Check if language prediction is available or not
-            if (string.IsNullOrEmpty(apiResponse.errorText))
+            try
             {
-                // Get language code from api response
-                if (apiResponse.output.Count > 0 && apiResponse.output[0].langPrediction.Count > 0)
+                var apiResponse = await BhashiniService.DetectAudioLanguage(base64Audio);
+
+                var languageCode = "";
+                bool isSuccess;
+
+                // Check if language prediction is available or not
+                if (string.IsNullOrEmpty(apiResponse.errorText))
                 {
-                    languageCode = apiResponse.output[0].langPrediction[0].langCode;
-                    isSuccess = true;
+                    // Get language code from api response
+                    if (apiResponse.output.Count > 0 && apiResponse.output[0].langPrediction.Count > 0)
+                    {
+                        languageCode = apiResponse.output[0].langPrediction[0].langCode;
+                        isSuccess = true;
+                    }
+                    else
+                    {
+                        languageCode = "";
+                        isSuccess = false;
+                    }
                 }
                 else
                 {
-                    languageCode = "";
                     isSuccess = false;
                 }
-            }
-            else
-            {
-                isSuccess = false;
-            }
-            //var languageCode = string.IsNullOrEmpty(apiResponse.errorText) ? apiResponse.output[0].langPrediction[0].langCode : "";
 
-            LanguageInfo languageInfo = new LanguageInfo();
+                LanguageInfo languageInfo = new LanguageInfo();
 
-            if (isSuccess)
-            {
-                languageInfo = LanguageManager.GetLanguageDetailsByCode(languageCode);
+                if (isSuccess)
+                {
+                    languageInfo = LanguageManager.GetLanguageDetailsByCode(languageCode);
+                }
+
+                return Json(new AjaxActionResponse()
+                {
+                    Success = isSuccess,
+                    Data = languageInfo,
+                    Message = apiResponse.errorText,
+                });
             }
-
-            return Json(new AjaxActionResponse()
+            catch (Exception ex)
             {
-                Success = isSuccess,
-                Data = languageInfo
-            });
+                Trace.TraceError($"HTTP request to DetectAudioLanguage failed: {ex.Message}");
+
+                return Json(new AjaxActionResponse()
+                {
+                    Success = false,
+                    Data = "",
+                    Message = ex.Message,
+                });
+            }
         }
 
         public ActionResult ChatHistory()

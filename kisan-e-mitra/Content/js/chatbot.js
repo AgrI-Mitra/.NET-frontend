@@ -954,11 +954,13 @@
                 const languageCultureCode = getSetCurrentLanguageCode();
 
                 // Remove previous language changed message
-                let previousLanguageChangedMessageId =
-                    '#chatbotMessageWrapper-language-change-greeting-message-base64-' +
-                    languageCultureCode +
-                    '-audio';
-                $(previousLanguageChangedMessageId).remove();
+                //let previousSchemeChangeMessageId =
+                //    '#chatbotMessageWrapper-welcome-greeting-message-base64-' +
+                //    languageCultureCode +
+                //    '-audio';
+                //$(previousSchemeChangeMessageId).remove();
+
+                //$('#welcome-message-wrapper').remove();
 
                 hideAllThePopovers();
 
@@ -970,6 +972,7 @@
 
                     // Get current scheme change message
                     currentLanguageInfo = GetDynamicTranslations();
+                    await getWelcomeGreetingsAudio();
                     const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
                     //updateTranslations([], ["welcome_greeting"]);
                     //updateWelcomeGreetingMessage();
@@ -979,6 +982,7 @@
                     updateChatMessagesList(
                         currentLanguageChangeMessage, uniqueMessageId,
                         '',
+                        true,
                         true,
                         true
                     );
@@ -1607,7 +1611,8 @@
         messageId,
         messageType,
         isMessageFromBot,
-        showAudioOption
+        showAudioOption,
+        shouldNotAutoPlayAudio
     ) {
         if (message != '' && message != undefined) {
 
@@ -1666,7 +1671,8 @@
             }
 
             scrollToBottom();
-            if (isMessageFromBot == true) {
+            if (isMessageFromBot == true && !shouldNotAutoPlayAudio) {
+                console.log('calling from 1661')
                 autoPlayAudio(messageId);
             }
         }
@@ -1710,8 +1716,8 @@
         }
     }
 
-    $(document).ready(function () {
-        initChatBotConfig();
+    $(document).ready(async function () {
+        await initChatBotConfig();
 
         $(voiceRecordMicCircleClass).hide();
 
@@ -1948,8 +1954,10 @@
             .catch((apiError) => { });
     }
 
-    function handleError(error) {
-        hideChatLoader();
+    function handleError(error, category) {
+        hideChatLoader(category);
+
+
 
         if (error?.status == 502) {
             addMetricsCount('badGateway');
@@ -2024,7 +2032,7 @@
             $(userQuestionTextBox).trigger('change');
         }
 
-        chatLoader();
+        chatLoader(category);
 
         scrollToBottom();
 
@@ -2067,7 +2075,7 @@
 
             makeRequestRetry('POST', apiUrl, headers, requestPayload)
                 .then((apiResponse) => {
-                    hideChatLoader();
+                    hideChatLoader(category);
 
                     const data = JSON.parse(apiResponse);
 
@@ -2152,7 +2160,7 @@
                     }
                 })
                 .catch((apiError) => {
-                    handleError(apiError);
+                    handleError(apiError, category);
                 });
         }
 
@@ -2703,6 +2711,8 @@
                         }).catch(error => {
                             reject(error);
                         });
+                    } else {
+                        resolve(data);
                     }
                 },
                 failure: function (data) {
@@ -2748,9 +2758,26 @@
                     // Update selected language buttons and labels to update the selected language in UI.
                     updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
 
+                    await getTranslations();
+
+                    const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
+                    //updateTranslations([], ["welcome_greeting"]);
+                    //updateWelcomeGreetingMessage();
+                    const uniqueMessageId = 'welcome-greeting-message-base64-' + languageCultureCode + '-audio';
+
+                    //Add welcome greeting change message to chat screen
+                    updateChatMessagesList(
+                        currentLanguageChangeMessage, uniqueMessageId,
+                        '',
+                        true,
+                        true,
+                        true
+                    );
+
                     getWelcomeGreetingsAudio(true);
 
-                    await getTranslations();
+                    //updateWelcomeGreetingMessage(currentLanguageCultureCode, languageCultureCode);
+
                     showUserRecordedMessageInTextBox('');
 
                     previousSessionId = sessionId;
@@ -2807,26 +2834,48 @@
         const currentLanguageCode = getSetCurrentLanguageCode();
 
         // Get current selected language and welcome message
-        const languageChangeMessageAPIResponse = await fetch('/Content/audio/language-change-' + currentLanguageCode + '.txt', { cache: 'no-cache' });
-        const welcomeMessageAPIResponse = await fetch('/Content/audio/welcome-' + currentLanguageCode + '.txt', { cache: 'no-cache' });
+        //const languageChangeMessageAPIResponse = await fetch('/Content/audio/language-change-' + currentLanguageCode + '.txt', { cache: 'no-cache' });
+        //const welcomeMessageAPIResponse = await fetch('/Content/audio/welcome-' + currentLanguageCode + '.txt', { cache: 'no-cache' });
 
-        const languageChangeBase64Data = await languageChangeMessageAPIResponse.text();
-        const welcomeMessageBase64Data = await welcomeMessageAPIResponse.text();
+        //const languageChangeBase64Data = await languageChangeMessageAPIResponse.text();
+        //const welcomeMessageBase64Data = await welcomeMessageAPIResponse.text();
+
+        //currentLanguageInfo = GetDynamicTranslations();
+        const welcomeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
+        console.log('welcomeMessage: ', welcomeMessage);
+        //const welcomeMessageElement = document.getElementsByClassName('messageWelcomeGreeting');
+
+        isGetWelcomeGreetingsTextToSpeechRequestInProgress = $.ajax({
+            type: "POST",
+            url: "/Home/GetWelcomeGreetingsTextToSpeech",
+            dataType: "json",
+            data: { languageCode: currentLanguageCode, welcomeMessage: welcomeMessage },
+            success: function (data) {
+                isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
+
+
+                initWelcomeGreetingAudioConfig(data.Data, isLanguageChanged);
+            },
+            failure: function (data) {
+                isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
+                alert("oops something went wrong");
+            },
+        });
 
         // Add fetched data in an array
-        const base64Data =
-            [
-                {
-                    Key: 'welcome-greeting-message-base64-' + currentLanguageCode,
-                    Value: welcomeMessageBase64Data
-                },
-                {
-                    Key: 'language-change-greeting-message-base64-' + currentLanguageCode,
-                    Value: languageChangeBase64Data
-                }
-            ];
+        //const base64Data =
+        //    [
+        //        {
+        //            Key: 'welcome-greeting-message-base64-' + currentLanguageCode,
+        //            Value: welcomeMessageBase64Data
+        //        },
+        //        {
+        //            Key: 'language-change-greeting-message-base64-' + currentLanguageCode,
+        //            Value: languageChangeBase64Data
+        //        }
+        //    ];
 
-        initWelcomeGreetingAudioConfig(base64Data, isLanguageChanged);
+        //initWelcomeGreetingAudioConfig(base64Data, isLanguageChanged);
     }
 
     function initGeneralAudioConfig(data) {
