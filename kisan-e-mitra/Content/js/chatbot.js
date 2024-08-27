@@ -399,7 +399,12 @@
     };
 
     // This method is used to show an indicator that chatbot response is in progress
-    function chatLoader() {
+    function chatLoader(category) {
+
+        if (category == 'base64audio') {
+
+            audioVisualizer.startAutoVisualizer();
+        } else {
         let chatMessageWrapperStartingDivHtmlContent =
             getChatMessageWrapperStartingDivHtmlContent(
                 true,
@@ -423,10 +428,15 @@
 
         $('#message-list').append(responseLoader);
     }
+    }
 
     // This method is used to hide the chatbot response in progress indicator
-    function hideChatLoader() {
+    function hideChatLoader(category) {
         $('#chatbotMessageWrapper-responseLoader').remove();
+
+        if (category == 'base64audio') {
+            audioVisualizer.stopAutoVisualizer();
+    }
     }
 
     /**
@@ -2389,6 +2399,11 @@
 
                     mediaRecorder.start();
 
+                    // Show audio recording visualizer
+                    audioVisualizer.startVisualizer(stream);
+                    $('.sendtext').hide();
+                    showHideMessagePlaceholder(false);
+
                     mediaRecorder.ondataavailable = async (e) => {
                         arrayBufferData = await e.data.arrayBuffer();
 
@@ -2403,10 +2418,18 @@
                         chunks = [];
                     };
 
-                    mediaRecorder.onstop = async (e) => { };
+                    mediaRecorder.onstop = async (e) => {
+                        audioVisualizer.stopVisualizer();
+
+                        $('.sendtext').show();
+                        showHideMessagePlaceholder(true);
+                    };
                 })
                 .catch((error) => {
-                    handleError(error);
+                    audioVisualizer.stopVisualizer();
+
+                    $('.sendtext').show();
+                    showHideMessagePlaceholder(true);
                 });
         }
     }
@@ -3121,6 +3144,23 @@
             });
         } else {
             console.error("Geolocation is not supported by this browser.");
+        }
+    }
+
+    function showHideMessagePlaceholder(shouldShow) {
+
+        if (shouldShow) {
+            //$(userQuestionTextBox).val('');
+            //$(userQuestionTextBox).attr('placeholder', '');
+            // Hide placeholder temporarily, keep value as it is
+
+            $(userQuestionTextBox).attr('placeholder', $(userQuestionTextBox).attr('data-text'));
+
+        } else {
+            //$(userQuestionTextBox).val('');
+            //$(userQuestionTextBox).attr('placeholder', currentLanguageInfo.translations.messages.ask_ur_question);
+            $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
+            $(userQuestionTextBox).removeAttr('placeholder');
         }
     }
 })();

@@ -80,10 +80,21 @@
         @*<button id="restartSessionButton" class="send-button me-2 me-sm-3 app_tour_refresh_button_description">
             <img class="refresh-btn-style" src="~/Content/images/restart-session.svg" />
         </button>*@
-        <div class="meg-input position-relative me-2 me-sm-3 flex-grow-1">
-<textarea id="userQuestionTextBox" data-screen-name="conversation" class="userQuestionTextBoxClass message-input messageAskUrQuestion message-input-textarea app_tour_typebox_description" placeholder=""></textarea>
-            <button id="sendTextButton" type="submit" class="sendtext app_tour_send_button_description sendTextButtonClass" disabled></button>
+        <div class="d-flex flex-grow-1 position-relative mx-2">
+            <div class="meg-input">
+<textarea id="userQuestionTextBox" data-screen-name="conversation" class="userQuestionTextBoxClass message-input messageAskUrQuestion message-input-textarea app_tour_typebox_description" placeholder="">
+
+</textarea>
+                <button id="sendTextButton" type="submit" class="sendtext app_tour_send_button_description sendTextButtonClass fade-left" disabled></button>
+            </div>
+            <div class="audio-visualizer-wrapper fade-right message-input-textarea">
+                <img id="micAudioRecordingIcon" src="~/Content/images/red-mic.svg" height="24" width="24" class="flashing-icon" />
+                <canvas id="visualizer" class="audio-visualizer-container"></canvas>
+                <div class="audio-processing-container"></div>
+            </div>
+
         </div>
+
         <button id="voiceRecordButtonId" data-screen-name="conversation" class="voiceRecordButtonClass send-button img-fluid bg-transparent position-relative app_tour_mic_button_description">
             <div id="voiceRecordMicCircle" data-screen-name="conversation" class="load voiceRecordMicCircleClass"></div>
             <img id="recordingImage" data-screen-name="conversation" src="~/Content/images/start-recording.svg" class="recordingImageClass mic-style position-absolute voice-start-recording-border-color" />
