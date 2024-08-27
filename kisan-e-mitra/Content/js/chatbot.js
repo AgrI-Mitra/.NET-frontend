@@ -990,11 +990,16 @@
     function voiceRecorderListener() {
 
         $(document).on(
-            'click',
+            'mousedown mouseup touchstart touchend',
             voiceRecordButtonClass,
             function (ev) {
                 let currentScreenName = $(this).data('screen-name');
-                recordAudio(currentScreenName);
+
+                let isRecordedStarted = false;
+                if (ev.type === 'mousedown' || ev.type === 'touchstart') {
+                    isRecordedStarted = true;
+            }
+                recordAudio(currentScreenName, isRecordedStarted);
             }
         );
     }
@@ -1652,39 +1657,39 @@
         }
     }
 
-    function recordAudio(screenName) {
-        isRecording = !isRecording;
+    function recordAudio(screenName, isRecording) {
+        //isRecording = !isRecording;
 
         if (isRecording) {
-            $(
-                voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
-            ).attr('src', stopVoiceRecordingImagePath);
-            $(
-                voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
-            ).addClass(voiceRecordingStopBgColorClass);
-            $(
-                voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
-            ).removeClass(voiceRecordingStartBgColorClass);
-            $(
-                voiceRecordMicCircleClass + '[data-screen-name=' + screenName + ']'
-            ).show();
+            //$(
+            //    voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
+            //).attr('src', stopVoiceRecordingImagePath);
+            //$(
+            //    voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
+            //).addClass(voiceRecordingStopBgColorClass);
+            //$(
+            //    voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
+            //).removeClass(voiceRecordingStartBgColorClass);
+            //$(
+            //    voiceRecordMicCircleClass + '[data-screen-name=' + screenName + ']'
+            //).show();
 
             $(sendTextButtonId).attr('disabled', 'disabled');
             startRecording(screenName);
         } else {
-            $(
-                voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
-            ).attr('src', startVoiceRecordingImagePath);
-            $(
-                voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
-            ).addClass(voiceRecordingStartBgColorClass);
-            $(
-                voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
-            ).removeClass(voiceRecordingStopBgColorClass);
+            //$(
+            //    voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
+            //).attr('src', startVoiceRecordingImagePath);
+            //$(
+            //    voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
+            //).addClass(voiceRecordingStartBgColorClass);
+            //$(
+            //    voiceRecordingImageClass + '[data-screen-name=' + screenName + ']'
+            //).removeClass(voiceRecordingStopBgColorClass);
 
-            $(
-                voiceRecordMicCircleClass + '[data-screen-name=' + screenName + ']'
-            ).hide();
+            //$(
+            //    voiceRecordMicCircleClass + '[data-screen-name=' + screenName + ']'
+            //).hide();
             $(sendTextButtonId).removeAttr('disabled');
             stopRecording();
         }
