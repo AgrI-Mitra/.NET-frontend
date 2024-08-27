@@ -523,7 +523,8 @@ svg.footer-svg-hover {
 
 /*Select Language*/
 .meg-input {
-    width: calc(100% - 152px);
+    /*width: calc(100% - 152px);*/
+    width: 100%;
 }
 
 .input-container {
@@ -585,7 +586,7 @@ svg.footer-svg-hover {
 		border-radius: 26px 26px 0 0;
 	}*/
     .kisan-e-mitra-content-text {
-        margin-top: 0px;
+        margin-top: 5px;
     }
 
     body {
@@ -608,6 +609,10 @@ svg.footer-svg-hover {
 
     .message-input {
         height: 48px;
+        padding: 0 2.5rem 0 1rem;
+    }
+
+    .audio-visualizer-wrapper {
         padding: 0 2.5rem 0 1rem;
     }
 
@@ -641,7 +646,7 @@ svg.footer-svg-hover {
     }
 
     .meg-input {
-        width: calc(100% - 128px);
+        /*width: calc(100% - 128px);*/
     }
 
     .navigation-icon {
@@ -672,7 +677,7 @@ svg.footer-svg-hover {
     }
     /*.load{ width: 30px; height: 30px; }*/
     .meg-input {
-        width: calc(100% - 88px);
+        /*width: calc(100% - 88px);*/
     }
 }
 
@@ -841,6 +846,9 @@ table.aadhar-table {
         padding-top: 1.4em;
     }
 
+    .audio-visualizer-wrapper {
+        padding-top: 1.4em;
+    }
     /*.navigation-icon{
         margin-bottom: 20px;
     }*/
@@ -890,6 +898,10 @@ table.aadhar-table {
     }
 
     .message-input-textarea {
+        padding-top: 0.8em;
+    }
+
+    .audio-visualizer-wrapper {
         padding-top: 0.8em;
     }
     /* .send-button {
@@ -1123,6 +1135,10 @@ img.query-msg-send-icon {
     animation: fade-left 0.5s ease;
 }
 
+.fade-right {
+    animation: fade-right 0.5s ease;
+}
+
 .fade-top {
     animation: fade-top 1s ease;
 }
@@ -1130,6 +1146,19 @@ img.query-msg-send-icon {
 @keyframes fade-left {
     0% {
         transform: translateX(-100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+@keyframes fade-right {
+    0% {
+        transform: translateX(100px);
         opacity: 0;
     }
 
@@ -1286,7 +1315,6 @@ img.query-msg-send-icon {
 /* Hide the popover content initially */
 #popover-content {
     display: none;
-    
 }
 
 .settings-popover-item {
@@ -1301,8 +1329,8 @@ img.query-msg-send-icon {
     border-color: transparent !important;
 }
 
-.language-dropdown-toggle{
-    width:100%;
+.language-dropdown-toggle {
+    width: 100%;
 }
 
 @keyframes fade-top-popover {
@@ -1376,6 +1404,108 @@ img.query-msg-send-icon {
     -moz-animation: fadeInFromNone 0.5s ease-out;
     -o-animation: fadeInFromNone 0.5s ease-out;
     animation: fadeInFromNone 0.5s ease-out;
+}
+
+
+/* Audio Visualizer */
+#micAudioRecordingIcon {
+    display: none;
+}
+
+.audio-visualizer-wrapper {
+    display: none;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    position: absolute;
+    max-height: 90px;
+    padding: 0 4rem 0 1.5rem;
+}
+
+.audio-visualizer-container {
+    /*justify-content: space-around;*/
+    width: 100%;
+    height: 50px;
+    place-content: center;
+    align-self: center;
+    display: none;
+    /*position: absolute;*/
+}
+
+.audio-processing-container {
+    display: none;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.bar {
+    width: 1.5px; /* Thinner bars */
+    height: 10px; /* Reduced height */
+    background-color: #198754;
+    animation: soundwave 1s infinite;
+    animation-play-state: running; /*paused*/
+    transform-origin: center;
+    margin: 0 0.5px; /* Reduce gap between bars */
+}
+
+@keyframes soundwave {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(var(--scale-factor, 3)); /* Use CSS variable for random scale */
+    }
+}
+
+#voiceRecordButtonId:active {
+    transform: scale(1.5); /* Scale the mic button when pressed */
+
+
+}
+
+.recording #recordingImage {
+    transform: scale(2); /* Scale the mic button when recording */
+}
+
+/* Initial states */
+/*.meg-input {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: left 0.5s ease-in-out;
+}
+
+canvas {
+    position: absolute;
+    right: -100%;
+    transition: right 0.5s ease-in-out;
+}*/
+
+/* When canvas is visible */
+/*.canvas-visible .meg-input {
+    left: 10%;
+}
+
+.canvas-visible canvas {
+    right: 10%;
+}*/
+
+@keyframes flash {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Apply the animation to the icon */
+.flashing-icon {
+    animation: flash 1s infinite; /* 1s duration, infinite loop */
 }
 
 .shepherd-button{background:#3288e6;border:0;border-radius:3px;color:hsla(0,0%,100%,.75);cursor:pointer;margin-right:.5rem;padding:.5rem 1.5rem;transition:all .5s ease}.shepherd-button:not(:disabled):hover{background:#196fcc;color:hsla(0,0%,100%,.75)}.shepherd-button.shepherd-button-secondary{background:#f1f2f3;color:rgba(0,0,0,.75)}.shepherd-button.shepherd-button-secondary:not(:disabled):hover{background:#d6d9db;color:rgba(0,0,0,.75)}.shepherd-button:disabled{cursor:not-allowed}

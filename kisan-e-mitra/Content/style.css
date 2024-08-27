@@ -517,7 +517,8 @@ svg.footer-svg-hover {
 
 /*Select Language*/
 .meg-input {
-    width: calc(100% - 152px);
+    /*width: calc(100% - 152px);*/
+    width: 100%;
 }
 
 .input-container {

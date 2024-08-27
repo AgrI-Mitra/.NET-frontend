@@ -10,7 +10,7 @@
 		border-radius: 26px 26px 0 0;
 	}*/
     .kisan-e-mitra-content-text {
-        margin-top: 0px;
+        margin-top: 5px;
     }
 
     body {
@@ -33,6 +33,10 @@
 
     .message-input {
         height: 48px;
+        padding: 0 2.5rem 0 1rem;
+    }
+
+    .audio-visualizer-wrapper {
         padding: 0 2.5rem 0 1rem;
     }
 
@@ -66,7 +70,7 @@
     }
 
     .meg-input {
-        width: calc(100% - 128px);
+        /*width: calc(100% - 128px);*/
     }
 
     .navigation-icon {
@@ -97,6 +101,6 @@
     }
     /*.load{ width: 30px; height: 30px; }*/
     .meg-input {
-        width: calc(100% - 88px);
+        /*width: calc(100% - 88px);*/
     }
 }
