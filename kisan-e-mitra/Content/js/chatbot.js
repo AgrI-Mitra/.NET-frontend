@@ -2928,7 +2928,7 @@
         }
 
         if (isLanguageChanged == true) {
-            autoPlayAudio(textsToGetSpeech[1].id);
+            autoPlayAudio(textsToGetSpeech[0].id);
         }
     }
 
