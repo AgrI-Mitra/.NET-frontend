@@ -186,7 +186,7 @@
     "app_tour_send_button_description": "Press this Arrow button to send your message.",
     "app_tour_typebox_description": "Type your questions here and press send to submit.",
     "app_tour_welcome_description": "Hi, I'm Kisan e-mitra, your digital assistant for different agricultural schemes. Click 'Next' to continue, or click the 'X' button to skip the tutorial.",
-    "app_tour_welcome_header": "Welcome to Kisan-eMitra User Manual",
+    "app_tour_welcome_header": "Welcome to Kisan e-mitra User Manual",
     "app_tour_toggle_feature_description": "Click on up/down arrow to show/hide the suggestive queries.",
     "ask_ur_question": "Ask Your Question",
     "cannot_answer_again": "Cannot answer again",
@@ -246,7 +246,7 @@
     "translation_feedback": "Translation Feedback",
     "wait_resending_otp": "Please wait before resending OTP",
     "welcome_greeting": "Please type or speak your question about {{SelectedScheme}}.",
-    "app_tour_welcome_greeting": "Welcome to Kisan-eMitra! I'm your digital assistant for the following agricultural schemes. Please choose your preferred language and scheme to continue.",
+    "app_tour_welcome_greeting": "Welcome to Kisan e-mitra! I'm your digital assistant for the following agricultural schemes. Please choose your preferred language and scheme to continue.",
     "welcome_greeting_1": "Also, please select the scheme."
   },
   "toasts": {

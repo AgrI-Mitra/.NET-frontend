@@ -168,7 +168,7 @@
     "splash_title": "Kisan e-Mitra",
     "submit": "Submit",
     "submit_review": "Submit Review",
-    "title": "Kisan-eMitra",
+    "title": "Kisan e-mitra",
     "welcome": "Welcome",
     "yes": "Yes",
     "tutorial": "Tutorial"
@@ -185,7 +185,7 @@
     "app_tour_send_button_description": "Press this Arrow button to send your message.",
     "app_tour_typebox_description": "Type your questions here.",
     "app_tour_welcome_description": "Click Next below to proceed or Click Exit Tutorial to skip the manual tutorial",
-    "app_tour_welcome_header": "Welcome to Kisan-eMitra User Manual",
+    "app_tour_welcome_header": "Welcome to Kisan e-mitra User Manual",
     "app_tour_toggle_feature_description": "Click on up/down arrow to show/hide the suggestive queries.",
     "ask_ur_question": "Ask Your Question",
     "cannot_answer_again": "Cannot answer again",
@@ -245,7 +245,7 @@
     "translation_feedback": "Translation Feedback",
     "wait_resending_otp": "Please wait before resending OTP",
     "welcome_greeting": "Please type or speak your question about {{SelectedScheme}} scheme.",
-    "app_tour_welcome_greeting": "Welcome to Kisan-eMitra! I am your digital assistant. Please let me know how can I help you? \nYou may select your preferred language."
+    "app_tour_welcome_greeting": "Welcome to Kisan e-mitra! I am your digital assistant. Please let me know how can I help you? \nYou may select your preferred language."
   },
   "toasts": {
     "reaction_dislike": "Successfully disliked the response",

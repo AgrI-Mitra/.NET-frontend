@@ -433,7 +433,7 @@
     <value>এগিয়ে যেতে নীচের ক্লিক করুন বা ম্যানুয়াল টিউটোরিয়াল এড়িয়ে যেতে টিউটোরিয়াল থেকে প্রস্থান করুন ক্লিক করুন</value>
   </data>
   <data name="message.app_tour_welcome_header" xml:space="preserve">
-    <value>Kisan-eMitra ব্যবহারকারী ম্যানুয়াল-এ স্বাগতম</value>
+    <value>কিষাণ ই-মিত্র ব্যবহারকারী ম্যানুয়াল-এ স্বাগতম</value>
   </data>
   <data name="message.chatbot_functionality_feedback" xml:space="preserve">
     <value>চ্যাটবট কার্যকারিতা</value>
