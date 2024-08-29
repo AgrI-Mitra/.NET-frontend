@@ -11,7 +11,7 @@ namespace KisanEMitra.Controllers
     {
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {
-            string lang = null;
+            string lang;
             HttpCookie langCookie = Request.Cookies["culture"];
             if (langCookie != null)
             {
@@ -19,16 +19,7 @@ namespace KisanEMitra.Controllers
             }
             else
             {
-                var userLanguage = Request.UserLanguages;
-                var userLang = userLanguage != null ? userLanguage[0] : "";
-                if (userLang != "")
-                {
-                    lang = userLang;
-                }
-                else
-                {
-                    lang = LanguageManager.GetDefaultLanguage();
-                }
+                lang = LanguageManager.GetDefaultLanguage();
             }
             new LanguageManager().SetLanguage(lang);
             return base.BeginExecuteCore(callback, state);

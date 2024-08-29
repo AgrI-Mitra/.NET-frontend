@@ -1241,10 +1241,12 @@
      * @returns
      */
     function getSetCurrentLanguageCode() {
-        let currentLanguageCode = localStorage.getItem("currentLanguageCode");
+
+        let currentLanguageCode = $('.languagesLabels').data('current-language-culture-code');
 
         if (currentLanguageCode == null || currentLanguageCode == undefined || !currentLanguageCode) {
-            currentLanguageCode = $('.languagesLabels').data('current-language-culture-code');
+            currentLanguageCode = localStorage.getItem("currentLanguageCode");
+        } else {
             localStorage.setItem("currentLanguageCode", currentLanguageCode);
         }
 
@@ -2797,7 +2799,6 @@
         languageCultureCode,
         languageCultureLabel
     ) {
-
         localStorage.setItem("currentLanguageCode", languageCultureCode);
         $('.language-buttons').removeClass('btn-success');
         $('.language-buttons').addClass('btn-secondary');
