@@ -405,29 +405,29 @@
 
             audioVisualizer.startAutoVisualizer();
         } else {
-        let chatMessageWrapperStartingDivHtmlContent =
-            getChatMessageWrapperStartingDivHtmlContent(
-                true,
-                'responseLoader',
-                'conversationsWrapper'
-            ); // Main chat message wrapper
-        let chatbotRespondingHtmlContent =
-            getChatbotRespondingIndicatorHtmlContent();
+            let chatMessageWrapperStartingDivHtmlContent =
+                getChatMessageWrapperStartingDivHtmlContent(
+                    true,
+                    'responseLoader',
+                    'conversationsWrapper'
+                ); // Main chat message wrapper
+            let chatbotRespondingHtmlContent =
+                getChatbotRespondingIndicatorHtmlContent();
 
-        const responseLoader =
-            chatMessageWrapperStartingDivHtmlContent +
-            chatMessageWrapperColumnTwoStartingDivHtmlContent +
-            startingDivHtmlContent +
-            chatbotLogoHtmlContent +
-            spanStartingHtmlContent +
-            chatbotRespondingHtmlContent +
-            spanClosingHtmlContent +
-            closingDivHtmlContent +
-            closingDivHtmlContent +
-            closingDivHtmlContent;
+            const responseLoader =
+                chatMessageWrapperStartingDivHtmlContent +
+                chatMessageWrapperColumnTwoStartingDivHtmlContent +
+                startingDivHtmlContent +
+                chatbotLogoHtmlContent +
+                spanStartingHtmlContent +
+                chatbotRespondingHtmlContent +
+                spanClosingHtmlContent +
+                closingDivHtmlContent +
+                closingDivHtmlContent +
+                closingDivHtmlContent;
 
-        $('#message-list').append(responseLoader);
-    }
+            $('#message-list').append(responseLoader);
+        }
     }
 
     // This method is used to hide the chatbot response in progress indicator
@@ -436,7 +436,7 @@
 
         if (category == 'base64audio') {
             audioVisualizer.stopAutoVisualizer();
-    }
+        }
     }
 
     /**
@@ -953,14 +953,7 @@
 
                 const languageCultureCode = getSetCurrentLanguageCode();
 
-                // Remove previous language changed message
-                //let previousSchemeChangeMessageId =
-                //    '#chatbotMessageWrapper-welcome-greeting-message-base64-' +
-                //    languageCultureCode +
-                //    '-audio';
-                //$(previousSchemeChangeMessageId).remove();
-
-                //$('#welcome-message-wrapper').remove();
+                removePreviousWelcomeGreetingMessage();
 
                 hideAllThePopovers();
 
@@ -1002,7 +995,7 @@
                 let isRecordedStarted = false;
                 if (ev.type === 'mousedown' || ev.type === 'touchstart') {
                     isRecordedStarted = true;
-            }
+                }
                 recordAudio(currentScreenName, isRecordedStarted);
             }
         );
@@ -1083,6 +1076,7 @@
             if (actionName == 'setAutoPlayAudioMessage') {
                 setAutoPlayOn(audioId);
             } else if (actionName == 'playAudioMessage') {
+                console.log('calling from 1085');
                 playAudio(audioId);
             } else if (actionType == 'fe') {
                 if (actionName == 'likeMessage') {
@@ -1199,6 +1193,7 @@
         chatbotConfirmationModalCloseEventListener();
         submitFeedbackModalCloseEventListener();
         await getTranslations();
+        console.log('response received translation: ');
 
         initPopovers();
         setLocationInfo();
@@ -1268,6 +1263,7 @@
             currentLanguageInfo = translations.find(f => f.languageCode == currentLanguageCode);
             rawCurrentLanguageInfo = JSON.parse(JSON.stringify(currentLanguageInfo)); // Deep copy currentLanguageInfo;
             currentLanguageInfo = GetDynamicTranslations();
+            console.log('current language info set: ');
 
             // Update schemes translations as well
             const translationsList = convertObjectToArray(currentLanguageInfo.translations.lables);
@@ -2492,6 +2488,7 @@
                     askQuestions(base64, 'base64audio', blob, screenName);
                 });
             }
+            //askQuestions(base64, 'base64audio', blob, screenName);
         };
     }
 
@@ -2736,6 +2733,7 @@
         languageCultureLabel,
         currentLanguageCultureCode
     ) {
+        console.log('calling from 2725');
         playAudio('language-labels-' + LanguageEnglishLabel + '-audio');
 
         return new Promise((resolve, reject) => {
@@ -2751,9 +2749,11 @@
                         addMetricsCount('stage2Count');
                     }
 
+                    // Remove previous language changed message
+                    removePreviousWelcomeGreetingMessage();
+
                     isChangeLanguageRequestInProgress = null;
 
-                    updateWelcomeGreetingMessage(currentLanguageCultureCode, languageCultureCode);
 
                     // Update selected language buttons and labels to update the selected language in UI.
                     updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
@@ -2904,6 +2904,7 @@
     }
 
     function initWelcomeGreetingAudioConfig(data, isLanguageChanged) {
+        console.log('data: ', data, isLanguageChanged);
         // Get welcome note and language greeting text audio
         var textsToGetSpeech = [];
 
@@ -2934,13 +2935,16 @@
 
     function setAutoPlayOn(audioId) {
         sessionStorage.setItem('isAutoPlayEnabled', true);
+        console.log('calling from 2907');
         playAudio(audioId);
     }
 
     function autoPlayAudio(audioId) {
         let isAutoPlayEnabled = sessionStorage.getItem('isAutoPlayEnabled');
 
+        console.log('isAuthPlayEnabled: ', isAutoPlayEnabled);
         if (isAutoPlayEnabled) {
+            console.log('calling from 2916');
             playAudio(audioId);
         }
     }
@@ -3010,6 +3014,7 @@
     }
 
     async function playAudio(audioId) {
+        console.log('playAudio: ', audioId);
         playAudioWithRememberingLastPause(audioId);
 
         return;
@@ -3231,5 +3236,18 @@
             $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
             $(userQuestionTextBox).removeAttr('placeholder');
         }
+    }
+
+    function removePreviousWelcomeGreetingMessage() {
+        // Remove previous language changed message
+        let previousSchemeChangeMessageId =
+            '#chatbotMessageWrapper-welcome-greeting-message-base64-' +
+            languageCultureCode +
+            '-audio';
+
+        console.log('previousSchemeChangeMessageId: ', previousSchemeChangeMessageId);
+        $(previousSchemeChangeMessageId).remove();
+
+        $('#welcome-message-wrapper').remove();
     }
 })();

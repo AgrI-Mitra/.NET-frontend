@@ -20,7 +20,7 @@
 @Html.Hidden("apiUrl", (object)apiUrl)
 
 <div class="msg-scrollbar" id="message-list">
-    <div class="my-msg-content fade-in-content system-msg-bg chatbot-message-wrapper welcome-message-wrapper">
+    <div class="my-msg-content fade-in-content system-msg-bg chatbot-message-wrapper welcome-message-wrapper" id="welcome-message-wrapper">
 
         <div class="chatbot-message-wrapper-column-two">
             <div>
@@ -29,22 +29,22 @@
             </div>
 
             @*<div class="app_tour_language_selection_description h-scrollable-wrapper" id="hScrollableWrapper">
-                <div class="d-flex justify-content-between align-items-center position-relative">
-                    <div class="d-flex flex-nowrap overflow-auto pb-2 fade-in-content scroll-container" id="scrollContainer">
-                        @foreach (var availableLanguage in availableLanguages)
-                        {
-                            if (availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode)
+                    <div class="d-flex justify-content-between align-items-center position-relative">
+                        <div class="d-flex flex-nowrap overflow-auto pb-2 fade-in-content scroll-container" id="scrollContainer">
+                            @foreach (var availableLanguage in availableLanguages)
                             {
-                                <button id="language-button-new-@{@availableLanguage.LanguageCultureCode}" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn fade-left btn-success language-buttons languagesLabels mx-1" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
+                                if (availableLanguage.LanguageCultureCode == selectedLanguage.LanguageCultureCode)
+                                {
+                                    <button id="language-button-new-@{@availableLanguage.LanguageCultureCode}" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn fade-left btn-success language-buttons languagesLabels mx-1" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
+                                }
+                                else
+                                {
+                                    <button id="language-button-new-@{@availableLanguage.LanguageCultureCode}" data-type="secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn fade-left btn-secondary language-buttons languagesLabels mx-1" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
+                                }
                             }
-                            else
-                            {
-                                <button id="language-button-new-@{@availableLanguage.LanguageCultureCode}" data-type="secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="@availableLanguage.LanguageEnglishLabel" type="button" class="btn fade-left btn-secondary language-buttons languagesLabels mx-1" data-language-culture-code="@availableLanguage.LanguageCultureCode" data-language-english-label="@availableLanguage.LanguageEnglishLabel" data-language-culture-label="@availableLanguage.LanguageCultureLabel" data-current-language-culture-code="@selectedLanguage.LanguageCultureCode">@availableLanguage.LanguageCultureLabel</button>
-                            }
-                        }
+                        </div>
                     </div>
-                </div>
-            </div>*@
+                </div>*@
         </div>
         <div class="d-flex align-self-start chatbot-message-wrapper-column-three me-md-2 first-audio-icon-wrapper app_tour_audio_button_description fade-left">
             <img id="playMessageImg-@{@welcomeGreetingMessageBase64StringName}" data-audio-id="@{@welcomeGreetingMessageBase64StringName}" data-action-name="setAutoPlayAudioMessage" src="../Content/images/start-audio.svg" alt="avatar 1" class="chatbot-message-action-buttons setAutoPlayAudioMessage">
@@ -55,8 +55,8 @@
 
 <div class="input-container align-items-center justify-content-center px-1 px-md-2">
     <button id="toggleContentButton" class="toggle-arrow app_tour_toggle_feature_description">
-    <img src="~/Content/images/arrow-up.svg" alt="Toggle Arrow" width="24" height="24" id="toggleArrowIcon" />
-</button>
+        <img src="~/Content/images/arrow-up.svg" alt="Toggle Arrow" width="24" height="24" id="toggleArrowIcon" />
+    </button>
     <div id="mainContentWrapper" class="show">
         <div class="app_tour_scheme_labels_selection_description app_tour_scheme_selection_description d-flex flex-nowrap overflow-x-auto schemesLabelsWrapper h-scrollable-wrapper pb-2" id="schemesLabelsWrapper">
             <div class="d-flex justify-content-between align-items-center position-relative">
@@ -78,8 +78,8 @@
 
     <div class="d-flex flex-row w-100 align-items-center">
         @*<button id="restartSessionButton" class="send-button me-2 me-sm-3 app_tour_refresh_button_description">
-            <img class="refresh-btn-style" src="~/Content/images/restart-session.svg" />
-        </button>*@
+                <img class="refresh-btn-style" src="~/Content/images/restart-session.svg" />
+            </button>*@
         <div class="d-flex flex-grow-1 position-relative mx-2">
             <div class="meg-input">
 <textarea id="userQuestionTextBox" data-screen-name="conversation" class="userQuestionTextBoxClass message-input messageAskUrQuestion message-input-textarea app_tour_typebox_description" placeholder="">
