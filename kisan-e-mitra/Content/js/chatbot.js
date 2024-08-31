@@ -953,7 +953,7 @@
 
                 const languageCultureCode = getSetCurrentLanguageCode();
 
-                removePreviousWelcomeGreetingMessage();
+                removePreviousWelcomeGreetingMessage(languageCultureCode);
 
                 hideAllThePopovers();
 
@@ -1242,13 +1242,13 @@
      */
     function getSetCurrentLanguageCode() {
 
-        let currentLanguageCode = $('.languagesLabels').data('current-language-culture-code');
+        let currentLanguageCode = localStorage.getItem("currentLanguageCode");
 
-        console.log('currentLanguageCode: ', currentLanguageCode);
         if (currentLanguageCode == null || currentLanguageCode == undefined || !currentLanguageCode) {
-            currentLanguageCode = localStorage.getItem("currentLanguageCode");
-        } else {
+            currentLanguageCode = $('.languagesLabels').data('current-language-culture-code');
             localStorage.setItem("currentLanguageCode", currentLanguageCode);
+        } else {
+            $('.languagesLabels').data('current-language-culture-code', currentLanguageCode);
         }
 
         return currentLanguageCode;
@@ -2753,7 +2753,7 @@
                     }
 
                     // Remove previous language changed message
-                    removePreviousWelcomeGreetingMessage();
+                    removePreviousWelcomeGreetingMessage(currentLanguageCultureCode);
 
                     isChangeLanguageRequestInProgress = null;
 
@@ -3240,7 +3240,7 @@
         }
     }
 
-    function removePreviousWelcomeGreetingMessage() {
+    function removePreviousWelcomeGreetingMessage(languageCultureCode) {
         // Remove previous language changed message
         let previousSchemeChangeMessageId =
             '#chatbotMessageWrapper-welcome-greeting-message-base64-' +
