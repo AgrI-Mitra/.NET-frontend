@@ -1244,6 +1244,7 @@
 
         let currentLanguageCode = $('.languagesLabels').data('current-language-culture-code');
 
+        console.log('currentLanguageCode: ', currentLanguageCode);
         if (currentLanguageCode == null || currentLanguageCode == undefined || !currentLanguageCode) {
             currentLanguageCode = localStorage.getItem("currentLanguageCode");
         } else {
@@ -2427,8 +2428,8 @@
 
                     // Show audio recording visualizer
                     audioVisualizer.startVisualizer(stream);
-                    $('.sendtext').hide();
-                    showHideMessagePlaceholder(false);
+                    //$('.sendtext').hide();
+                    //showHideMessagePlaceholder(false);
 
                     mediaRecorder.ondataavailable = async (e) => {
                         arrayBufferData = await e.data.arrayBuffer();
@@ -2447,15 +2448,15 @@
                     mediaRecorder.onstop = async (e) => {
                         audioVisualizer.stopVisualizer();
 
-                        $('.sendtext').show();
-                        showHideMessagePlaceholder(true);
+                        //$('.sendtext').show();
+                        //showHideMessagePlaceholder(true);
                     };
                 })
                 .catch((error) => {
                     audioVisualizer.stopVisualizer();
 
-                    $('.sendtext').show();
-                    showHideMessagePlaceholder(true);
+                    //$('.sendtext').show();
+                    //showHideMessagePlaceholder(true);
                 });
         }
     }

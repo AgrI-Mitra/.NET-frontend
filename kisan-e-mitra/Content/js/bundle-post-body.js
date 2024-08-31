@@ -715,6 +715,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const audioVisualizerContainer = document.querySelector('.audio-visualizer-container');
         const audioProcessingContainer = document.querySelector('.audio-processing-container');
         const micAudioRecordingIcon = document.getElementById('micAudioRecordingIcon');
+        const userQuestionTextBox = '#userQuestionTextBox';
         console.log('micAudioRecordingIcon: ',  micAudioRecordingIcon);
 
         const canvas = document.getElementById('visualizer');
@@ -798,7 +799,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Initialize the audio visualizer
         function startVisualizer(stream) {
-
+            $('.sendtext').hide();
+            showHideMessagePlaceholder(false);
             try {
                 audioVisualizerWrapper.style.display = "flex";
                 audioVisualizerContainer.style.display = 'flex';
@@ -823,6 +825,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 stopVisualizer = drawBars(0, canvas, dataArray, null, bufferLength, 1.5, 60, false);
             } catch (e) {
                 console.log('draw error: ', e);
+                $('.sendtext').show();
+                showHideMessagePlaceholder(true);
             }
 
         }
@@ -930,6 +934,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Stop the visualizer
         function stopVisualizer() {
+
+            $('.sendtext').show();
+            showHideMessagePlaceholder(true);
+
             if (animationId) {
                 cancelAnimationFrame(animationId);
             }
@@ -947,6 +955,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function startAutoVisualizer() {
+
+            $('.sendtext').hide();
+            showHideMessagePlaceholder(false);
+
             audioVisualizerWrapper.style.display = "flex";
             audioVisualizerContainer.style.display = 'flex';
             const canvasCtx = canvas.getContext('2d');
@@ -1023,6 +1035,26 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             audioVisualizerWrapper.style.display = 'none';
             audioVisualizerContainer.style.display = 'none';
+
+            $('.sendtext').show();
+            showHideMessagePlaceholder(true);
+        }
+
+        function showHideMessagePlaceholder(shouldShow) {
+
+            if (shouldShow) {
+                //$(userQuestionTextBox).val('');
+                //$(userQuestionTextBox).attr('placeholder', '');
+                // Hide placeholder temporarily, keep value as it is
+
+                $(userQuestionTextBox).attr('placeholder', $(userQuestionTextBox).attr('data-text'));
+
+            } else {
+                //$(userQuestionTextBox).val('');
+                //$(userQuestionTextBox).attr('placeholder', currentLanguageInfo.translations.messages.ask_ur_question);
+                $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
+                $(userQuestionTextBox).removeAttr('placeholder');
+            }
         }
 
         // Expose functions to the global scope for easy access
