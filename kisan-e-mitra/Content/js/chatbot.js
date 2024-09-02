@@ -2711,6 +2711,8 @@
                         }).catch(error => {
                             reject(error);
                         });
+                        } else {
+                            resolve(data);
                         }
                     } else {
                         resolve(data);
