@@ -1298,7 +1298,7 @@ img.query-msg-send-icon {
 
 #popularQuestionsWrapper {
     transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-    overflow: hidden;
+    /*overflow: hidden;*/
     max-height: 0;
     opacity: 0;
 }
