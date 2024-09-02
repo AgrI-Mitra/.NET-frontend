@@ -2480,17 +2480,11 @@
                 base64 += '=';
             }
 
-            if (isLanguageDetected) {
-
-                askQuestions(base64, 'base64audio', blob, screenName);
-            } else {
-
                 detectAudioLanguage(base64).then((result) => {
                     askQuestions(base64, 'base64audio', blob, screenName);
                 }).catch((error) => {
                     askQuestions(base64, 'base64audio', blob, screenName);
                 });
-            }
             //askQuestions(base64, 'base64audio', blob, screenName);
         };
     }
@@ -2701,16 +2695,23 @@
                         isLanguageDetected = true;
 
                         const currentLanguageCultureCode = getSetCurrentLanguageCode();
+
+                        // Check if current langauge and detected langauge is same or not
+                        // If they are different then change the langauge else do nothing
+                        if (currentLanguageCultureCode != data.Data.LanguageCultureCode) {
+
                         changeLanguage(
                             data.Data.LanguageCultureCode,
                             data.Data.LanguageEnglishLabel,
                             data.Data.LanguageCultureLabel,
-                            currentLanguageCultureCode
+                                currentLanguageCultureCode,
+                                false
                         ).then((result) => {
                             resolve(data);
                         }).catch(error => {
                             reject(error);
                         });
+                        }
                     } else {
                         resolve(data);
                     }
@@ -2734,10 +2735,15 @@
         languageCultureCode,
         LanguageEnglishLabel,
         languageCultureLabel,
-        currentLanguageCultureCode
+        currentLanguageCultureCode,
+        shouldSpeakLanguageName = true
     ) {
         console.log('calling from 2725');
+
+        if (shouldSpeakLanguageName) {
         playAudio('language-labels-' + LanguageEnglishLabel + '-audio');
+        }
+
 
         return new Promise((resolve, reject) => {
             isChangeLanguageRequestInProgress = $.ajax({
