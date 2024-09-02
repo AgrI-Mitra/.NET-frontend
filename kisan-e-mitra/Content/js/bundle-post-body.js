@@ -479,9 +479,19 @@ class WavRecorder {
             const usedQueriesObject = JSON.parse(usedQueriesString);
 
             if (usedQueriesObject) {
-                const currentSchemeQueries = usedQueriesObject.find(f => f.scheme == scheme);
-                if (currentSchemeQueries) {
-                    usedQueries = currentSchemeQueries.queries;
+
+                // If scheme is not passed, then return all used queries
+                if (!scheme) {
+                    // Combine used queries from all the schemes and return it
+                    for (let i = 0; i < usedQueriesObject.length; i++) {
+                        usedQueries = usedQueries.concat(usedQueriesObject[i].queries);
+                    }
+                    return usedQueries;
+                } else {
+                    const currentSchemeQueries = usedQueriesObject.find(f => f.scheme == scheme);
+                    if (currentSchemeQueries) {
+                        usedQueries = currentSchemeQueries.queries;
+                    }
                 }
             }
         }
@@ -1072,4 +1082,45 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     });
 
+})();
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleButton = document.getElementById('toggleContentButton');
+        const toggleArrowIcon = document.getElementById('toggleArrowIcon');
+        const mainContentWrapper = document.getElementById('popularQuestionsWrapper');
+
+        // Ensure the content is shown by default
+        //mainContentWrapper.classList.add('show');
+        //toggleArrowIcon.src = '../Content/images/arrow-down.svg';
+
+        toggleButton.addEventListener('click', function (e) {
+            mainContentWrapper.classList.toggle('show');
+            if (mainContentWrapper.classList.contains('show')) {
+                toggleArrowIcon.src = '../Content/images/arrow-down.svg';
+            } else {
+                toggleArrowIcon.src = '../Content/images/arrow-up.svg';
+            }
+        });
+
+        function hidePopularQuestions() {
+            $('#popularQuestionsWrapper').removeClass('d-flex');
+            $('#popularQuestionsWrapper').hide();
+            $('#message-list').addClass('without-popular-questions');
+            mainContentWrapper.classList.remove('show');
+            toggleArrowIcon.src = '../Content/images/arrow-up.svg';
+        }
+
+        function showPopularQuestions() {
+            $('#popularQuestionsWrapper').addClass('d-flex');
+            $('#popularQuestionsWrapper').show();
+            $('#message-list').removeClass('without-popular-questions');
+            mainContentWrapper.classList.add('show');
+            toggleArrowIcon.src = '../Content/images/arrow-down.svg';
+        }
+
+        window.showHideContent = {
+            hidePopularQuestions,
+            showPopularQuestions
+        };
+    });
 })();

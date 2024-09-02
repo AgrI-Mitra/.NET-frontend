@@ -1,13 +1,7 @@
 {
   "numberOfVisiblePopularQueries": 4,
   "numberOfUsedPopularQueriesToRetain": 5,
-  "defaultScheme": "pmkisan",
-  "defaultSchemeAPIKey": "PM Kisan",
-  "showSchemes": true,
-  "dynamicTranslations": [
-    {
-      "keyToFind": "{{SelectedScheme}}",
-      "messagesToUpdate": [ "welcome_greeting" ]
-    }
-  ]
+  "defaultScheme": "allschemes",
+  "defaultSchemeAPIKey": "General",
+  "showSchemes": true
 }

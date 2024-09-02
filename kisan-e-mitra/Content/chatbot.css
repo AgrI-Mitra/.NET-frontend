@@ -598,7 +598,7 @@ img.query-msg-send-icon {
     }*/
 
 /* Smooth transition for the main content wrapper */
-#mainContentWrapper {
+/*#mainContentWrapper {
     transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
     overflow: hidden;
     max-height: 0;
@@ -606,6 +606,21 @@ img.query-msg-send-icon {
 }
 
     #mainContentWrapper.show {
+        max-height: 1000px;*/ /* Adjust based on your content height */
+        /*opacity: 1;
+        border: 1px solid #eae9e9;
+        border-radius: 10px;
+        background: white;
+    }*/
+
+#popularQuestionsWrapper {
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+}
+
+    #popularQuestionsWrapper.show {
         max-height: 1000px; /* Adjust based on your content height */
         opacity: 1;
         border: 1px solid #eae9e9;
@@ -825,6 +840,8 @@ canvas {
 
 
 .auto-read-button-wrapper img {
-    height: 100%;
-    width: 100%;
+    max-height: 36px;
+    max-width: 36px;
+    height:100%;
+    width:100%;
 }

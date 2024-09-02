@@ -1132,24 +1132,10 @@
     function autoReadOnClickListener() {
         $(document).on('click', '.auto-read-button-wrapper', function (ev) {
 
-            // get the value of the img source
-            const autoReadStatus = $('#autoReadImage').attr('src');
-
-
-            if (autoReadStatus.indexOf('auto-read-on.svg') >= 0) {
-                $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
-
-                $('.auto-read-button-wrapper').removeClass('p-0');
-                localStorage.setItem('isAutoPlayEnabled', false);
-            } else {
-                $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
-
-                localStorage.setItem('isAutoPlayEnabled', true);
-                // Add "p-0" class
-                $('.auto-read-button-wrapper').addClass('p-0');
-            }
-
+            setAutoReadStatus();
         });
+
+        setAutoReadStatus(false);
     }
 
     function popularQuestionsOnClickListener() {
@@ -1254,7 +1240,11 @@
         const currentSelectedSchemeId = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
 
         const scrollElement = document.getElementById('scheme-button-' + currentSelectedSchemeId);
-        scrollElement.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+
+        if (scrollElement) {
+            scrollElement.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+        }
+
     }
 
     /**
@@ -1312,7 +1302,7 @@
 
             const currentSelectedSChemeTranslations = currentLanguageInfo.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
 
-            if (currentSelectedSChemeTranslations) {
+            if (currentSelectedSChemeTranslations || currentSelectedSchemeId == 'allschemes') {
                 bindPopularQuestions();
 
             } else {
@@ -1364,13 +1354,32 @@
         // We don't need to display already used queries
 
         const currentSelectedSchemeId = schemesInfo.currentScheme;
-        const currentSelectedSChemeTranslations = currentLanguageInfo.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
 
-        const alreadyUsedQueries = popularQueriesService.getUsedQueries(currentSelectedSchemeId);
+        let popularQuestionsHtmlContent = []
+        // if current selected scheme id is allschemes then combine the popular queries of all the schemes
+        if (currentSelectedSchemeId == 'allschemes') {
+            const usedQueries = popularQueriesService.getUsedQueries();
 
-        const topRandomPopularQuestions = getRandomValues(currentSelectedSChemeTranslations.queries, numberOfVisiblePopularQueries, alreadyUsedQueries.length ? alreadyUsedQueries : undefined);
+            let allSchemesQueries = currentLanguageInfo.translations.schemes.reduce((acc, item) => {
+                return { ...acc, ...item.queries };
+            }, {});
 
-        const popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topRandomPopularQuestions);
+            const topRandomPopularQuestions = getRandomValues(allSchemesQueries, numberOfVisiblePopularQueries, usedQueries.length ? usedQueries : undefined);
+            popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topRandomPopularQuestions);
+
+        } else {
+            const currentSelectedSChemeTranslations = currentLanguageInfo.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
+
+            const alreadyUsedQueries = popularQueriesService.getUsedQueries(currentSelectedSchemeId);
+
+            const topRandomPopularQuestions = getRandomValues(currentSelectedSChemeTranslations.queries, numberOfVisiblePopularQueries, alreadyUsedQueries.length ? alreadyUsedQueries : undefined);
+
+            popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topRandomPopularQuestions);
+
+            showHideContent.showPopularQuestions();
+            console.log('currentSelectedSchemeId: ', currentSelectedSchemeId);
+        }
+
 
         $('.query-messages-box').empty();
 
@@ -1378,7 +1387,7 @@
             $('.query-messages-box').append(popularQuestionsHtmlContent[i]);
         }
 
-        showPopularQuestions();
+
     }
 
     function configAppTour() {
@@ -1825,7 +1834,7 @@
     function copyPopularQuestionInTextBox(message, shouldHidePopularQuestions = true, shouldAutoSend) {
         // Hide popular questions now
         if (shouldHidePopularQuestions == true) {
-            hidePopularQuestions();
+            showHideContent.hidePopularQuestions();
         }
 
         showUserRecordedMessageInTextBox(message, shouldAutoSend);
@@ -3270,5 +3279,37 @@
         $(previousSchemeChangeMessageId).remove();
 
         $('#welcome-message-wrapper').remove();
+    }
+
+    function setAutoReadStatus(changeStatus = true) {
+        // get the value of the img source
+        const autoReadStatusImage = $('#autoReadImage').attr('src');
+        if (changeStatus == false) {
+
+            const currentAutoReadStatus = localStorage.getItem('isAutoPlayEnabled');
+
+
+            if (currentAutoReadStatus == 'true') {
+                $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
+                $('.auto-read-button-wrapper').addClass('p-0');
+            } else {
+                $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
+                $('.auto-read-button-wrapper').removeClass('p-0');
+            }           
+
+        } else {
+            if (autoReadStatusImage.indexOf('auto-read-on.svg') >= 0) {
+                $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
+
+                $('.auto-read-button-wrapper').removeClass('p-0');
+                localStorage.setItem('isAutoPlayEnabled', false);
+            } else {
+                $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
+
+                localStorage.setItem('isAutoPlayEnabled', true);
+                // Add "p-0" class
+                $('.auto-read-button-wrapper').addClass('p-0');
+            }
+        }
     }
 })();

@@ -1281,7 +1281,7 @@ img.query-msg-send-icon {
     }*/
 
 /* Smooth transition for the main content wrapper */
-#mainContentWrapper {
+/*#mainContentWrapper {
     transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
     overflow: hidden;
     max-height: 0;
@@ -1289,6 +1289,21 @@ img.query-msg-send-icon {
 }
 
     #mainContentWrapper.show {
+        max-height: 1000px;*/ /* Adjust based on your content height */
+        /*opacity: 1;
+        border: 1px solid #eae9e9;
+        border-radius: 10px;
+        background: white;
+    }*/
+
+#popularQuestionsWrapper {
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+}
+
+    #popularQuestionsWrapper.show {
         max-height: 1000px; /* Adjust based on your content height */
         opacity: 1;
         border: 1px solid #eae9e9;
@@ -1508,8 +1523,10 @@ canvas {
 
 
 .auto-read-button-wrapper img {
-    height: 100%;
-    width: 100%;
+    max-height: 36px;
+    max-width: 36px;
+    height:100%;
+    width:100%;
 }
 
 .shepherd-button{background:#3288e6;border:0;border-radius:3px;color:hsla(0,0%,100%,.75);cursor:pointer;margin-right:.5rem;padding:.5rem 1.5rem;transition:all .5s ease}.shepherd-button:not(:disabled):hover{background:#196fcc;color:hsla(0,0%,100%,.75)}.shepherd-button.shepherd-button-secondary{background:#f1f2f3;color:rgba(0,0,0,.75)}.shepherd-button.shepherd-button-secondary:not(:disabled):hover{background:#d6d9db;color:rgba(0,0,0,.75)}.shepherd-button:disabled{cursor:not-allowed}
