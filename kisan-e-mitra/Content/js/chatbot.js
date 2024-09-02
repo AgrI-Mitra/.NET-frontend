@@ -140,7 +140,7 @@
 
     var userQuestionTextBox = '#userQuestionTextBox'; // This variable is used to listen any events on user question text box where user will type the question
     var userQuestionTextBoxClass = '.userQuestionTextBoxClass';
-
+    var imagesRootPath = '../Content/images/';
     var startAudioImagePath = '../Content/images/start-audio.svg';
     var stopAudioImagePath = '../Content/images/stop-audio.svg';
     var thumbDislikeImagePath = '../Content/images/hand-thumbs-down.svg';
@@ -1076,7 +1076,6 @@
             if (actionName == 'setAutoPlayAudioMessage') {
                 setAutoPlayOn(audioId);
             } else if (actionName == 'playAudioMessage') {
-                console.log('calling from 1085');
                 playAudio(audioId);
             } else if (actionType == 'fe') {
                 if (actionName == 'likeMessage') {
@@ -1127,6 +1126,29 @@
     function resendOtpOnClickListener() {
         $(document).on('click', '.resendOTP', function (ev) {
             resendOTP(this);
+        });
+    }
+
+    function autoReadOnClickListener() {
+        $(document).on('click', '.auto-read-button-wrapper', function (ev) {
+
+            // get the value of the img source
+            const autoReadStatus = $('#autoReadImage').attr('src');
+
+
+            if (autoReadStatus.indexOf('auto-read-on.svg') >= 0) {
+                $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
+
+                $('.auto-read-button-wrapper').removeClass('p-0');
+                localStorage.setItem('isAutoPlayEnabled', false);
+            } else {
+                $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
+
+                localStorage.setItem('isAutoPlayEnabled', true);
+                // Add "p-0" class
+                $('.auto-read-button-wrapper').addClass('p-0');
+            }
+
         });
     }
 
@@ -1188,12 +1210,12 @@
         restartSessionButtonOnClickListener();
         startAppTourButtonOnClickListener();
         resendOtpOnClickListener();
+        autoReadOnClickListener();
         popularQuestionsOnClickListener();
         initAutoSizeInputBox();
         chatbotConfirmationModalCloseEventListener();
         submitFeedbackModalCloseEventListener();
         await getTranslations();
-        console.log('response received translation: ');
 
         initPopovers();
         setLocationInfo();
@@ -1266,7 +1288,6 @@
             currentLanguageInfo = translations.find(f => f.languageCode == currentLanguageCode);
             rawCurrentLanguageInfo = JSON.parse(JSON.stringify(currentLanguageInfo)); // Deep copy currentLanguageInfo;
             currentLanguageInfo = GetDynamicTranslations();
-            console.log('current language info set: ');
 
             // Update schemes translations as well
             const translationsList = convertObjectToArray(currentLanguageInfo.translations.lables);
@@ -1671,7 +1692,6 @@
 
             scrollToBottom();
             if (isMessageFromBot == true && !shouldNotAutoPlayAudio) {
-                console.log('calling from 1661')
                 autoPlayAudio(messageId);
             }
         }
@@ -2480,11 +2500,11 @@
                 base64 += '=';
             }
 
-                detectAudioLanguage(base64).then((result) => {
-                    askQuestions(base64, 'base64audio', blob, screenName);
-                }).catch((error) => {
-                    askQuestions(base64, 'base64audio', blob, screenName);
-                });
+            detectAudioLanguage(base64).then((result) => {
+                askQuestions(base64, 'base64audio', blob, screenName);
+            }).catch((error) => {
+                askQuestions(base64, 'base64audio', blob, screenName);
+            });
             //askQuestions(base64, 'base64audio', blob, screenName);
         };
     }
@@ -2700,17 +2720,17 @@
                         // If they are different then change the langauge else do nothing
                         if (currentLanguageCultureCode != data.Data.LanguageCultureCode) {
 
-                        changeLanguage(
-                            data.Data.LanguageCultureCode,
-                            data.Data.LanguageEnglishLabel,
-                            data.Data.LanguageCultureLabel,
+                            changeLanguage(
+                                data.Data.LanguageCultureCode,
+                                data.Data.LanguageEnglishLabel,
+                                data.Data.LanguageCultureLabel,
                                 currentLanguageCultureCode,
                                 false
-                        ).then((result) => {
-                            resolve(data);
-                        }).catch(error => {
-                            reject(error);
-                        });
+                            ).then((result) => {
+                                resolve(data);
+                            }).catch(error => {
+                                reject(error);
+                            });
                         } else {
                             resolve(data);
                         }
@@ -2740,10 +2760,9 @@
         currentLanguageCultureCode,
         shouldSpeakLanguageName = true
     ) {
-        console.log('calling from 2725');
 
         if (shouldSpeakLanguageName) {
-        playAudio('language-labels-' + LanguageEnglishLabel + '-audio');
+            playAudio('language-labels-' + LanguageEnglishLabel + '-audio');
         }
 
 
@@ -2852,7 +2871,6 @@
 
         //currentLanguageInfo = GetDynamicTranslations();
         const welcomeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
-        console.log('welcomeMessage: ', welcomeMessage);
         //const welcomeMessageElement = document.getElementsByClassName('messageWelcomeGreeting');
 
         isGetWelcomeGreetingsTextToSpeechRequestInProgress = $.ajax({
@@ -2914,7 +2932,6 @@
     }
 
     function initWelcomeGreetingAudioConfig(data, isLanguageChanged) {
-        console.log('data: ', data, isLanguageChanged);
         // Get welcome note and language greeting text audio
         var textsToGetSpeech = [];
 
@@ -2944,17 +2961,13 @@
     }
 
     function setAutoPlayOn(audioId) {
-        sessionStorage.setItem('isAutoPlayEnabled', true);
-        console.log('calling from 2907');
+        localStorage.setItem('isAutoPlayEnabled', true);
         playAudio(audioId);
     }
 
     function autoPlayAudio(audioId) {
-        let isAutoPlayEnabled = sessionStorage.getItem('isAutoPlayEnabled');
-
-        console.log('isAuthPlayEnabled: ', isAutoPlayEnabled);
-        if (isAutoPlayEnabled) {
-            console.log('calling from 2916');
+        let isAutoPlayEnabled = JSON.parse(localStorage.getItem('isAutoPlayEnabled'));
+        if (isAutoPlayEnabled == true) {
             playAudio(audioId);
         }
     }
@@ -2993,7 +3006,7 @@
                     $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
                 };
             } else {
-                sessionStorage.removeItem('isAutoPlayEnabled');
+                //sessionStorage.removeItem('isAutoPlayEnabled');
             }
         } else {
             var allAudioEls = $('audio');
@@ -3024,7 +3037,6 @@
     }
 
     async function playAudio(audioId) {
-        console.log('playAudio: ', audioId);
         playAudioWithRememberingLastPause(audioId);
 
         return;
@@ -3062,7 +3074,7 @@
                     $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
                 };
             } else {
-                sessionStorage.removeItem('isAutoPlayEnabled');
+                //sessionStorage.removeItem('isAutoPlayEnabled');
             }
         } else {
             var allAudioEls = $('audio');
@@ -3255,7 +3267,6 @@
             languageCultureCode +
             '-audio';
 
-        console.log('previousSchemeChangeMessageId: ', previousSchemeChangeMessageId);
         $(previousSchemeChangeMessageId).remove();
 
         $('#welcome-message-wrapper').remove();

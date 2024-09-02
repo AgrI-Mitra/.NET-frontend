@@ -779,8 +779,6 @@ img.query-msg-send-icon {
 
 #voiceRecordButtonId:active {
     transform: scale(1.5); /* Scale the mic button when pressed */
-
-
 }
 
 .recording #recordingImage {
@@ -823,4 +821,10 @@ canvas {
 /* Apply the animation to the icon */
 .flashing-icon {
     animation: flash 1s infinite; /* 1s duration, infinite loop */
+}
+
+
+.auto-read-button-wrapper img {
+    height: 100%;
+    width: 100%;
 }
