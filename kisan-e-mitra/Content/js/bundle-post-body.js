@@ -1126,43 +1126,53 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 
 (function () {
-
     var selectedVoice = '';
     var isAutoPlayEnabled = false;
     var isVoiceSelected = false;
     const voiceSelectionChannel = new BroadcastChannel('voice_selection');
     var popover;
     document.addEventListener('DOMContentLoaded', function () {
-
         var popoverTrigger = document.getElementById('autoReadButton');
         var popoverContent = document.getElementById('globalAutoReadPopover');
-
         const images = document.querySelectorAll('.image-container img');
-        images.forEach(img => {
+        const radios = document.querySelectorAll(
+            '.image-container input[type="radio"]'
+        );
+
+        images.forEach((img) => {
             img.addEventListener('click', function (ev) {
-
-                // Remove 'selected' class from all images
-                images.forEach(image => image.classList.remove('selected'));
-
-                // Add 'selected' class to the clicked image
-                img.classList.add('selected');
-
-                const radioId = img.closest('label').getAttribute('for');
-                document.getElementById(radioId).checked = true;
-                globalAutoReadFeature.selectedVoice = radioId;
-                console.log('selectedVoice: ', globalAutoReadFeature.selectedVoice);
-                globalAutoReadFeature.isVoiceSelected = true;
-                voiceSelectionChannel.postMessage(globalAutoReadFeature.selectedVoice);
-
-                popover.hide();
-
-                setAutoReadStatus(false, true);
-
-                // Remove popover click event listener
-                // Unregister the event listener
-                //popoverTrigger.removeEventListener('click', handleClick);
+                selectImageAndRadio(img);
             });
         });
+
+        radios.forEach((radio) => {
+            radio.addEventListener('click', function (ev) {
+                const img = radio.closest('.image-container').querySelector('img');
+                selectImageAndRadio(img);
+            });
+        });
+
+        function selectImageAndRadio(img) {
+            images.forEach((image) => image.classList.remove('selected'));
+            img.classList.add('selected');
+
+            const radioId = img
+                .closest('.image-container')
+                .querySelector('input[type="radio"]').id;
+
+            document.getElementById(radioId).checked = true;
+            globalAutoReadFeature.selectedVoice = radioId;
+            globalAutoReadFeature.isVoiceSelected = true;
+            voiceSelectionChannel.postMessage(globalAutoReadFeature.selectedVoice);
+
+            popover.hide();
+
+            setAutoReadStatus(false, true);
+
+            // Remove popover click event listener
+            // Unregister the event listener
+            popoverTrigger.removeEventListener('click', handleClick);
+        }
 
         popover = new bootstrap.Popover(document.querySelector('#autoReadButton'), {
             container: 'body',
@@ -1171,11 +1181,11 @@ document.addEventListener('DOMContentLoaded', function () {
             placement: 'bottom-start',
             customClass: 'settings-popover global-auto-read-popover',
             popperConfig: {
-                placement: 'bottom-start'
+                placement: 'bottom-start',
             },
             trigger: 'manual',
-            fallbackPlacements: ['bottom']
-        })
+            fallbackPlacements: ['bottom'],
+        });
 
         function handleClick(event) {
             if (globalAutoReadFeature.isVoiceSelected == false) {
@@ -1186,26 +1196,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Register the event listener
         popoverTrigger.addEventListener('click', handleClick);
-
-
-
-        //popoverTrigger.addEventListener('click', function (event) {
-        //    console.log('popover clicked');
-
-        //    console.log('isVoiceSelected: ', isVoiceSelected);
-        //    if (isVoiceSelected == false) {
-        //        //popover.toggle();
-        //        //event.stopPropagation();
-        //    }
-
-        //});
-
-        // document.addEventListener('click', function (event) {
-        //     //var popoverElement = document.querySelector('.popover');
-        //     //if (popoverElement && !popoverElement.contains(event.target) && !popoverTrigger.contains(event.target)) {
-        //     //    popover.hide();
-        //     //}
-        // });
 
         $('#autoReadButton').popover();
 
@@ -1259,7 +1249,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         //    const currentAutoReadStatus = localStorage.getItem('isAutoPlayEnabled');
 
-
         //    if (currentAutoReadStatus == 'true') {
         //        $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
         //        $('.auto-read-button-wrapper').addClass('p-0');
@@ -1288,6 +1277,6 @@ document.addEventListener('DOMContentLoaded', function () {
         setAutoReadStatus,
         selectedVoice,
         isAutoPlayEnabled,
-        isVoiceSelected
-    }
+        isVoiceSelected,
+    };
 })();

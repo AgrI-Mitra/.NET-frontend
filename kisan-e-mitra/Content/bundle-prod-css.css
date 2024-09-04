@@ -1583,6 +1583,7 @@ canvas {
     }*/
 .image-container {
     text-align: center;
+    cursor: pointer;
 }
 
     .image-container img {
@@ -1596,6 +1597,7 @@ canvas {
     .image-container input[type="radio"] {
         display: block;
         margin: 10px auto 0;
+        cursor: pointer;
     }
 
         .image-container input[type="radio"]:checked {
