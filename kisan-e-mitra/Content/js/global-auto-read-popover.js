@@ -4,7 +4,7 @@
     var isAutoPlayEnabled = false;
     var isVoiceSelected = false;
     const voiceSelectionChannel = new BroadcastChannel('voice_selection');
-
+    var popover;
     document.addEventListener('DOMContentLoaded', function () {
 
         var popoverTrigger = document.getElementById('autoReadButton');
@@ -27,17 +27,17 @@
                 globalAutoReadFeature.isVoiceSelected = true;
                 voiceSelectionChannel.postMessage(globalAutoReadFeature.selectedVoice);
 
-                // Remove popover click event listener
-                // Unregister the event listener
-                popoverTrigger.removeEventListener('click', handleClick);
-
                 popover.hide();
 
                 setAutoReadStatus(false, true);
+
+                // Remove popover click event listener
+                // Unregister the event listener
+                //popoverTrigger.removeEventListener('click', handleClick);
             });
         });
 
-        var popover = new bootstrap.Popover(document.querySelector('#autoReadButton'), {
+        popover = new bootstrap.Popover(document.querySelector('#autoReadButton'), {
             container: 'body',
             html: true,
             content: popoverContent,
