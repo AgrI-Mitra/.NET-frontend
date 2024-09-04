@@ -31,7 +31,7 @@
                 <div class="content-head-text"><h1 class="labelTitle"></h1></div>
                 <div class="d-flex justify-content-end">
 
-                    <span id="autoReadButton" class="refresh-btn-style help-button auto-read-button-wrapper d-flex align-items-center justify-content-center" >
+                    <span id="autoReadButton" class="refresh-btn-style app_tour_auto_read_description help-button auto-read-button-wrapper d-flex align-items-center justify-content-center">
                         <img id="autoReadImage" src="~/Content/images/auto-read-off.svg" />
                     </span>
                     <span id="settingsButton" class="example-popover app_tour_language_selection_description refresh-btn-style help-button d-flex align-items-center justify-content-center">
@@ -68,6 +68,32 @@
                     </div>
                 </div>
                 <button class="btn btn-secondary settings-popover-item" id="startAppTourButton"></button>
+            </div>
+        </div>
+    </div>
+
+    <div hidden>
+        <div id="globalAutoReadPopover">
+            <div class="d-flex flex-column align-items-center">
+                <h1 id="voiceSelectionTitle"></h1>
+            </div>
+            <div class="d-flex justify-content-around">
+                <div class="image-container">
+
+                    <label for="male">
+                        <img src="~/Content/images/male.jpg" alt="Image 1" class="img-fluid" />
+                    </label>
+                    <div id="maleVoice" class="image-label">Male</div>
+                    <input type="radio" name="voice-selection" id="male" />
+                </div>
+                <div class="image-container">
+
+                    <label for="female">
+                        <img src="~/Content/images/female.png" alt="Image 2" class="img-fluid" />
+                    </label>
+                    <div id="femaleVoice" class="image-label">Female</div>
+                    <input type="radio" name="voice-selection" id="female" />
+                </div>
             </div>
         </div>
     </div>

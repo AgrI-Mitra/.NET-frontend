@@ -279,112 +279,112 @@ namespace KisanEMitra.Controllers
             });
         }
 
+        //[HttpPost]
+        //private async Task<JsonResult> GetTextToSpeechForAllLanguages(string[] languagesCodes = null)
+        //{
+        //    var ignoreValues = new string[]
+        //    {
+        //        "(PM KISAN)",
+        //        "(PMFBY)",
+        //        "(KCC)"
+        //    };
+
+        //    // We need to get speech to text for Welcome and Language change greeting messages for all the languages
+        //    // Get all the enabled languages
+        //    var languages = LanguageManager.GetLanguagesOrderedByPosition(languageCodesToEnable);
+
+        //    try
+        //    {
+        //        for (int i = 0; i < languages.Count; i++)
+        //        {
+        //            var currentLanguage = languages[i];
+
+        //            // Proceed ahead only if languagesCodes value is null or if languagesCodes value is available and current language code is matching with it
+        //            if (languagesCodes != null && languagesCodes.Length > 0 && !languagesCodes.Contains(currentLanguage.LanguageCultureCode))
+        //            {
+        //                continue;
+        //            }
+
+        //            // Ge tthe translation file path
+        //            string fileName = Server.MapPath("~" + "/Content/translations/" + currentLanguage.LanguageEnglishLabel.ToLower() + ".json");
+
+        //            // Get Welcome message from Content/translations/language specific json file
+        //            string welcomeMessage = CoreHelper.GetValueFromJson(fileName, "messages.welcome_greeting", ignoreValues);
+        //            //string welcomeMessageOne = CoreHelper.GetValueFromJson(fileName, "messages.welcome_greeting_1", ignoreValues);
+
+        //            //// If welcomeMessageOne is not empty then we need to combine it with the welcomeMessage
+        //            //// As Welcome message will be displayed in two separate parts in UI but will be read as whole in the same speech
+        //            //if (string.IsNullOrEmpty(welcomeMessageOne) == false)
+        //            //{
+        //            //    welcomeMessage = welcomeMessage + " " + welcomeMessageOne;
+        //            //}
+
+        //            // Get Language Change message from Content/translations/language specific json file
+        //            string languageChangeMessage = CoreHelper.GetValueFromJson(fileName, "messages.language_changed_greeting", ignoreValues);
+
+        //            //Get text to speech for Welcome message and Language Change message
+        //            var greetingMessagesAudioStrings = await GetWelcomeGreetingsTextToSpeech(currentLanguage.LanguageCultureCode, welcomeMessage, languageChangeMessage);
+
+        //            // Get welcome message and language change message file path
+        //            string welcomeMessageFilePath = Server.MapPath("~" + "/Content/audio/welcome-" + currentLanguage.LanguageCultureCode.ToLower() + ".txt");
+        //            string languageChangeMessageFilePath = Server.MapPath("~" + "/Content/audio/language-change-" + currentLanguage.LanguageCultureCode.ToLower() + ".txt");
+
+        //            // Update welcome message and language change message file content
+        //            CoreHelper.UpdateTextFileContent(welcomeMessageFilePath, greetingMessagesAudioStrings[0].Value);
+        //            CoreHelper.UpdateTextFileContent(languageChangeMessageFilePath, greetingMessagesAudioStrings[1].Value);
+        //        }
+
+        //        return Json(new AjaxActionResponse()
+        //        {
+        //            Success = true,
+        //            Data = "Success",
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new AjaxActionResponse()
+        //        {
+        //            Success = false,
+        //            Data = ex.Message
+        //        });
+        //    }
+        //}
+
+        //public async Task<List<CommonKeyValue>> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage, string languageChangeMessage)
+        //{
+
+        //    List<string> strings = new List<string>
+        //    {
+        //        welcomeMessage,
+        //        languageChangeMessage
+        //    };
+
+        //    var greetingMessagesAudioStrings = await TextToSpeach(languageCode, strings);
+
+        //    // Load audio base64 strings to view bag so we can play audio using it
+        //    List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
+
+        //    if (greetingMessagesAudioStrings.Count > 0)
+        //    {
+
+        //        audioBase64Strings.Add(new CommonKeyValue
+        //        {
+        //            Key = "welcome-greeting-message-base64-" + languageCode,
+        //            Value = greetingMessagesAudioStrings[0].audioContent.ToString()
+        //        });
+
+        //        audioBase64Strings.Add(new CommonKeyValue
+        //        {
+        //            Key = "language-change-greeting-message-base64-" + languageCode,
+        //            Value = greetingMessagesAudioStrings[1].audioContent.ToString()
+        //        });
+        //    }
+
+        //    return audioBase64Strings;
+        //}
+
         [HttpPost]
-        private async Task<JsonResult> GetTextToSpeechForAllLanguages(string[] languagesCodes = null)
-        {
-            var ignoreValues = new string[]
-            {
-                "(PM KISAN)",
-                "(PMFBY)",
-                "(KCC)"
-            };
-
-            // We need to get speech to text for Welcome and Language change greeting messages for all the languages
-            // Get all the enabled languages
-            var languages = LanguageManager.GetLanguagesOrderedByPosition(languageCodesToEnable);
-
-            try
-            {
-                for (int i = 0; i < languages.Count; i++)
-                {
-                    var currentLanguage = languages[i];
-
-                    // Proceed ahead only if languagesCodes value is null or if languagesCodes value is available and current language code is matching with it
-                    if (languagesCodes != null && languagesCodes.Length > 0 && !languagesCodes.Contains(currentLanguage.LanguageCultureCode))
-                    {
-                        continue;
-                    }
-
-                    // Ge tthe translation file path
-                    string fileName = Server.MapPath("~" + "/Content/translations/" + currentLanguage.LanguageEnglishLabel.ToLower() + ".json");
-
-                    // Get Welcome message from Content/translations/language specific json file
-                    string welcomeMessage = CoreHelper.GetValueFromJson(fileName, "messages.welcome_greeting", ignoreValues);
-                    //string welcomeMessageOne = CoreHelper.GetValueFromJson(fileName, "messages.welcome_greeting_1", ignoreValues);
-
-                    //// If welcomeMessageOne is not empty then we need to combine it with the welcomeMessage
-                    //// As Welcome message will be displayed in two separate parts in UI but will be read as whole in the same speech
-                    //if (string.IsNullOrEmpty(welcomeMessageOne) == false)
-                    //{
-                    //    welcomeMessage = welcomeMessage + " " + welcomeMessageOne;
-                    //}
-
-                    // Get Language Change message from Content/translations/language specific json file
-                    string languageChangeMessage = CoreHelper.GetValueFromJson(fileName, "messages.language_changed_greeting", ignoreValues);
-
-                    //Get text to speech for Welcome message and Language Change message
-                    var greetingMessagesAudioStrings = await GetWelcomeGreetingsTextToSpeech(currentLanguage.LanguageCultureCode, welcomeMessage, languageChangeMessage);
-
-                    // Get welcome message and language change message file path
-                    string welcomeMessageFilePath = Server.MapPath("~" + "/Content/audio/welcome-" + currentLanguage.LanguageCultureCode.ToLower() + ".txt");
-                    string languageChangeMessageFilePath = Server.MapPath("~" + "/Content/audio/language-change-" + currentLanguage.LanguageCultureCode.ToLower() + ".txt");
-
-                    // Update welcome message and language change message file content
-                    CoreHelper.UpdateTextFileContent(welcomeMessageFilePath, greetingMessagesAudioStrings[0].Value);
-                    CoreHelper.UpdateTextFileContent(languageChangeMessageFilePath, greetingMessagesAudioStrings[1].Value);
-                }
-
-                return Json(new AjaxActionResponse()
-                {
-                    Success = true,
-                    Data = "Success",
-                });
-            }
-            catch (Exception ex)
-            {
-                return Json(new AjaxActionResponse()
-                {
-                    Success = false,
-                    Data = ex.Message
-                });
-            }
-        }
-
-        public async Task<List<CommonKeyValue>> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage, string languageChangeMessage)
-        {
-
-            List<string> strings = new List<string>
-            {
-                welcomeMessage,
-                languageChangeMessage
-            };
-
-            var greetingMessagesAudioStrings = await TextToSpeach(languageCode, strings);
-
-            // Load audio base64 strings to view bag so we can play audio using it
-            List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
-
-            if (greetingMessagesAudioStrings.Count > 0)
-            {
-
-                audioBase64Strings.Add(new CommonKeyValue
-                {
-                    Key = "welcome-greeting-message-base64-" + languageCode,
-                    Value = greetingMessagesAudioStrings[0].audioContent.ToString()
-                });
-
-                audioBase64Strings.Add(new CommonKeyValue
-                {
-                    Key = "language-change-greeting-message-base64-" + languageCode,
-                    Value = greetingMessagesAudioStrings[1].audioContent.ToString()
-                });
-            }
-
-            return audioBase64Strings;
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage)
+        public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage, string gender = "male")
         {
 
             List<string> strings = new List<string>
@@ -392,7 +392,7 @@ namespace KisanEMitra.Controllers
                 welcomeMessage
             };
 
-            var greetingMessagesAudioStrings = await TextToSpeach(languageCode, strings);
+            var greetingMessagesAudioStrings = await TextToSpeach(languageCode, strings, gender);
 
             // Load audio base64 strings to view bag so we can play audio using it
             List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
@@ -459,7 +459,7 @@ namespace KisanEMitra.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<List<BhashiniAudioInfo>> TextToSpeach(string languageCode, List<string> texts)
+        public async Task<List<BhashiniAudioInfo>> TextToSpeach(string languageCode, List<string> texts, string gender = "male")
         {
             var bhashiniApiInput = new List<BhashiniApiRequestBodyInput>();
 
@@ -471,7 +471,7 @@ namespace KisanEMitra.Controllers
                 });
             }
 
-            var responseBody = await BhashiniService.GetTextToSpeech(languageCode, bhashiniApiInput);
+            var responseBody = await BhashiniService.GetTextToSpeech(languageCode, gender, bhashiniApiInput);
 
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
 

@@ -171,7 +171,9 @@
     "title": "Kisan e-Mitra",
     "welcome": "Welcome",
     "yes": "Yes",
-    "tutorial": "Tutorial"
+    "tutorial": "Tutorial",
+    "male": "Male",
+    "female": "Female"
   },
   "messages": {
     "app_tour_alternate_language_selection_description": "You can also change your language from here.",
@@ -247,7 +249,9 @@
     "wait_resending_otp": "Please wait before resending OTP",
     "welcome_greeting": "Please ask your query related to PM-KISAN or Kisan Credit Card or Pradhan Mantri Fasal Bima Yojana or you can select the scheme from below.",
     "app_tour_welcome_greeting": "Welcome to Kisan e-mitra! I'm your digital assistant for the following agricultural schemes. Please choose your preferred language and scheme to continue.",
-    "welcome_greeting_1": "Also, please select the scheme."
+    "welcome_greeting_1": "Also, please select the scheme.",
+    "select_voice": "Select Voice",
+    "voice_selection": "Click here to enable voice based assistance for all queries by selecting male/female voice."
   },
   "toasts": {
     "reaction_dislike": "Successfully disliked the response",

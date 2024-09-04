@@ -93,6 +93,7 @@
     let latitude;
     let longitude;
     let isLanguageDetected = false;
+    let isWelcomeMessageAutoPlayed = false;
 
     var currentParentRoute = "/Home/";
 
@@ -188,6 +189,11 @@
 
     var chatbotConfirmationModal;
     var currentConversationId;
+    const voiceSelectionChannel = new BroadcastChannel('voice_selection');
+
+    voiceSelectionChannel.onmessage = async function (event) {
+        await getWelcomeGreetingsAudio();
+    };
 
     // When browser tab is about to close
     window.onbeforeunload = function () {
@@ -850,7 +856,26 @@
                 htmlElementKeyName: 'startAppTourButton',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text'
-            }
+            },
+            {
+                translationType: 'lables',
+                translationKey: 'male',
+                htmlElementKeyName: 'maleVoice',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text'
+            }, {
+                translationType: 'lables',
+                translationKey: 'female',
+                htmlElementKeyName: 'femaleVoice',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text'
+            }, {
+                translationType: 'messages',
+                translationKey: 'select_voice',
+                htmlElementKeyName: 'voiceSelectionTitle',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text'
+            },
         ];
 
         for (var i = 0; i < translationsMappingIds.length; i++) {
@@ -965,7 +990,7 @@
 
                     // Get current scheme change message
                     currentLanguageInfo = GetDynamicTranslations();
-                    await getWelcomeGreetingsAudio();
+                    //await getWelcomeGreetingsAudio();
                     const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
                     //updateTranslations([], ["welcome_greeting"]);
                     //updateWelcomeGreetingMessage();
@@ -1132,10 +1157,10 @@
     function autoReadOnClickListener() {
         $(document).on('click', '.auto-read-button-wrapper', function (ev) {
 
-            setAutoReadStatus();
+            globalAutoReadFeature.setAutoReadStatus(true);
         });
 
-        setAutoReadStatus(false);
+        //globalAutoReadFeature.setAutoReadStatus(false);
     }
 
     function popularQuestionsOnClickListener() {
@@ -1446,6 +1471,13 @@
                 showPreviousButton: false,
             },
             {
+                id: 'app_tour_auto_read_description',
+                translationType: 'messages',
+                text: 'voice_selection',
+                showNextButton: true,
+                showPreviousButton: true,
+            },
+            {
                 id: 'app_tour_language_selection_description',
                 translationType: 'messages',
                 text: 'app_tour_language_selection_description',
@@ -1459,13 +1491,13 @@
                 showNextButton: true,
                 showPreviousButton: true,
             },
-            {
-                id: 'app_tour_sample_questions_description',
-                translationType: 'messages',
-                text: 'app_tour_sample_questions_description',
-                showNextButton: true,
-                showPreviousButton: true,
-            },
+            //{
+            //    id: 'app_tour_sample_questions_description',
+            //    translationType: 'messages',
+            //    text: 'app_tour_sample_questions_description',
+            //    showNextButton: true,
+            //    showPreviousButton: true,
+            //},
             {
                 id: 'app_tour_toggle_feature_description',
                 translationType: 'messages',
@@ -1494,21 +1526,21 @@
                 showNextButton: true,
                 showPreviousButton: true,
             },
-            //{
-            //    id: 'app_tour_send_button_description',
-            //    translationType: 'messages',
-            //    text: 'app_tour_send_button_description',
-            //    showNextButton: true,
-            //    showPreviousButton: true,
-            //},
-            //{
-            //    id: 'app_tour_refresh_button_description',
-            //    translationType: 'messages',
-            //    text: 'app_tour_refresh_button_description',
-            //    showNextButton: false,
-            //    showPreviousButton: true,
-            //    showExitButton: true,
-            //}
+            {
+                id: 'app_tour_send_button_description',
+                translationType: 'messages',
+                text: 'app_tour_send_button_description',
+                showNextButton: true,
+                showPreviousButton: true,
+            },
+            {
+                id: 'app_tour_refresh_button_description',
+                translationType: 'messages',
+                text: 'app_tour_refresh_button_description',
+                showNextButton: false,
+                showPreviousButton: true,
+                showExitButton: true,
+            },
             {
                 id: '',
                 translationType: 'messages',
@@ -1826,6 +1858,7 @@
                     lastUserAudioMessageId = ''; // Clear last user typed messaged Id once it is sent
                 }
 
+                isWelcomeMessageAutoPlayed = true;
                 askQuestions(questionInputContent, 'text');
             });
         });
@@ -2098,7 +2131,8 @@
                 flow: '',
                 mediaCaption: '',
                 inputLanguage: currentLanguageCultureCode,
-                schemeName: schemeName
+                schemeName: schemeName,
+                audioGender: globalAutoReadFeature.selectedVoice ? globalAutoReadFeature.selectedVoice : null
             };
 
             makeRequestRetry('POST', apiUrl, headers, requestPayload)
@@ -2886,7 +2920,7 @@
             type: "POST",
             url: "/Home/GetWelcomeGreetingsTextToSpeech",
             dataType: "json",
-            data: { languageCode: currentLanguageCode, welcomeMessage: welcomeMessage },
+            data: { languageCode: currentLanguageCode, welcomeMessage: welcomeMessage, gender: globalAutoReadFeature.selectedVoice ? globalAutoReadFeature.selectedVoice : null },
             success: function (data) {
                 isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
 
@@ -2964,18 +2998,27 @@
             }
         }
 
-        if (isLanguageChanged == true) {
+        //if (isLanguageChanged == true) {
+        //    autoPlayAudio(textsToGetSpeech[0].id);
+        //}
+
+        if (globalAutoReadFeature.isAutoPlayEnabled == true && isWelcomeMessageAutoPlayed == false) {
             autoPlayAudio(textsToGetSpeech[0].id);
+
+            isWelcomeMessageAutoPlayed = true;
         }
     }
 
     function setAutoPlayOn(audioId) {
-        localStorage.setItem('isAutoPlayEnabled', true);
+        //localStorage.setItem('isAutoPlayEnabled', true);
         playAudio(audioId);
     }
 
     function autoPlayAudio(audioId) {
-        let isAutoPlayEnabled = JSON.parse(localStorage.getItem('isAutoPlayEnabled'));
+        //let isAutoPlayEnabled = JSON.parse(localStorage.getItem('isAutoPlayEnabled'));
+        console.log('globalAutoReadFeature: ', globalAutoReadFeature);
+        let isAutoPlayEnabled = globalAutoReadFeature.isAutoPlayEnabled;
+
         if (isAutoPlayEnabled == true) {
             playAudio(audioId);
         }
@@ -3279,37 +3322,5 @@
         $(previousSchemeChangeMessageId).remove();
 
         $('#welcome-message-wrapper').remove();
-    }
-
-    function setAutoReadStatus(changeStatus = true) {
-        // get the value of the img source
-        const autoReadStatusImage = $('#autoReadImage').attr('src');
-        if (changeStatus == false) {
-
-            const currentAutoReadStatus = localStorage.getItem('isAutoPlayEnabled');
-
-
-            if (currentAutoReadStatus == 'true') {
-                $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
-                $('.auto-read-button-wrapper').addClass('p-0');
-            } else {
-                $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
-                $('.auto-read-button-wrapper').removeClass('p-0');
-            }           
-
-        } else {
-            if (autoReadStatusImage.indexOf('auto-read-on.svg') >= 0) {
-                $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
-
-                $('.auto-read-button-wrapper').removeClass('p-0');
-                localStorage.setItem('isAutoPlayEnabled', false);
-            } else {
-                $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
-
-                localStorage.setItem('isAutoPlayEnabled', true);
-                // Add "p-0" class
-                $('.auto-read-button-wrapper').addClass('p-0');
-            }
-        }
     }
 })();

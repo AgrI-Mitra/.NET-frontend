@@ -1290,7 +1290,7 @@ img.query-msg-send-icon {
 
     #mainContentWrapper.show {
         max-height: 1000px;*/ /* Adjust based on your content height */
-        /*opacity: 1;
+/*opacity: 1;
         border: 1px solid #eae9e9;
         border-radius: 10px;
         background: white;
@@ -1525,8 +1525,91 @@ canvas {
 .auto-read-button-wrapper img {
     max-height: 36px;
     max-width: 36px;
-    height:100%;
-    width:100%;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+/* Global Auto Read Popover Styles */
+.global-auto-read-popover {
+    background: white;
+}
+
+    .global-auto-read-popover .popover-arrow::before {
+        border-bottom-color: white !important; /* Change this to your desired color */
+    }
+
+    .global-auto-read-popover .popover-arrow::after {
+        border-bottom-color: transparent !important; /* Change this to your desired color */
+    }
+/*#globalAutoReadPopover {*/
+/*display: none;*/
+/*position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    width: 300px;
+}
+
+    #globalAutoReadPopover .title {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    #globalAutoReadPopover .images-row {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 10px;
+    }
+
+        #globalAutoReadPopover .images-row img {
+            width: 100px;
+            height: auto;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+            #globalAutoReadPopover .images-row img.selected {
+                border-color: blue;
+            }
+
+    #globalAutoReadPopover .radio-buttons-row {
+        display: flex;
+        justify-content: space-around;
+    }*/
+.image-container {
+    text-align: center;
+}
+
+    .image-container img {
+        border-radius: 50%;
+        cursor: pointer;
+        transition: box-shadow 0.3s, border 0.3s;
+        border: 3px solid transparent;
+        max-height: 60px;
+    }
+
+    .image-container input[type="radio"] {
+        display: block;
+        margin: 10px auto 0;
+    }
+
+        .image-container input[type="radio"]:checked {
+            accent-color: #198754; /* Change the color when checked */
+        }
+
+    .image-container .selected {
+        border: 3px solid #198754;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+.image-label {
+    margin-top: 5px;
+    font-weight: bold;
 }
 
 .shepherd-button{background:#3288e6;border:0;border-radius:3px;color:hsla(0,0%,100%,.75);cursor:pointer;margin-right:.5rem;padding:.5rem 1.5rem;transition:all .5s ease}.shepherd-button:not(:disabled):hover{background:#196fcc;color:hsla(0,0%,100%,.75)}.shepherd-button.shepherd-button-secondary{background:#f1f2f3;color:rgba(0,0,0,.75)}.shepherd-button.shepherd-button-secondary:not(:disabled):hover{background:#d6d9db;color:rgba(0,0,0,.75)}.shepherd-button:disabled{cursor:not-allowed}

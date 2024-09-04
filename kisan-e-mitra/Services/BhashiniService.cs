@@ -102,7 +102,7 @@ namespace KisanEMitra.Services
             return languageDetectionResponse;
         }
 
-        public async Task<BhashiniApiResponseBody> GetTextToSpeech(string currentLanguage, List<BhashiniApiRequestBodyInput> bhashiniApiInput)
+        public async Task<BhashiniApiResponseBody> GetTextToSpeech(string currentLanguage, string gender, List<BhashiniApiRequestBodyInput> bhashiniApiInput)
         {
             var siteUserBody = new BhashiniApiResponseBody();
 
@@ -118,7 +118,7 @@ namespace KisanEMitra.Services
             {
                 language = bhashiniApiRequestBodyPipelineTaskConfigLanguage,
                 serviceId = serviceId,
-                gender = "male",
+                gender = gender,
                 samplingRate = 8000
             };
 

@@ -171,7 +171,9 @@
     "title": "Kisan e-mitra",
     "welcome": "Welcome",
     "yes": "Yes",
-    "tutorial": "Tutorial"
+    "tutorial": "Tutorial",
+    "male": "Male",
+    "female": "Female"
   },
   "messages": {
     "app_tour_alternate_language_selection_description": "You can also change your language from here.",
@@ -245,7 +247,9 @@
     "translation_feedback": "Translation Feedback",
     "wait_resending_otp": "Please wait before resending OTP",
     "welcome_greeting": "Please type or speak your question about {{SelectedScheme}} scheme.",
-    "app_tour_welcome_greeting": "Welcome to Kisan e-mitra! I am your digital assistant. Please let me know how can I help you? \nYou may select your preferred language."
+    "app_tour_welcome_greeting": "Welcome to Kisan e-mitra! I am your digital assistant. Please let me know how can I help you? \nYou may select your preferred language.",
+    "select_voice": "Select Voice",
+    "voice_selection": "Click here to enable voice based assistance for all queries by selecting male/female voice."
   },
   "toasts": {
     "reaction_dislike": "Successfully disliked the response",

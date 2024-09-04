@@ -213,10 +213,13 @@
     <Content Include="Content\images\arrow_forward.svg" />
     <Content Include="Content\images\auto-read-off.svg" />
     <Content Include="Content\images\auto-read-on.svg" />
+    <Content Include="Content\images\female.png" />
     <Content Include="Content\images\kisan-e-mitra-logo-original.png" />
     <Content Include="Content\images\land_of_grass-bg-original.png" />
     <Content Include="Content\images\land_of_grass-bg_50.png" />
+    <Content Include="Content\images\male.jpg" />
     <Content Include="Content\images\red-mic.svg" />
+    <Content Include="Content\images\setting.svg" />
     <Content Include="Content\images\settings.svg" />
     <Content Include="Content\js\app-config.js" />
     <Content Include="Content\js\audio-visualizer.js" />
@@ -232,6 +235,7 @@
       <DependentUpon>chatbot.js</DependentUpon>
     </Content>
     <Content Include="Content\js\commonService.js" />
+    <Content Include="Content\js\global-auto-read-popover.js" />
     <Content Include="Content\js\horizontal-scroll-listener.js" />
     <Content Include="Content\js\languageDropdown.js" />
     <Content Include="Content\js\popularQueriesService.js" />

@@ -40,7 +40,8 @@
       "Content/js/shepherd.js",
       "Content/js/settings-popover.js",
       "Content/js/audio-visualizer.js",
-      "Content/js/show-hide-content.js"
+      "Content/js/show-hide-content.js",
+      "Content/js/global-auto-read-popover.js"
     ]
   },
   {
