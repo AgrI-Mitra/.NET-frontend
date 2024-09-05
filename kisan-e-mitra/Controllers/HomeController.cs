@@ -496,7 +496,18 @@ namespace KisanEMitra.Controllers
                     if (apiResponse.output.Count > 0 && apiResponse.output[0].langPrediction.Count > 0)
                     {
                         languageCode = apiResponse.output[0].langPrediction[0].langCode;
-                        isSuccess = true;
+
+                        // If language code is more than 2 characters then it is invalid
+                        if (languageCode.Length > 2)
+                        {
+                            isSuccess = false;
+                            apiResponse.errorText = languageCode;
+                            languageCode = "";
+                        }
+                        else
+                        {
+                            isSuccess = true;
+                        }
                     }
                     else
                     {
