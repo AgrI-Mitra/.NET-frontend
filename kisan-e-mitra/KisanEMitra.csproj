@@ -207,6 +207,7 @@
     <Content Include="Content\bundle-staging.min.css">
       <DependentUpon>bundle-staging.css</DependentUpon>
     </Content>
+    <Content Include="Content\images\app_tutorial.svg" />
     <Content Include="Content\images\arrow-down.svg" />
     <Content Include="Content\images\arrow-up.svg" />
     <Content Include="Content\images\arrow_back.svg" />
