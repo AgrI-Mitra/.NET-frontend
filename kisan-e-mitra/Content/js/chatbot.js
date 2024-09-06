@@ -850,13 +850,13 @@
                 htmlElementKeyAttributeType: '.',
                 htmlElementValueAttributeType: 'text'
             },
-            {
-                translationType: 'lables',
-                translationKey: 'tutorial',
-                htmlElementKeyName: 'startAppTourButton',
-                htmlElementKeyAttributeType: '#',
-                htmlElementValueAttributeType: 'text'
-            },
+            //{
+            //    translationType: 'lables',
+            //    translationKey: 'tutorial',
+            //    htmlElementKeyName: 'startAppTourButton',
+            //    htmlElementKeyAttributeType: '#',
+            //    htmlElementValueAttributeType: 'text'
+            //},
             {
                 translationType: 'lables',
                 translationKey: 'male',
@@ -986,7 +986,7 @@
                 if (selectedSchemeId != schemesInfo.currentScheme) {
 
                     schemesInfo.bindSchemesToDropdown(schemesInfo.list, selectedSchemeId);
-                    bindPopularQuestions();
+                    //bindPopularQuestions();
 
                     // Get current scheme change message
                     currentLanguageInfo = GetDynamicTranslations();
@@ -1327,8 +1327,8 @@
 
             const currentSelectedSChemeTranslations = currentLanguageInfo.translations.schemes.find(f => f.schemeId == currentSelectedSchemeId);
 
-            if (currentSelectedSChemeTranslations || currentSelectedSchemeId == 'allschemes') {
-                bindPopularQuestions();
+            if (currentSelectedSChemeTranslations || currentSelectedSchemeId == 'general') {
+                //bindPopularQuestions();
 
             } else {
                 console.log('Translations missing');
@@ -1381,8 +1381,8 @@
         const currentSelectedSchemeId = schemesInfo.currentScheme;
 
         let popularQuestionsHtmlContent = []
-        // if current selected scheme id is allschemes then combine the popular queries of all the schemes
-        if (currentSelectedSchemeId == 'allschemes') {
+        // if current selected scheme id is general then combine the popular queries of all the schemes
+        if (currentSelectedSchemeId == 'general') {
             const usedQueries = popularQueriesService.getUsedQueries();
 
             let allSchemesQueries = currentLanguageInfo.translations.schemes.reduce((acc, item) => {
@@ -1728,7 +1728,7 @@
             if (messageType == 'final_response') {
                 sessionStorage.setItem('final_response', true);
 
-                bindPopularQuestions();
+                //bindPopularQuestions();
             }
 
             scrollToBottom();
@@ -3164,7 +3164,8 @@
 
             createSession(fingerPrintId)
                 .then((sessionResult) => {
-                    popularQueriesService.resetUsedQueries();
+
+                    //popularQueriesService.resetUsedQueries();
                     getTranslations();
                 })
                 .catch((sessionError) => {

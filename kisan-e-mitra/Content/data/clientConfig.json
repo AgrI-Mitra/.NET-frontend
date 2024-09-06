@@ -1,7 +1,7 @@
 {
   "numberOfVisiblePopularQueries": 4,
   "numberOfUsedPopularQueriesToRetain": 5,
-  "defaultScheme": "allschemes",
+  "defaultScheme": "general",
   "defaultSchemeAPIKey": "General",
   "showSchemes": true
 }
