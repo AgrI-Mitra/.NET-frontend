@@ -126,7 +126,9 @@
     var previousSessionId = null;
     var currentConversationId = null;
 
+    var hasConversationLimitReached = false;
     var chatbotConfirmationModalId = 'chatbotConfirmationModal';
+    var startNewConversationModalId = 'startNewConversationModal';
     var maintenanceModeModalId = 'maintenanceModeModal';
     var submitFeedbackModalId = 'submitFeedbackModal';
     var submitFeedbackModal;
@@ -178,6 +180,10 @@
         submitFeedbackModalId
     );
 
+    const startNewConversationModalElement = document.getElementById(
+        startNewConversationModalId
+    );
+
     const modalOptions = {
         backdrop: 'static',
         keyboard: false,
@@ -188,6 +194,7 @@
         'welcome-greeting-message-base64-{{selectedLanguageCultureCode}}-audio';
 
     var chatbotConfirmationModal;
+    var startNewConversationModal;
     var currentConversationId;
     const voiceSelectionChannel = new BroadcastChannel('voice_selection');
 
@@ -199,6 +206,10 @@
     window.onbeforeunload = function () {
         if (chatbotConfirmationModal) {
             chatbotConfirmationModal.hide();
+        }
+
+        if (startNewConversationModal) {
+            startNewConversationModal.hide();
         }
 
         // abort any on going request to server
@@ -876,6 +887,20 @@
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text'
             },
+            {
+                translationType: 'lables',
+                translationKey: 'start_new_chat',
+                htmlElementKeyName: 'startNewChat',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text'
+            },
+            {
+                translationType: 'messages',
+                translationKey: 'chat_limit_reached',
+                htmlElementKeyName: 'conversationLimitReachedMessage',
+                htmlElementKeyAttributeType: '#',
+                htmlElementValueAttributeType: 'text'
+            }
         ];
 
         for (var i = 0; i < translationsMappingIds.length; i++) {
@@ -1055,6 +1080,18 @@
         );
     }
 
+    function startNewConversationButtonOnClickListener() {
+
+        $(document).on(
+            'click',
+            '#startNewChat',
+            function (ev) {
+
+                startNewConversation();
+            }
+        );
+    }
+
     function startAppTourButtonOnClickListener() {
 
         $(document).on(
@@ -1219,6 +1256,7 @@
         chatbotMessageActionButtonsOnClickListener();
         feedbackSubmitButtonOnClickListener();
         restartSessionButtonOnClickListener();
+        //startNewConversationButtonOnClickListener();
         startAppTourButtonOnClickListener();
         resendOtpOnClickListener();
         autoReadOnClickListener();
@@ -1817,49 +1855,62 @@
         getLocalStream();
         $(function () {
             $('body').on('click', sendTextButtonId, function (e) {
+
+
                 e.preventDefault();
-                let questionInput = $(userQuestionTextBox).val();
 
-                var questionInputContent = $('<div />').text(questionInput).html();
-                if (questionInputContent) {
-                    let chatMessageWrapperStartingDivHtmlContent =
-                        getChatMessageWrapperStartingDivHtmlContent(
-                            false,
-                            null,
-                            'conversationsWrapper'
-                        ); // Main chat message wrapper
+                //hasConversationLimitReached = true;
 
-                    let chatMessageAudioImageHtmlContent =
-                        getChatMessageAudioImageHtmlContent(lastUserAudioMessageId); // Audio icon inside third column
+                if (hasConversationLimitReached) {
+                    showStartNewConversationModal(() => {
+                        restartSession();
+                    });
+                } else {
 
-                    var userQuery = '';
+                    let questionInput = $(userQuestionTextBox).val();
 
-                    userQuery =
-                        chatMessageWrapperStartingDivHtmlContent +
+                    var questionInputContent = $('<div />').text(questionInput).html();
+                    if (questionInputContent) {
+                        let chatMessageWrapperStartingDivHtmlContent =
+                            getChatMessageWrapperStartingDivHtmlContent(
+                                false,
+                                null,
+                                'conversationsWrapper'
+                            ); // Main chat message wrapper
 
-                        chatMessageWrapperColumnTwoStartingDivHtmlContent +
-                        startingDivHtmlContent +
-                        userLogoHtmlContent +
-                        spanStartingHtmlContent +
-                        "<p>" + questionInput + "</p>" +
-                        spanClosingHtmlContent +
-                        closingDivHtmlContent +
-                        closingDivHtmlContent +
+                        let chatMessageAudioImageHtmlContent =
+                            getChatMessageAudioImageHtmlContent(lastUserAudioMessageId); // Audio icon inside third column
 
-                        (lastUserAudioMessageId != null && lastUserAudioMessageId != ''
-                            ? chatMessageWrapperColumnThreeStartingDivHtmlContent +
-                            chatMessageAudioImageHtmlContent +
-                            closingDivHtmlContent
-                            : '') +
-                        closingDivHtmlContent +
-                        closingDivHtmlContent;
+                        var userQuery = '';
 
-                    $('#message-list').append(userQuery.replace(/\n/g, '<br>'));
-                    lastUserAudioMessageId = ''; // Clear last user typed messaged Id once it is sent
+                        userQuery =
+                            chatMessageWrapperStartingDivHtmlContent +
+
+                            chatMessageWrapperColumnTwoStartingDivHtmlContent +
+                            startingDivHtmlContent +
+                            userLogoHtmlContent +
+                            spanStartingHtmlContent +
+                            "<p>" + questionInput + "</p>" +
+                            spanClosingHtmlContent +
+                            closingDivHtmlContent +
+                            closingDivHtmlContent +
+
+                            (lastUserAudioMessageId != null && lastUserAudioMessageId != ''
+                                ? chatMessageWrapperColumnThreeStartingDivHtmlContent +
+                                chatMessageAudioImageHtmlContent +
+                                closingDivHtmlContent
+                                : '') +
+                            closingDivHtmlContent +
+                            closingDivHtmlContent;
+
+                        $('#message-list').append(userQuery.replace(/\n/g, '<br>'));
+                        lastUserAudioMessageId = ''; // Clear last user typed messaged Id once it is sent
+                    }
+
+                    isWelcomeMessageAutoPlayed = true;
+                    askQuestions(questionInputContent, 'text');
                 }
 
-                isWelcomeMessageAutoPlayed = true;
-                askQuestions(questionInputContent, 'text');
             });
         });
     });
@@ -3246,6 +3297,25 @@
             (event) => {
                 closeCallback(event);
                 // do something...
+            }
+        );
+    }
+
+    function showStartNewConversationModal(
+        closeCallback
+    ) {
+
+        startNewConversationModal = new bootstrap.Modal(
+            '#' + startNewConversationModalId,
+            modalOptions
+        );
+
+        startNewConversationModal.show();
+
+        startNewConversationModalElement.addEventListener(
+            'hidden.bs.modal',
+            (event) => {
+                closeCallback(event);
             }
         );
     }

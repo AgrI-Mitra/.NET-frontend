@@ -463,105 +463,6 @@ class WavRecorder {
         if (this.__data) return await getWaveBlob(this.__data, as32Bit, contextOptions);
     }
 }
-(function () {
-
-    const popularQueriesStorageKey = "usedPopularQueries";
-
-    function resetUsedQueries() {
-        localStorage.removeItem(popularQueriesStorageKey);
-    }
-    function getUsedQueries(scheme) {
-        let usedQueries = [];
-        // Get current used queries
-        const usedQueriesString = localStorage.getItem(popularQueriesStorageKey);
-
-        if (usedQueriesString) {
-            const usedQueriesObject = JSON.parse(usedQueriesString);
-
-            if (usedQueriesObject) {
-
-                // If scheme is not passed, then return all used queries
-                if (!scheme) {
-                    // Combine used queries from all the schemes and return it
-                    for (let i = 0; i < usedQueriesObject.length; i++) {
-                        usedQueries = usedQueries.concat(usedQueriesObject[i].queries);
-                    }
-                    return usedQueries;
-                } else {
-                    const currentSchemeQueries = usedQueriesObject.find(f => f.scheme == scheme);
-                    if (currentSchemeQueries) {
-                        usedQueries = currentSchemeQueries.queries;
-                    }
-                }
-            }
-        }
-
-        return usedQueries;
-    }
-
-    function updateUsedQueries(scheme, usedQuery, numberOfQueries) {
-
-        let usedQueries = [];
-        // Get current used queries
-        const usedQueriesString = localStorage.getItem(popularQueriesStorageKey);
-
-        if (usedQueriesString) {
-            const usedQueriesObject = JSON.parse(usedQueriesString);
-
-            if (usedQueriesObject && usedQueriesObject.length) {
-                usedQueries = usedQueriesObject;
-            }
-        }
-
-        let selectedSchemeUsedQueries = {
-            scheme: scheme,
-            queries: []
-        };
-
-        let usedQueriesBySchemeNameIndex = usedQueries.findIndex(f => f.scheme == scheme);
-
-        if (usedQueriesBySchemeNameIndex >= 0) {
-
-            // Check if query is already saved as used query or not
-            const usedQueriesOfCurrentScheme = usedQueries[usedQueriesBySchemeNameIndex];
-            const isQueryAlreadySaved = usedQueriesOfCurrentScheme.queries.find(f => f == usedQuery);
-
-            if (isQueryAlreadySaved) {
-                return;
-            }
-
-        } else {
-            usedQueries.push(selectedSchemeUsedQueries);
-        }
-
-        // Check the lenght of existing used queries
-        usedQueriesBySchemeNameIndex = usedQueries.findIndex(f => f.scheme == scheme);
-
-        if (usedQueriesBySchemeNameIndex >= 0) {
-            usedQueries[usedQueriesBySchemeNameIndex].queries = usedQueries[usedQueriesBySchemeNameIndex].queries.concat([usedQuery]);
-        }
-
-        // Get the number of max used queries we need to remember
-        const numberOfUsedPopularQueriesToRetain = window.appConfig.numberOfUsedPopularQueriesToRetain;
-
-        // Check the length of currently used queries
-        // If length is more than 4, then delete the remaining queries from top
-        if (usedQueries[usedQueriesBySchemeNameIndex].queries.length > numberOfUsedPopularQueriesToRetain) {
-            usedQueries[usedQueriesBySchemeNameIndex].queries.splice(0, usedQueries[usedQueriesBySchemeNameIndex].queries.length - numberOfUsedPopularQueriesToRetain);
-        }
-
-        // Save updated used popular qureies to local storage
-        const usedPopularQueriesString = JSON.stringify(usedQueries);
-        localStorage.setItem(popularQueriesStorageKey, usedPopularQueriesString);
-    }
-
-    // Attach to the global object (window)
-    window.popularQueriesService = {
-        getUsedQueries: getUsedQueries,
-        updateUsedQueries: updateUsedQueries,
-        resetUsedQueries: resetUsedQueries
-    };
-})();
 /*! shepherd.js 11.2.0 */
 
 'use strict';(function(K,ra){"object"===typeof exports&&"undefined"!==typeof module?module.exports=ra():"function"===typeof define&&define.amd?define(ra):(K="undefined"!==typeof globalThis?globalThis:K||self,K.Shepherd=ra())})(this,function(){function K(a,b){return!1!==b.clone&&b.isMergeableObject(a)?fa(Array.isArray(a)?[]:{},a,b):a}function ra(a,b,c){return a.concat(b).map(function(d){return K(d,c)})}function Bb(a){return Object.getOwnPropertySymbols?Object.getOwnPropertySymbols(a).filter(function(b){return Object.propertyIsEnumerable.call(a,
@@ -1084,48 +985,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 })();
 (function () {
-    document.addEventListener('DOMContentLoaded', function () {
-        const toggleButton = document.getElementById('toggleContentButton');
-        const toggleArrowIcon = document.getElementById('toggleArrowIcon');
-        const mainContentWrapper = document.getElementById('popularQuestionsWrapper');
-
-        // Ensure the content is shown by default
-        //mainContentWrapper.classList.add('show');
-        //toggleArrowIcon.src = '../Content/images/arrow-down.svg';
-
-        toggleButton.addEventListener('click', function (e) {
-            mainContentWrapper.classList.toggle('show');
-            if (mainContentWrapper.classList.contains('show')) {
-                toggleArrowIcon.src = '../Content/images/arrow-down.svg';
-            } else {
-                toggleArrowIcon.src = '../Content/images/arrow-up.svg';
-            }
-        });
-
-        function hidePopularQuestions() {
-            $('#popularQuestionsWrapper').removeClass('d-flex');
-            $('#popularQuestionsWrapper').hide();
-            $('#message-list').addClass('without-popular-questions');
-            mainContentWrapper.classList.remove('show');
-            toggleArrowIcon.src = '../Content/images/arrow-up.svg';
-        }
-
-        function showPopularQuestions() {
-            $('#popularQuestionsWrapper').addClass('d-flex');
-            $('#popularQuestionsWrapper').show();
-            $('#message-list').removeClass('without-popular-questions');
-            mainContentWrapper.classList.add('show');
-            toggleArrowIcon.src = '../Content/images/arrow-down.svg';
-        }
-
-        window.showHideContent = {
-            hidePopularQuestions,
-            showPopularQuestions
-        };
-    });
-})();
-
-(function () {
     var selectedVoice = '';
     var isAutoPlayEnabled = false;
     var isVoiceSelected = false;
@@ -1139,18 +998,53 @@ document.addEventListener('DOMContentLoaded', function () {
             '.image-container input[type="radio"]'
         );
 
-        images.forEach((img) => {
-            img.addEventListener('click', function (ev) {
-                selectImageAndRadio(img);
+        const containers = document.querySelectorAll('.image-container');
+        containers.forEach(container => {
+            container.addEventListener('click', function () {
+                // Get the associated radio button ID
+                const radioId = container.getAttribute('data-radio');
+                const radioButton = document.getElementById(radioId);
+
+                // Check the radio button
+                radioButton.checked = true;
+
+                // Remove 'selected' class from all images
+                containers.forEach(c => c.querySelector('img').classList.remove('selected'));
+
+                // Add 'selected' class to the clicked image
+                container.querySelector('img').classList.add('selected');
+
+                //const radioId = img
+                //    .closest('.image-container')
+                //    .querySelector('input[type="radio"]').id;
+
+                document.getElementById(radioId).checked = true;
+                globalAutoReadFeature.selectedVoice = radioId;
+                globalAutoReadFeature.isVoiceSelected = true;
+                voiceSelectionChannel.postMessage(globalAutoReadFeature.selectedVoice);
+
+                popover.hide();
+
+                setAutoReadStatus(false, true);
+
+                // Remove popover click event listener
+                // Unregister the event listener
+                popoverTrigger.removeEventListener('click', handleClick);
             });
         });
 
-        radios.forEach((radio) => {
-            radio.addEventListener('click', function (ev) {
-                const img = radio.closest('.image-container').querySelector('img');
-                selectImageAndRadio(img);
-            });
-        });
+        //images.forEach((img) => {
+        //    img.addEventListener('click', function (ev) {
+        //        selectImageAndRadio(img);
+        //    });
+        //});
+
+        //radios.forEach((radio) => {
+        //    radio.addEventListener('click', function (ev) {
+        //        const img = radio.closest('.image-container').querySelector('img');
+        //        selectImageAndRadio(img);
+        //    });
+        //});
 
         function selectImageAndRadio(img) {
             images.forEach((image) => image.classList.remove('selected'));

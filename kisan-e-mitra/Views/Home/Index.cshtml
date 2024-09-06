@@ -55,24 +55,24 @@
 
 <div class="input-container align-items-center justify-content-center px-1 px-md-2">
     @*<button id="toggleContentButton" class="toggle-arrow app_tour_toggle_feature_description">
-        <img src="~/Content/images/arrow-up.svg" alt="Toggle Arrow" width="24" height="24" id="toggleArrowIcon" />
-    </button>
-    <div>
-        <div class="app_tour_scheme_labels_selection_description app_tour_scheme_selection_description d-flex flex-nowrap overflow-x-auto schemesLabelsWrapper h-scrollable-wrapper pb-2" id="schemesLabelsWrapper">
-            <div class="d-flex justify-content-between align-items-center position-relative">
-                <button type="button" id="scrollLeft" class="scroll-arrow"><img src="~/Content/images/arrow_back.svg" alt="Left Arrow" width="24" height="24" /></button>
-                <div class="d-flex flex-nowrap overflow-auto scroll-container pb-2 fade-in-content" id="schemesChildWrapper">
+            <img src="~/Content/images/arrow-up.svg" alt="Toggle Arrow" width="24" height="24" id="toggleArrowIcon" />
+        </button>
+        <div>
+            <div class="app_tour_scheme_labels_selection_description app_tour_scheme_selection_description d-flex flex-nowrap overflow-x-auto schemesLabelsWrapper h-scrollable-wrapper pb-2" id="schemesLabelsWrapper">
+                <div class="d-flex justify-content-between align-items-center position-relative">
+                    <button type="button" id="scrollLeft" class="scroll-arrow"><img src="~/Content/images/arrow_back.svg" alt="Left Arrow" width="24" height="24" /></button>
+                    <div class="d-flex flex-nowrap overflow-auto scroll-container pb-2 fade-in-content" id="schemesChildWrapper">
+
+                    </div>
+                    <button type="button" id="scrollRight" class="scroll-arrow"><img src="~/Content/images/arrow_forward.svg" alt="Left Arrow" width="24" height="24" /></button>
+                </div>
+            </div>
+
+            <div class="scroll-container d-flex flex-row app_tour_sample_questions_description" id="popularQuestionsWrapper">
+                <div class="query-messages-box fade-in-content" id="popular-questions-area">
 
                 </div>
-                <button type="button" id="scrollRight" class="scroll-arrow"><img src="~/Content/images/arrow_forward.svg" alt="Left Arrow" width="24" height="24" /></button>
             </div>
-        </div>
-
-        <div class="scroll-container d-flex flex-row app_tour_sample_questions_description" id="popularQuestionsWrapper">
-            <div class="query-messages-box fade-in-content" id="popular-questions-area">
-
-            </div>
-        </div>
         </div>*@
 
 
@@ -114,6 +114,20 @@
             <div class="modal-footer">
                 <button id="chatbotConfirmationModalCancelLabel" type="button" class="btn btn-secondary noLabel label_no" data-bs-dismiss="modal"></button>
                 <button id="chatbotConfirmationModalSaveButton" type="button" class="btn btn-success yesLabel label_yes" data-modal-type="confirmation" data-bs-dismiss="modal"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="startNewConversationModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="conversationLimitReachedTitle">Conversation Limit</h1>
+            </div>
+            <div class="modal-body conversation-limit-reached" id="conversationLimitReachedMessage">
+            </div>
+            <div class="modal-footer">
+                <button id="startNewChat" type="button" class="btn btn-success language-buttons" data-bs-dismiss="modal"></button>
             </div>
         </div>
     </div>
