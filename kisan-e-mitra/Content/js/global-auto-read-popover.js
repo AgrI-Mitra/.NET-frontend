@@ -12,18 +12,53 @@
             '.image-container input[type="radio"]'
         );
 
-        images.forEach((img) => {
-            img.addEventListener('click', function (ev) {
-                selectImageAndRadio(img);
+        const containers = document.querySelectorAll('.image-container');
+        containers.forEach(container => {
+            container.addEventListener('click', function () {
+                // Get the associated radio button ID
+                const radioId = container.getAttribute('data-radio');
+                const radioButton = document.getElementById(radioId);
+
+                // Check the radio button
+                radioButton.checked = true;
+
+                // Remove 'selected' class from all images
+                containers.forEach(c => c.querySelector('img').classList.remove('selected'));
+
+                // Add 'selected' class to the clicked image
+                container.querySelector('img').classList.add('selected');
+
+                //const radioId = img
+                //    .closest('.image-container')
+                //    .querySelector('input[type="radio"]').id;
+
+                document.getElementById(radioId).checked = true;
+                globalAutoReadFeature.selectedVoice = radioId;
+                globalAutoReadFeature.isVoiceSelected = true;
+                voiceSelectionChannel.postMessage(globalAutoReadFeature.selectedVoice);
+
+                popover.hide();
+
+                setAutoReadStatus(false, true);
+
+                // Remove popover click event listener
+                // Unregister the event listener
+                popoverTrigger.removeEventListener('click', handleClick);
             });
         });
 
-        radios.forEach((radio) => {
-            radio.addEventListener('click', function (ev) {
-                const img = radio.closest('.image-container').querySelector('img');
-                selectImageAndRadio(img);
-            });
-        });
+        //images.forEach((img) => {
+        //    img.addEventListener('click', function (ev) {
+        //        selectImageAndRadio(img);
+        //    });
+        //});
+
+        //radios.forEach((radio) => {
+        //    radio.addEventListener('click', function (ev) {
+        //        const img = radio.closest('.image-container').querySelector('img');
+        //        selectImageAndRadio(img);
+        //    });
+        //});
 
         function selectImageAndRadio(img) {
             images.forEach((image) => image.classList.remove('selected'));
