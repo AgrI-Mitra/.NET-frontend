@@ -1440,7 +1440,6 @@
             popularQuestionsHtmlContent = getPopularQuestionsHtmlContent(topRandomPopularQuestions);
 
             showHideContent.showPopularQuestions();
-            console.log('currentSelectedSchemeId: ', currentSelectedSchemeId);
         }
 
 
@@ -3066,8 +3065,6 @@
     }
 
     function autoPlayAudio(audioId) {
-        //let isAutoPlayEnabled = JSON.parse(localStorage.getItem('isAutoPlayEnabled'));
-        console.log('globalAutoReadFeature: ', globalAutoReadFeature);
         let isAutoPlayEnabled = globalAutoReadFeature.isAutoPlayEnabled;
 
         if (isAutoPlayEnabled == true) {

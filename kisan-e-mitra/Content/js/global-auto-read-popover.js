@@ -115,13 +115,11 @@
         // Show the backdrop when the popover is shown
         popoverTrigger.addEventListener('show.bs.popover', function () {
             backdrop.style.display = 'block';
-            console.log('popover shown');
         });
 
         // Hide the backdrop when the popover is hidden
         popoverTrigger.addEventListener('hide.bs.popover', function () {
             backdrop.style.display = 'none';
-            console.log('popover hidden');
         });
     });
 

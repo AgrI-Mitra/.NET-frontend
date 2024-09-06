@@ -627,7 +627,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const audioProcessingContainer = document.querySelector('.audio-processing-container');
         const micAudioRecordingIcon = document.getElementById('micAudioRecordingIcon');
         const userQuestionTextBox = '#userQuestionTextBox';
-        console.log('micAudioRecordingIcon: ',  micAudioRecordingIcon);
 
         const canvas = document.getElementById('visualizer');
         const numberOfBars = 100; // Adjust the number of bars as needed
@@ -716,7 +715,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 audioVisualizerWrapper.style.display = "flex";
                 audioVisualizerContainer.style.display = 'flex';
                 micAudioRecordingIcon.style.display = 'flex';
-                console.log('micAudioRecordingIcon: ', micAudioRecordingIcon);
                 const canvasCtx = canvas.getContext('2d');
 
                 window.addEventListener('resize', resizeCanvas);
@@ -1101,13 +1099,11 @@ document.addEventListener('DOMContentLoaded', function () {
         // Show the backdrop when the popover is shown
         popoverTrigger.addEventListener('show.bs.popover', function () {
             backdrop.style.display = 'block';
-            console.log('popover shown');
         });
 
         // Hide the backdrop when the popover is hidden
         popoverTrigger.addEventListener('hide.bs.popover', function () {
             backdrop.style.display = 'none';
-            console.log('popover hidden');
         });
     });
 

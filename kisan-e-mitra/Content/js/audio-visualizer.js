@@ -6,7 +6,6 @@
         const audioProcessingContainer = document.querySelector('.audio-processing-container');
         const micAudioRecordingIcon = document.getElementById('micAudioRecordingIcon');
         const userQuestionTextBox = '#userQuestionTextBox';
-        console.log('micAudioRecordingIcon: ',  micAudioRecordingIcon);
 
         const canvas = document.getElementById('visualizer');
         const numberOfBars = 100; // Adjust the number of bars as needed
@@ -95,7 +94,6 @@
                 audioVisualizerWrapper.style.display = "flex";
                 audioVisualizerContainer.style.display = 'flex';
                 micAudioRecordingIcon.style.display = 'flex';
-                console.log('micAudioRecordingIcon: ', micAudioRecordingIcon);
                 const canvasCtx = canvas.getContext('2d');
 
                 window.addEventListener('resize', resizeCanvas);
