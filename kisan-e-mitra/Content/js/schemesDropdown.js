@@ -1,5 +1,9 @@
 ﻿(async function async() {
 
+    function updateSelectedSchemeTranslation(updatedTranslation) {
+        document.getElementById('selectedSchemeLabel').innerText = updatedTranslation;
+    }
+
     function updateSchemesTranslations(translations) {
         for (var i = 0; i < window.schemesInfo.list.length; i++) {
 
@@ -16,56 +20,67 @@
         // Update the translations in UI
         bindSchemesToDropdown(window.schemesInfo.list, window.schemesInfo.currentScheme);
     }
-    function bindSchemesToDropdown(schemes, selectedSchemeId) {
+    function bindSchemesToDropdown(schemes, selectedSchemeId, skipUpdatingCurrentSchemeTitle) {
 
-        var labelsWrapper = document.getElementById('schemesChildWrapper');
+        document.getElementById('schemesDropdownWrapper').style.display = 'flex';
+        var dropdown = document.getElementById('schemesDropdown');
+        //updateSelectedSchemeTranslation('');
 
         for (var i = 0; i < schemes.length; i++) {
 
             let currentScheme = schemes[i];
 
-            var label = getSchemesLabelsHtmlContent(currentScheme, currentScheme.id == selectedSchemeId ? "btn-success" : "");
-            if (i == 0) {
-                labelsWrapper.replaceChildren();
+            if (currentScheme.id === selectedSchemeId && !skipUpdatingCurrentSchemeTitle) {
+
+                //document.getElementById('selectedSchemeLabel').innerText = currentScheme.title;
+                updateSelectedSchemeTranslation(currentScheme.title);
             }
 
-            const parsedLabelHtml = new DOMParser().parseFromString(label, 'text/html');
-            const labelHtml = parsedLabelHtml.getElementsByTagName("button")[0];
-            labelsWrapper.appendChild(labelHtml);
+            var option = getSchemeOptionHtmlContent(currentScheme, currentScheme.id == selectedSchemeId ? "fw-bold" : "");
+
+
+            // Parse html string to html Node to update it inside UL element
+            const parsedHtml = new DOMParser().parseFromString(option, 'text/html');
+
+            const liHtml = parsedHtml.getElementsByTagName("li")[0];
+            if (i == 0) {
+                dropdown.replaceChildren();
+            }
+
+            dropdown.appendChild(liHtml);
         }
 
         // Set schemes info to global object
         window.schemesInfo.list = schemes;
         window.schemesInfo.currentScheme = selectedSchemeId;
     }
+    function getSchemeOptionHtmlContent(schemeInfo, extraClass) {
 
-    function getSchemesLabelsHtmlContent(schemeInfo, extraClass) {
-
-        let labelsClassString = extraClass ? extraClass : "btn btn-secondary";
-        let dataType = extraClass ? "data-type='secondary' " : "";
+        let dropDownItemClassString = extraClass ?
+            "dropdown-item " + extraClass
+            : "dropdown-item";
         return (
-            "<button data-bs-container='body'" + dataType
-            + "data-bs-toggle='popover' data-bs-placement='top' data-bs-content='" + schemeInfo.title + "'" +
-            "data-scheme-id='" + schemeInfo.id + "'" +
-            "id='scheme-button-" + schemeInfo.id + "'" +
+            "<li class='scheme-label-wrapper'" +
 
-            "type='button' class='btn fade-left language-buttons mx-1 schemeEventListener " + labelsClassString + "'> " + schemeInfo.title + "</button>"
-        )
+            "data-scheme-id='" +
+            schemeInfo.id +
+            "'>" +
+            "<a class='" + dropDownItemClassString + "'" +
+            "id='" +
+            schemeInfo.id +
+            "'>" +
+            schemeInfo.title +
+            '</a>' +
+            '</li>'
+        );
     }
 
     async function getSchemesList() {
-        document.getElementById('schemesLabelsWrapper').style.display = "flex";
-
         try {
-            const response = await fetch('/Content/data/schemes.json', { cache: 'no-cache' });
+            const response = await fetch('/Content/data/schemes.json');
             const schemes = await response.json();
 
-            // Check if defaultScheme config is available, if yes then use the id mentioned in it else the first scheme will be the default selected
-            if (window.appConfig.defaultScheme) {
-                bindSchemesToDropdown(schemes, window.appConfig.defaultScheme);
-            } else {
-                bindSchemesToDropdown(schemes, schemes[0].id);
-            }
+            bindSchemesToDropdown(schemes, schemes[0].id, true)
 
         } catch (e) {
             console.log('Error while fetching schemes data: ', e);
@@ -75,7 +90,10 @@
     // Set schemes info to global object
     window.schemesInfo = {
         bindSchemesToDropdown: bindSchemesToDropdown,
+        updateSelectedSchemeTranslation: updateSelectedSchemeTranslation,
         getSchemesList: getSchemesList,
         updateSchemesTranslations: updateSchemesTranslations
     }
+
+    //await getSchemesList();
 })();

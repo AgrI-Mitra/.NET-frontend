@@ -661,6 +661,10 @@ img.query-msg-send-icon {
     border-color: transparent !important;
 }
 
+#schemesDropdownButton {
+    border-color: transparent !important;
+}
+
 .language-dropdown-toggle {
     width: 100%;
 }

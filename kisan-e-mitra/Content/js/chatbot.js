@@ -972,7 +972,7 @@
 
         $(document).on(
             'click',
-            '.schemeEventListener',
+            '.scheme-label-wrapper',
             async function (ev) {
                 let selectedSchemeId = $(this).data('scheme-id');
 

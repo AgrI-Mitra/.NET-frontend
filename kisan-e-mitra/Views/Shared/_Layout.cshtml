@@ -67,7 +67,17 @@
                         </ul>
                     </div>
                 </div>
-                <button class="btn btn-secondary settings-popover-item" id="startAppTourButton"></button>
+                <div class="form-group">
+                    <div class="custom-select-wrapper app_tour_scheme_selection_description schemes-wrapper settings-popover-item" id="schemesDropdownWrapper">
+                        <button class="btn btn-style dropdown-toggle" type="button" id="schemesDropdownButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fw-bold" id="selectedSchemeLabel"></span>
+                        </button>
+                        <ul id="schemesDropdown" class="dropdown-menu" aria-labelledby="languageDropDown">
+                        </ul>
+                    </div>
+                </div>
+                @*<button class="btn btn-secondary settings-popover-item" id="startAppTourButton"></button>*@
             </div>
         </div>
     </div>
