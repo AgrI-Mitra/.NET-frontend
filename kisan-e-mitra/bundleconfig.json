@@ -36,11 +36,11 @@
       "Content/js/autosize.js",
       "Content/js/wavBlobUtil.js",
       "Content/js/WavRecorder.js",
-      "Content/js/popularQueriesService.js",
+      //"Content/js/popularQueriesService.js",
       "Content/js/shepherd.js",
       "Content/js/settings-popover.js",
       "Content/js/audio-visualizer.js",
-      "Content/js/show-hide-content.js",
+      //"Content/js/show-hide-content.js",
       "Content/js/global-auto-read-popover.js"
     ]
   },
