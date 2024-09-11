@@ -384,7 +384,7 @@ namespace KisanEMitra.Controllers
         //}
 
         [HttpPost]
-        public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage, string gender = "male")
+        public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage, string gender)
         {
 
             List<string> strings = new List<string>
@@ -392,6 +392,7 @@ namespace KisanEMitra.Controllers
                 welcomeMessage
             };
 
+            gender = string.IsNullOrEmpty(gender) ? "male" : gender;
             var greetingMessagesAudioStrings = await TextToSpeach(languageCode, strings, gender);
 
             // Load audio base64 strings to view bag so we can play audio using it
