@@ -226,9 +226,9 @@
             isGetWelcomeGreetingsTextToSpeechRequestInProgress.abort();
         }
 
-        if (isGetUITranslationsRequestInProgress) {
-            isGetUITranslationsRequestInProgress.abort();
-        }
+        //if (isGetUITranslationsRequestInProgress) {
+        //    isGetUITranslationsRequestInProgress.abort();
+        //}
 
         restartSession();
     };
@@ -1464,9 +1464,19 @@
             },
         });
 
-        tour.on('cancel', function () {
-            localStorage.setItem('isAppTourDisplayed', 'true');
-        });
+        ['show', 'cancel'].forEach((event) =>
+            tour.on(event, (tourEvent) => {
+
+                console.log(tourEvent);
+                if (event == 'show' && tourEvent.step?.id === 'app_tour_language_selection_description') {
+                    var popoverTrigger = document.getElementById('settingsButton');
+                    // Trigger click event on popoverTrigger
+                    popoverTrigger.click();
+                } else if (event == 'cancel') {
+                    localStorage.setItem('isAppTourDisplayed', 'true');
+                }
+            })
+        );
     }
 
     function initAppTour() {
@@ -1512,22 +1522,29 @@
                 translationType: 'messages',
                 text: 'voice_selection',
                 showNextButton: true,
-                showPreviousButton: true,
+                showPreviousButton: true
             },
             {
                 id: 'app_tour_language_selection_description',
                 translationType: 'messages',
-                text: 'app_tour_language_selection_description',
+                text: 'app_tour_settings_icon_description',
                 showNextButton: true,
                 showPreviousButton: true,
             },
             {
-                id: 'app_tour_scheme_selection_description',
+                id: 'app_tour_guide_descirption',
                 translationType: 'messages',
-                text: 'app_tour_scheme_selection_description',
+                text: 'app_tour_guide_descirption',
                 showNextButton: true,
                 showPreviousButton: true,
             },
+            //{
+            //    id: 'app_tour_scheme_selection_description',
+            //    translationType: 'messages',
+            //    text: 'app_tour_scheme_selection_description',
+            //    showNextButton: true,
+            //    showPreviousButton: true,
+            //},
             //{
             //    id: 'app_tour_sample_questions_description',
             //    translationType: 'messages',
@@ -1535,13 +1552,13 @@
             //    showNextButton: true,
             //    showPreviousButton: true,
             //},
-            {
-                id: 'app_tour_toggle_feature_description',
-                translationType: 'messages',
-                text: 'app_tour_toggle_feature_description',
-                showNextButton: true,
-                showPreviousButton: true,
-            },
+            //{
+            //    id: 'app_tour_toggle_feature_description',
+            //    translationType: 'messages',
+            //    text: 'app_tour_toggle_feature_description',
+            //    showNextButton: true,
+            //    showPreviousButton: true,
+            //},
             {
                 id: 'app_tour_audio_button_description',
                 translationType: 'messages',

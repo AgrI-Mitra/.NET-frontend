@@ -934,3 +934,8 @@ canvas {
     margin-top: 5px;
     font-weight: bold;
 }
+
+
+div[data-shepherd-step-id="app_tour_language_selection_description"] {
+    top: 150px !important;
+}
