@@ -7,14 +7,14 @@
     document.addEventListener('DOMContentLoaded', function () {
         var popoverTrigger = document.getElementById('autoReadButton');
         var popoverContent = document.getElementById('globalAutoReadPopover');
-        const images = document.querySelectorAll('.image-container img');
-        const radios = document.querySelectorAll(
-            '.image-container input[type="radio"]'
-        );
+        //const images = document.querySelectorAll('.image-container img');
+        //const radios = document.querySelectorAll(
+        //    '.image-container input[type="radio"]'
+        //);
 
         const containers = document.querySelectorAll('.image-container');
         containers.forEach(container => {
-            container.addEventListener('click', function () {
+            container.addEventListener('click', function (event) {
                 // Get the associated radio button ID
                 const radioId = container.getAttribute('data-radio');
                 const radioButton = document.getElementById(radioId);
@@ -44,6 +44,26 @@
                 // Remove popover click event listener
                 // Unregister the event listener
                 popoverTrigger.removeEventListener('click', handleClick);
+
+                // Stop propagation for label and img elements
+                const images = document.querySelectorAll('.image-container img');
+                const radios = document.querySelectorAll(
+                    '.image-container input[type="radio"]'
+                );
+
+                const label = container.querySelector('label');
+                const img = container.querySelector('img');
+                const radio = container.querySelector('input[type="radio"]');
+
+                radio.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+                label.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+                img.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
             });
         });
 
@@ -60,27 +80,27 @@
         //    });
         //});
 
-        function selectImageAndRadio(img) {
-            images.forEach((image) => image.classList.remove('selected'));
-            img.classList.add('selected');
+        //function selectImageAndRadio(img) {
+        //    images.forEach((image) => image.classList.remove('selected'));
+        //    img.classList.add('selected');
 
-            const radioId = img
-                .closest('.image-container')
-                .querySelector('input[type="radio"]').id;
+        //    const radioId = img
+        //        .closest('.image-container')
+        //        .querySelector('input[type="radio"]').id;
 
-            document.getElementById(radioId).checked = true;
-            globalAutoReadFeature.selectedVoice = radioId;
-            globalAutoReadFeature.isVoiceSelected = true;
-            voiceSelectionChannel.postMessage(globalAutoReadFeature.selectedVoice);
+        //    document.getElementById(radioId).checked = true;
+        //    globalAutoReadFeature.selectedVoice = radioId;
+        //    globalAutoReadFeature.isVoiceSelected = true;
+        //    voiceSelectionChannel.postMessage(globalAutoReadFeature.selectedVoice);
 
-            popover.hide();
+        //    popover.hide();
 
-            setAutoReadStatus(false, true);
+        //    setAutoReadStatus(false, true);
 
-            // Remove popover click event listener
-            // Unregister the event listener
-            popoverTrigger.removeEventListener('click', handleClick);
-        }
+        //    // Remove popover click event listener
+        //    // Unregister the event listener
+        //    popoverTrigger.removeEventListener('click', handleClick);
+        //}
 
         popover = new bootstrap.Popover(document.querySelector('#autoReadButton'), {
             container: 'body',
