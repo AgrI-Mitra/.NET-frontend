@@ -137,7 +137,7 @@
 
     async function getSchemesList() {
         try {
-            const response = await fetch('/Content/data/schemes.json');
+            const response = await fetch('/Content/data/schemes.json', { cache: 'no-cache' });
             const schemes = await response.json();
 
             bindSchemesToDropdown(schemes, schemes[0].id, true)
