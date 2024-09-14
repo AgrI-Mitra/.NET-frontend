@@ -1467,7 +1467,6 @@
         ['show', 'cancel'].forEach((event) =>
             tour.on(event, (tourEvent) => {
 
-                console.log(tourEvent);
                 if (event == 'show' && tourEvent.step?.id === 'app_tour_language_selection_description') {
                     var popoverTrigger = document.getElementById('settingsButton');
                     // Trigger click event on popoverTrigger
