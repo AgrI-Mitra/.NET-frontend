@@ -1107,10 +1107,10 @@
                     } else {
                         // If the button was held for more than 1 second, stop recording
 
-                }
+                    }
 
-                recordAudio(currentScreenName, isRecordedStarted);
-            }
+                    recordAudio(currentScreenName, isRecordedStarted);
+                }
             }
         );
     }
@@ -1948,8 +1948,9 @@
 
                     let questionInput = $(userQuestionTextBox).val();
 
-                    var questionInputContent = $('<div />').text(questionInput).html();
-                    if (questionInputContent) {
+                    //var questionInputContent = $('<div />').text(questionInput).html();
+                    const sanitizedInput = sanitizeInput(questionInput);
+                    if (sanitizedInput) {
                         let chatMessageWrapperStartingDivHtmlContent =
                             getChatMessageWrapperStartingDivHtmlContent(
                                 false,
@@ -1969,7 +1970,7 @@
                             startingDivHtmlContent +
                             userLogoHtmlContent +
                             spanStartingHtmlContent +
-                            "<p>" + questionInput + "</p>" +
+                            "<p>" + sanitizedInput + "</p>" +
                             spanClosingHtmlContent +
                             closingDivHtmlContent +
                             closingDivHtmlContent +
@@ -1984,10 +1985,10 @@
 
                         $('#message-list').append(userQuery.replace(/\n/g, '<br>'));
                         lastUserAudioMessageId = ''; // Clear last user typed messaged Id once it is sent
-                    }
 
-                    isWelcomeMessageAutoPlayed = true;
-                    askQuestions(questionInputContent, 'text');
+                        isWelcomeMessageAutoPlayed = true;
+                        askQuestions(sanitizedInput, 'text');
+                    }
                 }
 
             });
@@ -2736,7 +2737,7 @@
         //            //showHideMessagePlaceholder(true);
         //        });
         //}
-        }
+    }
 
     async function stopRecording() {
         //if (mediaRecorder) {
@@ -3561,5 +3562,21 @@
         $(previousSchemeChangeMessageId).remove();
 
         $('#welcome-message-wrapper').remove();
+    }
+
+    /**
+     * Sanitizes user input to prevent JavaScript, HTML, and jQuery injection.
+     * @param {string} userInput - The input string to sanitize.
+     * @returns {string} - The sanitized string.
+     */
+    function sanitizeInput(userInput) {
+        // Create a new div element
+        let div = document.createElement('div');
+
+        // Set the textContent to the user input
+        div.textContent = userInput;
+
+        // Return the sanitized HTML
+        return div.innerHTML;
     }
 })();
