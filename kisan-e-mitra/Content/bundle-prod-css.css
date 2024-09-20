@@ -1438,7 +1438,7 @@ img.query-msg-send-icon {
     width: 100%;
     position: absolute;
     max-height: 90px;
-    padding: 0 4rem 0 1.5rem;
+    padding: 0 1.5rem;
 }
 
 .audio-visualizer-container {
@@ -1484,7 +1484,7 @@ img.query-msg-send-icon {
 }
 
 .recording #recordingImage {
-    transform: scale(2); /* Scale the mic button when recording */
+    transform: scale(1.5); /* Scale the mic button when recording */
 }
 
 /* Initial states */

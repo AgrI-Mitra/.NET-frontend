@@ -620,367 +620,504 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 (function () {
-    document.addEventListener('DOMContentLoaded', () => {
+    const audioVisualizerWrapper = document.querySelector('.audio-visualizer-wrapper');
+    const audioVisualizerContainer = document.querySelector('.audio-visualizer-container');
+    const audioProcessingContainer = document.querySelector('.audio-processing-container');
+    const micAudioRecordingIcon = document.getElementById('micAudioRecordingIcon');
+    const userQuestionTextBox = '#userQuestionTextBox';
 
-        const audioVisualizerWrapper = document.querySelector('.audio-visualizer-wrapper');
-        const audioVisualizerContainer = document.querySelector('.audio-visualizer-container');
-        const audioProcessingContainer = document.querySelector('.audio-processing-container');
-        const micAudioRecordingIcon = document.getElementById('micAudioRecordingIcon');
-        const userQuestionTextBox = '#userQuestionTextBox';
+    const canvas = document.getElementById('visualizer');
+    const canvasCtx = canvas.getContext('2d');
+    let audioCtx = null;
+    let analyser = null;
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let stream = null;
+    let isRecording = false;
+    let hasSpoken = false;
+    let animationFrameId = null;
 
-        const canvas = document.getElementById('visualizer');
-        const numberOfBars = 100; // Adjust the number of bars as needed
+    window.addEventListener('recordingStopped', (event) => {
+        console.log('Recording stopped:', event.detail);
+    });
 
-        const micButton = document.getElementById('voiceRecordButtonId');
-        /*const timer = document.getElementById('timer');*/
-        const micButtonContainer = document.getElementById('voiceRecordButtonId');
+    const config = {
+        recording: {
+            maxHeight: canvas.height,
+            minHeight: 4,
+            color: 'rgb(25, 135, 84)',
+        },
+        notRecording: {
+            maxHeight: canvas.height / 2,
+            minHeight: 2,
+            color: 'rgb(255, 0, 0)',
+        },
+        idle: {
+            maxHeight: canvas.height / 6,
+            minHeight: 1,
+            color: 'rgb(25, 135, 84)',
+            animate: true,
+        },
+        barWidthFactor: 0.8,
+        colorTransitionSpeed: 0.05,
+        heightTransitionSpeed: 0.1,
+        silenceThreshold: 50,
+        silenceDuration: 1000,
+        useFullHeight: true
+    };
 
-        // Start recording on mouse down
-        micButton.addEventListener('mousedown', () => {
-            micButtonContainer.classList.add('recording');
-            //startTimer(timer);
-            //showAnimation();
-        });
+    function analyzeAudioData(audioBuffer) {
+        const threshold = 0.01; // Example threshold for detecting speech
+        const channelData = audioBuffer.getChannelData(0); // Get audio data for the first channel
+        const sampleRate = audioBuffer.sampleRate; // Get the sample rate of the audio buffer
+        const durationPerSample = 1 / sampleRate; // Duration of each sample in seconds
 
-        // Stop recording on mouse up
-        micButton.addEventListener('mouseup', () => {
-            micButtonContainer.classList.remove('recording');
-            //stopTimer(timer);
-            //hideAnimation();
-        });
+        let speechDuration = 0; // Initialize speech duration
 
-        // Also handle touch events for mobile devices
-        micButton.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevent default touch behavior
-            micButtonContainer.classList.add('recording');
-            //startTimer(timer);
-            //showAnimation();
-        });
-
-        micButton.addEventListener('touchend', (e) => {
-            e.preventDefault(); // Prevent default touch behavior
-            micButtonContainer.classList.remove('recording');
-            //stopTimer(timer);
-            //hideAnimation();
-        });
-
-        function showAnimation() {
-
-            for (let i = 0; i < numberOfBars; i++) {
-                const bar = document.createElement('div');
-                bar.classList.add('bar');
-
-                // Generate random animation delay and scale factor
-                const randomDelay = Math.random() * 1; // Random delay between 0 and 1 seconds
-                const randomScale = Math.random() * 2 + 1; // Random scale factor between 1 and 3
-
-                bar.style.animationDelay = `${randomDelay}s`;
-                bar.style.setProperty('--scale-factor', randomScale);
-
-                audioProcessingContainer.appendChild(bar);
+        for (let i = 0; i < channelData.length; i++) {
+            if (Math.abs(channelData[i]) > threshold) {
+                speechDuration += durationPerSample; // Increment speech duration
+                if (speechDuration > 1) {
+                    return true; // Return true if speech duration exceeds 1 second
+                }
             }
+        }
+        return false;
+    }
 
-            const bars = document.querySelectorAll('.bar');
-            bars.forEach(bar => {
-                bar.style.animationPlayState = 'running';
+    function startRecording() {
+        hasSpoken = false; // Reset hasSpoken when a new recording starts
+        recordedChunks = []; // Reset recorded chunks
+
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 256;
+        }
+
+        navigator.permissions
+            .query({ name: 'microphone' })
+            .then((permissionStatus) => {
+                if (permissionStatus.state === 'granted') {
+                    getUserMediaStream();
+                } else if (
+                    permissionStatus.state === 'prompt' ||
+                    permissionStatus.state === 'denied'
+                ) {
+                    navigator.mediaDevices
+                        .getUserMedia({ audio: true })
+                        .then((s) => {
+                            stream = s;
+                            startAudioStream();
+                        })
+                        .catch((err) => {
+                            console.error('Error accessing audio stream:', err);
+                        });
+                }
             });
+    }
 
-            audioVisualizerWrapper.style.display = "flex";
-            audioVisualizerContainer.style.display = 'flex';
-            audioProcessingContainer.style.display = 'flex';
-            //document.querySelector(".meg-input").style.display = "none";
+    function getUserMediaStream() {
+        navigator.mediaDevices
+            .getUserMedia({ audio: true })
+            .then((s) => {
+                stream = s;
+                startAudioStream();
+            })
+            .catch((err) => {
+                console.error('Error accessing audio stream:', err);
+            });
+    }
+
+    function startAudioStream() {
+        if (!stream) {
+            console.error('No media stream available');
+            return;
         }
 
-        function hideAnimation() {
-            audioVisualizerWrapper.style.display = "none";
-            audioVisualizerContainer.style.display = 'none';
-            audioProcessingContainer.style.display = 'none';
-            $('.audio-processing-container').empty();
-            //document.querySelector(".meg-input").style.display = "block";
-            //console.log('hideAnimation: ', document.querySelector(".meg-input").style.display);
+        audioCtx.resume().then(() => {
+            const source = audioCtx.createMediaStreamSource(stream);
+            source.connect(analyser);
+            isRecording = true;
+            hasSpoken = false;
+            //document.getElementById('startButton').style.display = 'none';
+            //document.getElementById('stopButton').style.display = 'block';
+
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.ondataavailable = handleDataAvailable;
+            mediaRecorder.onstart = handleStart;
+            mediaRecorder.onstop = handleStop;
+            mediaRecorder.onerror = handleError;
+            mediaRecorder.start();
+
+            visualize(); // Start visualization after setting up the audio stream
+        });
+    }
+
+    function handleDataAvailable(event) {
+        if (event.data.size > 0) {
+            recordedChunks.push(event.data);
         }
+    }
 
-        function resizeCanvas() {
-            canvas.width = canvas.clientWidth;
-            canvas.height = canvas.clientHeight;
-        }
+    function handleStart() {
+        console.log('Recording started');
+        audioVisualizerWrapper.style.display = "flex";
+        audioVisualizerContainer.style.display = 'flex';
+        micAudioRecordingIcon.style.display = 'flex';
+        showHideMessagePlaceholder(false);
+    }
 
-        let audioCtx, analyser, dataArray, bufferLength, animationId;
+    function handleError() {
+        console.error('MediaRecorder error');
+        audioVisualizerWrapper.style.display = "none";
+        audioVisualizerContainer.style.display = 'none';
+        micAudioRecordingIcon.style.display = 'none';
+        showHideMessagePlaceholder(true);
+    }
 
-        // Initialize the audio visualizer
-        function startVisualizer(stream) {
-            $('.sendtext').hide();
-            showHideMessagePlaceholder(false);
-            try {
-                audioVisualizerWrapper.style.display = "flex";
-                audioVisualizerContainer.style.display = 'flex';
-                micAudioRecordingIcon.style.display = 'flex';
-                const canvasCtx = canvas.getContext('2d');
+    function handleStop() {
+        const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+        recordedChunks = [];
+        convertToWav(blob, (wavBlob) => {
+            const event = new CustomEvent('recordingStopped', {
+                detail: { hasSpoken, wavBlob },
+            });
+            window.dispatchEvent(event);
+        });
 
-                window.addEventListener('resize', resizeCanvas);
-                resizeCanvas();
+        // Stop idle animation and clear variables
+        stopIdleAnimation();
+        clearVariables();
 
+        stopDraw();
+
+        // Hide the canvas
+        audioVisualizerWrapper.style.display = 'none';
+        audioVisualizerContainer.style.display = 'none';
+        micAudioRecordingIcon.style.display = 'none';
+        showHideMessagePlaceholder(true);
+    }
+
+    function convertToWav(blob, callback) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const arrayBuffer = event.target.result;
+            if (!audioCtx) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const source = audioCtx.createMediaStreamSource(stream);
-                analyser = audioCtx.createAnalyser();
-
-                analyser.fftSize = 256;
-                bufferLength = analyser.frequencyBinCount;
-                dataArray = new Uint8Array(bufferLength);
-
-                source.connect(analyser);
-
-                /*draw(canvas, canvasCtx);*/
-                stopVisualizer = drawBars(0, canvas, dataArray, null, bufferLength, 1.5, 60, false);
-            } catch (e) {
-                console.log('draw error: ', e);
-                $('.sendtext').show();
-                showHideMessagePlaceholder(true);
             }
+            audioCtx.decodeAudioData(arrayBuffer, function (audioBuffer) {
+                hasSpoken = analyzeAudioData(audioBuffer); // Update hasSpoken based on audio analysis
+                const wavBlob = audioBufferToWavBlob(audioBuffer);
+                callback(wavBlob);
+            });
+        };
+        reader.readAsArrayBuffer(blob);
+    }
 
+    function audioBufferToWavBlob(audioBuffer) {
+        const numOfChannels = audioBuffer.numberOfChannels;
+        const sampleRate = audioBuffer.sampleRate;
+        const format = 1; // PCM
+        const bitDepth = 16;
+
+        let result;
+        if (numOfChannels === 2) {
+            result = interleave(
+                audioBuffer.getChannelData(0),
+                audioBuffer.getChannelData(1)
+            );
+        } else {
+            result = audioBuffer.getChannelData(0);
         }
 
-        //function draw(canvas, canvasCtx) {
-        //    animationId = requestAnimationFrame(() => draw(canvas, canvasCtx));
+        const buffer = new ArrayBuffer(44 + result.length * 2);
+        const view = new DataView(buffer);
 
-        //    analyser.getByteFrequencyData(dataArray);
+        /* RIFF identifier */
+        writeString(view, 0, 'RIFF');
+        /* file length */
+        view.setUint32(4, 36 + result.length * 2, true);
+        /* RIFF type */
+        writeString(view, 8, 'WAVE');
+        /* format chunk identifier */
+        writeString(view, 12, 'fmt ');
+        /* format chunk length */
+        view.setUint32(16, 16, true);
+        /* sample format (raw) */
+        view.setUint16(20, format, true);
+        /* channel count */
+        view.setUint16(22, numOfChannels, true);
+        /* sample rate */
+        view.setUint32(24, sampleRate, true);
+        /* byte rate (sample rate * block align) */
+        view.setUint32(28, (sampleRate * numOfChannels * bitDepth) / 8, true);
+        /* block align (channel count * bytes per sample) */
+        view.setUint16(32, (numOfChannels * bitDepth) / 8, true);
+        /* bits per sample */
+        view.setUint16(34, bitDepth, true);
+        /* data chunk identifier */
+        writeString(view, 36, 'data');
+        /* data chunk length */
+        view.setUint32(40, result.length * 2, true);
 
-        //    // Remove the background fill to make it transparent
-        //    // canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-        //    // canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-        //    // Clear the canvas to make the background transparent
-        //    canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+        // Write the PCM samples
+        let offset = 44;
+        for (let i = 0; i < result.length; i++, offset += 2) {
+            const s = Math.max(-1, Math.min(1, result[i]));
+            view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+        }
 
-        //    const barWidth = 1.5; // Adjust bar width here
-        //    let barHeight;
-        //    let x = 0;
+        return new Blob([view], { type: 'audio/wav' });
+    }
 
-        //    for (let i = 0; i < bufferLength; i++) {
-        //        barHeight = (dataArray[i] / 255) * canvas.height;
+    function writeString(view, offset, string) {
+        for (let i = 0; i < string.length; i++) {
+            view.setUint8(offset + i, string.charCodeAt(i));
+        }
+    }
 
-        //        // Change bar colors here
-        //        canvasCtx.fillStyle = 'rgb(25, 135, 84)';
+    function interleave(inputL, inputR) {
+        const length = inputL.length + inputR.length;
+        const result = new Float32Array(length);
 
-        //        // Draw upward bars
-        //        canvasCtx.fillRect(x, canvas.height / 2 - barHeight / 2, barWidth, barHeight / 2);
+        let index = 0;
+        let inputIndex = 0;
 
-        //        // Draw downward bars
-        //        canvasCtx.fillRect(x, canvas.height / 2, barWidth, barHeight / 2);
+        while (index < length) {
+            result[index++] = inputL[inputIndex];
+            result[index++] = inputR[inputIndex];
+            inputIndex++;
+        }
+        return result;
+    }
 
-        //        x += barWidth + 1; // Space between bars
-        //    }
-        //}
+    function stopRecording() {
+        if (stream) {
+            stream.getTracks().forEach((track) => track.stop());
+            stream = null;
+        }
+        if (mediaRecorder) {
+            mediaRecorder.stop();
+            mediaRecorder = null;
+        }
+        isRecording = false;
+        //document.getElementById('startButton').style.display = 'block';
+        //document.getElementById('stopButton').style.display = 'none';
 
-        function drawBars(
-            timestamp,
-            canvas,
-            dataArray,
-            targetArray,
-            bufferLength,
-            barWidth,
-            fps,
-            isAuto
-        ) {
-            const canvasCtx = canvas.getContext('2d');
-            let lastTime = 0;
-            const interval = 1000 / fps;
-            let animationId;
+        showHideMessagePlaceholder(true);
+    }
 
-            function interpolate(current, target, factor) {
-                return current + (target - current) * factor; // Corrected the interpolation logic
-            }
+    function startIdleAnimation() {
+        console.log('startIdleAnimation: ');
 
-            function draw(timestamp) {
-                animationId = requestAnimationFrame(draw);
+        if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 256;
+        }
 
-                const deltaTime = timestamp - lastTime;
+        audioVisualizerWrapper.style.display = "flex";
+        audioVisualizerContainer.style.display = 'flex';
+        /*audioProcessingContainer.style.display = 'flex';*/
+        //micAudioRecordingIcon.style.display = 'flex';
+        
+        config.idle.animate = true;
+        visualize();
+        showHideMessagePlaceholder(false);
+    }
 
-                if (deltaTime > interval) {
-                    lastTime = timestamp - (deltaTime % interval);
+    function stopIdleAnimation() {
+        config.idle.animate = false;
+        cancelAnimationFrame(animationFrameId);
+        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 
-                    if (isAuto && targetArray) {
-                        // Generate random data to simulate audio frequency data
-                        for (let i = 0; i < bufferLength; i++) {
-                            targetArray[i] = Math.random() * 255;
-                        }
-                    }
+        audioVisualizerWrapper.style.display = "none";
+        audioVisualizerContainer.style.display = 'none';
+        /*audioProcessingContainer.style.display = 'none';*/
+        showHideMessagePlaceholder(true);
+    }
 
-                    if (targetArray) {
-                        // Interpolate between current data and target data
-                        for (let i = 0; i < bufferLength; i++) {
-                            dataArray[i] = interpolate(dataArray[i], targetArray[i], 0.1);
-                        }
-                    } else {
-                        analyser.getByteFrequencyData(dataArray); // Get real frequency data
+    function toggleIdleAnimation() {
+        console.log('toggleIdleAnimation: ');
+        if (config.idle.animate) {
+            stopIdleAnimation();
+        } else {
+            startIdleAnimation();
+        }
+    }
+
+    //document
+    //    .getElementById('startButton')
+    //    .addEventListener('click', startRecording);
+    //document
+    //    .getElementById('stopButton')
+    //    .addEventListener('click', stopRecording);
+    //document
+    //    .getElementById('toggleIdleButton')
+    //    .addEventListener('click', toggleIdleAnimation);
+
+    console.log('window.visualizerControl: ', window.visualizerControl);
+
+    function visualize() {
+
+        /*$('.sendtext').hide();*/
+        //showHideMessagePlaceholder(false);
+    
+        try {
+    
+            
+    
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            let previousHeights = new Float32Array(bufferLength);
+            let colorTransition = 0;
+            let lastAudioTime = Date.now();
+    
+            function draw() {
+                animationFrameId = requestAnimationFrame(draw);
+    
+                if (isRecording) {
+                    analyser.getByteFrequencyData(dataArray);
+                } else if (config.idle.animate) {
+                    for (let i = 0; i < bufferLength; i++) {
+                        dataArray[i] = Math.random() * 255;
                     }
                 }
-
-                // Clear the canvas to make the background transparent
-                canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-
-                let barHeight;
+    
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+    
+                const barWidth = (canvas.width / bufferLength) * config.barWidthFactor;
                 let x = 0;
-
+    
+                canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+    
+                const avgVolume = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+    
+                if (avgVolume >= config.silenceThreshold) {
+                    lastAudioTime = Date.now();
+                }
+    
+                const currentTime = Date.now();
+                const isSpeaking = currentTime - lastAudioTime < config.silenceDuration;
+                const targetColor = isRecording && isSpeaking ? 1 : 0;
+    
+                colorTransition +=
+                    (targetColor - colorTransition) * config.colorTransitionSpeed;
+    
+                const r = isRecording && isSpeaking ? 25 : 255;
+                const g = isRecording && isSpeaking ? 135 : 0;
+                const b = isRecording && isSpeaking ? 84 : 0;
+    
                 for (let i = 0; i < bufferLength; i++) {
-                    barHeight = (dataArray[i] / 255) * canvas.height;
-
-                    // Change bar colors here
-                    canvasCtx.fillStyle = 'rgb(25, 135, 84)';
-
-                    // Draw upward bars
-                    canvasCtx.fillRect(x, canvas.height / 2 - barHeight / 2, barWidth, barHeight / 2);
-
-                    // Draw downward bars
-                    canvasCtx.fillRect(x, canvas.height / 2, barWidth, barHeight / 2);
-
-                    x += barWidth + 1; // Space between bars
+                    const normalizedValue = dataArray[i] / 255;
+                    const maxHeight = config.useFullHeight
+                        ? canvas.height
+                        : isRecording
+                            ? isSpeaking
+                                ? config.recording.maxHeight
+                                : config.notRecording.maxHeight
+                            : config.idle.maxHeight;
+                    const minHeight = isRecording
+                        ? isSpeaking
+                            ? config.recording.minHeight
+                            : config.notRecording.minHeight
+                        : config.idle.minHeight;
+                    const targetHeight = normalizedValue * maxHeight;
+    
+                    let barHeight =
+                        previousHeights[i] +
+                        (targetHeight - previousHeights[i]) * config.heightTransitionSpeed;
+    
+                    barHeight = Math.max(barHeight, minHeight);
+    
+                    canvasCtx.fillStyle = isRecording
+                        ? `rgb(${r},${g},${b})`
+                        : config.idle.color;
+                    canvasCtx.fillRect(
+                        x,
+                        canvas.height / 2 - barHeight / 2,
+                        barWidth,
+                        barHeight
+                    );
+                    canvasCtx.fillRect(
+                        x,
+                        canvas.height / 2 + barHeight / 2,
+                        barWidth,
+                        -barHeight
+                    );
+    
+                    x += barWidth + 1;
+    
+                    previousHeights[i] = barHeight;
                 }
             }
-
-            draw(timestamp);
-            return () => cancelAnimationFrame(animationId);
-        }
-
-        // Stop the visualizer
-        function stopVisualizer() {
-
-            $('.sendtext').show();
-            showHideMessagePlaceholder(true);
-
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-            }
-            if (audioCtx) {
-                audioCtx.close();
-            }
-
-            // Remove event listeners
-            window.removeEventListener('resize', resizeCanvas);
-
-            // Hide the canvas
+    
+            // Request the next frame
+            animationFrameId = requestAnimationFrame(draw);
+    
+        } catch (e) {
+    
             audioVisualizerWrapper.style.display = 'none';
             audioVisualizerContainer.style.display = 'none';
             micAudioRecordingIcon.style.display = 'none';
-        }
-
-        function startAutoVisualizer() {
-
-            $('.sendtext').hide();
-            showHideMessagePlaceholder(false);
-
-            audioVisualizerWrapper.style.display = "flex";
-            audioVisualizerContainer.style.display = 'flex';
-            const canvasCtx = canvas.getContext('2d');
-
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
-
-            const barWidth = 1.5; // Width of each bar
-            const barSpacing = 0.5; // Space between each bar
-            const totalBarWidth = barWidth + barSpacing;
-            const barsCount = Math.floor(canvas.width / totalBarWidth);
-            const bufferLength = barsCount; // Adjust bufferLength to match barsCount
-
-            const dataArray = new Uint8Array(bufferLength);
-            const targetArray = new Uint8Array(bufferLength);
-
-            let lastTime = 0;
-            const fps = 30; // Frames per second, adjust this value to control speed
-            const interval = 1000 / fps;
-
-            stopAutoVisualizer = drawBars(0, canvas, dataArray, targetArray, bufferLength, barWidth, fps, true);
-
-            //function interpolate(current, target, factor) {
-            //    return current + (target - current) * factor;
-            //}
-
-            //function drawAutoBars(timestamp) {
-            //    animationId = requestAnimationFrame(drawAutoBars);
-
-            //    const deltaTime = timestamp - lastTime;
-
-            //    if (deltaTime > interval) {
-            //        lastTime = timestamp - (deltaTime % interval);
-
-            //        // Generate random data to simulate audio frequency data
-            //        for (let i = 0; i < bufferLength; i++) {
-            //            targetArray[i] = Math.random() * 255;
-            //        }
-            //    }
-
-            //    // Interpolate between current data and target data
-            //    for (let i = 0; i < bufferLength; i++) {
-            //        dataArray[i] = interpolate(dataArray[i], targetArray[i], 0.1);
-            //    }
-
-            //    // Clear the canvas to make the background transparent
-            //    canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-
-            //    let barHeight;
-            //    let x = 0;
-
-            //    for (let i = 0; i < bufferLength; i++) {
-            //        barHeight = (dataArray[i] / 255) * canvas.height;
-
-            //        // Change bar colors here
-            //        canvasCtx.fillStyle = 'rgb(25, 135, 84)';
-
-            //        // Draw upward bars
-            //        canvasCtx.fillRect(x, canvas.height / 2 - barHeight / 2, barWidth, barHeight / 2);
-
-            //        // Draw downward bars
-            //        canvasCtx.fillRect(x, canvas.height / 2, barWidth, barHeight / 2);
-
-            //        x += totalBarWidth; // Add space between bars
-            //    }
-            //}
-
-            //drawAutoBars(0); // Start the animation
-        }
-
-        function stopAutoVisualizer() {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-            }
-            audioVisualizerWrapper.style.display = 'none';
-            audioVisualizerContainer.style.display = 'none';
-
-            $('.sendtext').show();
+    
+            
             showHideMessagePlaceholder(true);
         }
+    
+    }
 
-        function showHideMessagePlaceholder(shouldShow) {
+    // Start the draw function when needed
+    function startDraw() {
+        console.log('startDraw: ');
+        if (!animationFrameId) {
+            visualize(); // Ensure variables are initialized before drawing
+        }
+    }
 
-            if (shouldShow) {
-                //$(userQuestionTextBox).val('');
-                //$(userQuestionTextBox).attr('placeholder', '');
-                // Hide placeholder temporarily, keep value as it is
+    // Stop the draw function when needed
+    function stopDraw() {
+        if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+        }
+    }
 
-                $(userQuestionTextBox).attr('placeholder', $(userQuestionTextBox).attr('data-text'));
+    function clearVariables() {
+        hasSpoken = false;
+        recordedChunks = [];
+    }
 
-            } else {
-                //$(userQuestionTextBox).val('');
-                //$(userQuestionTextBox).attr('placeholder', currentLanguageInfo.translations.messages.ask_ur_question);
-                $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
-                $(userQuestionTextBox).removeAttr('placeholder');
-            }
+    function showHideMessagePlaceholder(shouldShow) {
+
+        if (shouldShow) {
+            //$(userQuestionTextBox).val('');
+            //$(userQuestionTextBox).attr('placeholder', '');
+            // Hide placeholder temporarily, keep value as it is
+            $('.sendtext').show();
+            $(userQuestionTextBox).attr('placeholder', $(userQuestionTextBox).attr('data-text'));
+
+        } else {
+            $('.sendtext').hide();
+            //$(userQuestionTextBox).val('');
+            //$(userQuestionTextBox).attr('placeholder', currentLanguageInfo.translations.messages.ask_ur_question);
+            $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
+            $(userQuestionTextBox).removeAttr('placeholder');
         }
 
-        // Expose functions to the global scope for easy access
-        window.startVisualizer = startVisualizer;
-        window.stopVisualizer = stopVisualizer;
+        console.log('shouldShow', shouldShow);
+    }
 
-        // Expose functions to the window object
-        window.audioVisualizer = {
-            showAnimation,
-            hideAnimation,
-            startVisualizer,
-            stopVisualizer,
-            startAutoVisualizer,
-            stopAutoVisualizer
-        };
-    });
-
+    window.visualizerControl = {
+        startRecording,
+        stopRecording,
+        startIdleAnimation,
+        toggleIdleAnimation,
+        stopIdleAnimation,
+        clearVariables,
+    };
 })();
 (function () {
     var selectedVoice = '';

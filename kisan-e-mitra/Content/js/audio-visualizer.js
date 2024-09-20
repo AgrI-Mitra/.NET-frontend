@@ -7,41 +7,24 @@
         const micAudioRecordingIcon = document.getElementById('micAudioRecordingIcon');
         const userQuestionTextBox = '#userQuestionTextBox';
 
+        function toggleVisualizerWrapper(shouldTrunOn) {
+
+            if (shouldTrunOn) {
+                audioVisualizerWrapper.style.display = "flex";
+                audioVisualizerContainer.style.display = 'flex';
+                audioProcessingContainer.style.display = 'flex';
+            } else {
+                audioVisualizerWrapper.style.display = "none";
+                audioVisualizerContainer.style.display = 'none';
+                audioProcessingContainer.style.display = 'none';
+            }
+
+        }
+
         const canvas = document.getElementById('visualizer');
         const numberOfBars = 100; // Adjust the number of bars as needed
 
-        const micButton = document.getElementById('voiceRecordButtonId');
         /*const timer = document.getElementById('timer');*/
-        const micButtonContainer = document.getElementById('voiceRecordButtonId');
-
-        // Start recording on mouse down
-        micButton.addEventListener('mousedown', () => {
-            micButtonContainer.classList.add('recording');
-            //startTimer(timer);
-            //showAnimation();
-        });
-
-        // Stop recording on mouse up
-        micButton.addEventListener('mouseup', () => {
-            micButtonContainer.classList.remove('recording');
-            //stopTimer(timer);
-            //hideAnimation();
-        });
-
-        // Also handle touch events for mobile devices
-        micButton.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevent default touch behavior
-            micButtonContainer.classList.add('recording');
-            //startTimer(timer);
-            //showAnimation();
-        });
-
-        micButton.addEventListener('touchend', (e) => {
-            e.preventDefault(); // Prevent default touch behavior
-            micButtonContainer.classList.remove('recording');
-            //stopTimer(timer);
-            //hideAnimation();
-        });
 
         function showAnimation() {
 
@@ -64,16 +47,18 @@
                 bar.style.animationPlayState = 'running';
             });
 
-            audioVisualizerWrapper.style.display = "flex";
-            audioVisualizerContainer.style.display = 'flex';
-            audioProcessingContainer.style.display = 'flex';
+            //audioVisualizerWrapper.style.display = "flex";
+            //audioVisualizerContainer.style.display = 'flex';
+            //audioProcessingContainer.style.display = 'flex';
+            toggleVisualizerWrapper(true);
             //document.querySelector(".meg-input").style.display = "none";
         }
 
         function hideAnimation() {
-            audioVisualizerWrapper.style.display = "none";
-            audioVisualizerContainer.style.display = 'none';
-            audioProcessingContainer.style.display = 'none';
+            //audioVisualizerWrapper.style.display = "none";
+            //audioVisualizerContainer.style.display = 'none';
+            //audioProcessingContainer.style.display = 'none';
+            toggleVisualizerWrapper(false);
             $('.audio-processing-container').empty();
             //document.querySelector(".meg-input").style.display = "block";
             //console.log('hideAnimation: ', document.querySelector(".meg-input").style.display);
@@ -89,6 +74,7 @@
         // Initialize the audio visualizer
         function startVisualizer(stream) {
             $('.sendtext').hide();
+            console.log('called from startVisualizer with false');
             showHideMessagePlaceholder(false);
             try {
                 audioVisualizerWrapper.style.display = "flex";
@@ -114,41 +100,11 @@
             } catch (e) {
                 console.log('draw error: ', e);
                 $('.sendtext').show();
+                console.log('called from startVisualizer with true');
                 showHideMessagePlaceholder(true);
             }
 
         }
-
-        //function draw(canvas, canvasCtx) {
-        //    animationId = requestAnimationFrame(() => draw(canvas, canvasCtx));
-
-        //    analyser.getByteFrequencyData(dataArray);
-
-        //    // Remove the background fill to make it transparent
-        //    // canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-        //    // canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
-        //    // Clear the canvas to make the background transparent
-        //    canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-
-        //    const barWidth = 1.5; // Adjust bar width here
-        //    let barHeight;
-        //    let x = 0;
-
-        //    for (let i = 0; i < bufferLength; i++) {
-        //        barHeight = (dataArray[i] / 255) * canvas.height;
-
-        //        // Change bar colors here
-        //        canvasCtx.fillStyle = 'rgb(25, 135, 84)';
-
-        //        // Draw upward bars
-        //        canvasCtx.fillRect(x, canvas.height / 2 - barHeight / 2, barWidth, barHeight / 2);
-
-        //        // Draw downward bars
-        //        canvasCtx.fillRect(x, canvas.height / 2, barWidth, barHeight / 2);
-
-        //        x += barWidth + 1; // Space between bars
-        //    }
-        //}
 
         function drawBars(
             timestamp,
@@ -224,6 +180,7 @@
         function stopVisualizer() {
 
             $('.sendtext').show();
+            console.log('called from stopVisualizer with true');
             showHideMessagePlaceholder(true);
 
             if (animationId) {
@@ -245,6 +202,7 @@
         function startAutoVisualizer() {
 
             $('.sendtext').hide();
+            console.log('called from startAutoVisualizer with false');
             showHideMessagePlaceholder(false);
 
             audioVisualizerWrapper.style.display = "flex";
@@ -268,53 +226,6 @@
             const interval = 1000 / fps;
 
             stopAutoVisualizer = drawBars(0, canvas, dataArray, targetArray, bufferLength, barWidth, fps, true);
-
-            //function interpolate(current, target, factor) {
-            //    return current + (target - current) * factor;
-            //}
-
-            //function drawAutoBars(timestamp) {
-            //    animationId = requestAnimationFrame(drawAutoBars);
-
-            //    const deltaTime = timestamp - lastTime;
-
-            //    if (deltaTime > interval) {
-            //        lastTime = timestamp - (deltaTime % interval);
-
-            //        // Generate random data to simulate audio frequency data
-            //        for (let i = 0; i < bufferLength; i++) {
-            //            targetArray[i] = Math.random() * 255;
-            //        }
-            //    }
-
-            //    // Interpolate between current data and target data
-            //    for (let i = 0; i < bufferLength; i++) {
-            //        dataArray[i] = interpolate(dataArray[i], targetArray[i], 0.1);
-            //    }
-
-            //    // Clear the canvas to make the background transparent
-            //    canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-
-            //    let barHeight;
-            //    let x = 0;
-
-            //    for (let i = 0; i < bufferLength; i++) {
-            //        barHeight = (dataArray[i] / 255) * canvas.height;
-
-            //        // Change bar colors here
-            //        canvasCtx.fillStyle = 'rgb(25, 135, 84)';
-
-            //        // Draw upward bars
-            //        canvasCtx.fillRect(x, canvas.height / 2 - barHeight / 2, barWidth, barHeight / 2);
-
-            //        // Draw downward bars
-            //        canvasCtx.fillRect(x, canvas.height / 2, barWidth, barHeight / 2);
-
-            //        x += totalBarWidth; // Add space between bars
-            //    }
-            //}
-
-            //drawAutoBars(0); // Start the animation
         }
 
         function stopAutoVisualizer() {
@@ -325,6 +236,7 @@
             audioVisualizerContainer.style.display = 'none';
 
             $('.sendtext').show();
+            console.log('called from stopAutoVisualizer with true');
             showHideMessagePlaceholder(true);
         }
 
@@ -343,6 +255,8 @@
                 $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
                 $(userQuestionTextBox).removeAttr('placeholder');
             }
+
+            console.log('shouldShow', shouldShow);
         }
 
         // Expose functions to the global scope for easy access
@@ -358,6 +272,8 @@
             startAutoVisualizer,
             stopAutoVisualizer
         };
+
+        console.log('audio-visualizer.js loaded', window.audioVisualizer);
     });
 
 })();

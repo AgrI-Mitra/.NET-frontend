@@ -270,6 +270,7 @@
     <Content Include="Content\js\shepherd.js" />
     <Content Include="Content\js\show-hide-content.js" />
     <Content Include="Content\js\typed.umd.js" />
+    <Content Include="Content\js\voice-recorder.js" />
     <Content Include="Content\shepherd.css" />
     <Content Include="Content\chatbot-staging.css" />
     <Content Include="Content\chatbot.css" />

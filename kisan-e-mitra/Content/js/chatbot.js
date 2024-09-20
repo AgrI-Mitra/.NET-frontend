@@ -155,12 +155,14 @@
 
     // Voice Recording button related variables - To Apply animation, change icon images etc. - START
     var voiceRecordButtonClass = '.voiceRecordButtonClass';
+    const voiceRecordButtonContainer = document.querySelectorAll(voiceRecordButtonClass); //document.getElementsByClassName('voiceRecordButtonClass');
     var voiceRecordingImageClass = '.recordingImageClass';
     var stopVoiceRecordingImagePath = '../Content/images/stop-recording.svg';
     var startVoiceRecordingImagePath = '../Content/images/start-recording.svg';
     var voiceRecordMicCircleClass = '.voiceRecordMicCircleClass';
     var voiceRecordingStartBgColorClass = 'voice-start-recording-border-color';
     var voiceRecordingStopBgColorClass = 'voice-stop-recording-border-color';
+    let currentScreenName;
     // Voice Recording button related variables - To Apply animation, change icon images etc. - END
 
     var sendTextButtonId = '#sendTextButton';
@@ -197,7 +199,7 @@
     var startNewConversationModal;
     var currentConversationId;
     const voiceSelectionChannel = new BroadcastChannel('voice_selection');
-
+    let recordTimeout = null;
     voiceSelectionChannel.onmessage = async function (event) {
         await getWelcomeGreetingsAudio();
     };
@@ -420,7 +422,8 @@
 
         if (category == 'base64audio') {
 
-            audioVisualizer.startAutoVisualizer();
+            //audioVisualizer.startAutoVisualizer();
+            visualizerControl.startIdleAnimation();
         } else {
             let chatMessageWrapperStartingDivHtmlContent =
                 getChatMessageWrapperStartingDivHtmlContent(
@@ -452,7 +455,8 @@
         $('#chatbotMessageWrapper-responseLoader').remove();
 
         if (category == 'base64audio') {
-            audioVisualizer.stopAutoVisualizer();
+            //audioVisualizer.stopAutoVisualizer();
+            visualizerControl.stopIdleAnimation();
         }
     }
 
@@ -1034,19 +1038,79 @@
         );
     }
 
+    //function voiceRecorderListener() {
+
+    //    $(document).on(
+    //        'mousedown mouseup touchstart touchend',
+    //        voiceRecordButtonClass,
+    //        function (ev) {
+    //            console.log('voiceRecorderListener', ev.type);
+    //            let currentScreenName = $(this).data('screen-name');
+
+    //            let isRecordedStarted = false;
+    //            if (ev.type === 'mousedown' || ev.type === 'touchstart') {
+    //                isRecordedStarted = true;
+
+    //                // Add recording class to voice record button
+    //                $(this).addClass('recording');
+    //                //micButtonContainer.classList.add('recording');
+    //            } else {
+    //                // Remove recording class from voice record button
+    //                $(this).removeClass('recording');
+    //                //micButtonContainer.classList.remove('recording');
+    //            }
+    //            recordAudio(currentScreenName, isRecordedStarted);
+    //        }
+    //    );
+    //}
+
     function voiceRecorderListener() {
 
+        let isRecordedStarted = false;
+
         $(document).on(
-            'mousedown mouseup touchstart touchend',
+            'mousedown touchstart mouseup touchend',
             voiceRecordButtonClass,
             function (ev) {
-                let currentScreenName = $(this).data('screen-name');
 
-                let isRecordedStarted = false;
+                currentScreenName = $(this).data('screen-name');
+
                 if (ev.type === 'mousedown' || ev.type === 'touchstart') {
                     isRecordedStarted = true;
+                    //$(this).addClass('recording');
+
+                    // For each element in voiceRecordButtonContainer, add recording class
+                    voiceRecordButtonContainer.forEach(function () {
+                        $(this).addClass('recording');
+                    });
+
+                    //voiceRecordButtonContainer.classList.add('recording');
+
+                    // Start a timeout to call recordAudio after 1 second
+                    recordTimeout = window.setTimeout(() => {
+                        recordAudio(currentScreenName, isRecordedStarted);
+                    }, 200);
+                } else if (ev.type === 'mouseup' || ev.type === 'touchend') {
+                    isRecordedStarted = false;
+                    //$(this).removeClass('recording');
+                    //voiceRecordButtonContainer.classList.remove('recording');
+
+                    // For each element in voiceRecordButtonContainer, remove recording class
+                    voiceRecordButtonContainer.forEach(function () {
+                        $(this).removeClass('recording');
+                    });
+
+                    // If the button is released before 1 second, clear the timeout
+                    if (recordTimeout) {
+                        clearTimeout(recordTimeout);
+                        recordTimeout = null;
+                    } else {
+                        // If the button was held for more than 1 second, stop recording
+
                 }
+
                 recordAudio(currentScreenName, isRecordedStarted);
+            }
             }
         );
     }
@@ -2538,6 +2602,12 @@
         });
     }
 
+    window.addEventListener('recordingStopped', (event) => {
+        if (event.detail.hasSpoken) {
+            createDownloadLink(event.detail.wavBlob, currentScreenName);
+        }
+    });
+
     async function startRecording(screenName) {
         // Record metrics
         addMetricsCount('micUsedCount');
@@ -2545,53 +2615,134 @@
         var chunks = [];
         var arrayBufferData;
 
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices
-                .getUserMedia({
-                    audio: true,
-                })
-                .then((stream) => {
-                    mediaRecorder = new MediaRecorder(stream);
+        visualizerControl.startRecording();
 
-                    mediaRecorder.start();
+        //if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        //    navigator.mediaDevices
+        //        .getUserMedia({
+        //            audio: true,
+        //        })
+        //        .then((stream) => {
 
-                    // Show audio recording visualizer
-                    audioVisualizer.startVisualizer(stream);
-                    //$('.sendtext').hide();
-                    //showHideMessagePlaceholder(false);
+        //            isRecordingStopped = false;
+        //            mediaRecorder = new MediaRecorder(stream);
+        //            console.log('after mediaRecorder.start()', mediaRecorder);
+        //            mediaRecorder.start();
 
-                    mediaRecorder.ondataavailable = async (e) => {
-                        arrayBufferData = await e.data.arrayBuffer();
 
-                        chunks.push(e.data);
+        //            // Show audio recording visualizer
+        //            console.log('calling startVisualizer');
+        //            audioVisualizer.startVisualizer(stream);
+        //            //$('.sendtext').hide();
+        //            //showHideMessagePlaceholder(false);
 
-                        const blob = new Blob(chunks);
+        //            mediaRecorder.ondataavailable = async (e) => {
+        //                arrayBufferData = await e.data.arrayBuffer();
 
-                        const encodedBlob = await getWaveBlob(blob, false, arrayBufferData);
+        //                chunks.push(e.data);
 
-                        createDownloadLink(encodedBlob, screenName);
+        //                if (isRecordingStopped) {
+        //                    processAudioData();
+        //                }
 
-                        chunks = [];
-                    };
+        //                console.log('ondataAvailable:', chunks);
 
-                    mediaRecorder.onstop = async (e) => {
-                        audioVisualizer.stopVisualizer();
+        //                //const blob = new Blob(chunks);
 
-                        //$('.sendtext').show();
-                        //showHideMessagePlaceholder(true);
-                    };
-                })
-                .catch((error) => {
-                    audioVisualizer.stopVisualizer();
+        //                //const encodedBlob = await getWaveBlob(blob, false, arrayBufferData);
 
-                    //$('.sendtext').show();
-                    //showHideMessagePlaceholder(true);
-                });
+        //                //createDownloadLink(encodedBlob, screenName);
+
+        //                //chunks = [];
+        //            };
+
+        //            mediaRecorder.onstart = (event) => {
+        //                console.log('mediaRecorder.onstart');
+        //            };
+
+        //            mediaRecorder.onstop = async (e) => {
+        //                isRecordingStopped = true;
+        //                console.log('mediaRecorder.onstop', chunks);
+
+        //                if (chunks.length > 0) {
+
+        //                    const blob = new Blob(chunks);
+
+        //                    const encodedBlob = await getWaveBlob(blob, false, arrayBufferData);
+        //                    createDownloadLink(encodedBlob);
+
+        //                    //chunks = [];
+        //                    processAudioData();
+        //                } else {
+        //                    console.log('No voice data was recorded.');
+        //                }
+
+        //                //let stream = mediaRecorder.stream;
+        //                stream.getTracks().forEach(track => track.stop());
+
+        //                console.log('calling stopVisualizer');
+        //                //audioVisualizer.stopVisualizer();
+
+        //                //$('.sendtext').show();
+        //                //showHideMessagePlaceholder(true);
+        //            };
+
+
+        //            function processAudioData() {
+        //                const audioBlob = new Blob(chunks, { type: 'audio/wav' });
+        //                const audioContext = new AudioContext();
+        //                audioBlob.arrayBuffer().then(arrayBuffer => {
+        //                    audioContext.decodeAudioData(arrayBuffer).then(audioBuffer => {
+        //                        const analyser = audioContext.createAnalyser();
+        //                        const source = audioContext.createBufferSource();
+        //                        source.buffer = audioBuffer;
+        //                        source.connect(analyser);
+        //                        analyser.connect(audioContext.destination);
+
+        //                        analyser.fftSize = 256;
+        //                        const bufferLength = analyser.frequencyBinCount;
+        //                        const dataArray = new Uint8Array(bufferLength);
+
+        //                        source.start();
+
+        //                        function detectSilence() {
+        //                            analyser.getByteFrequencyData(dataArray);
+        //                            const sum = dataArray.reduce((a, b) => a + b, 0);
+        //                            const average = sum / bufferLength;
+
+        //                            if (average < 10) { // Adjust threshold as needed
+        //                                console.log("Silence detected");
+        //                            } else {
+        //                                console.log("Sound detected");
+        //                            }
+
+        //                            if (source.playbackState === source.FINISHED_STATE) {
+        //                                return;
+        //                            }
+
+        //                            requestAnimationFrame(detectSilence);
+        //                        }
+
+        //                        detectSilence();
+        //                    });
+        //                });
+
+        //        })
+        //        .catch((error) => {
+        //            console.log('error ', error);
+        //            //audioVisualizer.stopVisualizer();
+
+        //            //$('.sendtext').show();
+        //            //showHideMessagePlaceholder(true);
+        //        });
+        //}
         }
-    }
 
     async function stopRecording() {
-        mediaRecorder.stop();
+        //if (mediaRecorder) {
+        //    mediaRecorder.stop();
+        //}
+        visualizerControl.stopRecording();
     }
 
     function createDownloadLink(blob, screenName) {
@@ -2609,10 +2760,14 @@
                 base64 += '=';
             }
 
+            chatLoader('base64audio');
+
             detectAudioLanguage(base64).then((result) => {
+
                 askQuestions(base64, 'base64audio', blob, screenName);
             }).catch((error) => {
                 askQuestions(base64, 'base64audio', blob, screenName);
+                hideChatLoader('base64audio');
             });
             //askQuestions(base64, 'base64audio', blob, screenName);
         };
