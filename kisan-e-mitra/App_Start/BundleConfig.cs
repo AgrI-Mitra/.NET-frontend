@@ -8,9 +8,6 @@ namespace KisanEMitra
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
-
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.bundle.min.js"));
 
@@ -32,6 +29,9 @@ namespace KisanEMitra
 
             bundles.Add(new Bundle("~/bundles/chatbot-js").Include(
                 "~/Content/js/chatbot.min.js"));
+
+            bundles.Add(new Bundle("~/bundles/splash").Include(
+                "~/Content/js/splash.min.js"));
 
             BundleTable.EnableOptimizations = true;
         }

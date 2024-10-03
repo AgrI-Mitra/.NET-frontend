@@ -50,5 +50,11 @@
     "inputFiles": [
       "Content/js/chatbot.js"
     ]
+  },
+  {
+    "outputFileName": "Content/js/splash.min.js",
+    "inputFiles": [
+      "Content/js/splash.js"
+    ]
   }
 ]
