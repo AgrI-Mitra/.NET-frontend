@@ -73,7 +73,7 @@ body {
         color: #8e8e9e;
     }
 
-.my-msg-content {
+.msg-content {
     border-top: 1px solid #eae9e9;
     background: #fff;
     display: flex;
@@ -81,7 +81,7 @@ body {
     padding: 1% 2%;
 }
 
-    .my-msg-content:first-child {
+    .msg-content:first-child {
         border-top: 0;
     }
 

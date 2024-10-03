@@ -85,7 +85,7 @@
 }
 
 @media (max-width:400px) {
-    .my-msg-content {
+    .msg-content {
         padding: 2% 0%;
     }
 

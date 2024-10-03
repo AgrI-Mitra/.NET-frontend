@@ -423,7 +423,7 @@ img.query-msg-send-icon {
     top: 0;*/
 }
 
-.my-msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper {
+.msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper {
     padding-left: 5px;
 }
 
@@ -663,6 +663,8 @@ img.query-msg-send-icon {
 
 #schemesDropdownButton {
     border-color: transparent !important;
+    white-space: normal;
+    min-width:154px;
 }
 
 .language-dropdown-toggle {

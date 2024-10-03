@@ -77,15 +77,20 @@ body {
         color: #8e8e9e;
     }
 
-.my-msg-content {
-    border-top: 1px solid #eae9e9;
+.user-mesg-content {
     background: #fff;
+}
+
+.msg-content {
+    border-top: 1px solid #eae9e9;
+    
     display: flex;
     justify-content: space-between;
     padding: 1% 0%;
+    margin: 0px 2px;
 }
 
-    .my-msg-content:first-child {
+    .msg-content:first-child {
         border-top: 0;
     }
 
@@ -116,11 +121,11 @@ body {
     max-width: 450px !important;
 }
 
-.system-msg-bg {
+/*.system-msg-bg {
     background: #f7f7f8;
     margin-left: 2px;
     margin-right: 2px;
-}
+}*/
 
 .my-msg-icons {
     display: flex;
