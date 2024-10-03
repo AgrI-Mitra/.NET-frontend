@@ -127,6 +127,8 @@
     var currentConversationId = null;
 
     var hasConversationLimitReached = false;
+    let lastReponseProvider = '';
+    let wadhwaniResponseCounter = 0;
     var chatbotConfirmationModalId = 'chatbotConfirmationModal';
     var startNewConversationModalId = 'startNewConversationModal';
     var maintenanceModeModalId = 'maintenanceModeModal';
@@ -149,8 +151,8 @@
     var thumbDislikeImagePath = '../Content/images/hand-thumbs-down.svg';
     var thumbDislikeHighlightImagePath =
         '../Content/images/hand-thumbs-down-fill.svg';
-    var thumbLikeImagePath = '../Content/images/hand-thumbs-up.svg';
-    var thumbLikeHighlightImagePath = '../Content/images/hand-thumbs-up-fill.svg';
+    const thumbLikeImagePath = '../Content/images/hand-thumbs-up.svg';
+    const thumbLikeHighlightImagePath = '../Content/images/hand-thumbs-up-fill.svg';
     var chatbotLogoImagePath = '../Content/images/chatbot.png'; //"../Content/images/MOA_logo.png";
 
     // Voice Recording button related variables - To Apply animation, change icon images etc. - START
@@ -418,45 +420,80 @@
     };
 
     // This method is used to show an indicator that chatbot response is in progress
+    //function chatLoader(category) {
+
+    //    if (category == 'base64audio') {
+
+    //        //audioVisualizer.startAutoVisualizer();
+    //        visualizerControl.startIdleAnimation();
+    //    } else {
+    //        let chatMessageWrapperStartingDivHtmlContent =
+    //            getChatMessageWrapperStartingDivHtmlContent(
+    //                true,
+    //                'responseLoader',
+    //                'conversationsWrapper'
+    //            ); // Main chat message wrapper
+    //        let chatbotRespondingHtmlContent =
+    //            getChatbotRespondingIndicatorHtmlContent();
+
+    //        const responseLoader =
+    //            chatMessageWrapperStartingDivHtmlContent +
+    //            chatMessageWrapperColumnTwoStartingDivHtmlContent +
+    //            startingDivHtmlContent +
+    //            chatbotLogoHtmlContent +
+    //            spanStartingHtmlContent +
+    //            chatbotRespondingHtmlContent +
+    //            spanClosingHtmlContent +
+    //            closingDivHtmlContent +
+    //            closingDivHtmlContent +
+    //            closingDivHtmlContent;
+
+    //        // $('#message-list').append(responseLoader);
+    //        const messageList = document.getElementById('message-list');
+    //        messageList.appendChild(responseLoader);
+    //    }
+    //}
     function chatLoader(category) {
-
         if (category == 'base64audio') {
-
-            //audioVisualizer.startAutoVisualizer();
-            visualizerControl.startIdleAnimation();
+            // audioVisualizer.startAutoVisualizer();
+            visualizerControl.startIdleAnimation(currentScreenName);
         } else {
-            let chatMessageWrapperStartingDivHtmlContent =
-                getChatMessageWrapperStartingDivHtmlContent(
-                    true,
-                    'responseLoader',
-                    'conversationsWrapper'
-                ); // Main chat message wrapper
-            let chatbotRespondingHtmlContent =
-                getChatbotRespondingIndicatorHtmlContent();
+            // Main chat message wrapper
+            let chatMessageWrapperElement = getChatMessageWrapperStartingDivHtmlContent(true, 'responseLoader', 'conversationsWrapper');
+            let chatbotRespondingElement = getChatbotRespondingIndicatorHtmlContent();
 
-            const responseLoader =
-                chatMessageWrapperStartingDivHtmlContent +
-                chatMessageWrapperColumnTwoStartingDivHtmlContent +
-                startingDivHtmlContent +
-                chatbotLogoHtmlContent +
-                spanStartingHtmlContent +
-                chatbotRespondingHtmlContent +
-                spanClosingHtmlContent +
-                closingDivHtmlContent +
-                closingDivHtmlContent +
-                closingDivHtmlContent;
+            // Assuming the variables contain HTML elements instead of strings
+            const chatMessageColumnTwoElement = getChatMessageWrapperColumnTwoStartingDivHtmlContent(); //chatMessageWrapperColumnTwoStartingDivHtmlContent;
+            const userDivElement = getStartingDivHtmlContent();//startingDivHtmlContent;
+            const chatbotLogoElement = getChatbotLogoHtmlContent();//chatbotLogoHtmlContent;
+            const messageSpanElement = getStartingSpanHtmlContent();//spanStartingHtmlContent;
 
-            $('#message-list').append(responseLoader);
+            // Append the chatbot responding indicator to the span element
+            messageSpanElement.appendChild(chatbotRespondingElement);
+
+            // Append the elements to their respective parents
+            userDivElement.appendChild(chatbotLogoElement);
+            userDivElement.appendChild(messageSpanElement);
+            chatMessageColumnTwoElement.appendChild(userDivElement);
+            chatMessageWrapperElement.appendChild(chatMessageColumnTwoElement);
+
+            // Append the response loader to the message list
+            const messageList = document.getElementById('message-list');
+            messageList.appendChild(chatMessageWrapperElement);
         }
     }
 
     // This method is used to hide the chatbot response in progress indicator
     function hideChatLoader(category) {
-        $('#chatbotMessageWrapper-responseLoader').remove();
+        //$('#chatbotMessageWrapper-responseLoader').remove();
+        let responseLoaderElement = document.getElementById('chatbotMessageWrapper-responseLoader');
+        if (responseLoaderElement) {
+            responseLoaderElement.remove();
+        }
 
         if (category == 'base64audio') {
             //audioVisualizer.stopAutoVisualizer();
-            visualizerControl.stopIdleAnimation();
+            visualizerControl.stopIdleAnimation(currentScreenName);
         }
     }
 
@@ -473,16 +510,19 @@
             trimmedTextValue != null &&
             trimmedTextValue != ''
         ) {
-            $(sendTextButtonId).css({ opacity: 1 });
-            $(sendTextButtonId).prop('disabled', false);
+            document.querySelector(sendTextButtonId).style.opacity = 1;
+            document.querySelector(sendTextButtonId).disabled = false;
         } else {
-            $(sendTextButtonId).css({ opacity: 0.4 });
-            $(sendTextButtonId).prop('disabled', true);
+            document.querySelector(sendTextButtonId).style.opacity = 0.4;
+            document.querySelector(sendTextButtonId).disabled = true;
 
-            $(userQuestionTextBox)[0].value = null;
+            document.querySelector(userQuestionTextBox).value = null;
         }
 
-        autosize.update($(userQuestionTextBox));
+        autosize.update(document.querySelector(userQuestionTextBox));
+        //$(userQuestionTextBox)[0].value = null;
+        //autosize.update($(userQuestionTextBox));
+
     }
 
     //Reusable methods to set html content to show chat messages by user as well as chatbot - START
@@ -492,33 +532,66 @@
      * @param {any} customId
      * @returns
      */
+    // function getChatMessageWrapperStartingDivHtmlContent(
+    //     isSystemMessage,
+    //     customId,
+    //     customClass
+    // ) {
+    //     var systemMessageBackgroundClass =
+    //         isSystemMessage == true ? 'system-msg-bg' : '';
+    //     var customChatMessageWrapperId =
+    //         customId != null || customId != undefined
+    //             ? "id='" + 'chatbotMessageWrapper-' + customId + "'"
+    //             : '';
+
+    //     var customChatMessageWrapperClass =
+    //         customClass != null || customClass != undefined ? customClass + ' ' : ' ';
+
+    //     return (
+    //         "<div class='msg-content chatbot-message-wrapper " +
+    //         customChatMessageWrapperClass +
+    //         systemMessageBackgroundClass +
+    //         "'" +
+    //         customChatMessageWrapperId +
+    //         '>'
+    //     );
+    // }
     function getChatMessageWrapperStartingDivHtmlContent(
         isSystemMessage,
         customId,
         customClass
     ) {
-        var systemMessageBackgroundClass =
-            isSystemMessage == true ? 'system-msg-bg' : '';
-        var customChatMessageWrapperId =
-            customId != null || customId != undefined
-                ? "id='" + 'chatbotMessageWrapper-' + customId + "'"
-                : '';
+        // Create a div element
+        var div = document.createElement('div');
 
-        var customChatMessageWrapperClass =
-            customClass != null || customClass != undefined ? customClass + ' ' : ' ';
+        // Add common classes
+        div.classList.add('msg-content', 'chatbot-message-wrapper');
 
-        return (
-            "<div class='my-msg-content chatbot-message-wrapper " +
-            customChatMessageWrapperClass +
-            systemMessageBackgroundClass +
-            "'" +
-            customChatMessageWrapperId +
-            '>'
-        );
+        // Add system message background class if applicable
+        if (!isSystemMessage) {
+            div.classList.add('user-mesg-content');
+        }
+
+        // Add custom ID if provided
+        if (customId != null && customId != undefined) {
+            div.id = 'chatbotMessageWrapper-' + customId;
+        }
+
+        // Add custom classes if provided
+        if (customClass != null && customClass != undefined) {
+            customClass.split(' ').forEach(cls => div.classList.add(cls));
+        }
+
+        return div;
     }
 
+    // function getStartingDivHtmlContent() {
+    //     return '<div>';
+    // }
     function getStartingDivHtmlContent() {
-        return '<div>';
+        // Create a div element
+        var div = document.createElement('div');
+        return div;
     }
     /**
      * This method is used to get closing div html content
@@ -532,16 +605,30 @@
      * This method is used to get starting span tag html content
      * @returns
      */
-    function getStartingSpanHtmlContent(customId) {
-        var customSpanWrapperId =
-            customId != null || customId != undefined
-                ? "id='" + 'chat-message-span-wrapper-' + customId + "'"
-                : '';
+    //function getStartingSpanHtmlContent(customId) {
+    //    var customSpanWrapperId =
+    //        customId != null || customId != undefined
+    //            ? "id='" + 'chat-message-span-wrapper-' + customId + "'"
+    //            : '';
 
-        return "<span class='chat-message-span-wrapper'" +
-            " " +
-            customSpanWrapperId +
-            ">";
+    //    return "<span class='chat-message-span-wrapper'" +
+    //        " " +
+    //        customSpanWrapperId +
+    //        ">";
+    //}
+    function getStartingSpanHtmlContent(customId) {
+        // Create a span element
+        var span = document.createElement('span');
+
+        // Add common class
+        span.classList.add('chat-message-span-wrapper');
+
+        // Add custom ID if provided
+        if (customId != null && customId != undefined) {
+            span.id = 'chat-message-span-wrapper-' + customId;
+        }
+
+        return span;
     }
 
     /**
@@ -557,8 +644,17 @@
      * Message text will be showing inside this div in html
      * @returns
      */
+    //function getChatMessageWrapperColumnTwoStartingDivHtmlContent() {
+    //    return "<div class='chatbot-message-wrapper-column-two'>";
+    //}
     function getChatMessageWrapperColumnTwoStartingDivHtmlContent() {
-        return "<div class='chatbot-message-wrapper-column-two'>";
+        // Create a div element
+        var div = document.createElement('div');
+
+        // Add the specific class
+        div.classList.add('chatbot-message-wrapper-column-two');
+
+        return div;
     }
 
     /**
@@ -566,36 +662,92 @@
      * which will be used to show action buttons such as message play as audio icon, like dislike buttons.
      * @returns
      */
+    //function getChatMessageWrapperColumnThreeStartingDivHtmlContent() {
+    //    return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three me-md-2'>";
+    //}
     function getChatMessageWrapperColumnThreeStartingDivHtmlContent() {
-        return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three me-md-2'>";
+        // Create a div element
+        var div = document.createElement('div');
+
+        // Add the specific classes
+        div.classList.add('d-flex', 'align-self-start', 'chatbot-message-wrapper-column-three', 'me-md-2');
+
+        return div;
     }
 
+    //function getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(customId, keepHidden) {
+    //    return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three-part-two" + (keepHidden == true ? " d-none'" : "'") + (customId ? "id='chatbot-message-wrapper-column-three-part-two" + customId + "'" : "") + "'me-md-2'>";
+    //}
     function getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(customId, keepHidden) {
-        return "<div class='d-flex align-self-start chatbot-message-wrapper-column-three-part-two" + (keepHidden == true ? " d-none'" : "'") + (customId ? "id='chatbot-message-wrapper-column-three-part-two" + customId + "'" : "") + "'me-md-2'>";
+        // Create a div element
+        var div = document.createElement('div');
+
+        // Add the specific classes
+        div.classList.add('d-flex', 'align-self-start', 'chatbot-message-wrapper-column-three-part-two', 'me-md-2');
+
+        // Add the 'd-none' class if keepHidden is true
+        if (keepHidden === true) {
+            div.classList.add('d-none');
+        }
+
+        // Add custom ID if provided
+        if (customId) {
+            div.id = 'chatbot-message-wrapper-column-three-part-two' + customId;
+        }
+
+        return div;
     }
 
     function showChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(customId) {
-        $('#chatbot-message-wrapper-column-three-part-two' + customId).removeClass('d-none');
+        //$('#chatbot-message-wrapper-column-three-part-two' + customId).removeClass('d-none');
+        var chatbotMessageWrapperColumnThreePartTwo = document.getElementById('chatbot-message-wrapper-column-three-part-two' + customId);
+        if (chatbotMessageWrapperColumnThreePartTwo) {
+            chatbotMessageWrapperColumnThreePartTwo.classList.remove('d-none');
+        }
     }
 
     /**
      * This method is used to get html content for chatbot logo
      * @returns
      */
+    //function getChatbotLogoHtmlContent() {
+    //    return (
+    //        "<img src='" +
+    //        chatbotLogoImagePath +
+    //        "' class='chatbot-message-wrapper-column-one'>"
+    //    );
+    //}
     function getChatbotLogoHtmlContent() {
-        return (
-            "<img src='" +
-            chatbotLogoImagePath +
-            "' class='chatbot-message-wrapper-column-one'>"
-        );
+        // Create an img element
+        var img = document.createElement('img');
+
+        // Set the src attribute
+        img.src = chatbotLogoImagePath;
+
+        // Add the specific class
+        img.classList.add('chatbot-message-wrapper-column-one');
+
+        return img;
     }
 
     /**
      * This method is used to get html content for user logo
      * @returns
      */
+    //function getUserLogoHtmlContent() {
+    //    return "<img src='../Content/images/user.svg' class='chat-dp-img-width user-avatar-img rounded-circle chatbot-message-wrapper-column-one'>";
+    //}
     function getUserLogoHtmlContent() {
-        return "<img src='../Content/images/user.svg' class='chat-dp-img-width user-avatar-img rounded-circle chatbot-message-wrapper-column-one'>";
+        // Create an img element
+        var img = document.createElement('img');
+
+        // Set the src attribute
+        img.src = '../Content/images/user.svg';
+
+        // Add the specific classes
+        img.classList.add('chat-dp-img-width', 'user-avatar-img', 'rounded-circle', 'chatbot-message-wrapper-column-one');
+
+        return img;
     }
 
     /**
@@ -603,16 +755,40 @@
      * @param {any} audioId
      * @returns
      */
+    //function getChatMessageAudioImageHtmlContent(audioId) {
+    //    return (
+    //        "<img id='playMessageImg-" +
+    //        audioId +
+    //        "'" +
+    //        "data-audio-id='" +
+    //        audioId +
+    //        "'" +
+    //        "src='../Content/images/start-audio.svg' alt='avatar 1' class='chatbot-message-action-buttons' data-action-name='playAudioMessage'>"
+    //    );
+    //}
     function getChatMessageAudioImageHtmlContent(audioId) {
-        return (
-            "<img id='playMessageImg-" +
-            audioId +
-            "'" +
-            "data-audio-id='" +
-            audioId +
-            "'" +
-            "src='../Content/images/start-audio.svg' alt='avatar 1' class='chatbot-message-action-buttons' data-action-name='playAudioMessage'>"
-        );
+        // Create an img element
+        var img = document.createElement('img');
+
+        // Set the id attribute
+        img.id = 'playMessageImg-' + audioId;
+
+        // Set the data-audio-id attribute
+        img.setAttribute('data-audio-id', audioId);
+
+        // Set the src attribute
+        img.src = '../Content/images/start-audio.svg';
+
+        // Set the alt attribute
+        img.alt = 'avatar 1';
+
+        // Add the specific class
+        img.classList.add('chatbot-message-action-buttons');
+
+        // Set the data-action-name attribute
+        img.setAttribute('data-action-name', 'playAudioMessage');
+
+        return img;
     }
 
     /**
@@ -620,35 +796,72 @@
      * @param {any} messageId
      * @returns
      */
+    //function getFeedbackButtonsHtmlContent(messageId) {
+    //    return (
+    //        "<img id='thumbLikeButton-" +
+    //        messageId +
+    //        "'" +
+    //        "data-message-id='" +
+    //        messageId +
+    //        "'" +
+    //        "src='" +
+    //        thumbLikeImagePath +
+    //        "' alt='avatar 1' class='chatbot-message-action-buttons' data-action-name='likeMessage'>" +
+    //        "<img id='thumbDislikeButton-" +
+    //        messageId +
+    //        "'" +
+    //        "data-message-id='" +
+    //        messageId +
+    //        "'" +
+    //        "src='" +
+    //        thumbDislikeImagePath +
+    //        "' alt='avatar 1' class='chatbot-message-action-buttons' data-action-name='dislikeMessage'>"
+    //    );
+    //}
     function getFeedbackButtonsHtmlContent(messageId) {
-        return (
-            "<img id='thumbLikeButton-" +
-            messageId +
-            "'" +
-            "data-message-id='" +
-            messageId +
-            "'" +
-            "src='" +
-            thumbLikeImagePath +
-            "' alt='avatar 1' class='chatbot-message-action-buttons' data-action-name='likeMessage'>" +
-            "<img id='thumbDislikeButton-" +
-            messageId +
-            "'" +
-            "data-message-id='" +
-            messageId +
-            "'" +
-            "src='" +
-            thumbDislikeImagePath +
-            "' alt='avatar 1' class='chatbot-message-action-buttons' data-action-name='dislikeMessage'>"
-        );
+        // Create a fragment to hold the buttons
+        var fragment = document.createDocumentFragment();
+
+        // Create the like button
+        var likeButton = document.createElement('img');
+        likeButton.id = 'thumbLikeButton-' + messageId;
+        likeButton.setAttribute('data-message-id', messageId);
+        likeButton.src = thumbLikeImagePath;
+        likeButton.alt = 'avatar 1';
+        likeButton.classList.add('chatbot-message-action-buttons');
+        likeButton.setAttribute('data-action-name', 'likeMessage');
+
+        // Create the dislike button
+        var dislikeButton = document.createElement('img');
+        dislikeButton.id = 'thumbDislikeButton-' + messageId;
+        dislikeButton.setAttribute('data-message-id', messageId);
+        dislikeButton.src = thumbDislikeImagePath;
+        dislikeButton.alt = 'avatar 1';
+        dislikeButton.classList.add('chatbot-message-action-buttons');
+        dislikeButton.setAttribute('data-action-name', 'dislikeMessage');
+
+        // Append buttons to the fragment
+        fragment.appendChild(likeButton);
+        fragment.appendChild(dislikeButton);
+
+        return fragment;
     }
 
     /**
      * This method is used to get html content to display chatbot typing indicator
      * @returns
      */
+    //function getChatbotRespondingIndicatorHtmlContent() {
+    //    return "<div class='ms-2 dot-flashing'></div>";
+    //}
     function getChatbotRespondingIndicatorHtmlContent() {
-        return "<div class='ms-2 dot-flashing'></div>";
+        // Create a div element
+        var div = document.createElement('div');
+
+        // Add the specific classes
+        div.classList.add('ms-2', 'dot-flashing');
+
+        return div;
     }
 
     function getPopularQuestionsHtmlContent(popularQuestionsList) {
@@ -671,15 +884,15 @@
         return popularQuestionsElementsList;
     }
 
-    let userLogoHtmlContent = getUserLogoHtmlContent();
-    let chatbotLogoHtmlContent = getChatbotLogoHtmlContent();
-    let chatMessageWrapperColumnTwoStartingDivHtmlContent =
+    const userLogoHtmlContent = getUserLogoHtmlContent();
+    const chatbotLogoHtmlContent = getChatbotLogoHtmlContent();
+    const chatMessageWrapperColumnTwoStartingDivHtmlContent =
         getChatMessageWrapperColumnTwoStartingDivHtmlContent(); // Second column inside chat message wrapper
-    let chatMessageWrapperColumnThreeStartingDivHtmlContent =
+    const chatMessageWrapperColumnThreeStartingDivHtmlContent =
         getChatMessageWrapperColumnThreeStartingDivHtmlContent(); // Third column inside chat message wrapper
-    let chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent =
+    const chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent =
         getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(); // Third column inside chat message wrapper
-    let spanStartingHtmlContent = getStartingSpanHtmlContent();
+    //let spanStartingHtmlContent = getStartingSpanHtmlContent();
     let spanClosingHtmlContent = getClosingSpanHtmlContent();
     let startingDivHtmlContent = getStartingDivHtmlContent();
     let closingDivHtmlContent = getClosingDivHtmlContent();
@@ -943,6 +1156,7 @@
                 document.title = currentTranslationValue;
             }
 
+            /*
             if (
                 currentTranslationMappingDetails.htmlElementValueAttributeType ==
                 'text'
@@ -960,6 +1174,26 @@
                     currentTranslationValue
                 );
             }
+            */
+            const htmlElement = document.querySelector(
+                currentTranslationMappingDetails.htmlElementKeyAttributeType +
+                currentTranslationMappingDetails.htmlElementKeyName
+            );
+
+            if (htmlElement) {
+                if (
+                    currentTranslationMappingDetails.htmlElementValueAttributeType ===
+                    'text'
+                ) {
+                    htmlElement.innerText = currentTranslationValue;
+
+                } else {
+                    htmlElement.setAttribute(
+                        currentTranslationMappingDetails.htmlElementValueAttributeType,
+                        currentTranslationValue
+                    );
+                }
+            }
         }
         else {
             console.log('translation missing: ', currentTranslationMappingDetails);
@@ -971,6 +1205,7 @@
      */
     function languageChangeListener() {
 
+        /*
         $(document).on(
             'click',
             '.languagesLabels',
@@ -982,7 +1217,6 @@
                     'current-language-culture-code'
                 );
 
-
                 hideAllThePopovers();
                 changeLanguage(
                     languageCultureCode,
@@ -992,6 +1226,40 @@
                 );
             }
         );
+        */
+
+        //const languageLabels = document.querySelectorAll('.languagesLabels');
+
+        //languageLabels.forEach(languageLabel => {
+        //    languageLabel.addEventListener('click', function (ev) {
+        //        const languageCultureCode = this.dataset.languageCultureCode;
+        //        const languageEnglishLabel = this.dataset.languageEnglishLabel;
+        //        const languageCultureLabel = this.dataset.languageCultureLabel;
+        //        const currentLanguageCultureCode = this.dataset.currentLanguageCultureCode;
+
+        //        hideAllThePopovers();
+        //        changeLanguage(
+        //            languageCultureCode,
+        //            languageEnglishLabel,
+        //            languageCultureLabel,
+        //            currentLanguageCultureCode
+        //        );
+        //    });
+        //});
+        document.addEventListener('click', function (ev) {
+
+            const languageLabel = (ev.target).closest('.languagesLabels');
+            if (languageLabel) {
+                const languageCultureCode = languageLabel.getAttribute('data-language-culture-code');
+                const languageEnglishLabel = languageLabel.getAttribute('data-language-english-label');
+                const languageCultureLabel = languageLabel.getAttribute('data-language-culture-label');
+                const currentLanguageCultureCode = languageLabel.getAttribute('data-current-language-culture-code');
+
+                hideAllThePopovers();
+
+                changeLanguage(languageCultureCode, languageEnglishLabel, languageCultureLabel, currentLanguageCultureCode);
+            }
+        });
     }
 
     /**
@@ -999,11 +1267,12 @@
      */
     function schemeChangeListener() {
 
+        /*
         $(document).on(
             'click',
             '.scheme-label-wrapper',
             async function (ev) {
-                let selectedSchemeId = $(this).data('scheme-id');
+                let selectedSchemeId = this.dataset.schemeId; //$(this).data('scheme-id');
 
                 const languageCultureCode = getSetCurrentLanguageCode();
 
@@ -1036,6 +1305,78 @@
                 }
             }
         );
+        */
+        //const schemeLabelWrappers = document.querySelectorAll('.scheme-label-wrapper');
+
+        //schemeLabelWrappers.forEach(schemeLabelWrapper => {
+        //    schemeLabelWrapper.addEventListener('click', async function (ev) {
+        //        let selectedSchemeId = this.dataset.schemeId; //$(this).data('scheme-id');
+
+        //        const languageCultureCode = getSetCurrentLanguageCode();
+
+        //        removePreviousWelcomeGreetingMessage(languageCultureCode);
+
+        //        hideAllThePopovers();
+
+        //        // Proceed ahead only if selected scheme is different than previous one
+        //        if (selectedSchemeId != schemesInfo.currentScheme) {
+
+        //            schemesInfo.bindSchemesToDropdown(schemesInfo.list, selectedSchemeId);
+        //            //bindPopularQuestions();
+
+        //            // Get current scheme change message
+        //            currentLanguageInfo = GetDynamicTranslations();
+        //            //await getWelcomeGreetingsAudio();
+        //            const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
+        //            //updateTranslations([], ["welcome_greeting"]);
+        //            //updateWelcomeGreetingMessage();
+        //            const uniqueMessageId = 'welcome-greeting-message-base64-' + languageCultureCode + '-audio';
+
+        //            //Add welcome greeting change message to chat screen
+        //            updateChatMessagesList(
+        //                currentLanguageChangeMessage, uniqueMessageId,
+        //                '',
+        //                true,
+        //                true,
+        //                true
+        //            );
+        //        }
+        //    });
+        //});
+
+        document.addEventListener('click', async function (ev) {
+            const schemeLabelWrapper = (ev.target).closest('.scheme-label-wrapper');
+
+            if (schemeLabelWrapper) {
+                let selectedSchemeId = schemeLabelWrapper.dataset.schemeId;
+
+                const languageCultureCode = getSetCurrentLanguageCode();
+
+                removePreviousWelcomeGreetingMessage(languageCultureCode);
+
+                hideAllThePopovers();
+
+                // Proceed ahead only if selected scheme is different than previous one
+                if (selectedSchemeId !== schemesInfo.currentScheme) {
+                    schemesInfo.bindSchemesToDropdown(schemesInfo.list, selectedSchemeId);
+
+                    // Get current scheme change message
+                    let currentLanguageInfo = GetDynamicTranslations();
+                    const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
+                    const uniqueMessageId = 'welcome-greeting-message-base64-' + languageCultureCode + '-audio';
+
+                    // Add welcome greeting change message to chat screen
+                    updateChatMessagesList(
+                        currentLanguageChangeMessage,
+                        uniqueMessageId,
+                        '',
+                        true,
+                        true,
+                        true
+                    );
+                }
+            }
+        });
     }
 
     //function voiceRecorderListener() {
@@ -1064,120 +1405,265 @@
     //    );
     //}
 
-    function voiceRecorderListener() {
+    // function voiceRecorderListener() {
 
+    //     let isRecordedStarted = false;
+
+    //     $(document).on(
+    //         'mousedown touchstart mouseup touchend',
+    //         voiceRecordButtonClass,
+    //         function (ev) {
+
+    //             currentScreenName = $(this).data('screen-name');
+
+    //             if (ev.type === 'mousedown' || ev.type === 'touchstart') {
+    //                 isRecordedStarted = true;
+    //                 //$(this).addClass('recording');
+
+    //                 // For each element in voiceRecordButtonContainer, add recording class
+    //                 voiceRecordButtonContainer.forEach(function () {
+    //                     $(this).addClass('recording');
+    //                 });
+
+    //                 //voiceRecordButtonContainer.classList.add('recording');
+
+    //                 // Start a timeout to call recordAudio after 1 second
+    //                 recordTimeout = window.setTimeout(() => {
+    //                     recordAudio(currentScreenName, isRecordedStarted);
+    //                 }, 200);
+    //             } else if (ev.type === 'mouseup' || ev.type === 'touchend') {
+    //                 isRecordedStarted = false;
+    //                 //$(this).removeClass('recording');
+    //                 //voiceRecordButtonContainer.classList.remove('recording');
+
+    //                 // For each element in voiceRecordButtonContainer, remove recording class
+    //                 voiceRecordButtonContainer.forEach(function () {
+    //                     $(this).removeClass('recording');
+    //                 });
+
+    //                 // If the button is released before 1 second, clear the timeout
+    //                 if (recordTimeout) {
+    //                     clearTimeout(recordTimeout);
+    //                     recordTimeout = null;
+    //                 } else {
+    //                     // If the button was held for more than 1 second, stop recording
+
+    //                 }
+
+    //                 recordAudio(currentScreenName, isRecordedStarted);
+    //             }
+    //         }
+    //     );
+    // }
+
+    //function voiceRecorderListener() {
+    //    let isRecordedStarted = false;
+
+    //    // Function to handle the start of recording
+    //    function startRecordingHandler(ev) {
+    //        currentScreenName = ev.target.getAttribute('data-screen-name');
+    //        isRecordedStarted = true;
+
+    //        // Add recording class to each element in voiceRecordButtonContainer
+    //        voiceRecordButtonContainer.forEach(function (element) {
+    //            element.classList.add('recording');
+    //        });
+
+    //        // Start a timeout to call recordAudio after 200 milliseconds
+    //        recordTimeout = window.setTimeout(() => {
+    //            recordAudio(currentScreenName, isRecordedStarted);
+    //        }, 200);
+    //    }
+
+    //    // Function to handle the end of recording
+    //    function stopRecordingHandler(ev) {
+    //        isRecordedStarted = false;
+
+    //        // Remove recording class from each element in voiceRecordButtonContainer
+    //        voiceRecordButtonContainer.forEach(function (element) {
+    //            element.classList.remove('recording');
+    //        });
+
+    //        // If the button is released before 200 milliseconds, clear the timeout
+    //        if (recordTimeout) {
+    //            clearTimeout(recordTimeout);
+    //            recordTimeout = null;
+    //        } else {
+    //            // If the button was held for more than 200 milliseconds, stop recording
+    //            recordAudio(currentScreenName, isRecordedStarted);
+    //        }
+    //    }
+
+    //    // Attach event listeners to elements matching voiceRecordButtonClass
+    //    document.querySelectorAll(voiceRecordButtonClass).forEach(function (element) {
+    //        element.addEventListener('mousedown', startRecordingHandler);
+    //        element.addEventListener('touchstart', startRecordingHandler);
+    //        element.addEventListener('mouseup', stopRecordingHandler);
+    //        element.addEventListener('touchend', stopRecordingHandler);
+    //    });
+    //}
+
+    function voiceRecorderListener() {
         let isRecordedStarted = false;
 
-        $(document).on(
-            'mousedown touchstart mouseup touchend',
-            voiceRecordButtonClass,
-            function (ev) {
+        document.addEventListener('mousedown', handleEvent);
+        document.addEventListener('touchstart', handleEvent);
+        document.addEventListener('mouseup', handleEvent);
+        document.addEventListener('touchend', handleEvent);
 
-                currentScreenName = $(this).data('screen-name');
+        function handleEvent(ev) {
+            const target = ev.target.closest(voiceRecordButtonClass);
+            if (!target) return;
 
-                if (ev.type === 'mousedown' || ev.type === 'touchstart') {
-                    isRecordedStarted = true;
-                    //$(this).addClass('recording');
+            currentScreenName = target.getAttribute('data-screen-name');
 
-                    // For each element in voiceRecordButtonContainer, add recording class
-                    voiceRecordButtonContainer.forEach(function () {
-                        $(this).addClass('recording');
-                    });
+            if (ev.type === 'mousedown' || ev.type === 'touchstart') {
+                isRecordedStarted = true;
 
-                    //voiceRecordButtonContainer.classList.add('recording');
+                // Add 'recording' class to each element in voiceRecordButtonContainer
+                voiceRecordButtonContainer.forEach(element => {
 
-                    // Start a timeout to call recordAudio after 1 second
-                    recordTimeout = window.setTimeout(() => {
-                        recordAudio(currentScreenName, isRecordedStarted);
-                    }, 200);
-                } else if (ev.type === 'mouseup' || ev.type === 'touchend') {
-                    isRecordedStarted = false;
-                    //$(this).removeClass('recording');
-                    //voiceRecordButtonContainer.classList.remove('recording');
-
-                    // For each element in voiceRecordButtonContainer, remove recording class
-                    voiceRecordButtonContainer.forEach(function () {
-                        $(this).removeClass('recording');
-                    });
-
-                    // If the button is released before 1 second, clear the timeout
-                    if (recordTimeout) {
-                        clearTimeout(recordTimeout);
-                        recordTimeout = null;
-                    } else {
-                        // If the button was held for more than 1 second, stop recording
-
+                    if (element.hasAttribute('data-screen-name') && element.getAttribute('data-screen-name') === currentScreenName) {
+                        element.classList.add('recording');
                     }
+                });
 
+                // Start a timeout to call recordAudio after 1 second
+                recordTimeout = window.setTimeout(() => {
                     recordAudio(currentScreenName, isRecordedStarted);
-                }
-            }
-        );
-    }
+                }, 200);
+            } else if (ev.type === 'mouseup' || ev.type === 'touchend') {
+                isRecordedStarted = false;
 
+                // Remove 'recording' class from each element in voiceRecordButtonContainer
+                voiceRecordButtonContainer.forEach(element => {
+                    element.classList.remove('recording');
+                });
+
+                // If the button is released before 1 second, clear the timeout
+                if (recordTimeout) {
+                    clearTimeout(recordTimeout);
+                    recordTimeout = null;
+                } else {
+                    // If the button was held for more than 1 second, stop recording
+                }
+
+                recordAudio(currentScreenName, isRecordedStarted);
+            }
+        }
+    }
     function generalQuestionClickListener() {
-        $(document).on(
-            'click',
-            '.popular-query-card',
-            function (event) {
+
+        document.addEventListener('click', function (event) {
+            const element = event.target;
+            if (element.classList.contains('popular-query-card')) {
                 event.stopPropagation();
-                const popularQuestion = $(this).data('popular-question');
-                const popularQuestionKey = $(this).attr('id');
+                const popularQuestion = card.dataset.popularQuestion;
+                const popularQuestionKey = card.id;
                 copyPopularQuestionInTextBox(popularQuestion, false, true);
                 toggleHamburger();
             }
-        );
+        });
+
+        //const popularQueryCards = document.querySelectorAll('.popular-query-card');
+
+        //popularQueryCards.forEach(card => {
+        //    card.addEventListener('click', function (event) {
+        //        event.stopPropagation();
+        //        const popularQuestion = card.dataset.popularQuestion;
+        //        const popularQuestionKey = card.id;
+        //        copyPopularQuestionInTextBox(popularQuestion, false, true);
+        //        toggleHamburger();
+        //    });
+        //});
     }
 
     /**
      * This method is used to listen restart session button click event
      */
+    // function restartSessionButtonOnClickListener() {
+
+    //     $(document).on(
+    //         'click',
+    //         '#restartSessionButton',
+    //         function (ev) {
+
+    //             restartSession(true);
+    //         }
+    //     );
+    // }
     function restartSessionButtonOnClickListener() {
-
-        $(document).on(
-            'click',
-            '#restartSessionButton',
-            function (ev) {
-
+        const restartButton = document.querySelector('#restartSessionButton');
+        if (restartButton) {
+            restartButton.addEventListener('click', function () {
                 restartSession(true);
-            }
-        );
+            });
+        }
     }
 
     function startNewConversationButtonOnClickListener() {
 
-        $(document).on(
-            'click',
-            '#startNewChat',
-            function (ev) {
+        // $(document).on(
+        //     'click',
+        //     '#startNewChat',
+        //     function (ev) {
 
+        //         startNewConversation();
+        //     }
+        // );
+
+        const startNewConversationButton = document.querySelector('#startNewChat');
+        if (startNewConversationButton) {
+            startNewConversationButton.addEventListener('click', function () {
                 startNewConversation();
-            }
-        );
+            });
+        }
     }
 
     function startAppTourButtonOnClickListener() {
 
-        $(document).on(
-            'click',
-            '#startAppTourButton',
-            function (ev) {
+        // $(document).on(
+        //     'click',
+        //     '#startAppTourButton',
+        //     function (ev) {
+        //         startAppTour();
+        //     }
+        // );
+
+        const startAppTourButton = document.querySelector('#startAppTourButton');
+        if (startAppTourButton) {
+            startAppTourButton.addEventListener('click', function () {
                 startAppTour();
-            }
-        );
+            });
+        }
     }
 
     function feedbackSubmitButtonOnClickListener() {
-        $(document).on('click', '#feedbackSubmitButton', function (ev) {
-            let translationFeedback = $(this).data('translation-feedback');
-            let informationFeedback = $(this).data('information-feedback');
-            let functionalityFeedback = $('#feedbackSubmitButton').data(
-                'functionality-feedback'
-            );
+        // $(document).on('click', '#feedbackSubmitButton', function (ev) {
+        //     let translationFeedback = $(this).data('translation-feedback');
+        //     let informationFeedback = $(this).data('information-feedback');
+        //     let functionalityFeedback = $('#feedbackSubmitButton').data(
+        //         'functionality-feedback'
+        //     );
 
-            let feedbackDetails = $(
-                userQuestionTextBoxClass + '[data-screen-name=' + 'feedback' + ']'
-            ).val();
+        //     let feedbackDetails = $(
+        //         userQuestionTextBoxClass + '[data-screen-name=' + 'feedback' + ']'
+        //     ).val();
+
+        //     submitFeedback(
+        //         translationFeedback,
+        //         informationFeedback,
+        //         functionalityFeedback,
+        //         feedbackDetails
+        //     );
+        // });
+
+        document.querySelector('#feedbackSubmitButton').addEventListener('click', function (ev) {
+            let translationFeedback = ev.target.getAttribute('data-translation-feedback');
+            let informationFeedback = ev.target.getAttribute('data-information-feedback');
+            let functionalityFeedback = ev.target.getAttribute('data-functionality-feedback');
+
+            let feedbackDetails = document.querySelector(userQuestionTextBoxClass + '[data-screen-name="feedback"]').value;
 
             submitFeedback(
                 translationFeedback,
@@ -1193,45 +1679,113 @@
      * Actions like, play message as audio, like, dislike or unlike chatbot response
      */
     function chatbotMessageActionButtonsOnClickListener() {
-        $(document).on('click', '.chatbot-message-action-buttons', function (ev) {
-            let actionName = $(this).data('action-name');
-            let audioId = $(this).data('audio-id');
-            let messageId = $(this).data('message-id');
-            let actionType = $(this).data('action-type');
+        // $(document).on('click', '.chatbot-message-action-buttons', function (ev) {
+        //     let actionName = $(this).data('action-name');
+        //     let audioId = $(this).data('audio-id');
+        //     let messageId = $(this).data('message-id');
+        //     let actionType = $(this).data('action-type');
 
-            if (actionName == 'setAutoPlayAudioMessage') {
-                setAutoPlayOn(audioId);
-            } else if (actionName == 'playAudioMessage') {
-                playAudio(audioId);
-            } else if (actionType == 'fe') {
-                if (actionName == 'likeMessage') {
-                    likeMessageFe(messageId);
-                } else if (actionName == 'dislikeMessage') {
-                    dislikeMessageFe(messageId);
-                }
-            } else {
-                if (actionName == 'likeMessage') {
-                    likeMessage(messageId);
-                } else if (actionName == 'dislikeMessage') {
-                    dislikeMessage(messageId);
+        //     if (actionName == 'setAutoPlayAudioMessage') {
+        //         setAutoPlayOn(audioId);
+        //     } else if (actionName == 'playAudioMessage') {
+        //         playAudio(audioId);
+        //     } else if (actionType == 'fe') {
+        //         if (actionName == 'likeMessage') {
+        //             likeMessageFe(messageId);
+        //         } else if (actionName == 'dislikeMessage') {
+        //             dislikeMessageFe(messageId);
+        //         }
+        //     } else {
+        //         if (actionName == 'likeMessage') {
+        //             likeMessage(messageId);
+        //         } else if (actionName == 'dislikeMessage') {
+        //             dislikeMessage(messageId);
+        //         }
+        //     }
+        // });
+        //document.querySelectorAll('.chatbot-message-action-buttons').forEach(function (element) {
+        //    element.addEventListener('click', function (ev) {
+        //        console.log('ev in chatrbotMessageActionButtonsOnClickListener', ev);
+        //        let actionName = ev.target.getAttribute('data-action-name');
+        //        let audioId = ev.target.getAttribute('data-audio-id');
+        //        let messageId = ev.target.getAttribute('data-message-id');
+        //        let actionType = ev.target.getAttribute('data-action-type');
+
+        //        if (actionName === 'setAutoPlayAudioMessage') {
+        //            setAutoPlayOn(audioId);
+        //        } else if (actionName === 'playAudioMessage') {
+        //            playAudio(audioId);
+        //        } else if (actionType === 'fe') {
+        //            if (actionName === 'likeMessage') {
+        //                likeMessageFe(messageId);
+        //            } else if (actionName === 'dislikeMessage') {
+        //                dislikeMessageFe(messageId);
+        //            }
+        //        } else {
+        //            if (actionName === 'likeMessage') {
+        //                likeMessage(messageId);
+        //            } else if (actionName === 'dislikeMessage') {
+        //                dislikeMessage(messageId);
+        //            }
+        //        }
+        //    });
+        //});
+        document.addEventListener('click', function (ev) {
+            const element = ev.target;
+
+            if (element.classList.contains('chatbot-message-action-buttons')) {
+                let actionName = element.getAttribute('data-action-name');
+                let audioId = element.getAttribute('data-audio-id');
+                let messageId = element.getAttribute('data-message-id');
+                let actionType = element.getAttribute('data-action-type');
+
+                if (actionName === 'setAutoPlayAudioMessage') {
+                    setAutoPlayOn(audioId);
+                } else if (actionName === 'playAudioMessage') {
+                    playAudio(audioId);
+                } else if (actionType === 'fe') {
+                    if (actionName === 'likeMessage') {
+                        likeMessageFe(messageId);
+                    } else if (actionName === 'dislikeMessage') {
+                        dislikeMessageFe(messageId);
+                    }
+                } else {
+                    if (actionName === 'likeMessage') {
+                        likeMessage(messageId);
+                    } else if (actionName === 'dislikeMessage') {
+                        dislikeMessage(messageId);
+                    }
                 }
             }
         });
     }
 
-    function chatbotConfirmationModalCloseEventListener() {
-        $(document).on(
-            'click',
-            '#chatbotConfirmationModalSaveButton',
-            function (ev) {
-                let modalType = $(this).data('modal-type');
+    // function chatbotConfirmationModalCloseEventListener() {
+    //     $(document).on(
+    //         'click',
+    //         '#chatbotConfirmationModalSaveButton',
+    //         function (ev) {
+    //             let modalType = $(this).data('modal-type');
 
-                if (modalType == 'restart-session') {
-                    $(".app_tour_language_selection_description").show();
-                    restartSession();
-                }
+    //             if (modalType == 'restart-session') {
+    //                 $(".app_tour_language_selection_description").show();
+    //                 restartSession();
+    //             }
+    //         }
+    //     );
+    // }
+
+    function chatbotConfirmationModalCloseEventListener() {
+        document.querySelector('#chatbotConfirmationModalSaveButton').addEventListener('click', function (ev) {
+            let modalType = ev.target.getAttribute('data-modal-type');
+
+            if (modalType === 'restart-session') {
+                document.querySelectorAll('.app_tour_language_selection_description').forEach(function (element) {
+                    element.style.display = 'block';
+                });
+                restartSession();
             }
-        );
+        });
     }
 
     /**
@@ -1240,45 +1794,108 @@
      *
      * @returns {void}
      */
+    // function userQuestionTextBoxOnKeyPressListener() {
+    //     $(userQuestionTextBox).keypress(function (event) {
+    //         if (event.keyCode == 13 || event.key == 'Enter') {
+    //             event.stopPropagation();
+    //             $(sendTextButtonId).click();
+    //         }
+    //     });
+    // }
     function userQuestionTextBoxOnKeyPressListener() {
-        $(userQuestionTextBox).keypress(function (event) {
-            if (event.keyCode == 13 || event.key == 'Enter') {
+        document.querySelector(userQuestionTextBox).addEventListener('keypress', function (event) {
+            if (event.keyCode === 13 || event.key === 'Enter') {
                 event.stopPropagation();
-                $(sendTextButtonId).click();
+                document.querySelector(sendTextButtonId).click();
             }
         });
     }
 
     function resendOtpOnClickListener() {
-        $(document).on('click', '.resendOTP', function (ev) {
-            resendOTP(this);
+        // $(document).on('click', '.resendOTP', function (ev) {
+        //     resendOTP(this);
+        // });
+
+        //document.querySelectorAll('.resendOTP').forEach(function (element) {
+        //    element.addEventListener('click', function (ev) {
+        //        resendOTP(element);
+        //    });
+        //});
+        // Attach a single event listener to the document
+        document.addEventListener('click', function (ev) {
+            const element = (ev.target).closest('.resendOTP');
+
+            if (element) {
+                resendOTP(element);
+            }
         });
     }
 
     function autoReadOnClickListener() {
-        $(document).on('click', '.auto-read-button-wrapper', function (ev) {
+        // $(document).on('click', '.auto-read-button-wrapper', function (ev) {
 
-            globalAutoReadFeature.setAutoReadStatus(true);
+        //     globalAutoReadFeature.setAutoReadStatus(true);
+        // });
+
+        //document.querySelectorAll('.auto-read-button-wrapper').forEach(function (element) {
+        //    element.addEventListener('click', function (ev) {
+
+        //        globalAutoReadFeature.setAutoReadStatus(true);
+        //    })
+        //});
+
+        document.addEventListener('click', function (ev) {
+            const element = (ev.target).closest('.auto-read-button-wrapper');
+
+            if (element) {
+                globalAutoReadFeature.setAutoReadStatus(true);
+            }
         });
 
         //globalAutoReadFeature.setAutoReadStatus(false);
     }
 
     function popularQuestionsOnClickListener() {
-        $(document).on('click', '.popularQuestions', function (ev) {
-            const popularQuestion = $(this).data('popular-question');
-            const popularQuestionKey = $(this).attr('id');
-            copyPopularQuestionInTextBox(popularQuestion, true, true);
+        // $(document).on('click', '.popularQuestions', function (ev) {
+        //     const popularQuestion = $(this).data('popular-question');
+        //     const popularQuestionKey = $(this).attr('id');
+        //     copyPopularQuestionInTextBox(popularQuestion, true, true);
 
-            // Update used popular questions list,
-            // So when we display new popular questions, we can exclude used ones and show different questions
-            const currentScheme = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
-            popularQueriesService.updateUsedQueries(currentScheme, popularQuestionKey);
+        //     // Update used popular questions list,
+        //     // So when we display new popular questions, we can exclude used ones and show different questions
+        //     const currentScheme = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
+        //     popularQueriesService.updateUsedQueries(currentScheme, popularQuestionKey);
+        // });
+
+        //document.querySelectorAll('.popularQuestions').forEach(function (element) {
+        //    element.addEventListener('click', function (ev) {
+        //        const popularQuestion = element.getAttribute('data-popular-question');
+        //        const popularQuestionKey = element.getAttribute('id');
+        //        copyPopularQuestionInTextBox(popularQuestion, true, true);
+
+        //        // Update used popular questions list,
+        //        // So when we display new popular questions, we can exclude used ones and show different questions
+        //        const currentScheme = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
+        //        popularQueriesService.updateUsedQueries(currentScheme, popularQuestionKey);
+        //    });
+        //});
+        document.addEventListener('click', function (ev) {
+            const element = (ev.target).closest('.popularQuestions');
+
+            if (element) {
+                const popularQuestion = element.getAttribute('data-popular-question');
+                const popularQuestionKey = element.getAttribute('id');
+                copyPopularQuestionInTextBox(popularQuestion, true, true);
+
+                // Update used popular questions list,
+                // So when we display new popular questions, we can exclude used ones and show different questions
+                const currentScheme = schemesInfo.currentScheme ? schemesInfo.currentScheme : appConfig.defaultScheme;
+                popularQueriesService.updateUsedQueries(currentScheme, popularQuestionKey);
+            }
         });
     }
 
     function initPopovers() {
-        // Instantiate all popovers in docs or StackBlitz
         document.querySelectorAll('[data-bs-toggle="popover"]')
             .forEach(popover => {
                 new bootstrap.Popover(popover, {
@@ -1288,19 +1905,32 @@
             })
     }
 
+    // function hideAllThePopovers() {
+    //     $('[data-bs-toggle="popover"]').popover('dispose');
+
+    //     setTimeout(() => {
+    //         initPopovers();
+    //     }, 1000)
+
+    // }
     function hideAllThePopovers() {
-        $('[data-bs-toggle="popover"]').popover('dispose');
+        document.querySelectorAll('[data-bs-toggle="popover"]').forEach(function (element) {
+            // Assuming you have a way to dispose of the popover in your internal library
+            if (element.popoverInstance) {
+                element.popoverInstance.dispose();
+            }
+        });
 
         setTimeout(() => {
             initPopovers();
-        }, 1000)
-
+        }, 1000);
     }
 
     async function initChatBotConfig() {
 
         // Set parent route
-        currentParentRoute = $('#currentParentRoute').val();
+        //currentParentRoute = $('#currentParentRoute').val();
+        currentParentRoute = document.querySelector('#currentParentRoute').value;
 
         const controller = new AbortController();
         const signal = controller.signal;
@@ -1325,7 +1955,7 @@
         resendOtpOnClickListener();
         autoReadOnClickListener();
         popularQuestionsOnClickListener();
-        initAutoSizeInputBox();
+        initAutoSizeInputBox("conversation");
         chatbotConfirmationModalCloseEventListener();
         submitFeedbackModalCloseEventListener();
         await getTranslations();
@@ -1336,7 +1966,7 @@
         // Check if maintenance mode is on or not
         // If on, we need to show maintenance mode modal
         // And disable all the functionalities
-        const isMaintenanceModeOn = $('#isMaintenanceModeOn').val();
+        const isMaintenanceModeOn = document.querySelector('#isMaintenanceModeOn').value; //$('#isMaintenanceModeOn').val();
         if (isMaintenanceModeOn == 'True') {
             showMaintenanceModeModal();
         }
@@ -1375,22 +2005,34 @@
     }
 
     /**
-     * 
+     *
      * This method is used to get the current selected language code and also set in localstorage if not already set
      * @returns
      */
     function getSetCurrentLanguageCode() {
 
-        let currentLanguageCode = localStorage.getItem("currentLanguageCode");
+        const currentLanguageCodeElement = document.querySelector('[data-current-language-culture-code]');
+        //console.log('currentLanguageCodeElement: ', currentLanguageCodeElement.getAttribute('data-current-language-culture-code'));
+        //console.log("currentLanguageCode = document.querySelector('.languagesLabels').dataset.currentLanguageCultureCode;", currentLanguageCodeElement.value);
+        //let currentLanguageCode = localStorage.getItem("currentLanguageCode");
 
-        if (currentLanguageCode == null || currentLanguageCode == undefined || !currentLanguageCode) {
-            currentLanguageCode = $('.languagesLabels').data('current-language-culture-code');
-            localStorage.setItem("currentLanguageCode", currentLanguageCode);
-        } else {
-            $('.languagesLabels').data('current-language-culture-code', currentLanguageCode);
+        //let currentLanguageCode = document.querySelector('.languagesLabels').dataset.currentLanguageCultureCode;
+        if (!currentLanguageInfo.currentLanguageCode) {
+            currentLanguageInfo.currentLanguageCode = currentLanguageCodeElement.getAttribute('data-current-language-culture-code');
         }
 
-        return currentLanguageCode;
+        //currentLanguageInfo.currentLanguageCode = currentLanguageCode;
+
+        //if (currentLanguageCode == null || currentLanguageCode == undefined || !currentLanguageCode) {
+        //    //currentLanguageCode = $('.languagesLabels').data('current-language-culture-code');
+        //    currentLanguageCode = document.querySelector('.languagesLabels').dataset.currentLanguageCultureCode;
+        //    localStorage.setItem("currentLanguageCode", currentLanguageCode);
+        //} else {
+        //    //$('.languagesLabels').data('current-language-culture-code', currentLanguageCode);
+        //    document.querySelector('.languagesLabels').dataset.currentLanguageCultureCode = currentLanguageCode;
+        //}
+
+        return currentLanguageInfo.currentLanguageCode;
     }
 
     async function getTranslations() {
@@ -1507,10 +2149,15 @@
         }
 
 
-        $('.query-messages-box').empty();
+        //$('.query-messages-box').empty();
+        document.querySelectorAll('.query-messages-box').forEach(function (element) {
+            element.innerHTML = '';
+        });
 
         for (var i = 0; i < popularQuestionsHtmlContent.length; i++) {
-            $('.query-messages-box').append(popularQuestionsHtmlContent[i]);
+            //$('.query-messages-box').append(popularQuestionsHtmlContent[i]);
+            document.querySelector('.query-messages-box').innerHTML += popularQuestionsHtmlContent[i];
+
         }
 
 
@@ -1721,7 +2368,7 @@
         // So no need to display app tour for it, as it is not visible on the screen
         const appTourStepId = 'app_tour_language_selection_description';
         const appTourUiElementClassName = '.' + appTourStepId;
-        const currentAppTourStepUiElement = $(appTourUiElementClassName).css('display');
+        const currentAppTourStepUiElement = window.getComputedStyle(document.querySelector(appTourUiElementClassName)).display;//$(appTourUiElementClassName).css('display');
 
         if (currentAppTourStepUiElement == "none") {
             tour.removeStep(appTourStepId);
@@ -1749,13 +2396,21 @@
 
             updateChatMessagesList(toastMessage, feedbackResponseMessageId, '', true);
 
-            $(this).data('translation-feedback', -1);
-            $(this).data('information-feedback', -1);
-            $('#feedbackSubmitButton').data('functionality-feedback', -1);
+            // $(this).data('translation-feedback', -1);
+            // $(this).data('information-feedback', -1);
 
-            $(userQuestionTextBoxClass + '[data-screen-name=' + 'feedback' + ']').val(
-                ''
-            );
+            event.target.setAttribute('data-translation-feedback', -1);
+            event.target.setAttribute('data-information-feedback', -1);
+
+            // $('#feedbackSubmitButton').data('functionality-feedback', -1);
+
+            event.target.setAttribute('data-functionality-feedback', -1);
+
+            // $(userQuestionTextBoxClass + '[data-screen-name=' + 'feedback' + ']').val(
+            //     ''
+            // );
+            document.querySelector(userQuestionTextBoxClass + '[data-screen-name="feedback"]').value = '';
+
 
             likeMessageFe('translation-feedback', true);
             likeMessageFe('information-feedback', true);
@@ -1769,10 +2424,15 @@
     function showFeedbackModal() {
         submitFeedbackModal = new bootstrap.Modal('#' + submitFeedbackModalId);
         submitFeedbackModal.show();
+
+        const userQuestionTextBox = document.querySelector(userQuestionTextBoxClass + '[data-screen-name="feedback"]');
+        autosize.update(userQuestionTextBox);
     }
 
-    function initAutoSizeInputBox() {
-        autosize($(userQuestionTextBoxClass));
+    function initAutoSizeInputBox(screenName) {
+        // autosize($(userQuestionTextBoxClass));
+        //autosize(document.querySelector(userQuestionTextBoxClass));
+        autosize(document.querySelector(userQuestionTextBoxClass + '[data-screen-name="' + screenName + '"]'))
     }
 
     /**
@@ -1784,6 +2444,80 @@
      * @param {boolean} isMessageFromBot - Indicates whether the message is from the bot or not.
      * @param {boolean} showAudioOption - Indicates whether to show the audio option or not.
      */
+    //function updateChatMessagesList(
+    //    message,
+    //    messageId,
+    //    messageType,
+    //    isMessageFromBot,
+    //    showAudioOption,
+    //    shouldNotAutoPlayAudio
+    //) {
+    //    console.log('message: ', message);
+    //    if (message != '' && message != undefined) {
+
+    //        if (isMessageFromBot == true) {
+    //            message = formatChatbotResponse(message);
+    //            message = marked.parse(message);
+    //            message = message.replace("<a", "<a target='_blank' rel='noreferrer' ");
+    //        }
+
+    //        let chatMessageWrapperStartingDivHtmlContent =
+    //            getChatMessageWrapperStartingDivHtmlContent(
+    //                isMessageFromBot,
+    //                messageId,
+    //                'conversationsWrapper'
+    //            ); // Main chat message wrapper
+
+    //        let chatMessageAudioImageHtmlContent =
+    //            showAudioOption == true
+    //                ? getChatMessageAudioImageHtmlContent(messageId)
+    //                : null; // Audio icon inside third column
+
+    //        let feedbackOptionHtmlContent = getFeedbackButtonsHtmlContent(messageId);
+    //        let spanStartingHtmlContentWithId = getStartingSpanHtmlContent(messageId);
+
+    //        chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
+
+    //        var response =
+    //            chatMessageWrapperStartingDivHtmlContent +
+
+    //            chatMessageWrapperColumnTwoStartingDivHtmlContent +
+    //            startingDivHtmlContent +
+    //            chatbotLogoHtmlContent +
+    //            spanStartingHtmlContentWithId +
+    //            message +
+    //            spanClosingHtmlContent +
+    //            closingDivHtmlContent +
+    //            closingDivHtmlContent +
+    //            (showAudioOption == true
+    //                ? chatMessageWrapperColumnThreeStartingDivHtmlContent +
+    //                chatMessageAudioImageHtmlContent +
+    //                closingDivHtmlContent
+    //                : '') +
+    //            (messageType == 'final_response' && isMessageFromBot == true
+    //                ? chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent +
+    //                feedbackOptionHtmlContent +
+    //                closingDivHtmlContent
+    //                : '') +
+    //            closingDivHtmlContent;
+
+    //        //$('#message-list').append(response);
+    //        const messageList = document.getElementById('message-list');
+    //        messageList.appendChild(response);
+
+    //        if (messageType == 'final_response') {
+    //            sessionStorage.setItem('final_response', true);
+
+    //            //bindPopularQuestions();
+    //        }
+
+    //        scrollToBottom();
+    //        if (isMessageFromBot == true && !shouldNotAutoPlayAudio) {
+    //            autoPlayAudio(messageId);
+    //        }
+    //    }
+    //}
+
     function updateChatMessagesList(
         message,
         messageId,
@@ -1792,69 +2526,74 @@
         showAudioOption,
         shouldNotAutoPlayAudio
     ) {
-        if (message != '' && message != undefined) {
 
+        if (message != '' && message != undefined) {
             if (isMessageFromBot == true) {
                 message = formatChatbotResponse(message);
                 message = marked.parse(message);
                 message = message.replace("<a", "<a target='_blank' rel='noreferrer' ");
             }
 
-            let chatMessageWrapperStartingDivHtmlContent =
-                getChatMessageWrapperStartingDivHtmlContent(
-                    isMessageFromBot,
-                    messageId,
-                    'conversationsWrapper'
-                ); // Main chat message wrapper
+            let chatMessageWrapperElement = getChatMessageWrapperStartingDivHtmlContent(
+                isMessageFromBot,
+                messageId,
+                'conversationsWrapper'
+            ); // Main chat message wrapper
 
-            let chatMessageAudioImageHtmlContent =
-                showAudioOption == true
-                    ? getChatMessageAudioImageHtmlContent(messageId)
-                    : null; // Audio icon inside third column
+            let chatMessageAudioImageElement = showAudioOption == true
+                ? getChatMessageAudioImageHtmlContent(messageId)
+                : null; // Audio icon inside third column
 
-            let feedbackOptionHtmlContent = getFeedbackButtonsHtmlContent(messageId);
-            let spanStartingHtmlContentWithId = getStartingSpanHtmlContent(messageId);
+            let feedbackOptionElement = getFeedbackButtonsHtmlContent(messageId);
+            let spanStartingElementWithId = getStartingSpanHtmlContent(messageId);
+            let chatMessageColumnThreePartTwoElement = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
 
-            chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
+            // Assuming the variables contain HTML elements instead of strings
+            const chatMessageColumnTwoElement = getChatMessageWrapperColumnTwoStartingDivHtmlContent(); //chatMessageWrapperColumnTwoStartingDivHtmlContent;
+            const userDivElement = getStartingDivHtmlContent();//startingDivHtmlContent;
+            const chatbotLogoElement = getChatbotLogoHtmlContent();//chatbotLogoHtmlContent;
 
-            var response =
-                chatMessageWrapperStartingDivHtmlContent +
+            // Append the message to the span element
+            const messageParagraph = document.createElement('p');
+            messageParagraph.innerHTML = message;
+            spanStartingElementWithId.appendChild(messageParagraph);
 
-                chatMessageWrapperColumnTwoStartingDivHtmlContent +
-                startingDivHtmlContent +
-                chatbotLogoHtmlContent +
-                spanStartingHtmlContentWithId +
-                message +
-                spanClosingHtmlContent +
-                closingDivHtmlContent +
-                closingDivHtmlContent +
-                (showAudioOption == true
-                    ? chatMessageWrapperColumnThreeStartingDivHtmlContent +
-                    chatMessageAudioImageHtmlContent +
-                    closingDivHtmlContent
-                    : '') +
-                (messageType == 'final_response' && isMessageFromBot == true
-                    ? chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent +
-                    feedbackOptionHtmlContent +
-                    closingDivHtmlContent
-                    : '') +
-                closingDivHtmlContent;
+            // Append the elements to their respective parents
+            userDivElement.appendChild(chatbotLogoElement);
+            userDivElement.appendChild(spanStartingElementWithId);
+            chatMessageColumnTwoElement.appendChild(userDivElement);
+            chatMessageWrapperElement.appendChild(chatMessageColumnTwoElement);
 
-            $('#message-list').append(response);
+            if (showAudioOption == true) {
+                const chatMessageColumnThreeElement = getChatMessageWrapperColumnThreeStartingDivHtmlContent();//chatMessageWrapperColumnThreeStartingDivHtmlContent;
+                chatMessageColumnThreeElement.appendChild(chatMessageAudioImageElement);
+                chatMessageWrapperElement.appendChild(chatMessageColumnThreeElement);
+            }
+
+            if (messageType == 'final_response' && isMessageFromBot == true) {
+                const chatMessageColumnThreePartTwoElement = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent();//chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent;
+                chatMessageColumnThreePartTwoElement.appendChild(feedbackOptionElement);
+                chatMessageWrapperElement.appendChild(chatMessageColumnThreePartTwoElement);
+            }
+
+            //chatMessageWrapperElement.appendChild(closingDivElement);
+
+            // Append the response to the message list
+            const messageList = document.getElementById('message-list');
+            messageList.appendChild(chatMessageWrapperElement);
 
             if (messageType == 'final_response') {
                 sessionStorage.setItem('final_response', true);
-
-                //bindPopularQuestions();
+                // bindPopularQuestions();
             }
 
             scrollToBottom();
+
             if (isMessageFromBot == true && !shouldNotAutoPlayAudio) {
                 autoPlayAudio(messageId);
             }
         }
     }
-
     function recordAudio(screenName, isRecording) {
         //isRecording = !isRecording;
 
@@ -1872,7 +2611,8 @@
             //    voiceRecordMicCircleClass + '[data-screen-name=' + screenName + ']'
             //).show();
 
-            $(sendTextButtonId).attr('disabled', 'disabled');
+            //$(sendTextButtonId).attr('disabled', 'disabled');
+            document.querySelector(sendTextButtonId).setAttribute('disabled', 'disabled');
             startRecording(screenName);
         } else {
             //$(
@@ -1888,15 +2628,18 @@
             //$(
             //    voiceRecordMicCircleClass + '[data-screen-name=' + screenName + ']'
             //).hide();
-            $(sendTextButtonId).removeAttr('disabled');
-            stopRecording();
+            //$(sendTextButtonId).removeAttr('disabled');
+            document.querySelector(sendTextButtonId).removeAttribute('disabled', 'disabled');
+
+            stopRecording(screenName);
         }
     }
 
-    $(document).ready(async function () {
+    document.addEventListener('DOMContentLoaded', async function () {
         await initChatBotConfig();
 
-        $(voiceRecordMicCircleClass).hide();
+        //$(voiceRecordMicCircleClass).hide();
+        document.querySelector(voiceRecordMicCircleClass).style.display = 'none';
 
         createGlobalAudioElement();
 
@@ -1906,92 +2649,163 @@
 
         enableDisableSendButton();
 
-        $(userQuestionTextBoxClass).on('change paste keyup', function (event) {
-            let screenName = $(this).data('screen-name');
+        // $(userQuestionTextBoxClass).on('change paste keyup', function (event) {
+        //     let screenName = $(this).data('screen-name');
 
-            if (screenName == 'conversation') {
+        //     if (screenName == 'conversation') {
+        //         if (
+        //             event.type == 'keyup' &&
+        //             isSampleQueryUsed == false &&
+        //             event?.originalEvent?.key != 'Enter'
+        //         ) {
+        //             isUserTypedQuestion = true;
+        //         } else {
+        //             isUserTypedQuestion = false;
+        //         }
+        //     }
+
+        //     //autosize.update($(userQuestionTextBoxClass));
+        //     autosize.update(document.querySelector(userQuestionTextBoxClass));
+
+        //     if (screenName == 'conversation') {
+        //         var textValue = $(this).val();
+
+        //         // If value is there then only keep the send button enabled else keep it disabled.
+        //         enableDisableSendButton(textValue);
+        //     }
+        // });
+        //const userQuestionTextBox = document.querySelector(userQuestionTextBoxClass);
+        const userQuestionTextBox = document.querySelector(userQuestionTextBoxClass + '[data-screen-name="conversation"]');
+
+        ['change', 'paste', 'keyup'].forEach(eventType => {
+            userQuestionTextBox.addEventListener(eventType, handleUserQuestionTextBoxEvent);
+        });
+
+        function handleUserQuestionTextBoxEvent(event) {
+            let screenName = event.target.getAttribute('data-screen-name');
+
+            if (screenName === 'conversation') {
                 if (
-                    event.type == 'keyup' &&
-                    isSampleQueryUsed == false &&
-                    event?.originalEvent?.key != 'Enter'
+                    event.type === 'keyup' &&
+                    isSampleQueryUsed === false &&
+                    event?.originalEvent?.key !== 'Enter'
                 ) {
                     isUserTypedQuestion = true;
                 } else {
                     isUserTypedQuestion = false;
                 }
+
+                autosize.update(userQuestionTextBox);
+            } else {
+                const userQuestionTextBox = document.querySelector(userQuestionTextBoxClass + '[data-screen-name="feedback"]');
+                autosize.update(userQuestionTextBox);
             }
 
-            autosize.update($(userQuestionTextBoxClass));
-
-            if (screenName == 'conversation') {
-                var textValue = $(this).val();
+            if (screenName === 'conversation') {
+                var textValue = event.target.value;
 
                 // If value is there then only keep the send button enabled else keep it disabled.
                 enableDisableSendButton(textValue);
             }
-        });
+        }
 
         getLocalStream();
-        $(function () {
-            $('body').on('click', sendTextButtonId, function (e) {
 
+        //(async function () {
+        //    document.addEventListener('DOMContentLoaded', function() {
 
-                e.preventDefault();
+        //    });
+        //})();
+        document.querySelector(sendTextButtonId).addEventListener('click', function (e) {
+            e.preventDefault();
 
-                //hasConversationLimitReached = true;
+            if (hasConversationLimitReached) {
+                showStartNewConversationModal(() => {
+                    restartSession();
+                });
+            } else {
 
-                if (hasConversationLimitReached) {
-                    showStartNewConversationModal(() => {
-                        restartSession();
-                    });
-                } else {
+                //console.log('document.getElementById for UserQuestionTextBox: ', document.getElementById(userQuestionTextBox));
+                let questionInput = userQuestionTextBox.value; //$(userQuestionTextBox).val();
 
-                    let questionInput = $(userQuestionTextBox).val();
+                const sanitizedInput = sanitizeInput(questionInput);
+                if (sanitizedInput) {
+                    let chatMessageWrapperStartingDivHtmlContent =
+                        getChatMessageWrapperStartingDivHtmlContent(
+                            false,
+                            null,
+                            'conversationsWrapper'
+                        ); // Main chat message wrapper
 
-                    //var questionInputContent = $('<div />').text(questionInput).html();
-                    const sanitizedInput = sanitizeInput(questionInput);
-                    if (sanitizedInput) {
-                        let chatMessageWrapperStartingDivHtmlContent =
-                            getChatMessageWrapperStartingDivHtmlContent(
-                                false,
-                                null,
-                                'conversationsWrapper'
-                            ); // Main chat message wrapper
+                    let chatMessageAudioImageHtmlContent =
+                        getChatMessageAudioImageHtmlContent(lastUserAudioMessageId); // Audio icon inside third column
 
-                        let chatMessageAudioImageHtmlContent =
-                            getChatMessageAudioImageHtmlContent(lastUserAudioMessageId); // Audio icon inside third column
+                    var userQuery = '';
 
-                        var userQuery = '';
+                    ////
 
-                        userQuery =
-                            chatMessageWrapperStartingDivHtmlContent +
+                    ////
+                    //userQuery =
+                    //    chatMessageWrapperStartingDivHtmlContent +
 
-                            chatMessageWrapperColumnTwoStartingDivHtmlContent +
-                            startingDivHtmlContent +
-                            userLogoHtmlContent +
-                            spanStartingHtmlContent +
-                            "<p>" + sanitizedInput + "</p>" +
-                            spanClosingHtmlContent +
-                            closingDivHtmlContent +
-                            closingDivHtmlContent +
+                    //    chatMessageWrapperColumnTwoStartingDivHtmlContent +
+                    //    startingDivHtmlContent +
+                    //    userLogoHtmlContent +
+                    //    spanStartingHtmlContent +
+                    //    "<p>" + sanitizedInput + "</p>" +
+                    //    spanClosingHtmlContent +
+                    //    closingDivHtmlContent +
+                    //    closingDivHtmlContent +
 
-                            (lastUserAudioMessageId != null && lastUserAudioMessageId != ''
-                                ? chatMessageWrapperColumnThreeStartingDivHtmlContent +
-                                chatMessageAudioImageHtmlContent +
-                                closingDivHtmlContent
-                                : '') +
-                            closingDivHtmlContent +
-                            closingDivHtmlContent;
+                    //    (lastUserAudioMessageId != null && lastUserAudioMessageId != ''
+                    //        ? chatMessageWrapperColumnThreeStartingDivHtmlContent +
+                    //        chatMessageAudioImageHtmlContent +
+                    //        closingDivHtmlContent
+                    //        : '') +
+                    //    closingDivHtmlContent +
+                    //    closingDivHtmlContent;
 
-                        $('#message-list').append(userQuery.replace(/\n/g, '<br>'));
-                        lastUserAudioMessageId = ''; // Clear last user typed messaged Id once it is sent
+                    // Assuming the variables contain HTML elements instead of strings
+                    const chatMessageWrapperElement = chatMessageWrapperStartingDivHtmlContent;
+                    const chatMessageColumnTwoElement = getChatMessageWrapperColumnTwoStartingDivHtmlContent(); //chatMessageWrapperColumnTwoStartingDivHtmlContent;
+                    const userDivElement = getStartingDivHtmlContent(); //startingDivHtmlContent;
+                    const userLogoElement = getUserLogoHtmlContent();//userLogoHtmlContent;
+                    const messageSpanElement = getStartingSpanHtmlContent();
+                    const chatMessageColumnThreeElement = getChatMessageWrapperColumnThreeStartingDivHtmlContent();//chatMessageWrapperColumnThreeStartingDivHtmlContent;
+                    const audioImageElement = chatMessageAudioImageHtmlContent;
 
-                        isWelcomeMessageAutoPlayed = true;
-                        askQuestions(sanitizedInput, 'text');
+                    // Create the paragraph element for the sanitized input
+                    const paragraph = document.createElement('p');
+                    paragraph.textContent = sanitizedInput;
+
+                    // Append the paragraph to the span element
+                    messageSpanElement.appendChild(paragraph);
+
+                    // Append the elements to their respective parents
+                    userDivElement.appendChild(userLogoElement);
+                    userDivElement.appendChild(messageSpanElement);
+                    chatMessageColumnTwoElement.appendChild(userDivElement);
+                    chatMessageWrapperElement.appendChild(chatMessageColumnTwoElement);
+
+                    // Check if there is an audio message
+                    if (lastUserAudioMessageId != null && lastUserAudioMessageId != '') {
+                        chatMessageColumnThreeElement.appendChild(audioImageElement);
+                        chatMessageWrapperElement.appendChild(chatMessageColumnThreeElement);
                     }
-                }
 
-            });
+                    //$('#message-list').append(userQuery.replace(/\n/g, '<br>'));
+                    const messageList = document.getElementById('message-list');
+                    //messageList.appendChild(userQuery.replace(/\n/g, '<br>'));//
+                    //const userQueryNode = document.createElement('div');
+                    //userQueryNode.innerHTML = userQuery.replace(/\n/g, '<br>');
+                    //messageList.appendChild(userQueryNode);
+                    messageList.appendChild(chatMessageWrapperElement);
+                    lastUserAudioMessageId = ''; // Clear last user typed messaged Id once it is sent
+
+                    isWelcomeMessageAutoPlayed = true;
+                    askQuestions(sanitizedInput, 'text');
+                }
+            }
         });
     });
 
@@ -2005,26 +2819,50 @@
     }
 
     function hidePopularQuestions() {
-        $('#popularQuestionsWrapper').removeClass('d-flex');
-        $('#popularQuestionsWrapper').hide();
-        $('#message-list').addClass('without-popular-questions');
+        // $('#popularQuestionsWrapper').removeClass('d-flex');
+        // $('#popularQuestionsWrapper').hide();
+        // $('#message-list').addClass('without-popular-questions');
+
+        document.querySelector('#popularQuestionsWrapper').classList.remove('d-flex');
+        document.querySelector('#popularQuestionsWrapper').style.display = 'none';
+        document.querySelector('#message-list').classList.add('without-popular-questions');
     }
 
     function showPopularQuestions() {
-        $('#popularQuestionsWrapper').addClass('d-flex');
-        $('#popularQuestionsWrapper').show();
-        $('#message-list').removeClass('without-popular-questions');
+        // $('#popularQuestionsWrapper').addClass('d-flex');
+        // $('#popularQuestionsWrapper').show();
+        // $('#message-list').removeClass('without-popular-questions');
+
+        document.querySelector('#popularQuestionsWrapper').classList.add('d-flex');
+        document.querySelector('#popularQuestionsWrapper').style.display = 'block';
+        document.querySelector('#message-list').classList.remove('without-popular-questions');
     }
 
     function showUserRecordedMessageInTextBox(message, shouldAutoSend) {
-        $(userQuestionTextBox).val(message);
+        // $(userQuestionTextBox).val(message);
 
-        $(userQuestionTextBox).trigger('change');
+        // $(userQuestionTextBox).trigger('change');
+
+        // if (shouldAutoSend === true) {
+        //     $(sendTextButtonId).trigger('click');
+        // } else {
+        //     $(userQuestionTextBox).focus();
+        // }
+
+        // Set the value of the user question text box
+        document.querySelector(userQuestionTextBox).value = message;
+
+        // Trigger the 'change' event
+        const changeEvent = new Event('change');
+        document.querySelector(userQuestionTextBox).dispatchEvent(changeEvent);
 
         if (shouldAutoSend === true) {
-            $(sendTextButtonId).trigger('click');
+            // Trigger the 'click' event on the send button
+            const clickEvent = new Event('click');
+            document.querySelector(sendTextButtonId).dispatchEvent(clickEvent);
         } else {
-            $(userQuestionTextBox).focus();
+            // Focus on the user question text box
+            document.querySelector(userQuestionTextBox).focus();
         }
 
         isSampleQueryUsed = true;
@@ -2038,6 +2876,69 @@
      * @param {any} messageType
      * @param {any} textInEnglish
      */
+    //function processChatBotResponse(
+    //    message,
+    //    messageId,
+    //    messageType,
+    //    textInEnglish,
+    //    showAudioOption
+    //) {
+    //    if (message != '') {
+    //        updateChatMessagesList(
+    //            message,
+    //            messageId,
+    //            messageType,
+    //            true,
+    //            showAudioOption
+    //        );
+    //    }
+
+    //    if (
+    //        String(textInEnglish)
+    //            .toLowerCase()
+    //            .indexOf('one time password is wrong') >= 0
+    //    ) {
+    //        var resendOtpTranslation = currentLanguageInfo.translations.messages.resend_otp;
+
+    //        let chatMessageWrapperStartingDivHtmlContent =
+    //            getChatMessageWrapperStartingDivHtmlContent(
+    //                true,
+    //                'resendOtp',
+    //                'conversationsWrapper'
+    //            ); // Main chat message wrapper
+
+    //        var userQuery = '';
+
+    //        userQuery =
+    //            chatMessageWrapperStartingDivHtmlContent +
+
+    //            chatMessageWrapperColumnTwoStartingDivHtmlContent +
+    //            startingDivHtmlContent +
+
+    //            userLogoHtmlContent +
+    //            spanStartingHtmlContent +
+    //            "<button class='btn btn-success language-buttons resendOTP mt-0'>" +
+    //            resendOtpTranslation +
+    //            '</button>' +
+    //            spanClosingHtmlContent +
+    //            closingDivHtmlContent +
+    //            closingDivHtmlContent +
+    //            closingDivHtmlContent;
+
+    //        //$('#message-list').append(userQuery);
+    //        console.log('Added message', userQuery);
+    //        const messageList = document.getElementById('message-list');
+    //        messageList.appendChild(userQuery);
+    //    }
+    //    // $(userQuestionTextBox).val('');
+
+    //    // $(userQuestionTextBox).trigger('change');
+    //    document.querySelector(userQuestionTextBox).value = '';
+    //    document.querySelector(userQuestionTextBox).dispatchEvent(new Event('change'));
+
+    //    hideChatLoader();
+    //}
+
     function processChatBotResponse(
         message,
         messageId,
@@ -2055,49 +2956,49 @@
             );
         }
 
-        if (
-            String(textInEnglish)
-                .toLowerCase()
-                .indexOf('one time password is wrong') >= 0
-        ) {
+        if (String(textInEnglish).toLowerCase().indexOf('one time password is wrong') >= 0) {
             var resendOtpTranslation = currentLanguageInfo.translations.messages.resend_otp;
 
-            let chatMessageWrapperStartingDivHtmlContent =
-                getChatMessageWrapperStartingDivHtmlContent(
-                    true,
-                    'resendOtp',
-                    'conversationsWrapper'
-                ); // Main chat message wrapper
+            let chatMessageWrapperElement = getChatMessageWrapperStartingDivHtmlContent(
+                true,
+                'resendOtp',
+                'conversationsWrapper'
+            ); // Main chat message wrapper
 
-            var userQuery = '';
+            // Assuming the variables contain HTML elements instead of strings
+            const chatMessageColumnTwoElement = getChatMessageWrapperColumnTwoStartingDivHtmlContent(); //chatMessageWrapperColumnTwoStartingDivHtmlContent;
+            const userDivElement = getStartingDivHtmlContent();//startingDivHtmlContent;
+            const userLogoElement = getUserLogoHtmlContent(); //userLogoHtmlContent;
+            const messageSpanElement = getStartingSpanHtmlContent();//spanStartingHtmlContent;
 
-            userQuery =
-                chatMessageWrapperStartingDivHtmlContent +
+            // Create the button element for resend OTP
+            const resendOtpButton = document.createElement('button');
+            resendOtpButton.className = 'btn btn-success language-buttons resendOTP mt-0';
+            resendOtpButton.textContent = resendOtpTranslation;
 
-                chatMessageWrapperColumnTwoStartingDivHtmlContent +
-                startingDivHtmlContent +
+            // Append the button to the span element
+            messageSpanElement.appendChild(resendOtpButton);
 
-                userLogoHtmlContent +
-                spanStartingHtmlContent +
-                "<button class='btn btn-success language-buttons resendOTP mt-0'>" +
-                resendOtpTranslation +
-                '</button>' +
-                spanClosingHtmlContent +
-                closingDivHtmlContent +
-                closingDivHtmlContent +
-                closingDivHtmlContent;
+            // Append the elements to their respective parents
+            userDivElement.appendChild(userLogoElement);
+            userDivElement.appendChild(messageSpanElement);
+            chatMessageColumnTwoElement.appendChild(userDivElement);
+            chatMessageWrapperElement.appendChild(chatMessageColumnTwoElement);
 
-            $('#message-list').append(userQuery);
+            // Append the user query to the message list
+            const messageList = document.getElementById('message-list');
+            messageList.appendChild(chatMessageWrapperElement);
         }
-        $(userQuestionTextBox).val('');
 
-        $(userQuestionTextBox).trigger('change');
+        // Clear and trigger change event on the user question text box
+        document.querySelector(userQuestionTextBox).value = '';
+        document.querySelector(userQuestionTextBox).dispatchEvent(new Event('change'));
 
         hideChatLoader();
     }
-
     function resendOTP(element) {
-        $('#chatbotMessageWrapper-resendOtp').remove();
+        // $('#chatbotMessageWrapper-resendOtp').remove();
+        document.querySelector('#chatbotMessageWrapper-resendOtp').remove();
         askQuestions('resend OTP', 'text');
     }
 
@@ -2179,11 +3080,12 @@
 
         const requestPayload = {
             conversationId: currentConversationId,
-            translation: translation,
-            information: information,
-            chatbotFunctionality: chatbotFunctionality,
+            translation: parseInt(translation),
+            information: parseInt(information),
+            chatbotFunctionality: parseInt(chatbotFunctionality), // chatbotFunctionality,
             feedback: feedbackDetails,
         };
+        return;
 
         const headers = new Headers();
         headers.append('User-id', currentUserId);
@@ -2220,8 +3122,11 @@
                 addMetricsCount('sampleQueryUsedCount');
             }
 
-            $(userQuestionTextBox).val('');
-            $(userQuestionTextBox).trigger('change');
+            // $(userQuestionTextBox).val('');
+            // $(userQuestionTextBox).trigger('change');
+
+            document.querySelector(userQuestionTextBox).value = '';
+            document.querySelector(userQuestionTextBox).dispatchEvent(new Event('change'));
         }
 
         chatLoader(category);
@@ -2266,6 +3171,8 @@
                 audioGender: globalAutoReadFeature.selectedVoice ? globalAutoReadFeature.selectedVoice : null
             };
 
+            hasConversationLimitReached = false;
+
             makeRequestRetry('POST', apiUrl, headers, requestPayload)
                 .then((apiResponse) => {
                     hideChatLoader(category);
@@ -2296,24 +3203,32 @@
                             if (data.text) {
                                 message = data.text;
 
-                                $(
-                                    userQuestionTextBoxClass +
-                                    '[data-screen-name=' +
-                                    screenName +
-                                    ']'
-                                ).val(message);
-                                $(
-                                    userQuestionTextBoxClass +
-                                    '[data-screen-name=' +
-                                    screenName +
-                                    ']'
-                                ).focus();
-                                $(
-                                    userQuestionTextBoxClass +
-                                    '[data-screen-name=' +
-                                    screenName +
-                                    ']'
-                                ).trigger('change');
+                                // $(
+                                //     userQuestionTextBoxClass +
+                                //     '[data-screen-name=' +
+                                //     screenName +
+                                //     ']'
+                                // ).val(message);
+
+                                // $(
+                                //     userQuestionTextBoxClass +
+                                //     '[data-screen-name=' +
+                                //     screenName +
+                                //     ']'
+                                // ).focus();
+
+                                // $(
+                                //     userQuestionTextBoxClass +
+                                //     '[data-screen-name=' +
+                                //     screenName +
+                                //     ']'
+                                // ).trigger('change');
+
+                                const userQuestionTextBox = document.querySelector(userQuestionTextBoxClass + '[data-screen-name="' + screenName + '"]');
+
+                                userQuestionTextBox.value = message;
+                                userQuestionTextBox.focus();
+                                userQuestionTextBox.dispatchEvent(new Event('change'));
                             }
                         } else {
                             if (screenName == 'conversation') {
@@ -2344,6 +3259,22 @@
                                 }
                             }
                         }
+
+                        // We need to maintain counter for wadhwani response
+                        // When it reaches 5, we will consider it as a conversation limit and user needs to start new conversation by refreshing the session
+                        if (data.responseProvider != lastReponseProvider) {
+                            wadhwaniResponseCounter = 0;
+                        }
+
+                        if (data.responseProvider == "Wadhwani") {
+                            wadhwaniResponseCounter++;
+
+                            if (wadhwaniResponseCounter >= 5) {
+                                hasConversationLimitReached = true;
+                            }
+                        }
+
+                        lastReponseProvider = data.responseProvider;
                     }
 
                     scrollToBottom();
@@ -2364,13 +3295,54 @@
      * This method is used to set like or unlike reaction on thumb icon for feedback purpose
      * @param {any} messageId
      */
+    // function likeMessageFe(messageId, shouldReset) {
+    //     if (shouldReset) {
+    //         $('#thumbLikeButton-' + messageId).attr('src', thumbLikeImagePath);
+    //     } else {
+    //         // Check the current state of like button whether it is liked or unliked.
+    //         // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
+    //         var likeButtonSource = $('#thumbLikeButton-' + messageId)[0].src;
+
+    //         var likeImageToReplace = thumbLikeHighlightImagePath; // Highlight thumbLike button
+    //         let likeMessageValue = 1;
+    //         var isLikeHighlight = false;
+
+    //         if (likeButtonSource.indexOf('fill') >= 0) {
+    //             isLikeHighlight = true;
+
+    //             likeImageToReplace = thumbLikeImagePath; // Unlike thumbLike button
+    //             likeMessageValue = -1;
+    //         }
+
+    //         // Set the user selected reaction in data attribute, so later we can use it to send this info to api
+    //         $('#feedbackSubmitButton').data(messageId, likeMessageValue);
+
+    //         // Highlight the like button
+    //         $('#thumbLikeButton-' + messageId).attr('src', likeImageToReplace);
+
+    //         // If earlier it was already highlighted it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+    //         if (isLikeHighlight) {
+    //             $('#thumbLikeButton-' + messageId).removeClass('feedback-animation');
+    //         } else {
+    //             $('#thumbLikeButton-' + messageId).addClass('feedback-animation');
+    //         }
+
+    //         $('#thumbDislikeButton-' + messageId).removeClass('feedback-animation'); // Remove animation class from dislike button, to display animation when user hits the same button again
+
+    //         $('#thumbDislikeButton-' + messageId).attr('src', thumbDislikeImagePath); // Change image to color less icon for dislike button as user has clicked on like button now
+    //     }
+    // }
     function likeMessageFe(messageId, shouldReset) {
+        const thumbLikeButton = document.querySelector('#thumbLikeButton-' + messageId);
+        const feedbackSubmitButton = document.querySelector('#feedbackSubmitButton');
+        const thumbDislikeButton = document.querySelector('#thumbDislikeButton-' + messageId);
+
         if (shouldReset) {
-            $('#thumbLikeButton-' + messageId).attr('src', thumbLikeImagePath);
+            thumbLikeButton.setAttribute('src', thumbLikeImagePath);
         } else {
             // Check the current state of like button whether it is liked or unliked.
             // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
-            var likeButtonSource = $('#thumbLikeButton-' + messageId)[0].src;
+            var likeButtonSource = thumbLikeButton.src;
 
             var likeImageToReplace = thumbLikeHighlightImagePath; // Highlight thumbLike button
             let likeMessageValue = 1;
@@ -2384,21 +3356,21 @@
             }
 
             // Set the user selected reaction in data attribute, so later we can use it to send this info to api
-            $('#feedbackSubmitButton').data(messageId, likeMessageValue);
+            feedbackSubmitButton.setAttribute("data-" + messageId, likeMessageValue);
 
             // Highlight the like button
-            $('#thumbLikeButton-' + messageId).attr('src', likeImageToReplace);
+            thumbLikeButton.setAttribute('src', likeImageToReplace);
 
             // If earlier it was already highlighted it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
             if (isLikeHighlight) {
-                $('#thumbLikeButton-' + messageId).removeClass('feedback-animation');
+                thumbLikeButton.classList.remove('feedback-animation');
             } else {
-                $('#thumbLikeButton-' + messageId).addClass('feedback-animation');
+                thumbLikeButton.classList.add('feedback-animation');
             }
 
-            $('#thumbDislikeButton-' + messageId).removeClass('feedback-animation'); // Remove animation class from dislike button, to display animation when user hits the same button again
+            thumbDislikeButton.classList.remove('feedback-animation'); // Remove animation class from dislike button, to display animation when user hits the same button again
 
-            $('#thumbDislikeButton-' + messageId).attr('src', thumbDislikeImagePath); // Change image to color less icon for dislike button as user has clicked on like button now
+            thumbDislikeButton.setAttribute('src', thumbDislikeImagePath); // Change image to color less icon for dislike button as user has clicked on like button now
         }
     }
 
@@ -2406,17 +3378,60 @@
      * This method is used to set dislike or unlike reaction on thumb icon for feedback purpose
      * @param {any} messageId
      */
+    // function dislikeMessageFe(messageId, shouldReset) {
+    //     if (shouldReset) {
+    //         $('#thumbDislikeButton-' + messageId).attr('src', thumbDislikeImagePath);
+    //     } else {
+    //         // Check the current state of like button whether it is liked or unliked.
+    //         // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
+    //         var dislikeButtonSource = $('#thumbDislikeButton-' + messageId)[0].src;
+
+    //         var dislikeImageToReplace = thumbDislikeHighlightImagePath;
+    //         var isDislikeHighlight = false;
+    //         let dislikeMessageValue = 0;
+    //         if (dislikeButtonSource.indexOf('fill') >= 0) {
+    //             isDislikeHighlight = true;
+
+    //             dislikeImageToReplace = thumbDislikeImagePath;
+    //             dislikeMessageValue = -1;
+    //         }
+
+    //         $('#feedbackSubmitButton').data(messageId, dislikeMessageValue);
+
+    //         // Set the user selected reaction in data attribute, so later we can use it to send this info to api
+
+    //         // Highlight the like button
+    //         $('#thumbDislikeButton-' + messageId).attr('src', dislikeImageToReplace);
+
+    //         // If earlier it was already highlighted it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+    //         if (isDislikeHighlight) {
+    //             $('#thumbDislikeButton-' + messageId).removeClass('feedback-animation');
+    //         } else {
+    //             $('#thumbDislikeButton-' + messageId).addClass('feedback-animation');
+    //         }
+
+    //         $('#thumbLikeButton-' + messageId).removeClass('feedback-animation'); // Remove animation class from like button, to display animation when user hits the same button again
+
+    //         $('#thumbLikeButton-' + messageId).attr('src', thumbLikeImagePath);
+    //     }
+    // }
+
     function dislikeMessageFe(messageId, shouldReset) {
+        const thumbDislikeButton = document.querySelector('#thumbDislikeButton-' + messageId);
+        const feedbackSubmitButton = document.querySelector('#feedbackSubmitButton');
+        const thumbLikeButton = document.querySelector('#thumbLikeButton-' + messageId);
+
         if (shouldReset) {
-            $('#thumbDislikeButton-' + messageId).attr('src', thumbDislikeImagePath);
+            thumbDislikeButton.setAttribute('src', thumbDislikeImagePath);
         } else {
-            // Check the current state of like button whether it is liked or unliked.
-            // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
-            var dislikeButtonSource = $('#thumbDislikeButton-' + messageId)[0].src;
+            // Check the current state of dislike button whether it is disliked or not.
+            // If it is already disliked, and user has clicked on it again then we need to remove the dislike, else we need to dislike it
+            var dislikeButtonSource = thumbDislikeButton.src;
 
             var dislikeImageToReplace = thumbDislikeHighlightImagePath;
             var isDislikeHighlight = false;
             let dislikeMessageValue = 0;
+
             if (dislikeButtonSource.indexOf('fill') >= 0) {
                 isDislikeHighlight = true;
 
@@ -2424,23 +3439,22 @@
                 dislikeMessageValue = -1;
             }
 
-            $('#feedbackSubmitButton').data(messageId, dislikeMessageValue);
-
             // Set the user selected reaction in data attribute, so later we can use it to send this info to api
+            feedbackSubmitButton.setAttribute("data-" + messageId, dislikeMessageValue);
 
-            // Highlight the like button
-            $('#thumbDislikeButton-' + messageId).attr('src', dislikeImageToReplace);
+            // Highlight the dislike button
+            thumbDislikeButton.setAttribute('src', dislikeImageToReplace);
 
-            // If earlier it was already highlighted it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+            // If earlier it was already highlighted it means, user has un disliked the previous dislike. We need to remove the the animation class. so if user clicks on the same dislike again, then it can show the animation, else animation won't be shown
             if (isDislikeHighlight) {
-                $('#thumbDislikeButton-' + messageId).removeClass('feedback-animation');
+                thumbDislikeButton.classList.remove('feedback-animation');
             } else {
-                $('#thumbDislikeButton-' + messageId).addClass('feedback-animation');
+                thumbDislikeButton.classList.add('feedback-animation');
             }
 
-            $('#thumbLikeButton-' + messageId).removeClass('feedback-animation'); // Remove animation class from like button, to display animation when user hits the same button again
+            thumbLikeButton.classList.remove('feedback-animation'); // Remove animation class from like button, to display animation when user hits the same button again
 
-            $('#thumbLikeButton-' + messageId).attr('src', thumbLikeImagePath);
+            thumbLikeButton.setAttribute('src', thumbLikeImagePath); // Change image to color less icon for like button as user has clicked on dislike button now
         }
     }
 
@@ -2449,7 +3463,8 @@
 
         // Check the current state of like button whether it is liked or unliked.
         // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
-        var likeButtonSource = $('#thumbLikeButton-' + messageId)[0].src;
+        // var likeButtonSource = $('#thumbLikeButton-' + messageId)[0].src;
+        var likeButtonSource = document.querySelector('#thumbLikeButton-' + messageId).src;
 
         var likeMessageApiEndPoint = 'like';
         var likeImageToReplace = thumbLikeHighlightImagePath;
@@ -2477,22 +3492,41 @@
                 hideChatLoader();
                 const data = JSON.parse(apiResponse);
 
-                // Highlight the like button
-                $('#thumbLikeButton-' + messageId).attr('src', likeImageToReplace);
+                // // Highlight the like button
+                // $('#thumbLikeButton-' + messageId).attr('src', likeImageToReplace);
 
-                // If earlier it was already highlighted it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+                // // If earlier it was already highlighted it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+                // if (isLikeHighlight) {
+                //     $('#thumbLikeButton-' + messageId).removeClass('feedback-animation');
+                // } else {
+                //     $('#thumbLikeButton-' + messageId).addClass('feedback-animation');
+                // }
+
+                // $('#thumbDislikeButton-' + messageId).removeClass('feedback-animation'); // Remove animation class from dislike button, to display animation when user hits the same button again
+
+                // $('#thumbDislikeButton-' + messageId).attr(
+                //     'src',
+                //     thumbDislikeImagePath
+                // ); // Change image to color less icon for dislike button as user has clicked on like button now
+                const thumbLikeButton = document.querySelector('#thumbLikeButton-' + messageId);
+                const thumbDislikeButton = document.querySelector('#thumbDislikeButton-' + messageId);
+
+                // Highlight the like button
+                thumbLikeButton.setAttribute('src', likeImageToReplace);
+
+                // If earlier it was already highlighted it means, user has unliked the previous like.
+                // We need to remove the animation class so if the user clicks on the same like again, then it can show the animation, else animation won't be shown
                 if (isLikeHighlight) {
-                    $('#thumbLikeButton-' + messageId).removeClass('feedback-animation');
+                    thumbLikeButton.classList.remove('feedback-animation');
                 } else {
-                    $('#thumbLikeButton-' + messageId).addClass('feedback-animation');
+                    thumbLikeButton.classList.add('feedback-animation');
                 }
 
-                $('#thumbDislikeButton-' + messageId).removeClass('feedback-animation'); // Remove animation class from dislike button, to display animation when user hits the same button again
+                // Remove animation class from dislike button, to display animation when user hits the same button again
+                thumbDislikeButton.classList.remove('feedback-animation');
 
-                $('#thumbDislikeButton-' + messageId).attr(
-                    'src',
-                    thumbDislikeImagePath
-                ); // Change image to color less icon for dislike button as user has clicked on like button now
+                // Change image to colorless icon for dislike button as user has clicked on like button now
+                thumbDislikeButton.setAttribute('src', thumbDislikeImagePath);
 
                 // Check if feedback modal is already shown or not
                 // We need to show it only if it is not already shown
@@ -2517,7 +3551,8 @@
 
         // Check the current state of like button whether it is liked or unliked.
         // If it is already liked, and user has clicked on it again then we need to remove the like, else we need to like it
-        var dislikeButtonSource = $('#thumbDislikeButton-' + messageId)[0].src;
+        //var dislikeButtonSource = $('#thumbDislikeButton-' + messageId)[0].src;
+        var dislikeButtonSource = document.querySelector('#thumbDislikeButton-' + messageId).src;
 
         var dislikeMessageApiEndPoint = 'dislike';
         var dislikeImageToReplace = thumbDislikeHighlightImagePath;
@@ -2546,23 +3581,41 @@
                 const data = JSON.parse(apiResponse);
 
                 // Highlight the like button
-                $('#thumbDislikeButton-' + messageId).attr(
-                    'src',
-                    dislikeImageToReplace
-                );
+                // $('#thumbDislikeButton-' + messageId).attr(
+                //     'src',
+                //     dislikeImageToReplace
+                // );
 
-                // If earlier it was already highlighted it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+                // // If earlier it was already highlighted it means, user has un liked the previous like. We need to remove the the animation class. so if user clicks on the same like again, then it can show the animation, else animation won't be shown
+                // if (isDislikeHighlight) {
+                //     $('#thumbDislikeButton-' + messageId).removeClass(
+                //         'feedback-animation'
+                //     );
+                // } else {
+                //     $('#thumbDislikeButton-' + messageId).addClass('feedback-animation');
+                // }
+
+                // $('#thumbLikeButton-' + messageId).removeClass('feedback-animation'); // Remove animation class from like button, to display animation when user hits the same button again
+
+                // $('#thumbLikeButton-' + messageId).attr('src', thumbLikeImagePath);
+
+                // Highlight the dislike button
+                document.getElementById('thumbDislikeButton-' + messageId).src = dislikeImageToReplace;
+
+                // If earlier it was already highlighted it means, user has unliked the previous like. 
+                // We need to remove the animation class so if the user clicks on the same like again, 
+                // then it can show the animation, else animation won't be shown
                 if (isDislikeHighlight) {
-                    $('#thumbDislikeButton-' + messageId).removeClass(
-                        'feedback-animation'
-                    );
+                    document.getElementById('thumbDislikeButton-' + messageId).classList.remove('feedback-animation');
                 } else {
-                    $('#thumbDislikeButton-' + messageId).addClass('feedback-animation');
+                    document.getElementById('thumbDislikeButton-' + messageId).classList.add('feedback-animation');
                 }
 
-                $('#thumbLikeButton-' + messageId).removeClass('feedback-animation'); // Remove animation class from like button, to display animation when user hits the same button again
+                // Remove animation class from like button, to display animation when user hits the same button again
+                document.getElementById('thumbLikeButton-' + messageId).classList.remove('feedback-animation');
 
-                $('#thumbLikeButton-' + messageId).attr('src', thumbLikeImagePath);
+                // Update the like button image
+                document.getElementById('thumbLikeButton-' + messageId).src = thumbLikeImagePath;
 
                 const isFeedbackModalShown = sessionStorage.getItem(
                     'isFeedbackModalShown'
@@ -2580,9 +3633,14 @@
     }
 
     function scrollToBottom() {
-        $('#message-list').animate(
-            { scrollTop: $('#message-list').prop('scrollHeight') },
-            500
+        const messageList = document.getElementById('message-list');
+        messageList.scrollTop = messageList.scrollHeight;
+        messageList.animate(
+            [{ scrollTop: messageList.scrollHeight }],
+            {
+                duration: 500,
+                fill: 'forwards',
+            }
         );
     }
 
@@ -2616,7 +3674,7 @@
         var chunks = [];
         var arrayBufferData;
 
-        visualizerControl.startRecording();
+        visualizerControl.startRecording(screenName);
 
         //if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         //    navigator.mediaDevices
@@ -2739,11 +3797,11 @@
         //}
     }
 
-    async function stopRecording() {
+    async function stopRecording(screenName) {
         //if (mediaRecorder) {
         //    mediaRecorder.stop();
         //}
-        visualizerControl.stopRecording();
+        visualizerControl.stopRecording(screenName);
     }
 
     function createDownloadLink(blob, screenName) {
@@ -2776,7 +3834,10 @@
 
     function loadAudioPlayer(blob, messageId, alignment = 'right') {
         // Remove the existing audio player with the same id if available
-        $('#' + messageId).remove();
+        const element = document.getElementById(messageId);
+        if (element) {
+            element.remove();
+        }
 
         const blobUrl = URL.createObjectURL(blob);
         const div = document.createElement('div');
@@ -2821,7 +3882,10 @@
         div.appendChild(audio);
         div.appendChild(anchor);
         div.style.display = 'none'; // Hide audio player as we don't need to display it to the user. It will be played using a audio icon available next to text message
-        $('#message-list').append(div);
+        //$('#message-list').append(div);
+        /*document.getElementById('message-list').insertAdjacentHTML('beforeend', div);*/
+        const messageList = document.getElementById('message-list');
+        messageList.appendChild(div);
     }
 
     const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
@@ -2934,7 +3998,11 @@
             '#chatbotMessageWrapper-language-change-greeting-message-base64-' +
             currentLanguageCultureCode +
             '-audio';
-        $(previousLanguageChangedMessageId).remove();
+
+        const element = document.querySelector(previousLanguageChangedMessageId);
+        if (element) {
+            element.remove();
+        }
 
         // Update Welcome greeting data id as per the new language
         // So correct audio can be played when Welcome greeting audio icon is clicked after changing the language.
@@ -2949,49 +4017,95 @@
                 languageCultureCode
             );
 
-        $('#playMessageImg-' + currentWelcomeGreetingDataId).data(
-            'audio-id',
-            newWelcomeGreetingDataId
-        );
+        // $('#playMessageImg-' + currentWelcomeGreetingDataId).data(
+        //     'audio-id',
+        //     newWelcomeGreetingDataId
+        // );
+        document.getElementById('playMessageImg-' + currentWelcomeGreetingDataId).dataset.audioId = newWelcomeGreetingDataId;
 
         // We also need to update play icon image id
         // To pass to correctly change the audio id whenever language is changed.
-        $('#playMessageImg-' + currentWelcomeGreetingDataId).attr(
-            'id',
-            'playMessageImg-' + newWelcomeGreetingDataId
-        );
+        // $('#playMessageImg-' + currentWelcomeGreetingDataId).attr(
+        //     'id',
+        //     'playMessageImg-' + newWelcomeGreetingDataId
+        // );
+        document.getElementById('playMessageImg-' + currentWelcomeGreetingDataId).id = 'playMessageImg-' + newWelcomeGreetingDataId;
     }
 
     /**
      * This functio is used to detect Audio language
      */
+    //function detectAudioLanguage(base64Audio) {
+
+    //    // Return promise
+    //    return new Promise((resolve, reject) => {
+    //        //$.ajax({
+    //        //    type: 'POST',
+    //        //    url: currentParentRoute + 'DetectAudioLanguage',
+    //        //    dataType: 'json',
+    //        //    data: { base64Audio: base64Audio },
+    //        //    success: function (data) {
+    //        //        if (data.Success == true) {
+
+    //        //            isLanguageDetected = true;
+
+    //        //            const currentLanguageCultureCode = getSetCurrentLanguageCode();
+
+    //        //            // Check if current langauge and detected langauge is same or not
+    //        //            // If they are different then change the langauge else do nothing
+    //        //            if (currentLanguageCultureCode != data.Data.LanguageCultureCode) {
+
+    //        //                changeLanguage(
+    //        //                    data.Data.LanguageCultureCode,
+    //        //                    data.Data.LanguageEnglishLabel,
+    //        //                    data.Data.LanguageCultureLabel,
+    //        //                    currentLanguageCultureCode,
+    //        //                    false
+    //        //                ).then((result) => {
+    //        //                    resolve(data);
+    //        //                }).catch(error => {
+    //        //                    reject(error);
+    //        //                });
+    //        //            } else {
+    //        //                resolve(data);
+    //        //            }
+    //        //        } else {
+    //        //            resolve(data);
+    //        //        }
+    //        //    },
+    //        //    failure: function (data) {
+    //        //        reject(data);
+    //        //    },
+    //        //})
+
+    //    })
+    //}
+
     function detectAudioLanguage(base64Audio) {
-
-        // Return promise
         return new Promise((resolve, reject) => {
-            $.ajax({
-                type: 'POST',
-                url: currentParentRoute + 'DetectAudioLanguage',
-                dataType: 'json',
-                data: { base64Audio: base64Audio },
-                success: function (data) {
-                    if (data.Success == true) {
-
+            fetch(currentParentRoute + 'DetectAudioLanguage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ base64Audio: base64Audio })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.Success) {
                         isLanguageDetected = true;
-
                         const currentLanguageCultureCode = getSetCurrentLanguageCode();
 
-                        // Check if current langauge and detected langauge is same or not
-                        // If they are different then change the langauge else do nothing
-                        if (currentLanguageCultureCode != data.Data.LanguageCultureCode) {
-
+                        // Check if current language and detected language are the same or not
+                        // If they are different then change the language else do nothing
+                        if (currentLanguageCultureCode !== data.Data.LanguageCultureCode) {
                             changeLanguage(
                                 data.Data.LanguageCultureCode,
                                 data.Data.LanguageEnglishLabel,
                                 data.Data.LanguageCultureLabel,
                                 currentLanguageCultureCode,
                                 false
-                            ).then((result) => {
+                            ).then(result => {
                                 resolve(data);
                             }).catch(error => {
                                 reject(error);
@@ -3002,22 +4116,89 @@
                     } else {
                         resolve(data);
                     }
-                },
-                failure: function (data) {
-                    reject(data);
-                },
-            })
-        })
+                })
+                .catch(error => {
+                    reject(error);
+                });
+        });
     }
-
     /**
-     * 
+     *
      * @param {any} languageCultureCode
      * @param {any} LanguageEnglishLabel
      * @param {any} languageCultureLabel
      * @param {any} currentLanguageCultureCode
      */
 
+    //function changeLanguage(
+    //    languageCultureCode,
+    //    LanguageEnglishLabel,
+    //    languageCultureLabel,
+    //    currentLanguageCultureCode,
+    //    shouldSpeakLanguageName = true
+    //) {
+
+    //    if (shouldSpeakLanguageName) {
+    //        playAudio('language-labels-' + LanguageEnglishLabel + '-audio');
+    //    }
+
+
+    //    return new Promise((resolve, reject) => {
+    //        isChangeLanguageRequestInProgress = $.ajax({
+    //            type: 'POST',
+    //            url: currentParentRoute + 'ChangeLanguage',
+    //            dataType: 'json',
+    //            data: { lang: languageCultureCode },
+    //            success: async function (data) {
+    //                // If language is changed after session refresh was done,
+    //                // Add metric count for it
+    //                if (sessionId !== previousSessionId) {
+    //                    addMetricsCount('stage2Count');
+    //                }
+
+    //                // Remove previous language changed message
+    //                removePreviousWelcomeGreetingMessage(currentLanguageCultureCode);
+
+    //                isChangeLanguageRequestInProgress = null;
+
+
+    //                // Update selected language buttons and labels to update the selected language in UI.
+    //                updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
+
+    //                await getTranslations();
+
+    //                const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
+    //                //updateTranslations([], ["welcome_greeting"]);
+    //                //updateWelcomeGreetingMessage();
+    //                const uniqueMessageId = 'welcome-greeting-message-base64-' + languageCultureCode + '-audio';
+
+    //                //Add welcome greeting change message to chat screen
+    //                updateChatMessagesList(
+    //                    currentLanguageChangeMessage, uniqueMessageId,
+    //                    '',
+    //                    true,
+    //                    true,
+    //                    true
+    //                );
+
+    //                getWelcomeGreetingsAudio(true);
+
+    //                //updateWelcomeGreetingMessage(currentLanguageCultureCode, languageCultureCode);
+
+    //                showUserRecordedMessageInTextBox('');
+
+    //                previousSessionId = sessionId;
+
+    //                resolve(data);
+    //            },
+    //            failure: function (data) {
+    //                isChangeLanguageRequestInProgress = null;
+    //                alert('oops something went wrong');
+    //                reject(data);
+    //            }
+    //        });
+    //    });
+    //}
     function changeLanguage(
         languageCultureCode,
         LanguageEnglishLabel,
@@ -3025,19 +4206,20 @@
         currentLanguageCultureCode,
         shouldSpeakLanguageName = true
     ) {
-
         if (shouldSpeakLanguageName) {
             playAudio('language-labels-' + LanguageEnglishLabel + '-audio');
         }
 
-
         return new Promise((resolve, reject) => {
-            isChangeLanguageRequestInProgress = $.ajax({
-                type: 'POST',
-                url: currentParentRoute + 'ChangeLanguage',
-                dataType: 'json',
-                data: { lang: languageCultureCode },
-                success: async function (data) {
+            isChangeLanguageRequestInProgress = fetch(currentParentRoute + 'ChangeLanguage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ lang: languageCultureCode })
+            })
+                .then(response => response.json())
+                .then(async data => {
                     // If language is changed after session refresh was done,
                     // Add metric count for it
                     if (sessionId !== previousSessionId) {
@@ -3048,7 +4230,7 @@
                     removePreviousWelcomeGreetingMessage(currentLanguageCultureCode);
 
                     isChangeLanguageRequestInProgress = null;
-
+                    currentLanguageInfo.currentLanguageCode = languageCultureCode;
 
                     // Update selected language buttons and labels to update the selected language in UI.
                     updateSelectedLanguageInUI(languageCultureCode, languageCultureLabel);
@@ -3056,11 +4238,10 @@
                     await getTranslations();
 
                     const currentLanguageChangeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
-                    //updateTranslations([], ["welcome_greeting"]);
-                    //updateWelcomeGreetingMessage();
+
                     const uniqueMessageId = 'welcome-greeting-message-base64-' + languageCultureCode + '-audio';
 
-                    //Add welcome greeting change message to chat screen
+                    // Add welcome greeting change message to chat screen
                     updateChatMessagesList(
                         currentLanguageChangeMessage, uniqueMessageId,
                         '',
@@ -3071,104 +4252,140 @@
 
                     getWelcomeGreetingsAudio(true);
 
-                    //updateWelcomeGreetingMessage(currentLanguageCultureCode, languageCultureCode);
-
                     showUserRecordedMessageInTextBox('');
 
                     previousSessionId = sessionId;
 
                     resolve(data);
-                },
-                failure: function (data) {
+                })
+                .catch(error => {
                     isChangeLanguageRequestInProgress = null;
                     alert('oops something went wrong');
-                    reject(data);
-                }
-            });
+                    reject(error);
+                });
         });
     }
-
     function updateSelectedLanguageInUI(
         languageCultureCode,
         languageCultureLabel
     ) {
         localStorage.setItem("currentLanguageCode", languageCultureCode);
-        $('.language-buttons').removeClass('btn-success');
-        $('.language-buttons').addClass('btn-secondary');
+        // $('.language-buttons').removeClass('btn-success');
+        // $('.language-buttons').addClass('btn-secondary');
 
-        $('.language-buttons').data(
-            'current-language-culture-code',
-            languageCultureCode
-        );
-        $('li.languagesLabels a').data(
-            'current-language-culture-code',
-            languageCultureCode
-        );
+        // $('.language-buttons').data(
+        //     'current-language-culture-code',
+        //     languageCultureCode
+        // );
+        // $('li.languagesLabels a').data(
+        //     'current-language-culture-code',
+        //     languageCultureCode
+        // );
 
-        $(
-            'button[data-language-culture-code="' + languageCultureCode + '"]'
-        ).addClass('btn-success');
+        // $(
+        //     'button[data-language-culture-code="' + languageCultureCode + '"]'
+        // ).addClass('btn-success');
 
-        $(
-            'button[data-language-culture-code="' + languageCultureCode + '"]'
-        ).removeClass('btn-secondary');
+        // $(
+        //     'button[data-language-culture-code="' + languageCultureCode + '"]'
+        // ).removeClass('btn-secondary');
 
-        $('#selectedLanguageLabel').html(languageCultureLabel);
+        // $('#selectedLanguageLabel').html(languageCultureLabel);
 
-        $('li.languagesLabels a').removeClass('fw-bold');
+        // $('li.languagesLabels a').removeClass('fw-bold');
 
-        $(
-            'li.languagesLabels[data-language-culture-code="' +
-            languageCultureCode +
-            '"] a'
-        ).addClass('fw-bold');
-    }
+        // $(
+        //     'li.languagesLabels[data-language-culture-code="' +
+        //     languageCultureCode +
+        //     '"] a'
+        // ).addClass('fw-bold');
+        // Remove success class and add secondary class to language buttons
+        document.querySelectorAll('.language-buttons languagesLabels').forEach(button => {
 
-    async function getWelcomeGreetingsAudio(isLanguageChanged) {
-        const currentLanguageCode = getSetCurrentLanguageCode();
-
-        // Get current selected language and welcome message
-        //const languageChangeMessageAPIResponse = await fetch('/Content/audio/language-change-' + currentLanguageCode + '.txt', { cache: 'no-cache' });
-        //const welcomeMessageAPIResponse = await fetch('/Content/audio/welcome-' + currentLanguageCode + '.txt', { cache: 'no-cache' });
-
-        //const languageChangeBase64Data = await languageChangeMessageAPIResponse.text();
-        //const welcomeMessageBase64Data = await welcomeMessageAPIResponse.text();
-
-        //currentLanguageInfo = GetDynamicTranslations();
-        const welcomeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
-        //const welcomeMessageElement = document.getElementsByClassName('messageWelcomeGreeting');
-
-        isGetWelcomeGreetingsTextToSpeechRequestInProgress = $.ajax({
-            type: "POST",
-            url: "/Home/GetWelcomeGreetingsTextToSpeech",
-            dataType: "json",
-            data: { languageCode: currentLanguageCode, welcomeMessage: welcomeMessage, gender: globalAutoReadFeature.selectedVoice ? globalAutoReadFeature.selectedVoice : null },
-            success: function (data) {
-                isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
-
-
-                initWelcomeGreetingAudioConfig(data.Data, isLanguageChanged);
-            },
-            failure: function (data) {
-                isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
-                alert("oops something went wrong");
-            },
+            button.classList.remove('btn-success');
+            button.classList.add('btn-secondary');
+            button.dataset.currentLanguageCultureCode = languageCultureCode;
         });
 
-        // Add fetched data in an array
-        //const base64Data =
-        //    [
-        //        {
-        //            Key: 'welcome-greeting-message-base64-' + currentLanguageCode,
-        //            Value: welcomeMessageBase64Data
-        //        },
-        //        {
-        //            Key: 'language-change-greeting-message-base64-' + currentLanguageCode,
-        //            Value: languageChangeBase64Data
-        //        }
-        //    ];
+        // Set data attribute for current language culture code on language labels
+        // Select all elements with the data attribute 'data-current-language-culture-code'
+        const elements = document.querySelectorAll('[data-current-language-culture-code]');
 
-        //initWelcomeGreetingAudioConfig(base64Data, isLanguageChanged);
+        // Iterate over the NodeList and update the value of each element
+        elements.forEach(element => {
+            element.setAttribute('data-current-language-culture-code', languageCultureCode); // Update the data attribute as neededelement.value = languageCultureCode; // Update the value as needed
+        });
+
+        // Add success class and remove secondary class for the selected language button
+        const selectedLanguageButton = document.querySelector(`button[data-language-culture-code="${languageCultureCode}"]`);
+        if (selectedLanguageButton) {
+            selectedLanguageButton.classList.add('btn-success');
+            selectedLanguageButton.classList.remove('btn-secondary');
+        }
+
+        // Update the selected language label
+        document.getElementById('selectedLanguageLabel').innerHTML = languageCultureLabel;
+
+        // Remove bold class from all language labels and add it to the selected one
+        document.querySelectorAll('li.languagesLabels a').forEach(label => {
+            label.classList.remove('fw-bold');
+        });
+        const selectedLanguageLabel = document.querySelector(`li.languagesLabels[data-language-culture-code="${languageCultureCode}"] a`);
+        if (selectedLanguageLabel) {
+            selectedLanguageLabel.classList.add('fw-bold');
+        }
+    }
+
+    //async function getWelcomeGreetingsAudio(isLanguageChanged) {
+    //    const currentLanguageCode = getSetCurrentLanguageCode();
+
+    //    const welcomeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
+
+    //    isGetWelcomeGreetingsTextToSpeechRequestInProgress = $.ajax({
+    //        type: "POST",
+    //        url: "/Home/GetWelcomeGreetingsTextToSpeech",
+    //        dataType: "json",
+    //        data: { languageCode: currentLanguageCode, welcomeMessage: welcomeMessage, gender: globalAutoReadFeature.selectedVoice ? globalAutoReadFeature.selectedVoice : null },
+    //        success: function (data) {
+    //            isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
+
+
+    //            initWelcomeGreetingAudioConfig(data.Data, isLanguageChanged);
+    //        },
+    //        failure: function (data) {
+    //            isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
+    //            alert("oops something went wrong");
+    //        },
+    //    });
+    //}
+    function getWelcomeGreetingsAudio(isLanguageChanged) {
+        const currentLanguageCode = getSetCurrentLanguageCode();
+        const welcomeMessage = currentLanguageInfo.translations.messages.welcome_greeting;
+
+        return new Promise((resolve, reject) => {
+            isGetWelcomeGreetingsTextToSpeechRequestInProgress = fetch('/Home/GetWelcomeGreetingsTextToSpeech', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    languageCode: currentLanguageCode,
+                    welcomeMessage: welcomeMessage,
+                    gender: globalAutoReadFeature.selectedVoice ? globalAutoReadFeature.selectedVoice : null
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
+                    initWelcomeGreetingAudioConfig(data.Data, isLanguageChanged);
+                    resolve(data);
+                })
+                .catch(error => {
+                    isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
+                    alert("oops something went wrong");
+                    reject(error);
+                });
+        });
     }
 
     function initGeneralAudioConfig(data) {
@@ -3244,52 +4461,128 @@
         }
     }
 
+    // async function playAudioWithRememberingLastPause(audioId) {
+    //     const currentAudioIdElement = document.getElementById(audioId);
+
+    //     if (currentAudioIdElement.paused == false) {
+    //         currentAudioIdElement.pause();
+
+    //         $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+
+    //         var allAudioEls = $('audio');
+
+    //         allAudioEls.each(function () {
+    //             var a = $(this).get(0);
+
+    //             if (a.id != 'globalAudioElement') {
+    //                 a.pause();
+    //                 $('#playMessageImg-' + a.id).attr('src', startAudioImagePath);
+    //             }
+    //         });
+
+    //         if (previousPlayingMessageId != audioId) {
+    //             let currentAudio = document.getElementById(audioId);
+    //             currentAudio.playbackRate = 1.1;
+    //             currentAudio.play();
+
+    //             previousPlayingMessageId = audioId;
+
+    //             $('#playMessageImg-' + audioId).attr('src', stopAudioImagePath);
+    //             // Show audio progressbar when audio is playing
+
+    //             currentAudio.onended = function () {
+    //                 previousPlayingMessageId = '';
+    //                 $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+    //             };
+    //         } else {
+    //             //sessionStorage.removeItem('isAutoPlayEnabled');
+    //         }
+    //     } else {
+    //         var allAudioEls = $('audio');
+
+    //         allAudioEls.each(function () {
+    //             var a = $(this).get(0);
+
+    //             if (a.id != 'globalAudioElement') {
+    //                 a.pause();
+
+    //                 $('#playMessageImg-' + a.id).attr('src', startAudioImagePath);
+    //             }
+    //         });
+
+    //         let currentAudio = document.getElementById(audioId);
+    //         currentAudio.playbackRate = 1.1;
+    //         currentAudio.play();
+    //         previousPlayingMessageId = audioId;
+
+    //         $('#playMessageImg-' + audioId).attr('src', stopAudioImagePath);
+
+    //         currentAudio.onended = function () {
+    //             previousPlayingMessageId = '';
+
+    //             $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+    //         };
+    //     }
+    // }
     async function playAudioWithRememberingLastPause(audioId) {
         const currentAudioIdElement = document.getElementById(audioId);
 
-        if (currentAudioIdElement.paused == false) {
+        if (!currentAudioIdElement.paused) {
             currentAudioIdElement.pause();
 
-            $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+            document.getElementById('playMessageImg-' + audioId).src = startAudioImagePath;
 
-            var allAudioEls = $('audio');
+            const allAudioEls = document.querySelectorAll('audio');
 
-            allAudioEls.each(function () {
-                var a = $(this).get(0);
+            allAudioEls.forEach(audio => {
+                if (audio.id !== 'globalAudioElement') {
+                    //audio.pause();
+                    //document.getElementById('playMessageImg-' + audio.id).src = startAudioImagePath;
 
-                if (a.id != 'globalAudioElement') {
-                    a.pause();
-                    $('#playMessageImg-' + a.id).attr('src', startAudioImagePath);
+                    if (audio.paused == false) {
+                        audio.pause();
+
+                        const playMessageImg = document.getElementById('playMessageImg-' + audio.id);
+                        if (playMessageImg) {
+                            playMessageImg.src = startAudioImagePath;
+                        }
+                    }
                 }
             });
 
-            if (previousPlayingMessageId != audioId) {
+            if (previousPlayingMessageId !== audioId) {
                 let currentAudio = document.getElementById(audioId);
                 currentAudio.playbackRate = 1.1;
                 currentAudio.play();
 
                 previousPlayingMessageId = audioId;
 
-                $('#playMessageImg-' + audioId).attr('src', stopAudioImagePath);
-                // Show audio progressbar when audio is playing
+                document.getElementById('playMessageImg-' + audioId).src = stopAudioImagePath;
 
                 currentAudio.onended = function () {
                     previousPlayingMessageId = '';
-                    $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+
+                    const playMessageImg = document.getElementById('playMessageImg-' + audioId);
+
+                    if (playMessageImg) {
+                        playMessageImg.src = startAudioImagePath;
+                    }
                 };
-            } else {
-                //sessionStorage.removeItem('isAutoPlayEnabled');
             }
         } else {
-            var allAudioEls = $('audio');
+            const allAudioEls = document.querySelectorAll('audio');
 
-            allAudioEls.each(function () {
-                var a = $(this).get(0);
+            allAudioEls.forEach(audio => {
+                if (audio.id !== 'globalAudioElement') {
 
-                if (a.id != 'globalAudioElement') {
-                    a.pause();
+                    if (audio.paused == false) {
+                        audio.pause();
 
-                    $('#playMessageImg-' + a.id).attr('src', startAudioImagePath);
+                        const playMessageImg = document.getElementById('playMessageImg-' + audio.id);
+                        if (playMessageImg) {
+                            playMessageImg.src = startAudioImagePath;
+                        }
+                    }
                 }
             });
 
@@ -3298,67 +4591,134 @@
             currentAudio.play();
             previousPlayingMessageId = audioId;
 
-            $('#playMessageImg-' + audioId).attr('src', stopAudioImagePath);
+            const playMessageImg = document.getElementById('playMessageImg-' + audioId);
+            if (playMessageImg) {
+                playMessageImg.src = stopAudioImagePath;
+            }
 
             currentAudio.onended = function () {
                 previousPlayingMessageId = '';
+                const playMessageImg = document.getElementById('playMessageImg-' + audioId);
 
-                $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+                if (playMessageImg) {
+                    playMessageImg.src = startAudioImagePath;
+                }
+
             };
         }
     }
 
+    // async function playAudio(audioId) {
+    //     playAudioWithRememberingLastPause(audioId);
+
+    //     return;
+    //     const globalAudioElement = document.getElementById('globalAudioElement');
+
+    //     if (globalAudioElement.paused == false) {
+    //         globalAudioElement.pause();
+    //         globalAudioElement.currentTime = 0;
+
+    //         $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+
+    //         var allAudioEls = $('audio');
+
+    //         allAudioEls.each(function () {
+    //             var a = $(this).get(0);
+
+    //             if (a.id != 'globalAudioElement') {
+    //                 a.pause();
+    //                 a.currentTime = 0;
+    //                 $('#playMessageImg-' + a.id).attr('src', startAudioImagePath);
+    //             }
+    //         });
+
+    //         if (previousPlayingMessageId != audioId) {
+    //             globalAudioElement.src = document.getElementById(audioId).src;
+    //             globalAudioElement.playbackRate = 1.1;
+    //             globalAudioElement.play();
+    //             previousPlayingMessageId = audioId;
+
+    //             $('#playMessageImg-' + audioId).attr('src', stopAudioImagePath);
+    //             // Show audio progressbar when audio is playing
+
+    //             globalAudioElement.onended = function () {
+    //                 previousPlayingMessageId = '';
+    //                 $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+    //             };
+    //         } else {
+    //             //sessionStorage.removeItem('isAutoPlayEnabled');
+    //         }
+    //     } else {
+    //         var allAudioEls = $('audio');
+
+    //         allAudioEls.each(function () {
+    //             var a = $(this).get(0);
+
+    //             if (a.id != 'globalAudioElement') {
+    //                 a.pause();
+    //                 a.currentTime = 0;
+
+    //                 $('#playMessageImg-' + a.id).attr('src', startAudioImagePath);
+    //             }
+    //         });
+
+    //         globalAudioElement.src = document.getElementById(audioId).src;
+    //         globalAudioElement.playbackRate = 1.1;
+    //         globalAudioElement.play();
+    //         previousPlayingMessageId = audioId;
+
+    //         $('#playMessageImg-' + audioId).attr('src', stopAudioImagePath);
+
+    //         globalAudioElement.onended = function () {
+    //             previousPlayingMessageId = '';
+
+    //             $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+    //         };
+    //     }
+    // }
     async function playAudio(audioId) {
         playAudioWithRememberingLastPause(audioId);
-
         return;
+
         const globalAudioElement = document.getElementById('globalAudioElement');
 
-        if (globalAudioElement.paused == false) {
+        if (!globalAudioElement.paused) {
             globalAudioElement.pause();
             globalAudioElement.currentTime = 0;
 
-            $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+            document.getElementById('playMessageImg-' + audioId).src = startAudioImagePath;
 
-            var allAudioEls = $('audio');
+            const allAudioEls = document.querySelectorAll('audio');
 
-            allAudioEls.each(function () {
-                var a = $(this).get(0);
-
-                if (a.id != 'globalAudioElement') {
-                    a.pause();
-                    a.currentTime = 0;
-                    $('#playMessageImg-' + a.id).attr('src', startAudioImagePath);
+            allAudioEls.forEach(audio => {
+                if (audio.id !== 'globalAudioElement') {
+                    audio.pause();
+                    audio.currentTime = 0;
+                    document.getElementById('playMessageImg-' + audio.id).src = startAudioImagePath;
                 }
             });
 
-            if (previousPlayingMessageId != audioId) {
+            if (previousPlayingMessageId !== audioId) {
                 globalAudioElement.src = document.getElementById(audioId).src;
                 globalAudioElement.playbackRate = 1.1;
                 globalAudioElement.play();
                 previousPlayingMessageId = audioId;
 
-                $('#playMessageImg-' + audioId).attr('src', stopAudioImagePath);
-                // Show audio progressbar when audio is playing
+                document.getElementById('playMessageImg-' + audioId).src = stopAudioImagePath;
 
                 globalAudioElement.onended = function () {
                     previousPlayingMessageId = '';
-                    $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+                    document.getElementById('playMessageImg-' + audioId).src = startAudioImagePath;
                 };
-            } else {
-                //sessionStorage.removeItem('isAutoPlayEnabled');
             }
         } else {
-            var allAudioEls = $('audio');
+            const allAudioEls = document.querySelectorAll('audio');
 
-            allAudioEls.each(function () {
-                var a = $(this).get(0);
-
-                if (a.id != 'globalAudioElement') {
-                    a.pause();
-                    a.currentTime = 0;
-
-                    $('#playMessageImg-' + a.id).attr('src', startAudioImagePath);
+            allAudioEls.forEach(audio => {
+                if (audio.id !== 'globalAudioElement') {
+                    audio.pause();
+                    audio.currentTime = 0;
+                    document.getElementById('playMessageImg-' + audio.id).src = startAudioImagePath;
                 }
             });
 
@@ -3367,15 +4727,15 @@
             globalAudioElement.play();
             previousPlayingMessageId = audioId;
 
-            $('#playMessageImg-' + audioId).attr('src', stopAudioImagePath);
+            document.getElementById('playMessageImg-' + audioId).src = stopAudioImagePath;
 
             globalAudioElement.onended = function () {
                 previousPlayingMessageId = '';
-
-                $('#playMessageImg-' + audioId).attr('src', startAudioImagePath);
+                document.getElementById('playMessageImg-' + audioId).src = startAudioImagePath;
             };
         }
     }
+
     function restartSession(showConfirmation) {
         function proceedForSessionRestart() {
             scrollToBottom();
@@ -3395,9 +4755,12 @@
 
         if (showConfirmation == true) {
 
-            const confirmationMessage = $(
-                '#chatbot-restart-session-confirmation-message'
-            ).val();
+            // const confirmationMessage = $(
+            //     '#chatbot-restart-session-confirmation-message'
+            // ).val();
+
+            const confirmationMessage = document.getElementById('chatbot-restart-session-confirmation-message').value;
+
             showChatbotConfirmationModal(
                 'restart-session',
                 confirmationMessage,
@@ -3409,7 +4772,12 @@
     }
 
     function clearChatHistory() {
-        $('.conversationsWrapper').remove();
+        // $('.conversationsWrapper').remove();
+
+        document.querySelectorAll('.conversationsWrapper').forEach(element => {
+            element.remove();
+        });
+
         var defaultPlaceholderMessage = currentLanguageInfo.translations.messages.ask_ur_question; //translations.find((f) => f.key == 'ask_ur_question').value;
         changeInputPlaceholderValue(defaultPlaceholderMessage);
     }
@@ -3427,47 +4795,95 @@
 
         div.appendChild(audio);
         div.style.display = 'none'; // Hide audio player as we don't need to display it to the user. It will be played using a audio icon available next to text message
-        $('#message-list').append(div);
+        //$('#message-list').append(div);
+        const messageList = document.getElementById('message-list');
+        messageList.appendChild(div);
     }
 
     function changeInputPlaceholderValue(valueToChange) {
 
         var defaultPlaceholderMessage = currentLanguageInfo.translations.messages.ask_ur_question; //translations.find((f) => f.key == 'ask_ur_question').value;
 
-        $(userQuestionTextBox).attr(
-            'placeholder',
-            valueToChange != undefined ? valueToChange : defaultPlaceholderMessage
-        );
+        // $(userQuestionTextBox).attr(
+        //     'placeholder',
+        //     valueToChange != undefined ? valueToChange : defaultPlaceholderMessage
+        // );
 
-        $(userQuestionTextBox).trigger('keyup');
+        // $(userQuestionTextBox).trigger('keyup');
 
-        autosize.update($(userQuestionTextBox));
+        // autosize.update($(userQuestionTextBox));
+
+        const userQuestionTextBox = document.getElementById('userQuestionTextBox');
+        userQuestionTextBox.placeholder = valueToChange != undefined ? valueToChange : defaultPlaceholderMessage;
+        userQuestionTextBox.dispatchEvent(new Event('keyup'));
+        autosize.update(userQuestionTextBox);
+
+
+        // Highlight the dislike button
+        //document.getElementById('thumbDislikeButton-' + messageId).src = dislikeImageToReplace;
+
+        //// If earlier it was already highlighted it means, user has unliked the previous like.
+        //// We need to remove the animation class so if the user clicks on the same like again,
+        //// then it can show the animation, else animation won't be shown
+        //if (isDislikeHighlight) {
+        //    document.getElementById('thumbDislikeButton-' + messageId).classList.remove('feedback-animation');
+        //} else {
+        //    document.getElementById('thumbDislikeButton-' + messageId).classList.add('feedback-animation');
+        //}
+
+        //// Remove animation class from like button, to display animation when user hits the same button again
+        //document.getElementById('thumbLikeButton-' + messageId).classList.remove('feedback-animation');
+
+        //// Update the like button image
+        //document.getElementById('thumbLikeButton-' + messageId).src = thumbLikeImagePath;
     }
 
-    function showChatbotConfirmationModal(
-        type,
-        confirmationMessage,
-        closeCallback
-    ) {
-        $('#chatbotConfirmationModalSaveButton').data('modal-type', type);
+    // function showChatbotConfirmationModal(
+    //     type,
+    //     confirmationMessage,
+    //     closeCallback
+    // ) {
+    //     $('#chatbotConfirmationModalSaveButton').data('modal-type', type);
 
-        chatbotConfirmationModal = new bootstrap.Modal(
-            '#' + chatbotConfirmationModalId,
+    //     chatbotConfirmationModal = new bootstrap.Modal(
+    //         '#' + chatbotConfirmationModalId,
+    //         modalOptions
+    //     );
+
+    //     $('#chatbot-restart-session-confirmation-message').append(
+    //         confirmationMessage
+    //     );
+    //     chatbotConfirmationModal.show();
+
+    //     chatbotConfirmationModalElement.addEventListener(
+    //         'hidden.bs.modal',
+    //         (event) => {
+    //             closeCallback(event);
+    //             // do something...
+    //         }
+    //     );
+    // }
+    function showChatbotConfirmationModal(type, confirmationMessage, closeCallback) {
+        // Set the modal type data attribute
+        document.getElementById('chatbotConfirmationModalSaveButton').dataset.modalType = type;
+
+        // Initialize the Bootstrap modal
+        const chatbotConfirmationModal = new bootstrap.Modal(
+            document.getElementById(chatbotConfirmationModalId),
             modalOptions
         );
 
-        $('#chatbot-restart-session-confirmation-message').append(
-            confirmationMessage
-        );
+        // Append the confirmation message
+        document.getElementById('chatbot-restart-session-confirmation-message').append(confirmationMessage);
+
+        // Show the modal
         chatbotConfirmationModal.show();
 
-        chatbotConfirmationModalElement.addEventListener(
-            'hidden.bs.modal',
-            (event) => {
-                closeCallback(event);
-                // do something...
-            }
-        );
+        // Add event listener for when the modal is hidden
+        document.getElementById(chatbotConfirmationModalId).addEventListener('hidden.bs.modal', (event) => {
+            closeCallback(event);
+            // do something...
+        });
     }
 
     function showStartNewConversationModal(
@@ -3535,20 +4951,31 @@
         }
     }
 
+    // function showHideMessagePlaceholder(shouldShow) {
+
+    //     if (shouldShow) {
+    //         //$(userQuestionTextBox).val('');
+    //         //$(userQuestionTextBox).attr('placeholder', '');
+    //         // Hide placeholder temporarily, keep value as it is
+
+    //         $(userQuestionTextBox).attr('placeholder', $(userQuestionTextBox).attr('data-text'));
+
+    //     } else {
+    //         //$(userQuestionTextBox).val('');
+    //         //$(userQuestionTextBox).attr('placeholder', currentLanguageInfo.translations.messages.ask_ur_question);
+    //         $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
+    //         $(userQuestionTextBox).removeAttr('placeholder');
+    //     }
+    // }
     function showHideMessagePlaceholder(shouldShow) {
+        const userQuestionTextBoxElement = document.querySelector(userQuestionTextBox);
 
         if (shouldShow) {
-            //$(userQuestionTextBox).val('');
-            //$(userQuestionTextBox).attr('placeholder', '');
             // Hide placeholder temporarily, keep value as it is
-
-            $(userQuestionTextBox).attr('placeholder', $(userQuestionTextBox).attr('data-text'));
-
+            userQuestionTextBoxElement.setAttribute('placeholder', userQuestionTextBoxElement.getAttribute('data-text'));
         } else {
-            //$(userQuestionTextBox).val('');
-            //$(userQuestionTextBox).attr('placeholder', currentLanguageInfo.translations.messages.ask_ur_question);
-            $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
-            $(userQuestionTextBox).removeAttr('placeholder');
+            userQuestionTextBoxElement.setAttribute('data-text', userQuestionTextBoxElement.getAttribute('placeholder'));
+            userQuestionTextBoxElement.removeAttribute('placeholder');
         }
     }
 
@@ -3559,9 +4986,18 @@
             languageCultureCode +
             '-audio';
 
-        $(previousSchemeChangeMessageId).remove();
 
-        $('#welcome-message-wrapper').remove();
+        //$(previousSchemeChangeMessageId).remove();
+        let element = document.getElementById(previousSchemeChangeMessageId);
+        if (element) {
+            element.remove();
+        }
+
+        //$('#welcome-message-wrapper').remove();
+        let welcomeMessageWrapper = document.getElementById('welcome-message-wrapper');
+        if (welcomeMessageWrapper) {
+            welcomeMessageWrapper.remove();
+        }
     }
 
     /**

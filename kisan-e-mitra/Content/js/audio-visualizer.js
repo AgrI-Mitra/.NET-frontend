@@ -5,7 +5,7 @@
         const audioVisualizerContainer = document.querySelector('.audio-visualizer-container');
         const audioProcessingContainer = document.querySelector('.audio-processing-container');
         const micAudioRecordingIcon = document.getElementById('micAudioRecordingIcon');
-        const userQuestionTextBox = '#userQuestionTextBox';
+        const userQuestionTextBox = '.userQuestionTextBoxClass';//'#userQuestionTextBox';
 
         function toggleVisualizerWrapper(shouldTrunOn) {
 
@@ -74,7 +74,6 @@
         // Initialize the audio visualizer
         function startVisualizer(stream) {
             $('.sendtext').hide();
-            console.log('called from startVisualizer with false');
             showHideMessagePlaceholder(false);
             try {
                 audioVisualizerWrapper.style.display = "flex";
@@ -98,9 +97,7 @@
                 /*draw(canvas, canvasCtx);*/
                 stopVisualizer = drawBars(0, canvas, dataArray, null, bufferLength, 1.5, 60, false);
             } catch (e) {
-                console.log('draw error: ', e);
                 $('.sendtext').show();
-                console.log('called from startVisualizer with true');
                 showHideMessagePlaceholder(true);
             }
 
@@ -180,7 +177,6 @@
         function stopVisualizer() {
 
             $('.sendtext').show();
-            console.log('called from stopVisualizer with true');
             showHideMessagePlaceholder(true);
 
             if (animationId) {
@@ -202,7 +198,6 @@
         function startAutoVisualizer() {
 
             $('.sendtext').hide();
-            console.log('called from startAutoVisualizer with false');
             showHideMessagePlaceholder(false);
 
             audioVisualizerWrapper.style.display = "flex";
@@ -236,7 +231,6 @@
             audioVisualizerContainer.style.display = 'none';
 
             $('.sendtext').show();
-            console.log('called from stopAutoVisualizer with true');
             showHideMessagePlaceholder(true);
         }
 
@@ -255,8 +249,6 @@
                 $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
                 $(userQuestionTextBox).removeAttr('placeholder');
             }
-
-            console.log('shouldShow', shouldShow);
         }
 
         // Expose functions to the global scope for easy access
@@ -268,12 +260,8 @@
             showAnimation,
             hideAnimation,
             startVisualizer,
-            stopVisualizer,
-            startAutoVisualizer,
-            stopAutoVisualizer
+            stopVisualizer
         };
-
-        console.log('audio-visualizer.js loaded', window.audioVisualizer);
     });
 
 })();

@@ -270,6 +270,9 @@
     <Content Include="Content\js\settings-popover.js" />
     <Content Include="Content\js\shepherd.js" />
     <Content Include="Content\js\show-hide-content.js" />
+    <Content Include="Content\js\splash.min.js">
+      <DependentUpon>splash.js</DependentUpon>
+    </Content>
     <Content Include="Content\js\typed.umd.js" />
     <Content Include="Content\js\voice-recorder.js" />
     <Content Include="Content\shepherd.css" />
@@ -460,7 +463,6 @@
     <Content Include="Font\Montserrat-Regular.ttf" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\format-string.helper.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

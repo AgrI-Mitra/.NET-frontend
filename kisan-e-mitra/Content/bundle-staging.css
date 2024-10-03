@@ -12130,7 +12130,7 @@ body {
         color: #8e8e9e;
     }
 
-.my-msg-content {
+.msg-content {
     border-top: 1px solid #eae9e9;
     background: #fff;
     display: flex;
@@ -12138,7 +12138,7 @@ body {
     padding: 1% 2%;
 }
 
-    .my-msg-content:first-child {
+    .msg-content:first-child {
         border-top: 0;
     }
 
@@ -12854,7 +12854,7 @@ svg.footer-svg-hover {
 }
 
 @media (max-width:400px) {
-	.my-msg-content {
+	.msg-content {
 		padding: 2% 4%;
 	}
 
@@ -12879,6 +12879,9 @@ svg.footer-svg-hover {
 	}
 }
 
+.user-input-wrapper{
+	column-gap: 10px;
+}
 .shepherd-button{background:#3288e6;border:0;border-radius:3px;color:hsla(0,0%,100%,.75);cursor:pointer;margin-right:.5rem;padding:.5rem 1.5rem;transition:all .5s ease}.shepherd-button:not(:disabled):hover{background:#196fcc;color:hsla(0,0%,100%,.75)}.shepherd-button.shepherd-button-secondary{background:#f1f2f3;color:rgba(0,0,0,.75)}.shepherd-button.shepherd-button-secondary:not(:disabled):hover{background:#d6d9db;color:rgba(0,0,0,.75)}.shepherd-button:disabled{cursor:not-allowed}
 .shepherd-footer{border-bottom-left-radius:5px;border-bottom-right-radius:5px;display:flex;justify-content:flex-end;padding:0 .75rem .75rem}.shepherd-footer .shepherd-button:last-child{margin-right:0}
 .shepherd-cancel-icon{background:transparent;border:none;color:hsla(0,0%,50%,.75);cursor:pointer;font-size:2em;font-weight:400;margin:0;padding:0;transition:color .5s ease}.shepherd-cancel-icon:hover{color:rgba(0,0,0,.75)}.shepherd-has-title .shepherd-content .shepherd-cancel-icon{color:hsla(0,0%,50%,.75)}.shepherd-has-title .shepherd-content .shepherd-cancel-icon:hover{color:rgba(0,0,0,.75)}

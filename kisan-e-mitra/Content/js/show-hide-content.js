@@ -4,10 +4,6 @@
         const toggleArrowIcon = document.getElementById('toggleArrowIcon');
         const mainContentWrapper = document.getElementById('popularQuestionsWrapper');
 
-        // Ensure the content is shown by default
-        //mainContentWrapper.classList.add('show');
-        //toggleArrowIcon.src = '../Content/images/arrow-down.svg';
-
         toggleButton.addEventListener('click', function (e) {
             mainContentWrapper.classList.toggle('show');
             if (mainContentWrapper.classList.contains('show')) {
@@ -18,17 +14,17 @@
         });
 
         function hidePopularQuestions() {
-            $('#popularQuestionsWrapper').removeClass('d-flex');
-            $('#popularQuestionsWrapper').hide();
-            $('#message-list').addClass('without-popular-questions');
+            mainContentWrapper.classList.remove('d-flex');
+            mainContentWrapper.style.display = 'none';
+            document.getElementById('message-list').classList.add('without-popular-questions');
             mainContentWrapper.classList.remove('show');
             toggleArrowIcon.src = '../Content/images/arrow-up.svg';
         }
 
         function showPopularQuestions() {
-            $('#popularQuestionsWrapper').addClass('d-flex');
-            $('#popularQuestionsWrapper').show();
-            $('#message-list').removeClass('without-popular-questions');
+            mainContentWrapper.classList.add('d-flex');
+            mainContentWrapper.style.display = 'block';
+            document.getElementById('message-list').classList.remove('without-popular-questions');
             mainContentWrapper.classList.add('show');
             toggleArrowIcon.src = '../Content/images/arrow-down.svg';
         }

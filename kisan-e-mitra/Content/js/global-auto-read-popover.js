@@ -7,10 +7,6 @@
     document.addEventListener('DOMContentLoaded', function () {
         var popoverTrigger = document.getElementById('autoReadButton');
         var popoverContent = document.getElementById('globalAutoReadPopover');
-        //const images = document.querySelectorAll('.image-container img');
-        //const radios = document.querySelectorAll(
-        //    '.image-container input[type="radio"]'
-        //);
 
         const containers = document.querySelectorAll('.image-container');
         containers.forEach(container => {
@@ -28,10 +24,6 @@
                 // Add 'selected' class to the clicked image
                 container.querySelector('img').classList.add('selected');
 
-                //const radioId = img
-                //    .closest('.image-container')
-                //    .querySelector('input[type="radio"]').id;
-
                 document.getElementById(radioId).checked = true;
                 globalAutoReadFeature.selectedVoice = radioId;
                 globalAutoReadFeature.isVoiceSelected = true;
@@ -46,11 +38,6 @@
                 popoverTrigger.removeEventListener('click', handleClick);
 
                 // Stop propagation for label and img elements
-                const images = document.querySelectorAll('.image-container img');
-                const radios = document.querySelectorAll(
-                    '.image-container input[type="radio"]'
-                );
-
                 const label = container.querySelector('label');
                 const img = container.querySelector('img');
                 const radio = container.querySelector('input[type="radio"]');
@@ -66,41 +53,6 @@
                 });
             });
         });
-
-        //images.forEach((img) => {
-        //    img.addEventListener('click', function (ev) {
-        //        selectImageAndRadio(img);
-        //    });
-        //});
-
-        //radios.forEach((radio) => {
-        //    radio.addEventListener('click', function (ev) {
-        //        const img = radio.closest('.image-container').querySelector('img');
-        //        selectImageAndRadio(img);
-        //    });
-        //});
-
-        //function selectImageAndRadio(img) {
-        //    images.forEach((image) => image.classList.remove('selected'));
-        //    img.classList.add('selected');
-
-        //    const radioId = img
-        //        .closest('.image-container')
-        //        .querySelector('input[type="radio"]').id;
-
-        //    document.getElementById(radioId).checked = true;
-        //    globalAutoReadFeature.selectedVoice = radioId;
-        //    globalAutoReadFeature.isVoiceSelected = true;
-        //    voiceSelectionChannel.postMessage(globalAutoReadFeature.selectedVoice);
-
-        //    popover.hide();
-
-        //    setAutoReadStatus(false, true);
-
-        //    // Remove popover click event listener
-        //    // Unregister the event listener
-        //    popoverTrigger.removeEventListener('click', handleClick);
-        //}
 
         popover = new bootstrap.Popover(document.querySelector('#autoReadButton'), {
             container: 'body',
@@ -125,7 +77,8 @@
         // Register the event listener
         popoverTrigger.addEventListener('click', handleClick);
 
-        $('#autoReadButton').popover();
+        // $('#autoReadButton').popover();
+        new bootstrap.Popover(popoverTrigger);
 
         // Create the backdrop element
         var backdrop = document.createElement('div');
@@ -143,60 +96,75 @@
         });
     });
 
+    // function setAutoReadStatus(shouldToggle = true, autoReadStatus = true) {
+    //     // get the value of the img source
+    //     const autoReadStatusImage = $('#autoReadImage').attr('src');
+
+    //     if (shouldToggle) {
+    //         if (autoReadStatusImage.indexOf('auto-read-on.svg') >= 0) {
+    //             $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
+
+    //             $('.auto-read-button-wrapper').removeClass('p-0');
+                
+    //             globalAutoReadFeature.isAutoPlayEnabled = false;
+    //         } else {
+    //             $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
+
+    //             localStorage.setItem('isAutoPlayEnabled', true);
+    //             globalAutoReadFeature.isAutoPlayEnabled = true;
+    //             // Add "p-0" class
+    //             $('.auto-read-button-wrapper').addClass('p-0');
+    //         }
+    //     } else if (autoReadStatus == true) {
+    //         $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
+    //         $('.auto-read-button-wrapper').addClass('p-0');
+    //         globalAutoReadFeature.isAutoPlayEnabled = true;
+    //     } else {
+    //         $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
+    //         $('.auto-read-button-wrapper').removeClass('p-0');
+    //         globalAutoReadFeature.isAutoPlayEnabled = false;
+    //     }
+    // }
     function setAutoReadStatus(shouldToggle = true, autoReadStatus = true) {
         // get the value of the img source
-        const autoReadStatusImage = $('#autoReadImage').attr('src');
+        const autoReadStatusImage = document.getElementById('autoReadImage').src;
 
         if (shouldToggle) {
             if (autoReadStatusImage.indexOf('auto-read-on.svg') >= 0) {
-                $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
+                document.getElementById('autoReadImage').src = '../Content/Images/auto-read-off.svg';
 
-                $('.auto-read-button-wrapper').removeClass('p-0');
-                //localStorage.setItem('isAutoPlayEnabled', false);
+                document.querySelectorAll('.auto-read-button-wrapper').forEach(element => {
+                    element.classList.remove('p-0');
+                });
+
                 globalAutoReadFeature.isAutoPlayEnabled = false;
             } else {
-                $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
+                document.getElementById('autoReadImage').src = '../Content/Images/auto-read-on.svg';
 
                 localStorage.setItem('isAutoPlayEnabled', true);
                 globalAutoReadFeature.isAutoPlayEnabled = true;
-                // Add "p-0" class
-                $('.auto-read-button-wrapper').addClass('p-0');
+
+                document.querySelectorAll('.auto-read-button-wrapper').forEach(element => {
+                    element.classList.add('p-0');
+                });
             }
-        } else if (autoReadStatus == true) {
-            $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
-            $('.auto-read-button-wrapper').addClass('p-0');
+        } else if (autoReadStatus === true) {
+            document.getElementById('autoReadImage').src = '../Content/Images/auto-read-on.svg';
+
+            document.querySelectorAll('.auto-read-button-wrapper').forEach(element => {
+                element.classList.add('p-0');
+            });
+
             globalAutoReadFeature.isAutoPlayEnabled = true;
         } else {
-            $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
-            $('.auto-read-button-wrapper').removeClass('p-0');
+            document.getElementById('autoReadImage').src = '../Content/Images/auto-read-off.svg';
+
+            document.querySelectorAll('.auto-read-button-wrapper').forEach(element => {
+                element.classList.remove('p-0');
+            });
+
             globalAutoReadFeature.isAutoPlayEnabled = false;
         }
-        //if (changeStatus == false) {
-
-        //    const currentAutoReadStatus = localStorage.getItem('isAutoPlayEnabled');
-
-        //    if (currentAutoReadStatus == 'true') {
-        //        $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
-        //        $('.auto-read-button-wrapper').addClass('p-0');
-        //    } else {
-        //        $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
-        //        $('.auto-read-button-wrapper').removeClass('p-0');
-        //    }
-
-        //} else {
-        //    if (autoReadStatusImage.indexOf('auto-read-on.svg') >= 0) {
-        //        $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
-
-        //        $('.auto-read-button-wrapper').removeClass('p-0');
-        //        localStorage.setItem('isAutoPlayEnabled', false);
-        //    } else {
-        //        $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
-
-        //        localStorage.setItem('isAutoPlayEnabled', true);
-        //        // Add "p-0" class
-        //        $('.auto-read-button-wrapper').addClass('p-0');
-        //    }
-        //}
     }
 
     window.globalAutoReadFeature = {

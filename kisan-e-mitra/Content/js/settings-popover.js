@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    $('#settingsButton').popover();
+    //$('#settingsButton').popover();
+    new bootstrap.Popover(popoverTrigger);
 
     // Create the backdrop element
     var backdrop = document.createElement('div');

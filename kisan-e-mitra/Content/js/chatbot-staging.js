@@ -461,7 +461,7 @@
             customClass != null || customClass != undefined ? customClass + ' ' : ' ';
 
         return (
-            "<div class='my-msg-content chatbot-message-wrapper " +
+            "<div class='msg-content chatbot-message-wrapper " +
             customChatMessageWrapperClass +
             systemMessageBackgroundClass +
             "'" +

@@ -83,15 +83,20 @@ body {
         color: #8e8e9e;
     }
 
-.my-msg-content {
-    border-top: 1px solid #eae9e9;
+.user-mesg-content {
     background: #fff;
+}
+
+.msg-content {
+    border-top: 1px solid #eae9e9;
+    
     display: flex;
     justify-content: space-between;
     padding: 1% 0%;
+    margin: 0px 2px;
 }
 
-    .my-msg-content:first-child {
+    .msg-content:first-child {
         border-top: 0;
     }
 
@@ -122,11 +127,11 @@ body {
     max-width: 450px !important;
 }
 
-.system-msg-bg {
+/*.system-msg-bg {
     background: #f7f7f8;
     margin-left: 2px;
     margin-right: 2px;
-}
+}*/
 
 .my-msg-icons {
     display: flex;
@@ -661,7 +666,7 @@ svg.footer-svg-hover {
 }
 
 @media (max-width:400px) {
-    .my-msg-content {
+    .msg-content {
         padding: 2% 0%;
     }
 
@@ -1106,7 +1111,7 @@ img.query-msg-send-icon {
     top: 0;*/
 }
 
-.my-msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper {
+.msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper {
     padding-left: 5px;
 }
 
@@ -1346,6 +1351,8 @@ img.query-msg-send-icon {
 
 #schemesDropdownButton {
     border-color: transparent !important;
+    white-space: normal;
+    min-width:154px;
 }
 
 .language-dropdown-toggle {

@@ -602,7 +602,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    $('#settingsButton').popover();
+    //$('#settingsButton').popover();
+    new bootstrap.Popover(popoverTrigger);
 
     // Create the backdrop element
     var backdrop = document.createElement('div');
@@ -620,14 +621,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 (function () {
-    const audioVisualizerWrapper = document.querySelector('.audio-visualizer-wrapper');
-    const audioVisualizerContainer = document.querySelector('.audio-visualizer-container');
-    const audioProcessingContainer = document.querySelector('.audio-processing-container');
-    const micAudioRecordingIcon = document.getElementById('micAudioRecordingIcon');
-    const userQuestionTextBox = '#userQuestionTextBox';
+    // const audioVisualizerWrapper = document.querySelector('.audio-visualizer-wrapper');
+    // const audioVisualizerContainer = document.querySelector('.audio-visualizer-container');
+    // const audioProcessingContainer = document.querySelector('.audio-processing-container');
+    // const micAudioRecordingIcon = document.getElementById('micAudioRecordingIcon');
+    // const userQuestionTextBox = '#userQuestionTextBox';
+    let currentScreenName = '';
+    let canvas = null;
+    let canvasCtx = null;
+    let config = null;
+    function getElementByScreenName(selector) {
+        return document.querySelector(`${selector}[data-screen-name="${currentScreenName}"]`);
+    }
 
-    const canvas = document.getElementById('visualizer');
-    const canvasCtx = canvas.getContext('2d');
+    // let canvas = document.getElementById('visualizer');
+    // const canvasCtx = canvas.getContext('2d');
     let audioCtx = null;
     let analyser = null;
     let mediaRecorder = null;
@@ -638,33 +646,36 @@ document.addEventListener('DOMContentLoaded', function () {
     let animationFrameId = null;
 
     window.addEventListener('recordingStopped', (event) => {
-        console.log('Recording stopped:', event.detail);
     });
 
-    const config = {
-        recording: {
-            maxHeight: canvas.height,
-            minHeight: 4,
-            color: 'rgb(25, 135, 84)',
-        },
-        notRecording: {
-            maxHeight: canvas.height / 2,
-            minHeight: 2,
-            color: 'rgb(255, 0, 0)',
-        },
-        idle: {
-            maxHeight: canvas.height / 6,
-            minHeight: 1,
-            color: 'rgb(25, 135, 84)',
-            animate: true,
-        },
-        barWidthFactor: 0.8,
-        colorTransitionSpeed: 0.05,
-        heightTransitionSpeed: 0.1,
-        silenceThreshold: 50,
-        silenceDuration: 1000,
-        useFullHeight: true
-    };
+    function updateCanvasAndConfig() {
+        canvas = getElementByScreenName('#visualizer');
+        canvasCtx = canvas.getContext('2d');
+        config = {
+            recording: {
+                maxHeight: canvas.height,
+                minHeight: 4,
+                color: 'rgb(25, 135, 84)',
+            },
+            notRecording: {
+                maxHeight: canvas.height / 2,
+                minHeight: 2,
+                color: 'rgb(255, 0, 0)',
+            },
+            idle: {
+                maxHeight: canvas.height / 6,
+                minHeight: 1,
+                color: 'rgb(25, 135, 84)',
+                animate: true,
+            },
+            barWidthFactor: 0.8,
+            colorTransitionSpeed: 0.05,
+            heightTransitionSpeed: 0.1,
+            silenceThreshold: 50,
+            silenceDuration: 1000,
+            useFullHeight: true
+        };
+    }
 
     function analyzeAudioData(audioBuffer) {
         const threshold = 0.01; // Example threshold for detecting speech
@@ -685,7 +696,9 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
     }
 
-    function startRecording() {
+    function startRecording(screenName) {
+        currentScreenName = screenName;
+        updateCanvasAndConfig();
         hasSpoken = false; // Reset hasSpoken when a new recording starts
         recordedChunks = []; // Reset recorded chunks
 
@@ -761,19 +774,34 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function handleStart() {
-        console.log('Recording started');
+        const audioVisualizerWrapper = getElementByScreenName('.audio-visualizer-wrapper');
+        const audioVisualizerContainer = getElementByScreenName('.audio-visualizer-container');
+        const micAudioRecordingIcon = getElementByScreenName('#micAudioRecordingIcon');
+
         audioVisualizerWrapper.style.display = "flex";
         audioVisualizerContainer.style.display = 'flex';
         micAudioRecordingIcon.style.display = 'flex';
-        showHideMessagePlaceholder(false);
+
+        //showHideMessagePlaceholder(false);
+        if (currentScreenName == 'conversation') {
+            showHideMessagePlaceholder(false);
+        }
     }
 
     function handleError() {
         console.error('MediaRecorder error');
+
+        const audioVisualizerWrapper = getElementByScreenName('.audio-visualizer-wrapper');
+        const audioVisualizerContainer = getElementByScreenName('.audio-visualizer-container');
+        const micAudioRecordingIcon = getElementByScreenName('#micAudioRecordingIcon');
+
         audioVisualizerWrapper.style.display = "none";
         audioVisualizerContainer.style.display = 'none';
         micAudioRecordingIcon.style.display = 'none';
-        showHideMessagePlaceholder(true);
+        //showHideMessagePlaceholder(true);
+        if (currentScreenName == 'conversation') {
+            showHideMessagePlaceholder(true);
+        }
     }
 
     function handleStop() {
@@ -787,16 +815,23 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Stop idle animation and clear variables
-        stopIdleAnimation();
+        stopIdleAnimation(currentScreenName);
         clearVariables();
 
         stopDraw();
 
         // Hide the canvas
+        const audioVisualizerWrapper = getElementByScreenName('.audio-visualizer-wrapper');
+        const audioVisualizerContainer = getElementByScreenName('.audio-visualizer-container');
+        const micAudioRecordingIcon = getElementByScreenName('#micAudioRecordingIcon');
         audioVisualizerWrapper.style.display = 'none';
         audioVisualizerContainer.style.display = 'none';
         micAudioRecordingIcon.style.display = 'none';
-        showHideMessagePlaceholder(true);
+
+        //showHideMessagePlaceholder(true);
+        if (currentScreenName == 'conversation') {
+            showHideMessagePlaceholder(true);
+        }
     }
 
     function convertToWav(blob, callback) {
@@ -892,7 +927,10 @@ document.addEventListener('DOMContentLoaded', function () {
         return result;
     }
 
-    function stopRecording() {
+    function stopRecording(screenName) {
+
+        currentScreenName = screenName;
+        updateCanvasAndConfig();
         if (stream) {
             stream.getTracks().forEach((track) => track.stop());
             stream = null;
@@ -905,11 +943,15 @@ document.addEventListener('DOMContentLoaded', function () {
         //document.getElementById('startButton').style.display = 'block';
         //document.getElementById('stopButton').style.display = 'none';
 
-        showHideMessagePlaceholder(true);
+        //showHideMessagePlaceholder(true);
+        if (currentScreenName == 'conversation') {
+            showHideMessagePlaceholder(true);
+        }
     }
 
-    function startIdleAnimation() {
-        console.log('startIdleAnimation: ');
+    function startIdleAnimation(screenName) {
+        currentScreenName = screenName;
+        updateCanvasAndConfig();
 
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -917,33 +959,54 @@ document.addEventListener('DOMContentLoaded', function () {
             analyser.fftSize = 256;
         }
 
+        const audioVisualizerWrapper = getElementByScreenName('.audio-visualizer-wrapper');
+        const audioVisualizerContainer = getElementByScreenName('.audio-visualizer-container');
+
         audioVisualizerWrapper.style.display = "flex";
         audioVisualizerContainer.style.display = 'flex';
         /*audioProcessingContainer.style.display = 'flex';*/
         //micAudioRecordingIcon.style.display = 'flex';
-        
+
         config.idle.animate = true;
         visualize();
-        showHideMessagePlaceholder(false);
+        //showHideMessagePlaceholder(false);
+        if (currentScreenName == 'conversation') {
+            showHideMessagePlaceholder(false);
+        }
     }
 
-    function stopIdleAnimation() {
+    function stopIdleAnimation(screenName) {
+        currentScreenName = screenName;
+        updateCanvasAndConfig();
+
         config.idle.animate = false;
         cancelAnimationFrame(animationFrameId);
         canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 
-        audioVisualizerWrapper.style.display = "none";
-        audioVisualizerContainer.style.display = 'none';
+        const audioVisualizerWrapper = getElementByScreenName('.audio-visualizer-wrapper');
+        const audioVisualizerContainer = getElementByScreenName('.audio-visualizer-container');
+
+        if (audioVisualizerWrapper) {
+            audioVisualizerWrapper.style.display = "none";
+        }
+
+        if (audioVisualizerContainer) {
+            audioVisualizerContainer.style.display = 'none';
+        }
+        //audioVisualizerWrapper.style.display = "none";
+        //audioVisualizerContainer.style.display = 'none';
         /*audioProcessingContainer.style.display = 'none';*/
-        showHideMessagePlaceholder(true);
+
+        if (currentScreenName == 'conversation') {
+            showHideMessagePlaceholder(true);
+        }
     }
 
     function toggleIdleAnimation() {
-        console.log('toggleIdleAnimation: ');
         if (config.idle.animate) {
-            stopIdleAnimation();
+            stopIdleAnimation(currentScreenName);
         } else {
-            startIdleAnimation();
+            startIdleAnimation(currentScreenName);
         }
     }
 
@@ -957,26 +1020,25 @@ document.addEventListener('DOMContentLoaded', function () {
     //    .getElementById('toggleIdleButton')
     //    .addEventListener('click', toggleIdleAnimation);
 
-    console.log('window.visualizerControl: ', window.visualizerControl);
 
     function visualize() {
 
         /*$('.sendtext').hide();*/
         //showHideMessagePlaceholder(false);
-    
+
         try {
-    
-            
-    
+
+
+
             const bufferLength = analyser.frequencyBinCount;
             const dataArray = new Uint8Array(bufferLength);
             let previousHeights = new Float32Array(bufferLength);
             let colorTransition = 0;
             let lastAudioTime = Date.now();
-    
+
             function draw() {
                 animationFrameId = requestAnimationFrame(draw);
-    
+
                 if (isRecording) {
                     analyser.getByteFrequencyData(dataArray);
                 } else if (config.idle.animate) {
@@ -984,32 +1046,32 @@ document.addEventListener('DOMContentLoaded', function () {
                         dataArray[i] = Math.random() * 255;
                     }
                 }
-    
+
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
-    
+
                 const barWidth = (canvas.width / bufferLength) * config.barWidthFactor;
                 let x = 0;
-    
+
                 canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
                 const avgVolume = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
-    
+
                 if (avgVolume >= config.silenceThreshold) {
                     lastAudioTime = Date.now();
                 }
-    
+
                 const currentTime = Date.now();
                 const isSpeaking = currentTime - lastAudioTime < config.silenceDuration;
                 const targetColor = isRecording && isSpeaking ? 1 : 0;
-    
+
                 colorTransition +=
                     (targetColor - colorTransition) * config.colorTransitionSpeed;
-    
+
                 const r = isRecording && isSpeaking ? 25 : 255;
                 const g = isRecording && isSpeaking ? 135 : 0;
                 const b = isRecording && isSpeaking ? 84 : 0;
-    
+
                 for (let i = 0; i < bufferLength; i++) {
                     const normalizedValue = dataArray[i] / 255;
                     const maxHeight = config.useFullHeight
@@ -1025,13 +1087,13 @@ document.addEventListener('DOMContentLoaded', function () {
                             : config.notRecording.minHeight
                         : config.idle.minHeight;
                     const targetHeight = normalizedValue * maxHeight;
-    
+
                     let barHeight =
                         previousHeights[i] +
                         (targetHeight - previousHeights[i]) * config.heightTransitionSpeed;
-    
+
                     barHeight = Math.max(barHeight, minHeight);
-    
+
                     canvasCtx.fillStyle = isRecording
                         ? `rgb(${r},${g},${b})`
                         : config.idle.color;
@@ -1047,31 +1109,37 @@ document.addEventListener('DOMContentLoaded', function () {
                         barWidth,
                         -barHeight
                     );
-    
+
                     x += barWidth + 1;
-    
+
                     previousHeights[i] = barHeight;
                 }
             }
-    
+
             // Request the next frame
             animationFrameId = requestAnimationFrame(draw);
-    
+
         } catch (e) {
-    
+
+            const audioVisualizerWrapper = getElementByScreenName('.audio-visualizer-wrapper');
+            const audioVisualizerContainer = getElementByScreenName('.audio-visualizer-container');
+            const micAudioRecordingIcon = getElementByScreenName('#micAudioRecordingIcon');
+
             audioVisualizerWrapper.style.display = 'none';
             audioVisualizerContainer.style.display = 'none';
             micAudioRecordingIcon.style.display = 'none';
-    
-            
-            showHideMessagePlaceholder(true);
+
+
+            //showHideMessagePlaceholder(true);
+            if (currentScreenName == 'conversation') {
+                showHideMessagePlaceholder(true);
+            }
         }
-    
+
     }
 
     // Start the draw function when needed
     function startDraw() {
-        console.log('startDraw: ');
         if (!animationFrameId) {
             visualize(); // Ensure variables are initialized before drawing
         }
@@ -1096,18 +1164,35 @@ document.addEventListener('DOMContentLoaded', function () {
             //$(userQuestionTextBox).val('');
             //$(userQuestionTextBox).attr('placeholder', '');
             // Hide placeholder temporarily, keep value as it is
-            $('.sendtext').show();
-            $(userQuestionTextBox).attr('placeholder', $(userQuestionTextBox).attr('data-text'));
+            document.querySelectorAll('.sendtext').forEach(function (element) {
+                element.style.display = 'block';
+            });
+            // $(userQuestionTextBox).attr('placeholder', $(userQuestionTextBox).attr('data-text'));
+            // Set the placeholder attribute of userQuestionTextBox
+            var userQuestionTextBox = document.querySelector('#userQuestionTextBox'); // Assuming userQuestionTextBox is an ID
+            if (userQuestionTextBox) {
+                userQuestionTextBox.setAttribute('placeholder', userQuestionTextBox.getAttribute('data-text'));
+            }
 
         } else {
-            $('.sendtext').hide();
+            // $('.sendtext').hide();
+            document.querySelectorAll('.sendtext').forEach(function (element) {
+                element.style.display = 'none';
+            });
             //$(userQuestionTextBox).val('');
             //$(userQuestionTextBox).attr('placeholder', currentLanguageInfo.translations.messages.ask_ur_question);
-            $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
-            $(userQuestionTextBox).removeAttr('placeholder');
-        }
+            // $(userQuestionTextBox).attr('data-text', $(userQuestionTextBox).attr('placeholder'));
+            // $(userQuestionTextBox).removeAttr('placeholder');
+            var userQuestionTextBox = document.querySelector('#userQuestionTextBox'); // Adjust the selector if needed
 
-        console.log('shouldShow', shouldShow);
+            if (userQuestionTextBox) {
+                // Set the 'data-text' attribute to the value of the 'placeholder' attribute
+                userQuestionTextBox.setAttribute('data-text', userQuestionTextBox.getAttribute('placeholder'));
+
+                // Remove the 'placeholder' attribute
+                userQuestionTextBox.removeAttribute('placeholder');
+            }
+        }
     }
 
     window.visualizerControl = {
@@ -1128,10 +1213,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('DOMContentLoaded', function () {
         var popoverTrigger = document.getElementById('autoReadButton');
         var popoverContent = document.getElementById('globalAutoReadPopover');
-        //const images = document.querySelectorAll('.image-container img');
-        //const radios = document.querySelectorAll(
-        //    '.image-container input[type="radio"]'
-        //);
 
         const containers = document.querySelectorAll('.image-container');
         containers.forEach(container => {
@@ -1149,10 +1230,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Add 'selected' class to the clicked image
                 container.querySelector('img').classList.add('selected');
 
-                //const radioId = img
-                //    .closest('.image-container')
-                //    .querySelector('input[type="radio"]').id;
-
                 document.getElementById(radioId).checked = true;
                 globalAutoReadFeature.selectedVoice = radioId;
                 globalAutoReadFeature.isVoiceSelected = true;
@@ -1167,11 +1244,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 popoverTrigger.removeEventListener('click', handleClick);
 
                 // Stop propagation for label and img elements
-                const images = document.querySelectorAll('.image-container img');
-                const radios = document.querySelectorAll(
-                    '.image-container input[type="radio"]'
-                );
-
                 const label = container.querySelector('label');
                 const img = container.querySelector('img');
                 const radio = container.querySelector('input[type="radio"]');
@@ -1187,41 +1259,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
         });
-
-        //images.forEach((img) => {
-        //    img.addEventListener('click', function (ev) {
-        //        selectImageAndRadio(img);
-        //    });
-        //});
-
-        //radios.forEach((radio) => {
-        //    radio.addEventListener('click', function (ev) {
-        //        const img = radio.closest('.image-container').querySelector('img');
-        //        selectImageAndRadio(img);
-        //    });
-        //});
-
-        //function selectImageAndRadio(img) {
-        //    images.forEach((image) => image.classList.remove('selected'));
-        //    img.classList.add('selected');
-
-        //    const radioId = img
-        //        .closest('.image-container')
-        //        .querySelector('input[type="radio"]').id;
-
-        //    document.getElementById(radioId).checked = true;
-        //    globalAutoReadFeature.selectedVoice = radioId;
-        //    globalAutoReadFeature.isVoiceSelected = true;
-        //    voiceSelectionChannel.postMessage(globalAutoReadFeature.selectedVoice);
-
-        //    popover.hide();
-
-        //    setAutoReadStatus(false, true);
-
-        //    // Remove popover click event listener
-        //    // Unregister the event listener
-        //    popoverTrigger.removeEventListener('click', handleClick);
-        //}
 
         popover = new bootstrap.Popover(document.querySelector('#autoReadButton'), {
             container: 'body',
@@ -1246,7 +1283,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Register the event listener
         popoverTrigger.addEventListener('click', handleClick);
 
-        $('#autoReadButton').popover();
+        // $('#autoReadButton').popover();
+        new bootstrap.Popover(popoverTrigger);
 
         // Create the backdrop element
         var backdrop = document.createElement('div');
@@ -1264,60 +1302,75 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // function setAutoReadStatus(shouldToggle = true, autoReadStatus = true) {
+    //     // get the value of the img source
+    //     const autoReadStatusImage = $('#autoReadImage').attr('src');
+
+    //     if (shouldToggle) {
+    //         if (autoReadStatusImage.indexOf('auto-read-on.svg') >= 0) {
+    //             $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
+
+    //             $('.auto-read-button-wrapper').removeClass('p-0');
+                
+    //             globalAutoReadFeature.isAutoPlayEnabled = false;
+    //         } else {
+    //             $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
+
+    //             localStorage.setItem('isAutoPlayEnabled', true);
+    //             globalAutoReadFeature.isAutoPlayEnabled = true;
+    //             // Add "p-0" class
+    //             $('.auto-read-button-wrapper').addClass('p-0');
+    //         }
+    //     } else if (autoReadStatus == true) {
+    //         $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
+    //         $('.auto-read-button-wrapper').addClass('p-0');
+    //         globalAutoReadFeature.isAutoPlayEnabled = true;
+    //     } else {
+    //         $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
+    //         $('.auto-read-button-wrapper').removeClass('p-0');
+    //         globalAutoReadFeature.isAutoPlayEnabled = false;
+    //     }
+    // }
     function setAutoReadStatus(shouldToggle = true, autoReadStatus = true) {
         // get the value of the img source
-        const autoReadStatusImage = $('#autoReadImage').attr('src');
+        const autoReadStatusImage = document.getElementById('autoReadImage').src;
 
         if (shouldToggle) {
             if (autoReadStatusImage.indexOf('auto-read-on.svg') >= 0) {
-                $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
+                document.getElementById('autoReadImage').src = '../Content/Images/auto-read-off.svg';
 
-                $('.auto-read-button-wrapper').removeClass('p-0');
-                //localStorage.setItem('isAutoPlayEnabled', false);
+                document.querySelectorAll('.auto-read-button-wrapper').forEach(element => {
+                    element.classList.remove('p-0');
+                });
+
                 globalAutoReadFeature.isAutoPlayEnabled = false;
             } else {
-                $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
+                document.getElementById('autoReadImage').src = '../Content/Images/auto-read-on.svg';
 
                 localStorage.setItem('isAutoPlayEnabled', true);
                 globalAutoReadFeature.isAutoPlayEnabled = true;
-                // Add "p-0" class
-                $('.auto-read-button-wrapper').addClass('p-0');
+
+                document.querySelectorAll('.auto-read-button-wrapper').forEach(element => {
+                    element.classList.add('p-0');
+                });
             }
-        } else if (autoReadStatus == true) {
-            $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
-            $('.auto-read-button-wrapper').addClass('p-0');
+        } else if (autoReadStatus === true) {
+            document.getElementById('autoReadImage').src = '../Content/Images/auto-read-on.svg';
+
+            document.querySelectorAll('.auto-read-button-wrapper').forEach(element => {
+                element.classList.add('p-0');
+            });
+
             globalAutoReadFeature.isAutoPlayEnabled = true;
         } else {
-            $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
-            $('.auto-read-button-wrapper').removeClass('p-0');
+            document.getElementById('autoReadImage').src = '../Content/Images/auto-read-off.svg';
+
+            document.querySelectorAll('.auto-read-button-wrapper').forEach(element => {
+                element.classList.remove('p-0');
+            });
+
             globalAutoReadFeature.isAutoPlayEnabled = false;
         }
-        //if (changeStatus == false) {
-
-        //    const currentAutoReadStatus = localStorage.getItem('isAutoPlayEnabled');
-
-        //    if (currentAutoReadStatus == 'true') {
-        //        $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
-        //        $('.auto-read-button-wrapper').addClass('p-0');
-        //    } else {
-        //        $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
-        //        $('.auto-read-button-wrapper').removeClass('p-0');
-        //    }
-
-        //} else {
-        //    if (autoReadStatusImage.indexOf('auto-read-on.svg') >= 0) {
-        //        $('#autoReadImage').attr('src', '../Content/Images/auto-read-off.svg');
-
-        //        $('.auto-read-button-wrapper').removeClass('p-0');
-        //        localStorage.setItem('isAutoPlayEnabled', false);
-        //    } else {
-        //        $('#autoReadImage').attr('src', '../Content/Images/auto-read-on.svg');
-
-        //        localStorage.setItem('isAutoPlayEnabled', true);
-        //        // Add "p-0" class
-        //        $('.auto-read-button-wrapper').addClass('p-0');
-        //    }
-        //}
     }
 
     window.globalAutoReadFeature = {

@@ -82,7 +82,12 @@
     }
     function bindSchemesToDropdown(schemes, selectedSchemeId, skipUpdatingCurrentSchemeTitle) {
 
-        document.getElementById('schemesDropdownWrapper').style.display = 'flex';
+        const schemesDropdownWrapper = document.getElementById('schemesDropdownWrapper');
+
+        if (schemesDropdownWrapper) {
+            schemesDropdownWrapper.style.display = 'flex';
+        }
+        /*document.getElementById('schemesDropdownWrapper').style.display = 'flex*/';
         var dropdown = document.getElementById('schemesDropdown');
         //updateSelectedSchemeTranslation('');
 

@@ -11,7 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" type="text/css" href="~/Content/splash.css" />
-    @Scripts.Render("~/bundles/jquery")
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RCEZR4J24G"></script>
     <script type="text/javascript" src="~/Content/js/gtag.js"></script>
@@ -25,8 +24,6 @@
         <h1 class="splas-header">@Resources.Resource.label_title</h1>
     </div>
 
-    <script type="text/javascript" src="~/Content/js/splash.js">
-
-    </script>
+    @Scripts.Render("~/bundles/splash")
 </body>
 </html>
