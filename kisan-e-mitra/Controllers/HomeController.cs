@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace KisanEMitra.Controllers
 {
-    public class HomeController : LanguageController
+    public class HomeController : Controller
     {
         public IAgrimitraService AgrimitraService { get; set; }
         private IBhashiniService BhashiniService { get; set; }

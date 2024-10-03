@@ -5,6 +5,7 @@ using kishan_bot.Services.Contracts;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -35,6 +36,33 @@ namespace KisanEMitra
             Trace.Listeners.Add(new TimestampedTextWriterTraceListener(Server.MapPath("~/Logs/myapp.log")));
 
             RegisterComponents();
+
+            
+        }
+
+        protected void Application_BeginRequest()
+        {
+
+            // Check if the request is for a static file
+            string[] staticFileExtensions = { ".css", ".js", ".png", ".jpg", ".gif", ".ico", ".svg", ".pdf", ".json", ".txt", ".map" };
+            string requestPath = Request.Path.ToLower();
+
+            if (!staticFileExtensions.Any(ext => requestPath.EndsWith(ext)))
+            {
+                // Check if the culture cookie exists
+                HttpCookie cultureCookie = Request.Cookies["culture"];
+                if (cultureCookie == null)
+                {
+                    // Set the culture cookie if it doesn't exist
+                    cultureCookie = new HttpCookie("culture", "hi")
+                    {
+                        Expires = DateTime.Now.AddYears(1),
+                        HttpOnly = true,
+                        Secure = Request.IsSecureConnection
+                    };
+                    Response.Cookies.Add(cultureCookie);
+                }
+            }
         }
 
         public static void RegisterComponents()
@@ -72,5 +100,7 @@ namespace KisanEMitra
                 // your global error handling here!
             }
         }
+
+        
     }
 }
