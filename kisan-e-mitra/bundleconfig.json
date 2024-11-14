@@ -26,8 +26,7 @@
       "Content/js/commonService.js",
       "Content/js/languageDropDown.js",
       "Content/js/schemesDropdown.js",
-      "Content/js/typed.umd.js",
-      "Content/js/recorder.js"
+      "Content/js/typed.umd.js"
     ]
   },
   {
@@ -36,12 +35,9 @@
       "Content/js/autosize.js",
       "Content/js/wavBlobUtil.js",
       "Content/js/WavRecorder.js",
-      //"Content/js/popularQueriesService.js",
       "Content/js/shepherd.js",
       "Content/js/settings-popover.js",
-      //"Content/js/audio-visualizer.js",
       "Content/js/voice-recorder.js",
-      //"Content/js/show-hide-content.js",
       "Content/js/global-auto-read-popover.js"
     ]
   },
