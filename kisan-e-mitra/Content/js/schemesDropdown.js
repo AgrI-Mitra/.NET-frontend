@@ -27,7 +27,7 @@
         if (schemesDropdownWrapper) {
             schemesDropdownWrapper.style.display = 'flex';
         }
-        /*document.getElementById('schemesDropdownWrapper').style.display = 'flex*/';
+
         var dropdown = document.getElementById('schemesDropdown');
         //updateSelectedSchemeTranslation('');
 
