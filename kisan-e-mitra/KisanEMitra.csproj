@@ -170,6 +170,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Services\ServiceHelper.cs" />
+    <Compile Include="Services\StaticFileHandler.cs" />
     <Compile Include="Services\TraceListener.cs" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
