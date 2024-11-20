@@ -506,6 +506,8 @@
     <Content Include="Views\Test\Splash.cshtml" />
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\Shared\_StagingLayout.cshtml" />
+    <None Include="Properties\PublishProfiles\production.pubxml" />
+    <None Include="Properties\PublishProfiles\staging.pubxml" />
     <None Include="Properties\PublishProfiles\StagingProfile.pubxml" />
     <None Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
