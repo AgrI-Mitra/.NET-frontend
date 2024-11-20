@@ -250,7 +250,7 @@
     "thank_you_for_feedback": "Thanks for your feedback.",
     "translation_feedback": "Translation Feedback",
     "wait_resending_otp": "Please wait before resending OTP",
-    "welcome_greeting": "Please ask your query related to PM-KISAN or Kisan Credit Card or Pradhan Mantri Fasal Bima Yojana.",
+    "welcome_greeting": "Please ask your query related to PM-KISAN or Kisan Credit Card or Pradhan Mantri Fasal Bima Yojana.<br> <br> Please don't enter your Name / Aadhar Number / Phone Number or any other personal details until asked for.",
     "app_tour_welcome_greeting": "Welcome to Kisan e-mitra! I'm your digital assistant for the following agricultural schemes. Please choose your preferred language and scheme to continue.",
     "select_voice": "Select Voice",
     "voice_selection": "Click here to enable voice based assistance for all queries by selecting male/female voice.",
