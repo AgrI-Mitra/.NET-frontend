@@ -33,6 +33,12 @@ namespace KisanEMitra
             bundles.Add(new Bundle("~/bundles/splash").Include(
                 "~/Content/js/splash.min.js"));
 
+            bundles.Add(new Bundle("~/bundles/fingerprint").Include(
+                "~/Content/js/fingerprint.js"));
+
+            bundles.Add(new Bundle("~/bundles/gtag").Include(
+                "~/Content/js/gtag.js"));
+
             BundleTable.EnableOptimizations = true;
         }
     }

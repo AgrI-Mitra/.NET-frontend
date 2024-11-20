@@ -9,11 +9,13 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/pre-init-js")
-    <script type="text/javascript" src="~/Content/js/fingerprint.js" defer></script>
+    <script defer src="~/bundles/fingerprint"></script>
+    @*<script type="text/javascript" src="~/Content/js/fingerprint.js" defer></script>*@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RCEZR4J24G"></script>
-    <script type="text/javascript" src="~/Content/js/gtag.js"></script>
+    @*<script type="text/javascript" src="~/Content/js/gtag.js"></script>*@
+    @Scripts.Render("~/bundles/gtag")
 </head>
 <body class="">
     @{
