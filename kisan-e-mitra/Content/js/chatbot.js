@@ -4382,7 +4382,7 @@
                 })
                 .catch(error => {
                     isGetWelcomeGreetingsTextToSpeechRequestInProgress = null;
-                    alert("oops something went wrong");
+                    //alert("oops something went wrong");
                     reject(error);
                 });
         });
