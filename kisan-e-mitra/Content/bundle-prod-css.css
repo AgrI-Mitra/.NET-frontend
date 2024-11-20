@@ -1350,9 +1350,24 @@ img.query-msg-send-icon {
 }
 
 #schemesDropdownButton {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
     border-color: transparent !important;
     white-space: normal;
-    min-width:154px;
+    min-width: 122px;
+    gap: 0;
+}
+
+.scheme-dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.2em;
+    vertical-align: middle;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
 }
 
 .language-dropdown-toggle {
@@ -1398,6 +1413,7 @@ img.query-msg-send-icon {
     /*transform: scale(0.95);*/
     transition: opacity 0.3s ease;
     animation: fade-right-popover 0.5s ease-in-out;
+    max-width: 120px;
 }
 
     .settings-popover div.popover-arrow {
