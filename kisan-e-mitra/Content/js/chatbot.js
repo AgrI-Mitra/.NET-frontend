@@ -1944,7 +1944,6 @@
         voiceRecorderListener();
         languageChangeListener();
         schemeChangeListener();
-        configAppTour();
         generalQuestionClickListener();
         userQuestionTextBoxOnKeyPressListener();
         chatbotMessageActionButtonsOnClickListener();
@@ -4260,7 +4259,7 @@
                 })
                 .catch(error => {
                     isChangeLanguageRequestInProgress = null;
-                    alert('oops something went wrong');
+                    //alert('oops something went wrong');
                     reject(error);
                 });
         });
@@ -4744,8 +4743,6 @@
 
             createSession(fingerPrintId)
                 .then((sessionResult) => {
-
-                    //popularQueriesService.resetUsedQueries();
                     getTranslations();
                 })
                 .catch((sessionError) => {
@@ -4755,21 +4752,32 @@
 
         if (showConfirmation == true) {
 
-            // const confirmationMessage = $(
-            //     '#chatbot-restart-session-confirmation-message'
-            // ).val();
+            // Fetch translation based on the keys
+            const confirmationMessage = getTranslation('messages', 'session_restart_confirmation_message');
 
-            const confirmationMessage = document.getElementById('chatbot-restart-session-confirmation-message').value;
-
-            showChatbotConfirmationModal(
-                'restart-session',
-                confirmationMessage,
-                (data) => { }
-            );
+            // Ensure the message is available
+            if (confirmationMessage) {
+                // Show confirmation modal with the translated message
+                showChatbotConfirmationModal(
+                    'restart-session',
+                    confirmationMessage,
+                    (data) => { }
+                );
+            } else {
+                console.error('Confirmation message not found');
+            }
         } else {
             proceedForSessionRestart();
         }
     }
+
+    // Function to get translation
+    function getTranslation(translationType, translationKey) {
+        // Assuming you have a translations object that contains your messages
+        const translations = currentLanguageInfo.translations[translationType];
+        return translations ? translations[translationKey] : null;
+    }
+
 
     function clearChatHistory() {
         // $('.conversationsWrapper').remove();
@@ -4873,8 +4881,10 @@
             modalOptions
         );
 
-        // Append the confirmation message
-        document.getElementById('chatbot-restart-session-confirmation-message').append(confirmationMessage);
+        // Clear the previous message before appending the new one
+        const messageElement = document.getElementById('chatbot-restart-session-confirmation-message');
+        messageElement.innerHTML = ''; // Clear the previous message
+        messageElement.innerHTML = confirmationMessage; // Set the new confirmation message
 
         // Show the modal
         chatbotConfirmationModal.show();
@@ -4882,9 +4892,9 @@
         // Add event listener for when the modal is hidden
         document.getElementById(chatbotConfirmationModalId).addEventListener('hidden.bs.modal', (event) => {
             closeCallback(event);
-            // do something...
         });
     }
+
 
     function showStartNewConversationModal(
         closeCallback
