@@ -1,9 +1,5 @@
 [
   {
-    "id": "general",
-    "apiKey": "General"
-  },
-  {
     "id": "pmkisan",
     "apiKey": "PM Kisan"
   },
