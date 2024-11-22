@@ -1185,8 +1185,7 @@
                     currentTranslationMappingDetails.htmlElementValueAttributeType ===
                     'text'
                 ) {
-                    htmlElement.innerText = currentTranslationValue;
-
+                    htmlElement.innerHTML = currentTranslationValue;
                 } else {
                     htmlElement.setAttribute(
                         currentTranslationMappingDetails.htmlElementValueAttributeType,
