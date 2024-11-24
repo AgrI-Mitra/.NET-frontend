@@ -2,14 +2,10 @@
     async function getAppConfig() {
         try {
             const response = await fetch('/Content/data/clientConfig.json', { cache: 'no-cache' });
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            const appConfig = await response.json();
 
-            const text = await response.text();
-            console.log('Response text:', text);
-            const appConfig = JSON.parse(text);
             window.appConfig = appConfig;
+
         } catch (e) {
             console.log('Error while fetching app config data: ', e);
         }

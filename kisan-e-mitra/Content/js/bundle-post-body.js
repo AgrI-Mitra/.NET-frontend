@@ -627,7 +627,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // const micAudioRecordingIcon = document.getElementById('micAudioRecordingIcon');
     // const userQuestionTextBox = '#userQuestionTextBox';
     let currentScreenName = '';
-    let canvas = null;
+    //let canvas = null;
     let canvasCtx = null;
     let config = null;
     function getElementByScreenName(selector) {
