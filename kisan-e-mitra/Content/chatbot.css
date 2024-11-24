@@ -322,6 +322,8 @@ img.query-msg-send-icon {
 
 .pm-kisan-chatbot-app-tour-modal-wrapper {
     border-radius: 20px !important;
+    transform: translateX(0%);
+    margin-top: 10px;
 }
 
 .help-button {
@@ -956,4 +958,5 @@ canvas {
 
 div[data-shepherd-step-id="app_tour_language_selection_description"] {
     top: 150px !important;
+    margin-top: 28px;
 }
