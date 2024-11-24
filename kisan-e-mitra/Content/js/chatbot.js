@@ -4079,8 +4079,19 @@
     //    })
     //}
 
+    window.onload = function () {
+        sessionStorage.setItem("selectedLanguageCode", "hi");
+        sessionStorage.removeItem("isLanguageDetected"); 
+    };
+
     function detectAudioLanguage(base64Audio) {
         return new Promise((resolve, reject) => {
+
+            if (sessionStorage.getItem("isLanguageDetected")) {
+                resolve(); 
+                return;
+            }
+
             fetch(currentParentRoute + 'DetectAudioLanguage', {
                 method: 'POST',
                 headers: {
@@ -4091,17 +4102,18 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.Success) {
-                        isLanguageDetected = true;
-                        const currentLanguageCultureCode = getSetCurrentLanguageCode();
+                        
+                        sessionStorage.setItem("isLanguageDetected", true);
 
-                        // Check if current language and detected language are the same or not
-                        // If they are different then change the language else do nothing
-                        if (currentLanguageCultureCode !== data.Data.LanguageCultureCode) {
+                        const selectedLanguage = sessionStorage.getItem("selectedLanguageCode");
+
+                        // If detected language differs from selected language, change it
+                        if (selectedLanguage !== data.Data.LanguageCultureCode) {
                             changeLanguage(
                                 data.Data.LanguageCultureCode,
                                 data.Data.LanguageEnglishLabel,
                                 data.Data.LanguageCultureLabel,
-                                currentLanguageCultureCode,
+                                selectedLanguage,
                                 false
                             ).then(result => {
                                 resolve(data);
