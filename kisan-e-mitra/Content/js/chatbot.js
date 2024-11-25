@@ -2236,8 +2236,8 @@
             {
                 id: 'app_tour_alternate_language_selection_description',
                 translationType: 'messages',
-                title: 'app_tour_language_header',
-                text: 'app_tour_language_selection',
+                title: 'app_tour_language_selection',
+                //text: 'app_tour_language_selection',
                 showNextButton: false,
                 showPreviousButton: false,
                 showExitButton: false,
@@ -2268,8 +2268,8 @@
             // Define the step
             let appTourStep = {
                 id: currentTranslationMappingDetails.id,
-                //title: titleTranslationInfo ? titleTranslationInfo : undefined,
-                text: textTranslationInfo,
+                title: titleTranslationInfo ? titleTranslationInfo : undefined,
+                //text: textTranslationInfo,
                 attachTo: currentTranslationMappingDetails.id
                     ? attachToInfo
                     : undefined,
