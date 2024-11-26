@@ -1,7 +1,7 @@
 {
   "numberOfVisiblePopularQueries": 4,
   "numberOfUsedPopularQueriesToRetain": 5,
-  "defaultScheme": "pmkisan",
-  "defaultSchemeAPIKey": "PM Kisan",
+  "defaultScheme": "general",
+  "defaultSchemeAPIKey": "General",
   "showSchemes": true
 }
