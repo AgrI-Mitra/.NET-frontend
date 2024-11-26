@@ -1146,35 +1146,19 @@
     }
 
     function mapTranslations(currentTranslationMappingDetails) {
-        let currentTranslation = currentLanguageInfo.translations[currentTranslationMappingDetails.translationType];
+        // Retrieve the current translation for the given type
+        const currentTranslation = currentLanguageInfo.translations[currentTranslationMappingDetails.translationType];
 
         if (currentTranslation && currentTranslation[currentTranslationMappingDetails.translationKey]) {
+            let currentTranslationValue = currentTranslation[currentTranslationMappingDetails.translationKey];
 
-            const currentTranslationValue = currentTranslation[currentTranslationMappingDetails.translationKey];
-            // Update page title
-            if (currentTranslationMappingDetails.translationKey == 'title') {
+            currentTranslationValue = currentTranslationValue.replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
+
+            // Update page title if the key is 'title'
+            if (currentTranslationMappingDetails.translationKey === 'title') {
                 document.title = currentTranslationValue;
             }
 
-            /*
-            if (
-                currentTranslationMappingDetails.htmlElementValueAttributeType ==
-                'text'
-            ) {
-                $(
-                    currentTranslationMappingDetails.htmlElementKeyAttributeType +
-                    currentTranslationMappingDetails.htmlElementKeyName
-                ).html(currentTranslationValue);
-            } else {
-                $(
-                    currentTranslationMappingDetails.htmlElementKeyAttributeType +
-                    currentTranslationMappingDetails.htmlElementKeyName
-                ).attr(
-                    currentTranslationMappingDetails.htmlElementValueAttributeType,
-                    currentTranslationValue
-                );
-            }
-            */
             const htmlElement = document.querySelector(
                 currentTranslationMappingDetails.htmlElementKeyAttributeType +
                 currentTranslationMappingDetails.htmlElementKeyName
