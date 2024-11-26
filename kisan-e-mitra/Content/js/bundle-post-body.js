@@ -1171,7 +1171,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Set the placeholder attribute of userQuestionTextBox
             var userQuestionTextBox = document.querySelector('#userQuestionTextBox'); // Assuming userQuestionTextBox is an ID
             if (userQuestionTextBox) {
-                userQuestionTextBox.setAttribute('placeholder', userQuestionTextBox.getAttribute('data-text'));
+                //userQuestionTextBox.setAttribute('placeholder', userQuestionTextBox.getAttribute('data-text'));
             }
 
         } else {
