@@ -99,7 +99,6 @@
 
     var isRecording = false;
     var tour;
-    var languageTour;
 
     var sessionAutoRestartTimeoutId;
 
@@ -2188,103 +2187,6 @@
         );
     }
 
-    function changeLanguageAppTour() {
-        languageTour = new Shepherd.Tour({
-            useModalOverlay: true,
-            defaultStepOptions: {
-                cancelIcon: {
-                    enabled: true,
-                },
-                classes: 'shadow-md bg-purple-dark',
-                scrollTo: { behavior: 'smooth', block: 'center' },
-            },
-        });
-
-        ['show', 'cancel'].forEach((event) =>
-            languageTour.on(event, (tourEvent) => {
-
-                if (event == 'show' && tourEvent.step?.id === 'app_tour_alternate_language_selection_description') {
-                    var popoverTrigger = document.getElementById('settingsButton');
-                    // Trigger click event on popoverTrigger
-                    popoverTrigger.click();
-                } else if (event == 'cancel') {
-                    localStorage.setItem('isAppTourDisplayed', 'true');
-                }
-            })
-        );
-    }
-
-    function initializeLanguageSelection() {
-        if (localStorage.getItem('isLanguageTourDisplayed') === 'true') {
-            return; 
-        }
-
-        localStorage.setItem('isLanguageTourDisplayed', 'true');
-        changeLanguageAppTour();
-
-        let exitButtonTranslation = currentLanguageInfo.translations.messages.app_tour_exit;
-
-        let exitButtonInfo = {
-            text: exitButtonTranslation,
-            action: tour.cancel,
-            classes: 'app-tour-next-button',
-        };
-
-        let appTourSteps = [];
-
-        let appTourTranslationMappingDetails = [
-            {
-                id: 'app_tour_alternate_language_selection_description',
-                translationType: 'messages',
-                title: 'app_tour_language_selection',
-                //text: 'app_tour_language_selection',
-                showNextButton: false,
-                showPreviousButton: false,
-                showExitButton: false,
-            }
-            
-        ];
-
-        for (let i = 0; i < appTourTranslationMappingDetails.length; i++) {
-            let currentTranslationMappingDetails = appTourTranslationMappingDetails[i];
-
-            let appTourStepButtons = [];
-
-            if (currentTranslationMappingDetails.showExitButton) {
-                appTourStepButtons.push(exitButtonInfo);
-            }
-
-            let titleTranslationInfo = currentLanguageInfo.translations[currentTranslationMappingDetails.translationType][currentTranslationMappingDetails.title];
-
-            // Retrieve translation for the text
-            let textTranslationInfo = currentLanguageInfo.translations?.[currentTranslationMappingDetails.translationType]?.[currentTranslationMappingDetails.text];
-
-            let attachToInfo = {
-                element: '.' + currentTranslationMappingDetails.id,
-                on: 'bottom',
-            };
-
-
-            // Define the step
-            let appTourStep = {
-                id: currentTranslationMappingDetails.id,
-                title: titleTranslationInfo ? titleTranslationInfo : undefined,
-                //text: textTranslationInfo,
-                attachTo: currentTranslationMappingDetails.id
-                    ? attachToInfo
-                    : undefined,
-                classes: 'pm-kisan-chatbot-app-tour-modal-wrapper',
-                buttons: appTourStepButtons,
-            };
-
-            appTourSteps.push(appTourStep);
-        }
-
-       
-        languageTour.addSteps(appTourSteps);
-        languageTour.start();
-    }
-
     function initAppTour() {
         // First remove the old steps to update the translations when language is changed
         configAppTour();
@@ -2733,7 +2635,6 @@
 
     document.addEventListener('DOMContentLoaded', async function () {
         await initChatBotConfig();
-        initializeLanguageSelection();
 
         //$(voiceRecordMicCircleClass).hide();
         document.querySelector(voiceRecordMicCircleClass).style.display = 'none';
@@ -4223,7 +4124,7 @@
                             resolve(data);
                         }
                     } else {
-                        resolve(data); 
+                        resolve(data);
                     }
                 })
                 .catch(error => {
