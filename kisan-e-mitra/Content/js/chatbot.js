@@ -1006,7 +1006,7 @@
             {
                 translationType: 'messages',
                 translationKey: 'translation_feedback',
-                htmlElementKeyName: 'translationsFeedback',
+                htmlElementKeyName: 'translationFeedback',
                 htmlElementKeyAttributeType: '#',
                 htmlElementValueAttributeType: 'text',
             },
