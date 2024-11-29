@@ -983,11 +983,11 @@
                 htmlElementValueAttributeType: 'text',
             },
             {
-                translationType: 'messages',
-                translationKey: 'feedback_description',
+                translationType: 'lables',
+                translationKey: 'feedback',
                 htmlElementKeyName: 'feedbackTextArea',
                 htmlElementKeyAttributeType: '#',
-                htmlElementValueAttributeType: 'value',
+                htmlElementValueAttributeType: 'placeholder',
             },
             {
                 translationType: 'messages',
