@@ -1,11 +1,18 @@
 [
   {
-    "id": "pmkisan"
+    "id": "general",
+    "apiKey": "General"
   },
   {
-    "id": "kcc"
+    "id": "pmkisan",
+    "apiKey": "PM Kisan"
   },
   {
-    "id": "pmfby"
+    "id": "kcc",
+    "apiKey": "Kisan Credit Card"
+  },
+  {
+    "id": "pmfby",
+    "apiKey": "PM Fasal Bima Yojana"
   }
 ]

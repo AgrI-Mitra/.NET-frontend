@@ -2,9 +2,12 @@
 using kishan_bot.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace KisanEMitra.Services
@@ -28,10 +31,13 @@ namespace KisanEMitra.Services
                 ServiceId = "ai4bharat/indic-tts-coqui-dravidian-gpu--t4", LanguageCode = new string[] { "ta", "ml", "kn", "te" }
             }
         };
+        private readonly string bhashiniALDServiceId = "bhashini/iitmandi/audio-lang-detection/gpu";
+        private readonly int requestTimeoutInMinutes = int.Parse(ConfigurationManager.AppSettings["requestTimeoutInMinutes"]);
 
         public static class APIPaths
         {
             public static string TextToSpeechService = "services/inference/pipeline";
+            public static string AudioLanguageDetectionService = "services/inference/audiolangdetection";
         }
 
         public BhashiniService(HttpClient httpClient, IAgrimitraService _agrimitraService)
@@ -41,7 +47,62 @@ namespace KisanEMitra.Services
             AgrimitraService = _agrimitraService;
         }
 
-        public async Task<BhashiniApiResponseBody> GetTextToSpeech(string currentLanguage, List<BhashiniApiRequestBodyInput> bhashiniApiInput)
+        public async Task<LanguageDetectionResponse> DetectAudioLanguage(string audioContent)
+        {
+            var bhashiniApiRequestBody = new LanguageDetectionRequestBody
+            {
+                config = new LanguageDetectionRequestConfig()
+            };
+
+            bhashiniApiRequestBody.config.serviceId = bhashiniALDServiceId;
+
+            bhashiniApiRequestBody.audio = new List<BhashiniAudioInfo>
+            {
+                new BhashiniAudioInfo
+                {
+                    audioContent = audioContent
+                }
+            };
+
+            var languageDetectionResponse = new LanguageDetectionResponse();
+
+            try
+            {
+                // Remove previous authorization header if added
+                httpClient.DefaultRequestHeaders.Remove("Authorization");
+                httpClient.DefaultRequestHeaders.Add("Authorization", bhashiniApiAuthorizationHeaderKey);
+                httpClient.Timeout = requestTimeoutInMinutes > 0 ? TimeSpan.FromMinutes(requestTimeoutInMinutes) : TimeSpan.FromMinutes(10);
+
+                Trace.TraceInformation($"Starting HTTP request to {APIPaths.AudioLanguageDetectionService}");
+
+                var response = await httpClient.PostAsJsonAsync($"{APIPaths.AudioLanguageDetectionService}", bhashiniApiRequestBody);
+
+                Trace.TraceInformation($"Completed HTTP request to {APIPaths.AudioLanguageDetectionService} with status code {response.StatusCode}");
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+
+                    // Convert response to LanguageDetectionResponse
+                    languageDetectionResponse = response.Content.ReadFromJsonAsync<LanguageDetectionResponse>().Result;
+                }
+                else
+                {
+                    languageDetectionResponse.errorText = response.ReasonPhrase;
+                    languageDetectionResponse.errorCode = response.StatusCode.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                languageDetectionResponse.errorMessage = ex.Message;
+                languageDetectionResponse.errorText = ex.StackTrace.ToString();
+
+                Trace.TraceError($"HTTP request to {APIPaths.AudioLanguageDetectionService} failed: {ex.Message}");
+            }
+
+            return languageDetectionResponse;
+        }
+
+        public async Task<BhashiniApiResponseBody> GetTextToSpeech(string currentLanguage, string gender, List<BhashiniApiRequestBodyInput> bhashiniApiInput)
         {
             var siteUserBody = new BhashiniApiResponseBody();
 
@@ -57,7 +118,7 @@ namespace KisanEMitra.Services
             {
                 language = bhashiniApiRequestBodyPipelineTaskConfigLanguage,
                 serviceId = serviceId,
-                gender = "male",
+                gender = gender,
                 samplingRate = 8000
             };
 
@@ -85,12 +146,13 @@ namespace KisanEMitra.Services
                 inputData = bhashiniInputData
             };
 
-            var audioList = new List<BhashiniApiResponseAudioInfo>();
+            var audioList = new List<BhashiniAudioInfo>();
 
             try
             {
                 _ = AgrimitraService.AddMatricsCount("bhashiniCount");
 
+                // Remove previous authorization header if added
                 httpClient.DefaultRequestHeaders.Remove("Authorization");
                 httpClient.DefaultRequestHeaders.Add("Authorization", bhashiniApiAuthorizationHeaderKey);
 

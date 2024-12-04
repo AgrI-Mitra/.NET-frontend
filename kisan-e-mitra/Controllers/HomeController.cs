@@ -6,14 +6,14 @@ using kishan_bot.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace KisanEMitra.Controllers
 {
-    public class HomeController : LanguageController
+    public class HomeController : Controller
     {
         public IAgrimitraService AgrimitraService { get; set; }
         private IBhashiniService BhashiniService { get; set; }
@@ -36,37 +36,43 @@ namespace KisanEMitra.Controllers
 
         public ActionResult Index()
         {
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
-            //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
 
             TempData["LanguageModel"] = languageModel;
-            TempData["PopularQuestions"] = ChatbotService.GetPopularQuestions();
 
             // Check if site is in maintenence mode or not
             bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
             TempData["isMaintenanceModeOn"] = isMaintenanceModeOn;
+            string apiUrl = ConfigurationManager.AppSettings["apiUrl"].ToString();
+            TempData["apiUrl"] = apiUrl;
             return View();
+        }
+
+        public ActionResult IndexPartial()
+        {
+            var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
+            TempData["LanguageModel"] = languageModel;
+
+            bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
+            TempData["isMaintenanceModeOn"] = isMaintenanceModeOn;
+            string apiUrl = ConfigurationManager.AppSettings["apiUrl"].ToString();
+            TempData["apiUrl"] = apiUrl;
+            return PartialView("_IndexPartial");
         }
 
         public ActionResult Test()
         {
             languageCodesToEnable = new string[] { "hi", "te", "or", "bn", "en", "mr", "ta", "ml", "gu", "pa", "kn" };
 
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
-            //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
 
             TempData["LanguageModel"] = languageModel;
-            TempData["PopularQuestions"] = ChatbotService.GetPopularQuestions();
 
             // Check if site is in maintenence mode or not
             bool isMaintenanceModeOn = bool.Parse(ConfigurationManager.AppSettings["isMaintenanceModeOn"]);
             TempData["isMaintenanceModeOn"] = isMaintenanceModeOn;
+            string apiUrl = ConfigurationManager.AppSettings["apiUrl"].ToString();
+            TempData["apiUrl"] = apiUrl;
 
             return View();
         }
@@ -273,87 +279,121 @@ namespace KisanEMitra.Controllers
             });
         }
 
+        //[HttpPost]
+        //private async Task<JsonResult> GetTextToSpeechForAllLanguages(string[] languagesCodes = null)
+        //{
+        //    var ignoreValues = new string[]
+        //    {
+        //        "(PM KISAN)",
+        //        "(PMFBY)",
+        //        "(KCC)"
+        //    };
+
+        //    // We need to get speech to text for Welcome and Language change greeting messages for all the languages
+        //    // Get all the enabled languages
+        //    var languages = LanguageManager.GetLanguagesOrderedByPosition(languageCodesToEnable);
+
+        //    try
+        //    {
+        //        for (int i = 0; i < languages.Count; i++)
+        //        {
+        //            var currentLanguage = languages[i];
+
+        //            // Proceed ahead only if languagesCodes value is null or if languagesCodes value is available and current language code is matching with it
+        //            if (languagesCodes != null && languagesCodes.Length > 0 && !languagesCodes.Contains(currentLanguage.LanguageCultureCode))
+        //            {
+        //                continue;
+        //            }
+
+        //            // Ge tthe translation file path
+        //            string fileName = Server.MapPath("~" + "/Content/translations/" + currentLanguage.LanguageEnglishLabel.ToLower() + ".json");
+
+        //            // Get Welcome message from Content/translations/language specific json file
+        //            string welcomeMessage = CoreHelper.GetValueFromJson(fileName, "messages.welcome_greeting", ignoreValues);
+        //            //string welcomeMessageOne = CoreHelper.GetValueFromJson(fileName, "messages.welcome_greeting_1", ignoreValues);
+
+        //            //// If welcomeMessageOne is not empty then we need to combine it with the welcomeMessage
+        //            //// As Welcome message will be displayed in two separate parts in UI but will be read as whole in the same speech
+        //            //if (string.IsNullOrEmpty(welcomeMessageOne) == false)
+        //            //{
+        //            //    welcomeMessage = welcomeMessage + " " + welcomeMessageOne;
+        //            //}
+
+        //            // Get Language Change message from Content/translations/language specific json file
+        //            string languageChangeMessage = CoreHelper.GetValueFromJson(fileName, "messages.language_changed_greeting", ignoreValues);
+
+        //            //Get text to speech for Welcome message and Language Change message
+        //            var greetingMessagesAudioStrings = await GetWelcomeGreetingsTextToSpeech(currentLanguage.LanguageCultureCode, welcomeMessage, languageChangeMessage);
+
+        //            // Get welcome message and language change message file path
+        //            string welcomeMessageFilePath = Server.MapPath("~" + "/Content/audio/welcome-" + currentLanguage.LanguageCultureCode.ToLower() + ".txt");
+        //            string languageChangeMessageFilePath = Server.MapPath("~" + "/Content/audio/language-change-" + currentLanguage.LanguageCultureCode.ToLower() + ".txt");
+
+        //            // Update welcome message and language change message file content
+        //            CoreHelper.UpdateTextFileContent(welcomeMessageFilePath, greetingMessagesAudioStrings[0].Value);
+        //            CoreHelper.UpdateTextFileContent(languageChangeMessageFilePath, greetingMessagesAudioStrings[1].Value);
+        //        }
+
+        //        return Json(new AjaxActionResponse()
+        //        {
+        //            Success = true,
+        //            Data = "Success",
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(new AjaxActionResponse()
+        //        {
+        //            Success = false,
+        //            Data = ex.Message
+        //        });
+        //    }
+        //}
+
+        //public async Task<List<CommonKeyValue>> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage, string languageChangeMessage)
+        //{
+
+        //    List<string> strings = new List<string>
+        //    {
+        //        welcomeMessage,
+        //        languageChangeMessage
+        //    };
+
+        //    var greetingMessagesAudioStrings = await TextToSpeach(languageCode, strings);
+
+        //    // Load audio base64 strings to view bag so we can play audio using it
+        //    List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
+
+        //    if (greetingMessagesAudioStrings.Count > 0)
+        //    {
+
+        //        audioBase64Strings.Add(new CommonKeyValue
+        //        {
+        //            Key = "welcome-greeting-message-base64-" + languageCode,
+        //            Value = greetingMessagesAudioStrings[0].audioContent.ToString()
+        //        });
+
+        //        audioBase64Strings.Add(new CommonKeyValue
+        //        {
+        //            Key = "language-change-greeting-message-base64-" + languageCode,
+        //            Value = greetingMessagesAudioStrings[1].audioContent.ToString()
+        //        });
+        //    }
+
+        //    return audioBase64Strings;
+        //}
+
         [HttpPost]
-        public async Task<JsonResult> GetTextToSpeechForAllLanguages(string[] languagesCodes = null)
-        {
-            var ignoreValues = new string[]
-            {
-                "(PM KISAN)",
-                "(PMFBY)",
-                "(KCC)"
-            };
-
-            // We need to get speech to text for Welcome and Language change greeting messages for all the languages
-            // Get all the enabled languages
-            var languages = LanguageManager.GetLanguagesOrderedByPosition(languageCodesToEnable);
-
-            try
-            {
-                for (int i = 0; i < languages.Count; i++)
-                {
-                    var currentLanguage = languages[i];
-
-                    // Proceed ahead only if languagesCodes value is null or if languagesCodes value is available and current language code is matching with it
-                    if (languagesCodes != null && languagesCodes.Length > 0 && !languagesCodes.Contains(currentLanguage.LanguageCultureCode))
-                    {
-                        continue;
-                    }
-
-                    // Ge tthe translation file path
-                    string fileName = Server.MapPath("~" + "/Content/translations/" + currentLanguage.LanguageEnglishLabel.ToLower() + ".json");
-
-                    // Get Welcome message from Content/translations/language specific json file
-                    string welcomeMessage = CoreHelper.GetValueFromJson(fileName, "messages.welcome_greeting", ignoreValues);
-                    //string welcomeMessageOne = CoreHelper.GetValueFromJson(fileName, "messages.welcome_greeting_1", ignoreValues);
-
-                    //// If welcomeMessageOne is not empty then we need to combine it with the welcomeMessage
-                    //// As Welcome message will be displayed in two separate parts in UI but will be read as whole in the same speech
-                    //if (string.IsNullOrEmpty(welcomeMessageOne) == false)
-                    //{
-                    //    welcomeMessage = welcomeMessage + " " + welcomeMessageOne;
-                    //}
-
-                    // Get Language Change message from Content/translations/language specific json file
-                    string languageChangeMessage = CoreHelper.GetValueFromJson(fileName, "messages.language_changed_greeting", ignoreValues);
-
-                    //Get text to speech for Welcome message and Language Change message
-                    var greetingMessagesAudioStrings = await GetWelcomeGreetingsTextToSpeech(currentLanguage.LanguageCultureCode, welcomeMessage, languageChangeMessage);
-
-                    // Get welcome message and language change message file path
-                    string welcomeMessageFilePath = Server.MapPath("~" + "/Content/audio/welcome-" + currentLanguage.LanguageCultureCode.ToLower() + ".txt");
-                    string languageChangeMessageFilePath = Server.MapPath("~" + "/Content/audio/language-change-" + currentLanguage.LanguageCultureCode.ToLower() + ".txt");
-
-                    // Update welcome message and language change message file content
-                    //CoreHelper.UpdateTextFileContent(welcomeMessageFilePath, greetingMessagesAudioStrings[0].Value);
-                    CoreHelper.UpdateTextFileContent(languageChangeMessageFilePath, greetingMessagesAudioStrings[1].Value);
-                }
-
-                return Json(new AjaxActionResponse()
-                {
-                    Success = true,
-                    Data = "Success",
-                });
-            }
-            catch (Exception ex)
-            {
-                return Json(new AjaxActionResponse()
-                {
-                    Success = false,
-                    Data = ex.Message
-                });
-            }
-        }
-
-        public async Task<List<CommonKeyValue>> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage, string languageChangedMessage)
+        public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech(string languageCode, string welcomeMessage, string gender)
         {
 
             List<string> strings = new List<string>
             {
-                welcomeMessage,
-                languageChangedMessage
+                welcomeMessage
             };
 
-            var greetingMessagesAudioStrings = await TextToSpeach(languageCode, strings);
+            gender = string.IsNullOrEmpty(gender) ? "male" : gender;
+            var greetingMessagesAudioStrings = await TextToSpeach(languageCode, strings, gender);
 
             // Load audio base64 strings to view bag so we can play audio using it
             List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
@@ -367,14 +407,20 @@ namespace KisanEMitra.Controllers
                     Value = greetingMessagesAudioStrings[0].audioContent.ToString()
                 });
 
-                audioBase64Strings.Add(new CommonKeyValue
-                {
-                    Key = "language-change-greeting-message-base64-" + languageCode,
-                    Value = greetingMessagesAudioStrings[1].audioContent.ToString()
-                });
+                //audioBase64Strings.Add(new CommonKeyValue
+                //{
+                //    Key = "language-change-greeting-message-base64-" + languageCode,
+                //    Value = greetingMessagesAudioStrings[1].audioContent.ToString()
+                //});
             }
 
-            return audioBase64Strings;
+
+            return Json(new AjaxActionResponse()
+            {
+                Message = "Success",
+                Data = audioBase64Strings,
+                Success = true
+            });
         }
 
         [HttpPost]
@@ -414,7 +460,7 @@ namespace KisanEMitra.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<List<BhashiniApiResponseAudioInfo>> TextToSpeach(string languageCode, List<string> texts)
+        public async Task<List<BhashiniAudioInfo>> TextToSpeach(string languageCode, List<string> texts, string gender = "male")
         {
             var bhashiniApiInput = new List<BhashiniApiRequestBodyInput>();
 
@@ -426,28 +472,86 @@ namespace KisanEMitra.Controllers
                 });
             }
 
-            var responseBody = await BhashiniService.GetTextToSpeech(languageCode, bhashiniApiInput);
+            var responseBody = await BhashiniService.GetTextToSpeech(languageCode, gender, bhashiniApiInput);
 
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
-            //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
 
             TempData["LanguageModel"] = languageModel;
-            TempData["PopularQuestions"] = ChatbotService.GetPopularQuestions();
 
             return responseBody.audio;
+        }
+
+        public async Task<JsonResult> DetectAudioLanguage(string base64Audio)
+        {
+            try
+            {
+                var apiResponse = await BhashiniService.DetectAudioLanguage(base64Audio);
+
+                var languageCode = "";
+                bool isSuccess;
+
+                // Check if language prediction is available or not
+                if (string.IsNullOrEmpty(apiResponse.errorText))
+                {
+                    // Get language code from api response
+                    if (apiResponse.output.Count > 0 && apiResponse.output[0].langPrediction.Count > 0)
+                    {
+                        languageCode = apiResponse.output[0].langPrediction[0].langCode;
+
+                        // If language code is more than 2 characters then it is invalid
+                        if (languageCode.Length > 2)
+                        {
+                            isSuccess = false;
+                            apiResponse.errorText = languageCode;
+                            languageCode = "";
+                        }
+                        else
+                        {
+                            isSuccess = true;
+                        }
+                    }
+                    else
+                    {
+                        languageCode = "";
+                        isSuccess = false;
+                    }
+                }
+                else
+                {
+                    isSuccess = false;
+                }
+
+                LanguageInfo languageInfo = new LanguageInfo();
+
+                if (isSuccess)
+                {
+                    languageInfo = LanguageManager.GetLanguageDetailsByCode(languageCode);
+                }
+
+                return Json(new AjaxActionResponse()
+                {
+                    Success = isSuccess,
+                    Data = languageInfo,
+                    Message = apiResponse.errorText,
+                });
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError($"HTTP request to DetectAudioLanguage failed: {ex.Message}");
+
+                return Json(new AjaxActionResponse()
+                {
+                    Success = false,
+                    Data = "",
+                    Message = ex.Message,
+                });
+            }
         }
 
         public ActionResult ChatHistory()
         {
             List<ChatHistory> chatHistories = new List<ChatHistory>();
 
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
-            //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
 
             ViewBag.LanguageModel = languageModel;
@@ -456,10 +560,6 @@ namespace KisanEMitra.Controllers
 
         public ActionResult More()
         {
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
-            //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
             ViewBag.LanguageModel = languageModel;
 
@@ -468,10 +568,6 @@ namespace KisanEMitra.Controllers
 
         public ActionResult ProfileView()
         {
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
-            //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
             ViewBag.LanguageModel = languageModel;
             return View();
@@ -479,10 +575,6 @@ namespace KisanEMitra.Controllers
 
         public ActionResult FAQs()
         {
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
-            //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
             ViewBag.LanguageModel = languageModel;
             return View();
@@ -490,10 +582,6 @@ namespace KisanEMitra.Controllers
 
         public ActionResult Feedback()
         {
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
-            //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
             ViewBag.LanguageModel = languageModel;
             return View();
@@ -502,10 +590,6 @@ namespace KisanEMitra.Controllers
         [HttpPost]
         public ActionResult SubmitRating(int rating)
         {
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
-            //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
             ViewBag.LanguageModel = languageModel;
 
@@ -515,9 +599,6 @@ namespace KisanEMitra.Controllers
         [HttpPost]
         public ActionResult SubmitReview(string review)
         {
-            HttpCookie langCookie = Request.Cookies["culture"];
-            var userLanguage = Request.UserLanguages;
-
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
             ViewBag.LanguageModel = languageModel;
 

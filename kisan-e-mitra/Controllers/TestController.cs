@@ -86,7 +86,7 @@ namespace KisanEMitra.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech()
+        public async Task<JsonResult> GetWelcomeGreetingsTextToSpeech(string gender)
         {
 
             List<string> strings = new List<string>
@@ -101,7 +101,7 @@ namespace KisanEMitra.Controllers
             //var languageModel = ChatbotService.GetSelectedLanguage(langCookie, userLanguage, languageCodesToEnable);
             var languageModel = ChatbotService.GetSelectedLanguage(Request, languageCodesToEnable);
 
-            var greetingMessagesAudioStrings = await TextToSpeach(languageModel.SelectedLanguage.LanguageCultureCode, strings);
+            var greetingMessagesAudioStrings = await TextToSpeach(languageModel.SelectedLanguage.LanguageCultureCode, strings, gender);
 
             // Load audio base64 strings to view bag so we can play audio using it
             List<CommonKeyValue> audioBase64Strings = new List<CommonKeyValue>();
@@ -169,7 +169,7 @@ namespace KisanEMitra.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<List<BhashiniApiResponseAudioInfo>> TextToSpeach(string languageCode, List<string> texts)
+        public async Task<List<BhashiniAudioInfo>> TextToSpeach(string languageCode, List<string> texts, string gender = "male")
         {
             var bhashiniApiInput = new List<BhashiniApiRequestBodyInput>();
 
@@ -181,7 +181,7 @@ namespace KisanEMitra.Controllers
                 });
             }
 
-            var responseBody = await BhashiniService.GetTextToSpeech(languageCode, bhashiniApiInput);
+            var responseBody = await BhashiniService.GetTextToSpeech(languageCode, gender, bhashiniApiInput);
 
             HttpCookie langCookie = Request.Cookies["culture"];
             var userLanguage = Request.UserLanguages;

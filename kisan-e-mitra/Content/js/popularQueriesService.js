@@ -14,9 +14,19 @@
             const usedQueriesObject = JSON.parse(usedQueriesString);
 
             if (usedQueriesObject) {
-                const currentSchemeQueries = usedQueriesObject.find(f => f.scheme == scheme);
-                if (currentSchemeQueries) {
-                    usedQueries = currentSchemeQueries.queries;
+
+                // If scheme is not passed, then return all used queries
+                if (!scheme) {
+                    // Combine used queries from all the schemes and return it
+                    for (let i = 0; i < usedQueriesObject.length; i++) {
+                        usedQueries = usedQueries.concat(usedQueriesObject[i].queries);
+                    }
+                    return usedQueries;
+                } else {
+                    const currentSchemeQueries = usedQueriesObject.find(f => f.scheme == scheme);
+                    if (currentSchemeQueries) {
+                        usedQueries = currentSchemeQueries.queries;
+                    }
                 }
             }
         }
@@ -58,8 +68,6 @@
         } else {
             usedQueries.push(selectedSchemeUsedQueries);
         }
-
-        //selectedSchemeUsedQueries.queries.push(usedQuery);
 
         // Check the lenght of existing used queries
         usedQueriesBySchemeNameIndex = usedQueries.findIndex(f => f.scheme == scheme);

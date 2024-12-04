@@ -87,11 +87,23 @@ namespace KisanEMitra.Models
             try
             {
                 if (!IsLanguageAvailable(lang)) lang = GetDefaultLanguage();
-                var cultureInfo = new CultureInfo(lang);
-                Thread.CurrentThread.CurrentUICulture = cultureInfo;
-                Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(cultureInfo.Name);
-                HttpCookie langCookie = new HttpCookie("culture", lang);
-                langCookie.Expires = DateTime.Now.AddYears(1);
+                //var cultureInfo = new CultureInfo(lang);
+                //Thread.CurrentThread.CurrentUICulture = cultureInfo;
+                //Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(cultureInfo.Name);
+                HttpCookie langCookie = new HttpCookie("culture", lang)
+                {
+                    Expires = DateTime.Now.AddYears(1),
+                    Secure = true,
+                    HttpOnly = true
+                };
+
+                // Remove the existing cookie from the response if it exists
+                if (HttpContext.Current.Response.Cookies["culture"] != null)
+                {
+                    HttpContext.Current.Response.Cookies.Remove("culture");
+                }
+
+                // Add the updated cookie to the response
                 HttpContext.Current.Response.Cookies.Add(langCookie);
             }
             catch (Exception) { }

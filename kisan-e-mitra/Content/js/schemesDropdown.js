@@ -1,4 +1,4 @@
-(async function async() {
+﻿(async function async() {
 
     function updateSelectedSchemeTranslation(updatedTranslation) {
         document.getElementById('selectedSchemeLabel').innerText = updatedTranslation;
@@ -22,7 +22,12 @@
     }
     function bindSchemesToDropdown(schemes, selectedSchemeId, skipUpdatingCurrentSchemeTitle) {
 
-        console.log('bindSchemesToDropdown: ', schemes);
+        const schemesDropdownWrapper = document.getElementById('schemesDropdownWrapper');
+
+        if (schemesDropdownWrapper) {
+            schemesDropdownWrapper.style.display = 'flex';
+        }
+
         var dropdown = document.getElementById('schemesDropdown');
         //updateSelectedSchemeTranslation('');
 
@@ -31,7 +36,7 @@
             let currentScheme = schemes[i];
 
             if (currentScheme.id === selectedSchemeId && !skipUpdatingCurrentSchemeTitle) {
-                
+
                 //document.getElementById('selectedSchemeLabel').innerText = currentScheme.title;
                 updateSelectedSchemeTranslation(currentScheme.title);
             }
@@ -76,10 +81,6 @@
     }
 
     async function getSchemesList() {
-
-        //Enable Schemes dropdown
-        document.getElementById('selectedSchemeLabel').style.display = "flex";
-        
         try {
             const response = await fetch('/Content/data/schemes.json', { cache: 'no-cache' });
             const schemes = await response.json();

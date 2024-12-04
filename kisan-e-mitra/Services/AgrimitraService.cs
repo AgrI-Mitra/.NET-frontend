@@ -2,6 +2,7 @@ using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using Newtonsoft.Json;
 using System;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace KisanEMitra.Services
     public class AgrimitraService : IAgrimitraService
     {
         private readonly HttpClient httpClient;
-        private readonly string baseURL = "https://apichatbot.pmkisan.gov.in/";
+        private readonly string baseURL = ConfigurationManager.AppSettings["apiUrl"].ToString();
         private readonly string userApiBaseEndPoint = "user/";
 
         public static class APIPaths

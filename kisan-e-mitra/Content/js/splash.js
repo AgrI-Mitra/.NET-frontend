@@ -1,8 +1,8 @@
 ﻿(function () {
-    $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+       
         setTimeout(function () {
-
-            var url = $("#RedirectFromSplash").val();
+            const url  = document.querySelector('#RedirectFromSplash').value;
             window.location.href = url;
         }, 3000);
     });

@@ -220,7 +220,7 @@
     <value>Submit Review</value>
   </data>
   <data name="label.title" xml:space="preserve">
-    <value>Kisan-eMitra</value>
+    <value>Kisan e-mitra</value>
   </data>
   <data name="label.welcome" xml:space="preserve">
     <value>Welcome</value>
@@ -348,7 +348,7 @@ Type your question or speak using the mic button. Just touch the mic button and 
     <value>Please wait before resending OTP</value>
   </data>
   <data name="message.welcome_greeting" xml:space="preserve">
-    <value>Welcome to Kisan-eMitra! I am your digital assistant. Please let me know how can I help you? 
+    <value>Welcome to Kisan e-mitra! I am your digital assistant. Please let me know how can I help you? 
 You may select your preferred language.</value>
   </data>
   <data name="toast.reaction_dislike" xml:space="preserve">
@@ -390,7 +390,7 @@ You may select your preferred language.</value>
 Do you want to continue and refresh the page?</value>
   </data>
   <data name="message.maintenance_mode_body" xml:space="preserve">
-    <value>Due to application migration and maintenance activities, the services of Kisan-eMitra Chatbot will not be available from 31st March, 2024 to 3rd April, 2024.
+    <value>Due to application migration and maintenance activities, the services of Kisan e-mitra Chatbot will not be available from 31st March, 2024 to 3rd April, 2024.
 The Chatbot with full functionalities will be available from 04 April 2024.</value>
   </data>
   <data name="message.maintenance_mode_header" xml:space="preserve">
@@ -433,7 +433,7 @@ The Chatbot with full functionalities will be available from 04 April 2024.</val
     <value>Click Next below to proceed or Click Exit Tutorial to skip the manual tutorial</value>
   </data>
   <data name="message.app_tour_welcome_header" xml:space="preserve">
-    <value>Welcome to Kisan-eMitra User Manual</value>
+    <value>Welcome to Kisan e-mitra User Manual</value>
   </data>
   <data name="message.chatbot_functionality_feedback" xml:space="preserve">
     <value>Chatbot Functionality</value>

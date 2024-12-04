@@ -151,7 +151,7 @@
 }
 
 @media (max-width:400px) {
-	.my-msg-content {
+	.msg-content {
 		padding: 2% 4%;
 	}
 
@@ -174,4 +174,8 @@
 	.meg-input {
 		width: calc(100% - 88px);
 	}
+}
+
+.user-input-wrapper{
+	column-gap: 10px;
 }

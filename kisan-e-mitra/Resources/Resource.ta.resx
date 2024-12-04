@@ -433,7 +433,7 @@
     <value>தொடர கீழே உள்ள அடுத்து என்பதைக் கிளிக் செய்யவும் அல்லது கையேடு டுடோரியலைத் தவிர்க்க டுடோரியலில் இருந்து வெளியேறு என்பதைக் கிளிக் செய்யவும்</value>
   </data>
   <data name="message.app_tour_welcome_header" xml:space="preserve">
-    <value>Kisan-Emitra பயனர் கையேடுக்கு வரவேற்கிறோம்</value>
+    <value>கிசான் இ-மித்ரா பயனர் கையேடுக்கு வரவேற்கிறோம்</value>
   </data>
   <data name="message.chatbot_functionality_feedback" xml:space="preserve">
     <value>சாட்போட் செயல்பாடு</value>

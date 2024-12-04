@@ -12,6 +12,7 @@ namespace KisanEMitra
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("Content/{*pathInfo}"); //Ignore static files
 
             routes.MapRoute(
                 name: "Default",

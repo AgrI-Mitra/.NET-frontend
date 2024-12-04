@@ -52,6 +52,12 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NUglify, Version=1.21.9.0, Culture=neutral, PublicKeyToken=15bc7810aec21b5e, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUglify.1.21.9\lib\net40\NUglify.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -132,9 +138,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Abstractions, Version=5.11.7.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.11.10\lib\net46\Unity.Abstractions.dll</HintPath>
     </Reference>
@@ -160,9 +163,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SecureCookiesAttribute.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Services\ServiceHelper.cs" />
+    <Compile Include="Services\StaticFileHandler.cs" />
+    <Compile Include="Services\TraceListener.cs" />
+    <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\audio\pa.txt" />
     <Content Include="Content\audio\language-change-pa.txt" />
@@ -205,10 +212,23 @@
     <Content Include="Content\bundle-staging.min.css">
       <DependentUpon>bundle-staging.css</DependentUpon>
     </Content>
+    <Content Include="Content\images\app_tutorial.svg" />
+    <Content Include="Content\images\arrow-down.svg" />
+    <Content Include="Content\images\arrow-up.svg" />
+    <Content Include="Content\images\arrow_back.svg" />
+    <Content Include="Content\images\arrow_forward.svg" />
+    <Content Include="Content\images\auto-read-off.svg" />
+    <Content Include="Content\images\auto-read-on.svg" />
+    <Content Include="Content\images\male.png" />
+    <Content Include="Content\images\female.png" />
     <Content Include="Content\images\kisan-e-mitra-logo-original.png" />
     <Content Include="Content\images\land_of_grass-bg-original.png" />
     <Content Include="Content\images\land_of_grass-bg_50.png" />
+    <Content Include="Content\images\red-mic.svg" />
+    <Content Include="Content\images\setting.svg" />
+    <Content Include="Content\images\settings.svg" />
     <Content Include="Content\js\app-config.js" />
+    <Content Include="Content\js\audio-visualizer.js" />
     <Content Include="Content\js\bundle-post-body.js" />
     <Content Include="Content\js\bundle-post-body.min.js">
       <DependentUpon>bundle-post-body.js</DependentUpon>
@@ -221,6 +241,9 @@
       <DependentUpon>chatbot.js</DependentUpon>
     </Content>
     <Content Include="Content\js\commonService.js" />
+    <Content Include="Content\js\global-auto-read-popover.js" />
+    <Content Include="Content\js\horizontal-scroll-listener.js" />
+    <Content Include="Content\js\languageDropdown.js" />
     <Content Include="Content\js\popularQueriesService.js" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Resources\Resource.ur.Designer.cs">
@@ -244,13 +267,18 @@
     <Compile Include="Services\Contracts\IChatbotService.cs" />
     <Content Include="Content\images\Expanded.svg" />
     <Content Include="Content\images\help.png" />
-    <Content Include="Content\ham-menu.css" />
     <Content Include="Content\images\feedback.svg" />
     <Content Include="Content\images\refresh.svg" />
-    <Content Include="Content\js\ham-menu.js" />
     <Content Include="Content\js\schemesDropdown.js" />
+    <Content Include="Content\js\scroll-listener.js" />
+    <Content Include="Content\js\settings-popover.js" />
     <Content Include="Content\js\shepherd.js" />
+    <Content Include="Content\js\show-hide-content.js" />
+    <Content Include="Content\js\splash.min.js">
+      <DependentUpon>splash.js</DependentUpon>
+    </Content>
     <Content Include="Content\js\typed.umd.js" />
+    <Content Include="Content\js\voice-recorder.js" />
     <Content Include="Content\shepherd.css" />
     <Content Include="Content\chatbot-staging.css" />
     <Content Include="Content\chatbot.css" />
@@ -350,7 +378,6 @@
     <Compile Include="Services\Contracts\IAgrimitraService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Botchat.css" />
     <Content Include="Content\images\background_mainpage.jpg" />
     <Content Include="Content\images\c4gt_logo.png" />
     <Content Include="Content\images\background.png" />
@@ -410,7 +437,6 @@
     <Content Include="Content\js\feedback.js" />
     <Content Include="Content\js\fingerprint.js" />
     <Content Include="Content\js\gtag.js" />
-    <Content Include="Content\js\languageDropDown.js" />
     <Content Include="Content\js\recorder.js" />
     <Content Include="Content\js\splash.js" />
     <Content Include="Content\js\wavBlobUtil.js" />
@@ -428,12 +454,11 @@
     <Content Include="Content\translations\punjabi.json" />
     <Content Include="Content\translations\malayalam.json" />
     <Content Include="Content\translations\kannada.json" />
-    <Content Include="Content\translations\bengali.json" />
+    <Content Include="Content\translations\bangla.json" />
     <Content Include="Content\translations\english.json" />
     <Content Include="Content\translations\hindi.json" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Font\Mulish-Bold.792fb274.ttf" />
     <Content Include="Font\Mulish-Regular.a4c4b1ab.ttf" />
     <Content Include="Content\Files\my_odia_manual.pdf" />
@@ -442,7 +467,6 @@
     <Content Include="Font\Montserrat-Regular.ttf" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\format-string.helper.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -486,6 +510,12 @@
     <Content Include="Views\Test\Splash.cshtml" />
     <Content Include="Views\Test\Test.cshtml" />
     <Content Include="Views\Shared\_StagingLayout.cshtml" />
+    <None Include="Properties\PublishProfiles\production.pubxml" />
+    <None Include="Properties\PublishProfiles\staging.pubxml" />
+    <None Include="Properties\PublishProfiles\StagingProfile.pubxml" />
+    <None Include="Web.Staging.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Resource.ur.resx">
@@ -539,6 +569,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.ta.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.te.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -562,6 +593,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Staging|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -592,7 +626,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\BuildBundlerMinifier2022.2.9.11\build\BuildBundlerMinifier2022.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\BuildBundlerMinifier2022.2.9.11\build\BuildBundlerMinifier2022.targets'))" />
   </Target>
+  <Import Project="..\packages\BuildBundlerMinifier2022.2.9.11\build\BuildBundlerMinifier2022.targets" Condition="Exists('..\packages\BuildBundlerMinifier2022.2.9.11\build\BuildBundlerMinifier2022.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

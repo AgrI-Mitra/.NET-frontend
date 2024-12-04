@@ -403,7 +403,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kisan-eMitra.
+        ///   Looks up a localized string similar to Kisan e-mitra.
         /// </summary>
         public static string label_title {
             get {
@@ -529,7 +529,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to Kisan-eMitra User Manual.
+        ///   Looks up a localized string similar to Welcome to Kisan e-mitra User Manual.
         /// </summary>
         public static string message_app_tour_welcome_header {
             get {
@@ -738,7 +738,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Due to application migration and maintenance activities, the services of Kisan-eMitra Chatbot will not be available from 31st March, 2024 to 3rd April, 2024.
+        ///   Looks up a localized string similar to Due to application migration and maintenance activities, the services of Kisan e-mitra Chatbot will not be available from 31st March, 2024 to 3rd April, 2024.
         ///The Chatbot with full functionalities will be available from 04 April 2024..
         /// </summary>
         public static string message_maintenance_mode_body {
@@ -1056,7 +1056,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to Kisan-eMitra! I am your digital assistant. Please let me know how can I help you? 
+        ///   Looks up a localized string similar to Welcome to Kisan e-mitra! I am your digital assistant. Please let me know how can I help you? 
         ///You may select your preferred language..
         /// </summary>
         public static string message_welcome_greeting {

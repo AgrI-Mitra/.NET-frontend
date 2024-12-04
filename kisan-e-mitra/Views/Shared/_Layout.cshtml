@@ -7,52 +7,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/pre-init-js")
-    <script type="text/javascript" src="~/Content/js/fingerprint.js" defer></script>
-    @*<script src="~/Content/js/app-config.js"></script>
-        <script src="~/Content/js/commonService.js"></script>
-        <script type="text/javascript" src="~/Content/js/schemesDropdown.js"></script>*@
+    <script defer src="~/bundles/fingerprint"></script>
+    @*<script type="text/javascript" src="~/Content/js/fingerprint.js" defer></script>*@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    @*<script type="text/javascript" src="~/Content/js/fingerprint.js" defer></script>
-        <script type="text/javascript" src="~/Content/js/recorder.js"></script>
-        <script type="text/javascript" src="~/Content/js/languageDropDown.js"></script>
-        <script type="text/javascript" src="~/Content/js/typed.umd.js"></script>*@
-
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RCEZR4J24G"></script>
-    <script type="text/javascript" src="~/Content/js/gtag.js"></script>
+    @*<script type="text/javascript" src="~/Content/js/gtag.js"></script>*@
+    @Scripts.Render("~/bundles/gtag")
 </head>
 <body class="">
     @{
-        //var availableLanguages = ViewBag?.LanguageModel?.AvailableLanguages;
-        //var selectedLanguage = ViewBag?.LanguageModel?.SelectedLanguage;
         var languageModel = TempData["LanguageModel"] as KisanEMitra.Models.LanguageModel;
-        var availableLanguages = languageModel.AvailableLanguages;// as List<KisanEMitra.Models.LanguageInfo>;
-        var selectedLanguage = languageModel.SelectedLanguage; //TempData["LanguageModel.SelectedLanguage"] as KisanEMitra.Models.LanguageInfo;
+        var availableLanguages = languageModel.AvailableLanguages;
+        var selectedLanguage = languageModel.SelectedLanguage;
 
         TempData.Keep("LanguageModel");
     }
-    <div class="container-fluid chatbot-container">
-        <div class="overlay"></div>
+    <div class="container-fluid chatbot-container fade-top">
         <div class="kisan-e-mitra-content-text">
-            <div class="header-flex justify-content-between align-items-center kisan-e-mitra-texts-padding">
+            <div class="d-flex justify-content-between align-items-center kisan-e-mitra-texts-padding" id="appHeader">
                 <div class="logo-flex responsive-logo"><span class="d-flex justify-content-start p-2"><img src="~/Content/images/kisan-e-mitra-logo.png" class="kisan-e-mitra-logo"></span></div>
-                <div class="content-head-text"><h1 class="labelTitle">@Resources.Resource.label_title</h1></div>
+                <div class="content-head-text"><h1 class="labelTitle"></h1></div>
                 <div class="d-flex justify-content-end">
 
-                    <div class="custom-select-wrapper app_tour_scheme_selection_description schemes-wrapper" id="schemesDropdownWrapper">
-                        <button class="btn btn-style dropdown-toggle px-0" type="button" id="schemesDropdownButton"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="fw-bold d-inline-block text-ellipsis" id="selectedSchemeLabel"></span>
-                        </button>
-                        <ul id="schemesDropdown" class="dropdown-menu" aria-labelledby="languageDropDown">
-                        </ul>
-                    </div>
+                    <span id="autoReadButton" class="refresh-btn-style app_tour_auto_read_description help-button auto-read-button-wrapper d-flex align-items-center justify-content-center">
+                        <img id="autoReadImage" src="~/Content/images/auto-read-off.svg" />
+                    </span>
+                    <span id="settingsButton" class="example-popover app_tour_language_selection_description refresh-btn-style help-button d-flex align-items-center justify-content-center">
+                        <img src="~/Content/images/setting.svg" />
+                    </span>
+                    <span id="startAppTourButton" class="refresh-btn-style app_tour_guide_descirption help-button d-flex align-items-center justify-content-center">
+                        <img src="~/Content/images/app_tutorial.svg" />
+                    </span>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
 
-                    <div class="custom-select-wrapper app_tour_alternate_language_selection_description" id="languageDropdownWrapper">
-                        <button class="btn btn-style dropdown-toggle" type="button" id="languageDropDown"
+    </div>
+    <div class="footer">
+        <p class="powered">Powered by Sunbird UCI | BHASHINI</p>
+        <p class="footer_disclaimer">Disclaimer:This chatbot provides general information about selected schemes, helping bridge technical and language barriers. For accurate and updated details, please contact the relevant authorities.</p>
+    </div>
+
+
+    <div hidden>
+        <div id="settings-popover-content">
+            <div class="popover-content-row">
+                <div class="form-group">
+                    <div class="custom-select-wrapper app_tour_alternate_language_selection_description settings-popover-item" id="languageDropdownWrapper">
+                        <button class="btn btn-style dropdown-toggle language-dropdown-toggle" type="button" id="languageDropDown"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="fw-bold" id="selectedLanguageLabel">@{ @selectedLanguage.LanguageCultureLabel}</span>
                         </button>
@@ -65,52 +71,47 @@
                             }
                         </ul>
                     </div>
+                </div>
+                <div class="form-group">
+                    <div class="custom-select-wrapper app_tour_scheme_selection_description schemes-wrapper settings-popover-item" id="schemesDropdownWrapper">
+                        <button class="btn btn-style scheme-dropdown-toggle" type="button" id="schemesDropdownButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fw-bold" id="selectedSchemeLabel"></span>
+                        </button>
+                        <ul id="schemesDropdown" class="dropdown-menu" aria-labelledby="languageDropDown">
+                        </ul>
+                    </div>
+                </div>
+                @*<button class="btn btn-secondary settings-popover-item" id="startAppTourButton"></button>*@
+            </div>
+        </div>
+    </div>
 
-                    <span id="startAppTourButton">
-                        <img class="refresh-btn-style help-button" src="~/Content/images/help.png" />
-                    </span>
+    <div hidden>
+        <div id="globalAutoReadPopover">
+            <div class="d-flex flex-column align-items-center">
+                <h3 id="voiceSelectionTitle"></h3>
+            </div>
+            <div class="d-flex justify-content-around">
+                <div class="image-container" data-radio="male">
+
+                    <label for="male">
+                        <img src="~/Content/images/male.png" alt="Image 1" class="img-fluid" />
+                    </label>
+                    <div id="maleVoice" class="image-label">Male</div>
+                    <input type="radio" name="voice-selection" id="male" />
+                </div>
+                <div class="image-container" data-radio="female">
+
+                    <label for="female">
+                        <img src="~/Content/images/female.png" alt="Image 2" class="img-fluid" />
+                    </label>
+                    <div id="femaleVoice" class="image-label">Female</div>
+                    <input type="radio" name="voice-selection" id="female" />
                 </div>
             </div>
-            <div class="content-head-text-responsive"><h1 class="labelTitle">@Resources.Resource.label_title</h1></div>
-            <nav class="sideNav">
-                <button class="menuX">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </nav>
-            @RenderBody()
-
-            @*<div class="navigation-icon">
-                    <a id="restartSessionButton" class="app_tour_refresh_button_description">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="footer-svg-hover" width="32" height="32" viewBox="0 0 32 32">
-                            <path d="M16 6C21.5228 6 26 10.4771 26 16C26 21.5228 21.5228 26 16 26C10.4771 26 6 21.5228 6 16C6 15.4981 6.03696 15.0051 6.10831 14.5231C6.19793 13.9176 5.75479 13.3333 5.14277 13.3333C4.64831 13.3333 4.21467 13.6749 4.13961 14.1637C4.04768 14.7624 4 15.3756 4 16C4 22.6275 9.37259 28 16 28C22.6275 28 28 22.6275 28 16C28 9.37259 22.6275 4 16 4C12.9266 4 10.123 5.15541 8 7.05557V5.66667C8 5.11439 7.55228 4.66667 7 4.66667C6.44772 4.66667 6 5.11439 6 5.66667V9.66667C6 10.2189 6.44772 10.6667 7 10.6667H11C11.5523 10.6667 12 10.2189 12 9.66667C12 9.11439 11.5523 8.66667 11 8.66667H9.20124C10.9854 7.01177 13.3745 6 16 6Z" />
-                        </svg>
-                    </a>
-                    <a class="ham-menu">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="footer-svg-hover" width="30" height="30"
-                             viewBox="0 0 30 30">
-                            <path d="M3.75 21.25H26.25C26.9404 21.25 27.5 21.8096 27.5 22.5C27.5 23.141 27.0175 23.6694 26.3958 23.7416L26.25 23.75H3.75C3.05965 23.75 2.5 23.1904 2.5 22.5C2.5 21.859 2.98255 21.3306 3.60422 21.2584L3.75 21.25ZM3.74985 13.75L26.2499 13.7472C26.9403 13.7472 27.5 14.3067 27.5 14.9971C27.5 15.6381 27.0176 16.1666 26.3959 16.2389L26.2501 16.2472L3.75015 16.25C3.0598 16.2501 2.5 15.6905 2.5 15.0001C2.5 14.3591 2.98243 13.8307 3.60407 13.7584L3.74985 13.75ZM3.75 6.25H26.25C26.9404 6.25 27.5 6.80965 27.5 7.5C27.5 8.14105 27.0175 8.66939 26.3958 8.74159L26.25 8.75H3.75C3.05965 8.75 2.5 8.19035 2.5 7.5C2.5 6.85895 2.98255 6.33061 3.60422 6.25841L3.75 6.25Z">
-                            </path>
-                        </svg>
-                    </a>
-                </div>*@
         </div>
-
     </div>
-    <div class="footer">
-        <p>Powered by Sunbird UCI | BHASHINI</p>
-    </div>
-
-    @Scripts.Render("~/bundles/post-init-js");
-    @*<script type="text/javascript" src="~/Content/js/autosize.js"></script>
-
-        <script type="text/javascript" src="~/Content/js/wavBlobUtil.js"></script>
-        <script type="text/javascript" src="~/Content/js/WavRecorder.js"></script>
-
-        <script type="text/javascript" src="~/Content/js/shepherd.js"></script>
-
-        <script type="text/javascript" src="~/Content/js/popularQueriesService.js"></script>*@
-    @*<script type="text/javascript" src="~/Content/js/ham-menu.js"></script>*@
+    @Scripts.Render("~/bundles/post-init-js")
 </body>
 </html>

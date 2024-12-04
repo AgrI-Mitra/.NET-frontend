@@ -11,8 +11,6 @@
         }
     }
 
-    //await getAppConfig();
-
     window.appConfigConstruct = {
         getAppConfig: getAppConfig
     }

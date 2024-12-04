@@ -15,10 +15,6 @@ table.aadhar-table {
     display: flex;
 }
 
-.user-avatar-img {
-    background-color: #219653;
-}
-
 .div-row div:nth-child(2) {
     font-weight: bold;
     color: #333;
@@ -41,8 +37,8 @@ table.aadhar-table {
 }
 
 .chatbot-message-wrapper-column-one {
-    flex: 0 1 48px;
-    height: 48px;
+    flex: 0 1 36px;
+    height: 36px;
 }
 
 .chatbot-message-wrapper-column-two {
@@ -51,6 +47,7 @@ table.aadhar-table {
     flex-wrap: wrap;
     flex-flow: column wrap;
     padding: 5px 10px;
+    font-size: 11px;
 }
 
 .chatbot-message-wrapper-column-three {
@@ -78,8 +75,7 @@ table.aadhar-table {
  */
 .dot-flashing {
     position: relative;
-    margin-top: 30px;
-    margin-left: 0.5rem !important;
+    margin-left: 20px !important;
     width: 10px;
     height: 10px;
     border-radius: 5px;
@@ -87,6 +83,7 @@ table.aadhar-table {
     color: #219653;
     animation: dot-flashing 1s infinite linear alternate;
     animation-delay: 0.5s;
+    display: inline-block;
 }
 
     .dot-flashing::before,
@@ -144,6 +141,7 @@ table.aadhar-table {
     border-radius: 20px;
     font-size: .9rem;
     height: 30px;
+    white-space: nowrap;
 }
 
 /*// X-Small devices (portrait phones, less than 576px)
@@ -166,6 +164,9 @@ table.aadhar-table {
         padding-top: 1.4em;
     }
 
+    .audio-visualizer-wrapper {
+        padding-top: 1.4em;
+    }
     /*.navigation-icon{
         margin-bottom: 20px;
     }*/
@@ -217,6 +218,10 @@ table.aadhar-table {
     .message-input-textarea {
         padding-top: 0.8em;
     }
+
+    .audio-visualizer-wrapper {
+        padding-top: 0.8em;
+    }
     /* .send-button {
     margin: 0px 0px 0px 8px;
   } */
@@ -248,6 +253,8 @@ table.aadhar-table {
 
 .user-avatar-img {
     background-color: #219653;
+    margin-right: 5px;
+    margin-bottom: 3px;
 }
 
 /*Voice Recording Animation START*/
@@ -283,7 +290,7 @@ img.query-msg-send-icon {
 }
 
 .chatbot-message-action-buttons {
-    width: 36px;
+    width: 24px;
     height: 100%;
 }
 
@@ -324,14 +331,15 @@ img.query-msg-send-icon {
 
 #startAppTourButton {
     cursor: pointer;
+    max-width: 50%;
 }
 
 .button-close {
-    height: 1rem;
-    background: url(../Content/images/close.svg);
-    width: 1rem;
-    border: none;
-    color: black;
+    height: 0.95rem;
+    background: url(images/close.svg);
+    width: 0.99rem;
+    border: 0;
+    color: #000;
 }
 
 .close-button-wrapper {
@@ -391,4 +399,562 @@ img.query-msg-send-icon {
 
 #schemesDropdownWrapper {
     display: none;
+}
+
+#schemesLabelsWrapper {
+    display: none;
+}
+
+.h-scrollable-wrapper {
+    max-width: 88vw;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+.content-head-text-responsive {
+    display: none;
+}
+
+.chat-message-span-wrapper p {
+    display: initial;
+}
+
+.welcome-message-wrapper {
+    /*position: sticky;
+    top: 0;*/
+}
+
+.msg-content div.chatbot-message-wrapper-column-two span.chat-message-span-wrapper span.chat-message-span-wrapper {
+    padding-left: 5px;
+}
+
+/*#appHeader {
+    animation: icon-animation cubic-bezier(0.165, 0.84, 0.44, 1) 0.8s;
+}*/
+
+#appHeader.without-header {
+    transition: all 2s ease-in;
+}
+
+#message-list.without-header {
+    transition: all 1s ease-in;
+    margin-top: 20px;
+}
+
+.fade-in-content {
+    animation: fadeIn 1s ease;
+}
+
+.fade-bottom {
+    animation: fade-bottom 1s ease;
+}
+
+.fade-left {
+    animation: fade-left 0.5s ease;
+}
+
+.fade-right {
+    animation: fade-right 0.5s ease;
+}
+
+.fade-top {
+    animation: fade-top 1s ease;
+}
+
+@keyframes fade-left {
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+@keyframes fade-right {
+    0% {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-bottom {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-top {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    justify-content: space-between;
+}
+
+/*left right arrows to scroll content*/
+
+.scroll-arrow {
+    background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
+    color: black; /* Black text color for better contrast */
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visibility */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, opacity 0.3s ease; /* Add transition effect */
+}
+
+    .scroll-arrow:disabled {
+        background-color: rgba(255, 255, 255, 0.5); /* Lighter background when disabled */
+        cursor: not-allowed;
+        opacity: 0.2;
+    }
+
+.d-flex.justify-content-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.scroll-container {
+    flex-grow: 1;
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+}
+
+
+/* Position the toggle button at the top center */
+.toggle-arrow {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Smooth transition for content visibility */
+/*.fade-in-content {
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+}
+
+    .fade-in-content.show {
+        max-height: 1000px;*/ /* Adjust based on your content height */
+/*opacity: 1;
+    }*/
+
+/* Smooth transition for the main content wrapper */
+/*#mainContentWrapper {
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+}
+
+    #mainContentWrapper.show {
+        max-height: 1000px;*/ /* Adjust based on your content height */
+/*opacity: 1;
+        border: 1px solid #eae9e9;
+        border-radius: 10px;
+        background: white;
+    }*/
+
+#popularQuestionsWrapper {
+    transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    /*overflow: hidden;*/
+    max-height: 0;
+    opacity: 0;
+}
+
+    #popularQuestionsWrapper.show {
+        max-height: 1000px; /* Adjust based on your content height */
+        opacity: 1;
+        border: 1px solid #eae9e9;
+        border-radius: 10px;
+        background: white;
+    }
+
+.schemesLabelsWrapper {
+    max-width: 92vw !important;
+}
+
+
+.popover-content-row {
+    display: flex;
+    align-items: center;
+}
+
+    .popover-content-row .form-group {
+        margin-right: 10px;
+        display: flex;
+        flex-grow: 1;
+    }
+
+/* Hide the popover content initially */
+#popover-content {
+    display: none;
+}
+
+.settings-popover-item {
+    border-radius: 20px;
+    background: white;
+    color: black;
+    border-color: transparent;
+    width: 100%;
+}
+
+#languageDropDown {
+    border-color: transparent !important;
+}
+
+#schemesDropdownButton {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    border-color: transparent !important;
+    white-space: normal;
+    min-width: 122px;
+    gap: 0;
+}
+
+.scheme-dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.2em;
+    vertical-align: middle;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+}
+
+.language-dropdown-toggle {
+    width: 100%;
+}
+
+@keyframes fade-top-popover {
+    0% {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+.settings-popover {
+    /*margin-right: 80px !important;*/
+    /*top: 0px !important;*/
+    left: -15px !important;
+    background-color: lightgrey;
+    min-width: 270px;
+    opacity: 0;
+    /*transform: scale(0.95);*/
+    transition: opacity 0.3s ease;
+    animation: fade-right-popover 0.5s ease-in-out;
+    max-width: 120px;
+}
+
+    .settings-popover div.popover-arrow {
+        left: 15px !important;
+    }
+
+    .settings-popover .popover-arrow::before {
+        border-bottom-color: lightgrey !important; /* Change this to your desired color */
+    }
+
+    .settings-popover .popover-arrow::after {
+        border-bottom-color: transparent !important; /* Change this to your desired color */
+    }
+
+    .settings-popover.show {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+.popover-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity and color as needed */
+    z-index: 1040; /* Ensure it is behind the popover but above other content */
+    display: none; /* Initially hidden */
+    -webkit-animation: fadeInFromNone 0.5s ease-out;
+    -moz-animation: fadeInFromNone 0.5s ease-out;
+    -o-animation: fadeInFromNone 0.5s ease-out;
+    animation: fadeInFromNone 0.5s ease-out;
+}
+
+
+/* Audio Visualizer */
+#micAudioRecordingIcon {
+    display: none;
+}
+
+.audio-visualizer-wrapper {
+    display: none;
+    align-items: center;
+    justify-content: end;
+    width: 100%;
+    position: absolute;
+    max-height: 90px;
+    padding: 0 1.5rem;
+}
+
+.audio-visualizer-container {
+    /*justify-content: space-around;*/
+    width: 100%;
+    height: 50px;
+    place-content: center;
+    align-self: center;
+    display: none;
+    /*position: absolute;*/
+}
+
+.audio-processing-container {
+    display: none;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.bar {
+    width: 1.5px; /* Thinner bars */
+    height: 10px; /* Reduced height */
+    background-color: #198754;
+    animation: soundwave 1s infinite;
+    animation-play-state: running; /*paused*/
+    transform-origin: center;
+    margin: 0 0.5px; /* Reduce gap between bars */
+}
+
+@keyframes soundwave {
+    0%, 100% {
+        transform: scaleY(1);
+    }
+
+    50% {
+        transform: scaleY(var(--scale-factor, 3)); /* Use CSS variable for random scale */
+    }
+}
+
+#voiceRecordButtonId:active {
+    transform: scale(1.5); /* Scale the mic button when pressed */
+}
+
+.recording #recordingImage {
+    transform: scale(1.5); /* Scale the mic button when recording */
+}
+
+/* Initial states */
+/*.meg-input {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: left 0.5s ease-in-out;
+}
+
+canvas {
+    position: absolute;
+    right: -100%;
+    transition: right 0.5s ease-in-out;
+}*/
+
+/* When canvas is visible */
+/*.canvas-visible .meg-input {
+    left: 10%;
+}
+
+.canvas-visible canvas {
+    right: 10%;
+}*/
+
+@keyframes flash {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Apply the animation to the icon */
+.flashing-icon {
+    animation: flash 1s infinite; /* 1s duration, infinite loop */
+}
+
+
+.auto-read-button-wrapper img {
+    max-height: 36px;
+    max-width: 36px;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+/* Global Auto Read Popover Styles */
+.global-auto-read-popover {
+    background: white;
+}
+
+    .global-auto-read-popover .popover-arrow::before {
+        border-bottom-color: white !important; /* Change this to your desired color */
+    }
+
+    .global-auto-read-popover .popover-arrow::after {
+        border-bottom-color: transparent !important; /* Change this to your desired color */
+    }
+/*#globalAutoReadPopover {*/
+/*display: none;*/
+/*position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    width: 300px;
+}
+
+    #globalAutoReadPopover .title {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    #globalAutoReadPopover .images-row {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 10px;
+    }
+
+        #globalAutoReadPopover .images-row img {
+            width: 100px;
+            height: auto;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+            #globalAutoReadPopover .images-row img.selected {
+                border-color: blue;
+            }
+
+    #globalAutoReadPopover .radio-buttons-row {
+        display: flex;
+        justify-content: space-around;
+    }*/
+.image-container {
+    text-align: center;
+    cursor: pointer;
+}
+
+    .image-container img {
+        border-radius: 50%;
+        cursor: pointer;
+        transition: box-shadow 0.3s, border 0.3s;
+        border: 3px solid transparent;
+        max-height: 60px;
+    }
+
+    .image-container input[type="radio"] {
+        display: block;
+        margin: 10px auto 0;
+        cursor: pointer;
+    }
+
+        .image-container input[type="radio"]:checked {
+            accent-color: #198754; /* Change the color when checked */
+        }
+
+    .image-container .selected {
+        border: 3px solid #198754;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+.image-label {
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+
+div[data-shepherd-step-id="app_tour_language_selection_description"] {
+    top: 150px !important;
 }
