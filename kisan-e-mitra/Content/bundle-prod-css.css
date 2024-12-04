@@ -225,14 +225,14 @@ svg.footer-svg-hover {
     .footer .powered {
         color: white;
         margin-bottom: 3px;
-        line-height: 20px;
-        font-size: 16px;
+        line-height: 14px;
+        font-size: 14px;
     }
 
     .footer .footer_disclaimer {
         color: white;
         margin-bottom: 0;
-        font-size: 9px;
+        font-size: 8px;
     }
 
 .message-input:focus {
