@@ -202,6 +202,7 @@
     var currentConversationId;
     const voiceSelectionChannel = new BroadcastChannel('voice_selection');
     let recordTimeout = null;
+    const recordingImage = document.getElementById("recordingImage");
     voiceSelectionChannel.onmessage = async function (event) {
         await getWelcomeGreetingsAudio();
     };
@@ -248,6 +249,13 @@
             createSession(fingerPrintId, true);
         }
     }
+
+    function disableContextMenu(event) {
+        event.preventDefault();
+    }
+
+    recordingImage.addEventListener('contextmenu', disableContextMenu);
+    recordingImage.addEventListener('touchstart', disableContextMenu); // For long-press behavior
 
     // Generate a UUID using timestamp and random numbers
     /**
