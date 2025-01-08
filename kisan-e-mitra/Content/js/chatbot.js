@@ -3075,7 +3075,6 @@
             chatbotFunctionality: parseInt(chatbotFunctionality), // chatbotFunctionality,
             feedback: feedbackDetails,
         };
-        return;
 
         const headers = new Headers();
         headers.append('User-id', currentUserId);
