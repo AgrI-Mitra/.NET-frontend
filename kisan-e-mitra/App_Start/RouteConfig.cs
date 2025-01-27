@@ -19,6 +19,12 @@ namespace KisanEMitra
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Splash", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+            name: "LogLocation",
+            url: "Home/LogLocation",
+            defaults: new { controller = "Home", action = "LogLocation" }
+        );
         }
     }
 }

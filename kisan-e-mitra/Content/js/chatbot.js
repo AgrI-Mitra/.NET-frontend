@@ -4931,30 +4931,41 @@
     }
 
     function setLocationInfo() {
-
-        function getLocation() {
-            navigator.geolocation.getCurrentPosition((position) => {
-                latitude = position.coords.latitude;
-                longitude = position.coords.longitude;
-
-            }, (errorCallback) => {
-
-                console.log('errorCallback: ', errorCallback);
+        function sendLocationToServer(latitude, longitude) {
+            fetch('/Home/LogLocation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ latitude, longitude }),
+            }).catch((error) => {
+                console.error('Error sending location to server:', error);
             });
         }
 
+        function getLocation() {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    localStorage.setItem('location', JSON.stringify({ latitude, longitude }));
+
+                    // Send the geolocation to the server
+                    sendLocationToServer(latitude, longitude);
+                },
+                (errorCallback) => {
+                    console.log('errorCallback:', errorCallback);
+                }
+            );
+        }
+
         if (navigator.geolocation) {
-
             navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
-                if (result.state == 'granted') {
-
+                if (result.state === 'granted') {
                     getLocation();
-
-                } else if (result.state == 'prompt') {
+                } else if (result.state === 'prompt') {
                     getLocation();
-
-                } else if (result.state == 'denied') {
-                    // Display instructions to reactivate location sharing in browser settings
+                } else if (result.state === 'denied') {
                     console.log('User denied the permission');
                 }
             });

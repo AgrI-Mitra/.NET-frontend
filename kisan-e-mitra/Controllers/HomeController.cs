@@ -1,4 +1,4 @@
-using KisanEMitra.Models;
+﻿using KisanEMitra.Models;
 using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using kishan_bot.Services;
@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -28,7 +29,31 @@ namespace KisanEMitra.Controllers
             BhashiniService = bhashiniService;
             ChatbotService = chatbotService;
         }
+        [HttpPost]
+        public JsonResult LogLocation(double latitude, double longitude)
+        {
+            try
+            {
+                string logEntry = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} | Latitude: {latitude}, Longitude: {longitude}";
+                string logFilePath = Server.MapPath("~/Logs/locationlogs.txt");
 
+                // Ensure the Logs directory exists
+                string logDirectory = Path.GetDirectoryName(logFilePath);
+                if (!Directory.Exists(logDirectory))
+                {
+                    Directory.CreateDirectory(logDirectory);
+                }
+
+                 //Append the geolocation data to the file
+                System.IO.File.AppendAllText(logFilePath, logEntry + Environment.NewLine);
+
+                return Json(new { success = true, message = "Location logged successfully." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
         public ActionResult Splash()
         {
             return View();

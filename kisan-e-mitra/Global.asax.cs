@@ -1,4 +1,4 @@
-using KisanEMitra.Services;
+﻿using KisanEMitra.Services;
 using KisanEMitra.Services.Contracts;
 using kishan_bot.Services;
 using kishan_bot.Services.Contracts;
@@ -62,6 +62,15 @@ namespace KisanEMitra
                     };
                     Response.Cookies.Add(cultureCookie);
                 }
+                // Get IP address and log it
+                string userIP = Request.UserHostAddress;
+                string userAgent = Request.UserAgent ?? "Unknown User Agent";
+
+                string logEntry = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} | IP: {userIP} | User Agent: {userAgent}";
+
+                // Log to locationlogs.txt
+                string logFilePath = Server.MapPath("~/Logs/locationlogs.txt");
+                File.AppendAllText(logFilePath, logEntry + Environment.NewLine);
             }
         }
 
