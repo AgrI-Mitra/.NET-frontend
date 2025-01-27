@@ -51,17 +51,17 @@ namespace KisanEMitra.Services
         {
             var bhashiniApiRequestBody = new LanguageDetectionRequestBody
             {
-                config = new LanguageDetectionRequestConfig()
-            };
-
-            bhashiniApiRequestBody.config.serviceId = bhashiniALDServiceId;
-
-            bhashiniApiRequestBody.audio = new List<BhashiniAudioInfo>
-            {
-                new BhashiniAudioInfo
+                config = new LanguageDetectionRequestConfig
                 {
-                    audioContent = audioContent
-                }
+                    serviceId = bhashiniALDServiceId
+                },
+                audio = new List<BhashiniAudioInfo>
+        {
+            new BhashiniAudioInfo
+            {
+                audioContent = audioContent
+            }
+        }
             };
 
             var languageDetectionResponse = new LanguageDetectionResponse();
@@ -73,30 +73,40 @@ namespace KisanEMitra.Services
                 httpClient.DefaultRequestHeaders.Add("Authorization", bhashiniApiAuthorizationHeaderKey);
                 httpClient.Timeout = requestTimeoutInMinutes > 0 ? TimeSpan.FromMinutes(requestTimeoutInMinutes) : TimeSpan.FromMinutes(10);
 
+                // Log request details
                 Trace.TraceInformation($"Starting HTTP request to {APIPaths.AudioLanguageDetectionService}");
+                Trace.TraceInformation($"Request Body: {System.Text.Json.JsonSerializer.Serialize(bhashiniApiRequestBody)}");
 
                 var response = await httpClient.PostAsJsonAsync($"{APIPaths.AudioLanguageDetectionService}", bhashiniApiRequestBody);
 
+                // Log response status
                 Trace.TraceInformation($"Completed HTTP request to {APIPaths.AudioLanguageDetectionService} with status code {response.StatusCode}");
 
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
+                    // Log successful response content
+                    var responseContent = await response.Content.ReadAsStringAsync();
+                    Trace.TraceInformation($"Response Content: {responseContent}");
 
                     // Convert response to LanguageDetectionResponse
-                    languageDetectionResponse = response.Content.ReadFromJsonAsync<LanguageDetectionResponse>().Result;
+                    languageDetectionResponse = System.Text.Json.JsonSerializer.Deserialize<LanguageDetectionResponse>(responseContent);
                 }
                 else
                 {
+                    // Log error details
+                    Trace.TraceError($"Error Response: {response.ReasonPhrase}, Status Code: {response.StatusCode}");
                     languageDetectionResponse.errorText = response.ReasonPhrase;
                     languageDetectionResponse.errorCode = response.StatusCode.ToString();
                 }
             }
             catch (Exception ex)
             {
+                // Log exception details
+                Trace.TraceError($"HTTP request to {APIPaths.AudioLanguageDetectionService} failed: {ex.Message}");
+                Trace.TraceError($"Exception StackTrace: {ex.StackTrace}");
+
                 languageDetectionResponse.errorMessage = ex.Message;
                 languageDetectionResponse.errorText = ex.StackTrace.ToString();
-
-                Trace.TraceError($"HTTP request to {APIPaths.AudioLanguageDetectionService} failed: {ex.Message}");
             }
 
             return languageDetectionResponse;

@@ -1,4 +1,4 @@
-﻿using KisanEMitra.Models;
+using KisanEMitra.Models;
 using KisanEMitra.Services.Contracts;
 using kishan_bot.Models;
 using kishan_bot.Services;
@@ -485,6 +485,7 @@ namespace KisanEMitra.Controllers
         {
             try
             {
+                Trace.TraceInformation($"DetectAudioLanguage called: {DateTime.Now}");
                 var apiResponse = await BhashiniService.DetectAudioLanguage(base64Audio);
 
                 var languageCode = "";

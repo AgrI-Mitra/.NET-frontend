@@ -1,4 +1,4 @@
-﻿using KisanEMitra.Services;
+using KisanEMitra.Services;
 using KisanEMitra.Services.Contracts;
 using kishan_bot.Services;
 using kishan_bot.Services.Contracts;
@@ -33,7 +33,7 @@ namespace KisanEMitra
             }
 
             Trace.Listeners.Clear();
-            Trace.Listeners.Add(new TimestampedTextWriterTraceListener(Server.MapPath("~/Logs/myapp.log")));
+            Trace.Listeners.Add(new TimestampedTextWriterTraceListener(Server.MapPath("~/Logs/myapp.txt")));
 
             RegisterComponents();
 
