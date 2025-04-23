@@ -154,6 +154,7 @@
     const thumbLikeImagePath = '../Content/images/hand-thumbs-up.svg';
     const thumbLikeHighlightImagePath = '../Content/images/hand-thumbs-up-fill.svg';
     var chatbotLogoImagePath = '../Content/images/chatbot.png'; //"../Content/images/MOA_logo.png";
+    var downloadCardIcon = '../Content/images/download-card-icon.png';
 
     // Voice Recording button related variables - To Apply animation, change icon images etc. - START
     var voiceRecordButtonClass = '.voiceRecordButtonClass';
@@ -1917,6 +1918,67 @@
         }, 1000);
     }
 
+    async function handleSoilHealthCardResponse(apiResponse) {
+        try {
+            const soilContent = apiResponse.textInEnglish?.content?.content;
+            const htmlContent = soilContent?.html;
+            const hasSoilData = soilContent?.farmerDetails && soilContent?.plotDetails;
+
+            if (htmlContent && hasSoilData) {
+                const sanitizedHtml = DOMPurify.sanitize(htmlContent, {
+                    ADD_TAGS: ['style'], 
+                    ADD_ATTR: ['style'], 
+                });
+
+                updateChatMessagesList(
+                    soilContent.message || 'Your Soil Health Card:',
+                    `soil-card-${generateUUID()}`,
+                    'final_response',
+                    true,
+                    true,
+                    false,
+                    sanitizedHtml
+                );
+                return;
+            }
+
+            if (apiResponse.error?.includes('unable to translate')) {
+                console.warn('Translation error bypassed for soil health card');
+                if (htmlContent) {
+                    const sanitizedHtml = DOMPurify.sanitize(htmlContent, {
+                        ADD_TAGS: ['style'],
+                        ADD_ATTR: ['style'],
+                    });
+                    updateChatMessagesList(
+                        'Soil Health Card Details:',
+                        `soil-card-${generateUUID()}`,
+                        'final_response',
+                        true,
+                        true,
+                        false,
+                        sanitizedHtml
+                    );
+                    return;
+                }
+            }
+
+            throw new Error(apiResponse.error || 'Invalid soil health card response');
+
+        } catch (error) {
+            console.error('[ERROR] Processing Failed:', error);
+            updateChatMessagesList(
+                error.message.includes('translate')
+                    ? 'System is upgrading translation support. Here is your card: <card content>'
+                    : error.message,
+                `error-${generateUUID()}`,
+                'error',
+                true,
+                false,
+                true
+            );
+        }
+    }
+
     async function initChatBotConfig() {
 
         // Set parent route
@@ -2508,17 +2570,18 @@
     //    }
     //}
 
-    function updateChatMessagesList(
+    async function updateChatMessagesList(
         message,
         messageId,
         messageType,
         isMessageFromBot,
         showAudioOption,
-        shouldNotAutoPlayAudio
+        shouldNotAutoPlayAudio,
+        htmlContent = null
     ) {
+        if (message && message !== undefined) {
 
-        if (message != '' && message != undefined) {
-            if (isMessageFromBot == true) {
+            if (isMessageFromBot) {
                 message = formatChatbotResponse(message);
                 message = marked.parse(message);
                 message = message.replace("<a", "<a target='_blank' rel='noreferrer' ");
@@ -2528,62 +2591,168 @@
                 isMessageFromBot,
                 messageId,
                 'conversationsWrapper'
-            ); // Main chat message wrapper
+            );
 
-            let chatMessageAudioImageElement = showAudioOption == true
+            let chatMessageAudioImageElement = showAudioOption
                 ? getChatMessageAudioImageHtmlContent(messageId)
-                : null; // Audio icon inside third column
+                : null;
 
             let feedbackOptionElement = getFeedbackButtonsHtmlContent(messageId);
+
             let spanStartingElementWithId = getStartingSpanHtmlContent(messageId);
-            let chatMessageColumnThreePartTwoElement = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent(messageId);
 
-            // Assuming the variables contain HTML elements instead of strings
-            const chatMessageColumnTwoElement = getChatMessageWrapperColumnTwoStartingDivHtmlContent(); //chatMessageWrapperColumnTwoStartingDivHtmlContent;
-            const userDivElement = getStartingDivHtmlContent();//startingDivHtmlContent;
-            const chatbotLogoElement = getChatbotLogoHtmlContent();//chatbotLogoHtmlContent;
+            const chatMessageColumnTwoElement = getChatMessageWrapperColumnTwoStartingDivHtmlContent();
+            const userDivElement = getStartingDivHtmlContent();
+            const chatbotLogoElement = getChatbotLogoHtmlContent();
 
-            // Append the message to the span element
             const messageParagraph = document.createElement('p');
             messageParagraph.innerHTML = message;
             spanStartingElementWithId.appendChild(messageParagraph);
 
-            // Append the elements to their respective parents
+            if (htmlContent) {
+                const sanitizedHtml = window.DOMPurify ? DOMPurify.sanitize(htmlContent) : sanitizelnput(htmlContent);
+
+                const cardElement = document.createElement('div');
+                cardElement.classList.add('chatbot-card');
+                cardElement.dataset.messageId = messageId;
+
+                const compactView = document.createElement('div');
+                compactView.classList.add('chatbot-card-compact');
+
+                const tempContainer = document.createElement('div');
+                tempContainer.style.position = 'absolute';
+                tempContainer.style.left = '-9999px';
+                tempContainer.innerHTML = sanitizedHtml;
+                document.body.appendChild(tempContainer);
+
+                try {
+                    const canvas = await html2canvas(tempContainer, {
+                        scale: 1, 
+                        backgroundColor: '#fff',
+                    });
+                    const img = document.createElement('img');
+                    img.src = canvas.toDataURL('image/png');
+                    img.alt = 'Soil Health Card Preview';
+                    img.classList.add('chatbot-card-image');
+                    compactView.appendChild(img);
+                } catch (error) {
+                    console.error('Failed to generate image:', error);
+                    compactView.innerHTML = '<p>Soil Health Card (Click to view)</p>';
+                } finally {
+                    document.body.removeChild(tempContainer);
+                }
+
+                cardElement.appendChild(compactView);
+
+                const expandedView = document.createElement('div');
+                expandedView.classList.add('chatbot-card-expanded');
+                const cardBodyElement = document.createElement('div');
+                cardBodyElement.classList.add('card-body');
+                cardBodyElement.innerHTML = sanitizedHtml;
+                expandedView.appendChild(cardBodyElement);
+
+                const closeButton = document.createElement('button');
+                closeButton.classList.add('close-expanded');
+                closeButton.innerHTML = '&times;';
+                closeButton.addEventListener('click', () => {
+                    expandedView.classList.remove('active');
+                    compactView.style.display = 'block';
+                });
+
+                // Download button
+                const downloadButton = document.createElement('button');
+                downloadButton.classList.add('chatbot-card-download');
+                downloadButton.innerHTML = `<img src="${downloadCardIcon}" alt="Download Icon" class="download-icon"> Download Card`;                downloadButton.addEventListener('click', () => downloadSoilHealthCard(sanitizedHtml, messageId));
+                expandedView.insertBefore(closeButton, expandedView.firstChild);
+                expandedView.appendChild(downloadButton);
+
+                cardElement.appendChild(expandedView);
+
+                // Toggle on click
+                cardElement.addEventListener('click', (e) => {
+                    if (e.target === downloadButton || e.target.closest('.chatbot-card-download') || e.target === closeButton || e.target.closest('.close-expanded')) return;
+                    expandedView.classList.add('active');
+                    compactView.style.display = 'none';
+                });
+
+                // Close button logic 
+                closeButton.addEventListener('click', () => {
+                    expandedView.classList.remove('active');
+                    compactView.style.display = 'block';
+                });
+
+                spanStartingElementWithId.appendChild(cardElement);
+            }
+
             userDivElement.appendChild(chatbotLogoElement);
             userDivElement.appendChild(spanStartingElementWithId);
             chatMessageColumnTwoElement.appendChild(userDivElement);
             chatMessageWrapperElement.appendChild(chatMessageColumnTwoElement);
 
-            if (showAudioOption == true) {
-                const chatMessageColumnThreeElement = getChatMessageWrapperColumnThreeStartingDivHtmlContent();//chatMessageWrapperColumnThreeStartingDivHtmlContent;
+            if (showAudioOption) {
+                const chatMessageColumnThreeElement = getChatMessageWrapperColumnThreeStartingDivHtmlContent();
                 chatMessageColumnThreeElement.appendChild(chatMessageAudioImageElement);
                 chatMessageWrapperElement.appendChild(chatMessageColumnThreeElement);
             }
 
-            if (messageType == 'final_response' && isMessageFromBot == true) {
-                const chatMessageColumnThreePartTwoElement = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent();//chatMessageWrapperColumnThreePartTwoStartingDivHtmlContent;
+            if (messageType === 'final_response' && isMessageFromBot) {
+                const chatMessageColumnThreePartTwoElement = getChatMessageWrapperColumnThreePartTwoStartingDivHtmlContent();
                 chatMessageColumnThreePartTwoElement.appendChild(feedbackOptionElement);
                 chatMessageWrapperElement.appendChild(chatMessageColumnThreePartTwoElement);
             }
 
-            //chatMessageWrapperElement.appendChild(closingDivElement);
-
-            // Append the response to the message list
             const messageList = document.getElementById('message-list');
-            messageList.appendChild(chatMessageWrapperElement);
+            if (messageList) {
+                messageList.appendChild(chatMessageWrapperElement);
+            } else {
+                console.error('message-list element not found');
+            }
 
-            if (messageType == 'final_response') {
+            if (messageType === 'final_response') {
                 sessionStorage.setItem('final_response', true);
-                // bindPopularQuestions();
             }
 
             scrollToBottom();
 
-            if (isMessageFromBot == true && !shouldNotAutoPlayAudio) {
+            if (isMessageFromBot && !shouldNotAutoPlayAudio) {
                 autoPlayAudio(messageId);
             }
         }
     }
+    function downloadSoilHealthCard(htmlContent, messageId) {
+        const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Soil Health Card</title>
+        <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            .card-body { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { padding: 8px; border-bottom: 1px solid #ecf0f1; text-align: left; }
+            th { background: #f8f9fa; font-weight: 600; }
+            h3 { color: #2c3e50; }
+        </style>
+    </head>
+    <body>
+        <h3>Soil Health Card</h3>
+        <div class="card-body">${htmlContent}</div>
+    </body>
+    </html>
+`;
+
+        // Create a Blob and trigger download
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `soil-health-card-${messageId}.html`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+    
     function recordAudio(screenName, isRecording) {
         //isRecording = !isRecording;
 
@@ -3168,11 +3337,15 @@
 
                     const data = JSON.parse(apiResponse);
 
+                    if (data.textInEnglish?.type === 'soil_health_card') {
+                        handleSoilHealthCardResponse(data);
+                        return;
+                    }
+
                     var message = '';
                     currentConversationId = data.conversationId;
 
                     if (data.error !== null) {
-                        // Show default error message
                         var defaultChatbotErrorMessage = currentLanguageInfo.translations.errors.default_message; //translations.find((f) => f.key == 'error_default_message').value;
 
                         processChatBotResponse(
