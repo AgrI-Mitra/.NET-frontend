@@ -12,7 +12,9 @@
     <script defer src="~/bundles/fingerprint"></script>
     @*<script type="text/javascript" src="~/Content/js/fingerprint.js" defer></script>*@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <!-- Google tag (gtag.js) -->
+    <!-- Add this before your chatbot script -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RCEZR4J24G"></script>
     @*<script type="text/javascript" src="~/Content/js/gtag.js"></script>*@
     @Scripts.Render("~/bundles/gtag")
