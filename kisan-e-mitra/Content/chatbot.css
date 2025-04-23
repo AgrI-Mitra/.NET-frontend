@@ -970,3 +970,144 @@ div[data-shepherd-step-id="app_tour_language_selection_description"] {
     user-select: none;
 }
 
+.chatbot-card {
+    background: #fff;
+    margin-left: 35px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    max-width: 300px;
+}
+.chatbot-card-compact {
+    overflow: hidden;
+}
+
+.chatbot-card-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    padding: 10px;
+}
+
+.chatbot-card-expanded {
+    display: none; 
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh; 
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    padding: 20px; 
+    box-sizing: border-box; 
+}
+
+    .chatbot-card-expanded .card-body {
+        background: #fff; 
+        padding: 20px;
+        border-radius: 8px;
+        width: 100%; 
+        max-width: 800px;
+        max-height: 80vh; 
+        overflow-y: auto; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        position: relative; 
+        box-sizing: border-box; 
+    }
+
+    .chatbot-card-expanded table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .chatbot-card-expanded th,
+    .chatbot-card-expanded td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ecf0f1;
+    }
+
+    .chatbot-card-expanded th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+
+    .chatbot-card-expanded.active {
+        display: flex; 
+    }
+
+.chatbot-card-download {
+    background: #3498db;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+    margin: 15px 0 0 auto;
+    display: block; 
+}
+
+    .chatbot-card-download:hover {
+        background: #2980b9;
+    }
+
+.close-expanded {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .close-expanded:hover {
+        background: #c0392b;
+    }
+.chatbot-card-download .download-icon {
+    width: 20px;
+    height: 20px; 
+    vertical-align: middle; 
+    margin-right: 8px;
+}
+
+
+@media (max-width: 768px) {
+    .chatbot-card {
+        max-width: 180px;
+        min-width: 120px;
+    }
+
+    .chatbot-card-expanded .card-body {
+        max-width: 90vw; 
+        max-height: 85vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .chatbot-card {
+        max-width: 150px;
+        min-width: 100px;
+    }
+
+    .chatbot-card-expanded .card-body {
+        max-width: 95vw; 
+        padding: 15px;
+    }
+
+    .chatbot-card-download {
+        font-size: 0.8rem; 
+        padding: 6px 12px; 
+    }
+}
