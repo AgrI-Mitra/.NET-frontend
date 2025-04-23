@@ -14,5 +14,9 @@
   {
     "id": "pmfby",
     "apiKey": "PM Fasal Bima Yojana"
+  },
+  {
+    "id": "shc",
+    "apiKey": "Soil Health Card"
   }
 ]
