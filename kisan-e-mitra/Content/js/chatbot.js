@@ -78,7 +78,14 @@
             languageLabel: 'Telugu',
             languageCode: 'te',
             translations: null
+        },
+        {
+            language: 'assamese',
+            languageLabel: 'Assamese',
+            languageCode: 'as',
+            translations: null
         }
+
 
     ];
 
